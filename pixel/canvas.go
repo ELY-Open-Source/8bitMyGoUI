@@ -221,6 +221,30 @@ func (g Canvas) Text(x, y int, s string, ink Slot, scale int) {
 	}
 }
 
+// TextBlend draws s, glyph dots dithered from top to bottom.
+func (g Canvas) TextBlend(x, y int, s string, top, bottom Slot, scale int) {
+	checkScale(scale)
+	span := LineHeight * scale
+	for _, r := range s {
+		gl := glyphOf(r)
+		gx := x + gl.x*scale
+		for j := range gl.h * scale {
+			yy := y + gl.top()*scale + j
+			level := min(16, (yy-y)*17/span)
+			row := bayer[(g.gy+yy)&3]
+			for _, part := range [2]struct {
+				s    Slot
+				down bool
+			}{{top, false}, {bottom, true}} {
+				runs(gl.w*scale, func(i int) bool {
+					return gl.on(i/scale, j/scale) && (row[(g.gx+gx+i)&3] < level) == part.down
+				}, func(a, b int) { g.Rect(gx+a, yy, b-a, 1, part.s) })
+			}
+		}
+		x += gl.adv * scale
+	}
+}
+
 // Micro draws s in the 3×5 micro font.
 func (g Canvas) Micro(x, y int, s string, ink Slot, scale int) {
 	checkScale(scale)

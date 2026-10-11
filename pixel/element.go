@@ -25,7 +25,7 @@ func Text(c *ui.Context, s string, o TextOptions) *ui.Element {
 	if o.Wrap {
 		width, check = WrapWidth(c, e)
 	}
-	lines := textLines(s, width/scale, o.MaxLines)
+	lines := Wrap(s, width/scale, o.MaxLines)
 	if o.Wrap {
 		e.Height(k.D(len(lines) * LineHeight * scale))
 	} else {
@@ -44,8 +44,8 @@ func Text(c *ui.Context, s string, o TextOptions) *ui.Element {
 	})
 }
 
-// textLines wraps s, cutting to maxLines with an ellipsis.
-func textLines(s string, width, maxLines int) []string {
+// Wrap wraps s to width; past maxLines, an ellipsis.
+func Wrap(s string, width, maxLines int) []string {
 	if maxLines < 0 {
 		panic(fmt.Sprintf("pixel: MaxLines %d", maxLines))
 	}

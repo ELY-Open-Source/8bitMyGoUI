@@ -239,3 +239,32 @@ func TestTextAndMicroDraw(t *testing.T) {
 		}
 	}
 }
+
+func TestTextBlend(t *testing.T) {
+	plain := canvas(t, 40, 20, func(g pixel.Canvas) { g.Text(2, 2, "HM", pixel.Ink, 1) })
+	blend := canvas(t, 40, 20, func(g pixel.Canvas) { g.TextBlend(2, 2, "HM", pixel.Accent, pixel.Good, 1) })
+	tops, bottoms := 0, 0
+	for y := range 20 {
+		for x := range 40 {
+			ink, got := plain.at(x, y) == pixel.Ink, blend.at(x, y)
+			if ink != (got == pixel.Accent || got == pixel.Good) {
+				t.Fatalf("dot %d,%d: text %v, blend %v", x, y, ink, got)
+			}
+			if got == pixel.Accent && y > 2+pixel.LineHeight*3/4 || got == pixel.Good && y < 2+pixel.LineHeight/4 {
+				t.Fatalf("dot %d,%d has %v on the wrong end", x, y, got)
+			}
+			tops += boolInt(got == pixel.Accent)
+			bottoms += boolInt(got == pixel.Good)
+		}
+	}
+	if tops == 0 || bottoms == 0 {
+		t.Fatalf("blend used %d top and %d bottom dots", tops, bottoms)
+	}
+}
+
+func boolInt(b bool) int {
+	if b {
+		return 1
+	}
+	return 0
+}

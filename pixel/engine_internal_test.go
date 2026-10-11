@@ -24,7 +24,7 @@ func TestRuns(t *testing.T) {
 	}
 }
 
-func TestTextLinesEllipsis(t *testing.T) {
+func TestWrapEllipsis(t *testing.T) {
 	cases := []struct {
 		s        string
 		width, n int
@@ -37,8 +37,8 @@ func TestTextLinesEllipsis(t *testing.T) {
 		{"像素风格组件库", 36, 2, []string{"像素风", "格组…"}},
 	}
 	for _, c := range cases {
-		if got := textLines(c.s, c.width, c.n); !slices.Equal(got, c.want) {
-			t.Errorf("textLines(%q, %d, %d) = %q, want %q", c.s, c.width, c.n, got, c.want)
+		if got := Wrap(c.s, c.width, c.n); !slices.Equal(got, c.want) {
+			t.Errorf("Wrap(%q, %d, %d) = %q, want %q", c.s, c.width, c.n, got, c.want)
 		}
 	}
 }
