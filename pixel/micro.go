@@ -90,6 +90,16 @@ func microGlyph(r rune) [MicroHeight]uint8 {
 	return g
 }
 
+// MicroOK reports whether the micro font has all of s.
+func MicroOK(s string) bool {
+	for _, r := range s {
+		if _, ok := micro[unicode.ToUpper(r)]; !ok {
+			return false
+		}
+	}
+	return true
+}
+
 // MicroWidth returns the width of s in dots.
 func MicroWidth(s string) int {
 	n := 0

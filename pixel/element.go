@@ -77,27 +77,6 @@ func WrapWidth(c *ui.Context, e *ui.Element) (int, func(r ui.Rect)) {
 	}
 }
 
-type IconOptions struct {
-	Slot  Slot
-	Scale int
-	// Label names the icon; empty hides it from assistive technology.
-	Label string
-}
-
-func Icon(c *ui.Context, sp *Sprite, o IconOptions) *ui.Element {
-	k := K(c)
-	scale := scaleOr1(o.Scale)
-	e := ui.Box(c).Size(k.D(sp.W*scale), k.D(sp.H*scale))
-	if o.Label != "" {
-		e.Label(o.Label).Role(ui.RoleImage)
-	} else {
-		e.Role(ui.RoleNone)
-	}
-	return e.Draw(func(p *ui.Painter, r ui.Rect) {
-		k.Canvas(p, r).Sprite(0, 0, sp, 0, o.Slot, scale)
-	})
-}
-
 func scaleOr1(s int) int {
 	if s == 0 {
 		return 1

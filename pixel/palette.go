@@ -31,6 +31,11 @@ const (
 
 const Slots = 16
 
+var slotNames = [Slots]string{"Ink", "Back", "Face", "Lit", "Shade", "Edge", "Faint", "Well",
+	"Accent", "AccentLit", "AccentInk", "Good", "Warn", "Bad", "Info", "Magic"}
+
+func (s Slot) String() string { return slotNames[s] }
+
 type Season uint8
 
 const (

@@ -150,22 +150,6 @@ func TestTextElement(t *testing.T) {
 	}
 }
 
-func TestIconElement(t *testing.T) {
-	sp := pixel.MustSprite("aa\naa\naa")
-	tt := ui.NewTester(func(c *ui.Context) {
-		pixel.Use(c, pixel.Settings{Palette: pixel.SpringDay, Dot: 2})
-		pixel.Icon(c, sp, pixel.IconOptions{Scale: 3, Label: "block"})
-		pixel.Icon(c, sp, pixel.IconOptions{})
-	}, 100, 100)
-	r, ok := tt.Find("block")
-	if !ok || r.W != 2*3*2 || r.H != 3*3*2 {
-		t.Fatalf("icon box %v found %v, want 12×18", r, ok)
-	}
-	if len(tt.Texts()) != 1 {
-		t.Fatalf("unlabeled icon is visible to assistive technology: %q", tt.Texts())
-	}
-}
-
 func shellView(disabled *bool, clicks *int, st *pixel.State) func(c *ui.Context) {
 	at := time.Unix(1_700_000_001, 250_000_000)
 	return func(c *ui.Context) {

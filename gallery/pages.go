@@ -6,6 +6,7 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
+	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/display"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/icon"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
 )
@@ -205,7 +206,7 @@ func GameOver(c *ui.Context, why string) bool {
 			shadowText(k.Canvas(p, r), 0, 0, k.Msg("game_over"), pixel.Bad, 3)
 		})
 		pixel.Text(c, why, pixel.TextOptions{Slot: pixel.Faint, Wrap: true, MaxLines: 6}).Width(k.D(min(pixel.Measure(why), 280)))
-		pixel.Icon(c, icon.Skull, pixel.IconOptions{Scale: 3})
+		display.Icon(c, icon.Skull, display.IconOptions{Scale: 3})
 		cont = button(c, k.Msg("continue"))
 	})
 	return cont

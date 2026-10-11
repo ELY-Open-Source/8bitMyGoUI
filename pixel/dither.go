@@ -4,6 +4,9 @@ import "fmt"
 
 var bayer = [4][4]int{{0, 8, 2, 10}, {12, 4, 14, 6}, {3, 11, 1, 9}, {15, 7, 13, 5}}
 
+// Bayer is the 4×4 ordered threshold, 0–15, at x, y.
+func Bayer(x, y int) int { return bayer[y&3][x&3] }
+
 // Dither fills b below the level threshold, a elsewhere.
 func (g Canvas) Dither(x, y, w, h int, a, b Slot, level int) {
 	checkLevel(level)

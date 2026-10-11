@@ -10,6 +10,7 @@ Progress truth: `TASKS.md`. Requirements: `PRD.md` and `docs/prd/components-*.md
 | Go | 1.27.1 |
 | MyGo | `github.com/egoist/mygo v0.2.10`, pinned in go.mod |
 | Font | Ark Pixel Font 12px proportional zh_Hans v2026.09.25 (OFL-1.1, `pixel/OFL.txt`). Rebuild: `go run ./tools/fontpack -in ark-pixel-12px-proportional-zh_hans.bdf` (BDF sha256 `535f7024…8c86`) |
+| QR | `rsc.io/qr v0.2.0` (BSD-3), encoder behind `display.QRCode` |
 | Web | `cmd/web` built with `GOOS=js GOARCH=wasm`; the browser runs the gallery under `ui.Tester` and blits frames to a canvas |
 | Hosting | Cloudflare Workers static assets from `web/dist`; code on Gitea `git.zacharyzhang.com` |
 

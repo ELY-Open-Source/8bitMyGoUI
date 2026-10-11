@@ -5,6 +5,7 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
+	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/display"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/icon"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/layout"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
@@ -159,7 +160,7 @@ func demoGrid(c *ui.Context, log func(string)) {
 	ui.Row(c).Gap(k.D(12)).AlignItems(ui.Start).Children(func() {
 		for _, lines := range []layout.GridLines{layout.SolidLines, layout.DottedLines} {
 			layout.Grid(c, len(items), layout.GridOptions{Columns: 3, Lines: lines}, func(i int) {
-				pixel.Icon(c, items[i], pixel.IconOptions{Scale: 2})
+				display.Icon(c, items[i], display.IconOptions{Scale: 2})
 			})
 		}
 	})
@@ -171,7 +172,7 @@ func demoTiles(c *ui.Context, log func(string)) {
 	layout.Tiles(c, len(items), layout.TilesOptions{W: 28}, func(i int) {
 		ui.Box(c).Fill().Center().Draw(func(p *ui.Painter, r ui.Rect) {
 			k.Canvas(p, r).Frame(0, 0, 28, 28, pixel.Raised, pixel.Face)
-		}).Children(func() { pixel.Icon(c, items[i], pixel.IconOptions{}) })
+		}).Children(func() { display.Icon(c, items[i], display.IconOptions{}) })
 	}).Width(k.D(160))
 }
 
@@ -211,7 +212,7 @@ func demoLayers(c *ui.Context, log func(string)) {
 			g.Dither(0, 0, g.W, g.H, pixel.Well, pixel.Info, 6)
 		})
 	}, func() {
-		ui.Box(c).Fill().Center().Children(func() { pixel.Icon(c, icon.Chest, pixel.IconOptions{Scale: 3}) })
+		ui.Box(c).Fill().Center().Children(func() { display.Icon(c, icon.Chest, display.IconOptions{Scale: 3}) })
 	}, func() {
 		ui.Box(c).Padding(k.D(3)).Children(func() { label(c, "LAYER 3", pixel.Ink) })
 	}).Size(k.D(120), k.D(64))

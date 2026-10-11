@@ -75,7 +75,8 @@ func build(t *testing.T, ds map[string]decl, name string) *pixel.Sprite {
 func render(sp *pixel.Sprite, ink pixel.Slot) []byte {
 	return ui.Render(func(c *ui.Context) {
 		pixel.Use(c, pixel.Settings{Palette: pixel.SummerDay, Dot: 1})
-		pixel.Icon(c, sp, pixel.IconOptions{Slot: ink})
+		k := pixel.K(c)
+		ui.Box(c).Size(12, 12).Draw(func(p *ui.Painter, r ui.Rect) { k.Canvas(p, r).Sprite(0, 0, sp, 0, ink, 1) })
 	}, 12, 12, 1).Pix
 }
 

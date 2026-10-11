@@ -9,6 +9,9 @@ var messages = map[Locale]map[string]string{
 		"search": "SEARCH", "empty": "NO ITEMS", "minimize": "MINIMIZE", "resize": "RESIZE",
 		"scroll_up": "SCROLL UP", "scroll_down": "SCROLL DOWN",
 		"up": "UP", "down": "DOWN", "left": "LEFT", "right": "RIGHT", "disabled": "DISABLED",
+		"remove": "REMOVE", "online": "ONLINE", "away": "AWAY", "busy": "BUSY", "offline": "OFFLINE",
+		"gold": "GOLD", "silver": "SILVER", "bronze": "BRONZE",
+		"common": "COMMON", "uncommon": "UNCOMMON", "rare": "RARE", "epic": "EPIC", "legendary": "LEGENDARY",
 	},
 	Zh: {
 		"ok": "确定", "cancel": "取消", "yes": "是", "no": "否", "close": "关闭",
@@ -16,6 +19,9 @@ var messages = map[Locale]map[string]string{
 		"search": "搜索", "empty": "空空如也", "minimize": "最小化", "resize": "调整大小",
 		"scroll_up": "向上滚动", "scroll_down": "向下滚动",
 		"up": "上", "down": "下", "left": "左", "right": "右", "disabled": "已禁用",
+		"remove": "移除", "online": "在线", "away": "离开", "busy": "忙碌", "offline": "离线",
+		"gold": "金", "silver": "银", "bronze": "铜",
+		"common": "普通", "uncommon": "优秀", "rare": "稀有", "epic": "史诗", "legendary": "传说",
 	},
 }
 
