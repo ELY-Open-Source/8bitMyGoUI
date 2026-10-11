@@ -7,6 +7,7 @@ import (
 
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/display"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/icon"
+	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/input"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/layout"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
 )
@@ -42,11 +43,11 @@ func demoScreen(c *ui.Context, log func(string)) {
 	ui.Column(c).Gap(k.D(6)).Children(func() {
 		ui.Box(c).FillWidth().Height(k.D(96)).Children(func() {
 			layout.Screen(c, layout.ScreenOptions{Vignette: *on, Padding: 12}, func() {
-				label(c, "A NEW SAVE FILE", pixel.Ink)
-				label(c, "Day 1. The cartridge starts.", pixel.Faint)
+				pixel.Text(c, "A NEW SAVE FILE", pixel.TextOptions{})
+				pixel.Text(c, "Day 1. The cartridge starts.", pixel.TextOptions{Slot: pixel.Faint})
 			})
 		})
-		if button(c, "VIGNETTE") {
+		if input.Button(c, "VIGNETTE", input.ButtonOptions{}).Clicked {
 			*on = !*on
 			log(fmt.Sprintf("vignette %v", *on))
 		}
@@ -58,12 +59,12 @@ func demoWindow(c *ui.Context, log func(string)) {
 	ui.Row(c).Gap(k.D(8)).AlignItems(ui.Start).Children(func() {
 		layout.Window(c, layout.WindowOptions{Title: "ITEMS"}, func() {
 			for _, s := range []string{"Potion x3", "Ether  x1", "Key    x2"} {
-				label(c, s, pixel.Ink)
+				pixel.Text(c, s, pixel.TextOptions{})
 			}
 		})
 		layout.Window(c, layout.WindowOptions{}, func() {
-			label(c, "HP 32/40", pixel.Ink)
-			label(c, "MP 12/18", pixel.Ink)
+			pixel.Text(c, "HP 32/40", pixel.TextOptions{})
+			pixel.Text(c, "MP 12/18", pixel.TextOptions{})
 		})
 	})
 }
@@ -72,7 +73,7 @@ func demoPanel(c *ui.Context, log func(string)) {
 	k := pixel.K(c)
 	ui.Row(c).Wrap().Gap(k.D(6)).Children(func() {
 		for i, name := range []string{"RAISED", "SUNKEN", "FLAT", "DOUBLE", "WINDOW", "NOTCHED"} {
-			layout.Panel(c, layout.PanelOptions{Style: pixel.FrameStyle(i)}, func() { label(c, name, pixel.Ink) })
+			layout.Panel(c, layout.PanelOptions{Style: pixel.FrameStyle(i)}, func() { pixel.Text(c, name, pixel.TextOptions{}) })
 		}
 	})
 }
@@ -81,15 +82,15 @@ func demoCard(c *ui.Context, log func(string)) {
 	k := pixel.K(c)
 	ui.Box(c).Width(k.D(200)).Children(func() {
 		layout.Card(c, layout.CardOptions{Title: "QUEST", Icon: icon.Scroll, Footer: func() {
-			if button(c, "ACCEPT") {
+			if input.Button(c, "ACCEPT", input.ButtonOptions{}).Clicked {
 				log("quest accepted")
 			}
-			if button(c, "LATER") {
+			if input.Button(c, "LATER", input.ButtonOptions{}).Clicked {
 				log("quest saved for later")
 			}
 		}}, func() {
-			label(c, "Find the lost cartridge.", pixel.Ink)
-			label(c, "Reward: 300 G", pixel.Faint)
+			pixel.Text(c, "Find the lost cartridge.", pixel.TextOptions{})
+			pixel.Text(c, "Reward: 300 G", pixel.TextOptions{Slot: pixel.Faint})
 		})
 	})
 }
@@ -98,8 +99,8 @@ func demoSection(c *ui.Context, log func(string)) {
 	k := pixel.K(c)
 	ui.Box(c).Width(k.D(220)).Children(func() {
 		layout.Section(c, "Sound", layout.SectionOptions{}, func() {
-			label(c, "Music   8", pixel.Ink)
-			label(c, "Effects 5", pixel.Ink)
+			pixel.Text(c, "Music   8", pixel.TextOptions{})
+			pixel.Text(c, "Effects 5", pixel.TextOptions{})
 		})
 	})
 }
@@ -110,7 +111,7 @@ func demoDivider(c *ui.Context, log func(string)) {
 	ui.Row(c).Gap(k.D(12)).AlignItems(ui.Stretch).Children(func() {
 		ui.Column(c).Grow(1).Gap(k.D(4)).Children(func() {
 			for i, n := range names {
-				label(c, n, pixel.Faint)
+				pixel.Text(c, n, pixel.TextOptions{Slot: pixel.Faint})
 				layout.Divider(c, layout.DividerOptions{Style: layout.DividerStyle(i)})
 			}
 		})
@@ -126,14 +127,14 @@ func demoScrollArea(c *ui.Context, log func(string)) {
 	ui.Column(c).Gap(k.D(4)).Children(func() {
 		r := layout.ScrollArea(c, s, layout.ScrollAreaOptions{Label: "Bestiary"}, func() {
 			for i := range 40 {
-				label(c, fmt.Sprintf("No.%03d %s", i+1, monsters[i%len(monsters)]), pixel.Ink)
+				pixel.Text(c, fmt.Sprintf("No.%03d %s", i+1, monsters[i%len(monsters)]), pixel.TextOptions{})
 			}
 		})
 		r.Element.Size(k.D(200), k.D(112))
 		if r.Changed {
 			log(fmt.Sprintf("scrolled to %d dots", int(s.Y/k.Dot())))
 		}
-		label(c, fmt.Sprintf("Y %d of %d dots", int(s.Y/k.Dot()), int(s.MaxY/k.Dot())), pixel.Faint)
+		pixel.Text(c, fmt.Sprintf("Y %d of %d dots", int(s.Y/k.Dot()), int(s.MaxY/k.Dot())), pixel.TextOptions{Slot: pixel.Faint})
 	})
 }
 
@@ -142,7 +143,7 @@ func demoSplit(c *ui.Context, log func(string)) {
 	size := ui.Local(c.Root(), demoKey("split"), func() int { return 120 })
 	pane := func(name string) func() {
 		return func() {
-			layout.Panel(c, layout.PanelOptions{Style: pixel.Sunken, Fill: pixel.Well}, func() { label(c, name, pixel.Ink) }).Fill()
+			layout.Panel(c, layout.PanelOptions{Style: pixel.Sunken, Fill: pixel.Well}, func() { pixel.Text(c, name, pixel.TextOptions{}) }).Fill()
 		}
 	}
 	ui.Box(c).FillWidth().Height(k.D(96)).Children(func() {
@@ -214,7 +215,7 @@ func demoLayers(c *ui.Context, log func(string)) {
 	}, func() {
 		ui.Box(c).Fill().Center().Children(func() { display.Icon(c, icon.Chest, display.IconOptions{Scale: 3}) })
 	}, func() {
-		ui.Box(c).Padding(k.D(3)).Children(func() { label(c, "LAYER 3", pixel.Ink) })
+		ui.Box(c).Padding(k.D(3)).Children(func() { pixel.Text(c, "LAYER 3", pixel.TextOptions{}) })
 	}).Size(k.D(120), k.D(64))
 }
 
@@ -259,7 +260,7 @@ func demoResizable(c *ui.Context, log func(string)) {
 	h := ui.Local(c.Root(), demoKey("resize-h"), func() int { return 56 })
 	r := layout.Resizable(c, w, h, layout.ResizableOptions{MinW: 48, MinH: 32, MaxW: 240, MaxH: 120}, func() {
 		layout.Panel(c, layout.PanelOptions{Style: pixel.Sunken, Fill: pixel.Well}, func() {
-			label(c, fmt.Sprintf("%d×%d", *w, *h), pixel.Ink)
+			pixel.Text(c, fmt.Sprintf("%d×%d", *w, *h), pixel.TextOptions{})
 		}).Fill()
 	})
 	if r.Changed {
@@ -297,8 +298,8 @@ func demoCRTFrame(c *ui.Context, log func(string)) {
 	k := pixel.K(c)
 	layout.CRTFrame(c, layout.CRTFrameOptions{Brand: "8BIT CRT"}, func() {
 		ui.Column(c).Size(k.D(180), k.D(72)).Padding(k.D(4)).Children(func() {
-			label(c, "READY.", pixel.Good)
-			label(c, "10 PRINT \"HI\"", pixel.Good)
+			pixel.Text(c, "READY.", pixel.TextOptions{Slot: pixel.Good})
+			pixel.Text(c, "10 PRINT \"HI\"", pixel.TextOptions{Slot: pixel.Good})
 		})
 	}).AlignSelf(ui.Start)
 }
@@ -307,17 +308,17 @@ func demoAppFrame(c *ui.Context, log func(string)) {
 	k := pixel.K(c)
 	ui.Box(c).FillWidth().Height(k.D(150)).Children(func() {
 		layout.AppFrame(c, layout.AppFrameOptions{SidebarWidth: 72}, func() {
-			label(c, "8BIT MAIL", pixel.Ink)
+			pixel.Text(c, "8BIT MAIL", pixel.TextOptions{})
 		}, func() {
 			for _, s := range []string{"Inbox", "Sent", "Spam"} {
-				if button(c, s) {
+				if input.Button(c, s, input.ButtonOptions{}).Clicked {
 					log("open " + s)
 				}
 			}
 		}, func() {
-			label(c, "No new mail. Go outside.", pixel.Ink)
+			pixel.Text(c, "No new mail. Go outside.", pixel.TextOptions{})
 		}, func() {
-			label(c, "3 folders", pixel.Faint)
+			pixel.Text(c, "3 folders", pixel.TextOptions{Slot: pixel.Faint})
 		})
 	})
 }

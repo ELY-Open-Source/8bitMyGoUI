@@ -10,6 +10,7 @@ import (
 
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/display"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/icon"
+	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/input"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
 )
 
@@ -125,7 +126,7 @@ func demoTag(c *ui.Context, log func(string)) {
 			}
 			display.Tag(c, "locked", display.TagOptions{Icon: icon.Lock, Removable: true, Disabled: true})
 		})
-		if button(c, "RESET") {
+		if input.Button(c, "RESET", input.ButtonOptions{}).Clicked {
 			*tags = []string{"fire", "ice", "thunder", "wind"}
 			log("tags reset")
 		}
@@ -138,7 +139,7 @@ func demoStatusDot(c *ui.Context, log func(string)) {
 		for _, s := range []display.Status{display.Online, display.Away, display.Busy, display.Offline} {
 			ui.Row(c).Gap(k.D(4)).AlignItems(ui.Center).Children(func() {
 				display.StatusDot(c, s, display.StatusDotOptions{Live: true})
-				label(c, []string{"Player 1", "Player 2", "Player 3", "Player 4"}[s], pixel.Ink)
+				pixel.Text(c, []string{"Player 1", "Player 2", "Player 3", "Player 4"}[s], pixel.TextOptions{})
 			})
 		}
 	})
@@ -227,7 +228,7 @@ func demoRarityFrame(c *ui.Context, log func(string)) {
 	items := []string{"Stick", "Bow", "Rapier", "Dragon Lance", "Excalibur"}
 	ui.Row(c).Wrap().Gap(k.D(6)).Children(func() {
 		for r := display.Common; r <= display.Legendary; r++ {
-			display.RarityFrame(c, r, display.RarityFrameOptions{}, func() { label(c, items[r], pixel.Ink) })
+			display.RarityFrame(c, r, display.RarityFrameOptions{}, func() { pixel.Text(c, items[r], pixel.TextOptions{}) })
 		}
 	})
 }
@@ -237,7 +238,7 @@ func demoBubble(c *ui.Context, log func(string)) {
 	lines := []string{"Hey!", "Look up.", "Psst.", "Over here."}
 	ui.Row(c).Wrap().Gap(k.D(8)).AlignItems(ui.Center).Children(func() {
 		for i, side := range []display.Side{display.Bottom, display.Top, display.Left, display.Right} {
-			display.Bubble(c, display.BubbleOptions{Tail: side}, func() { label(c, lines[i], pixel.Ink) })
+			display.Bubble(c, display.BubbleOptions{Tail: side}, func() { pixel.Text(c, lines[i], pixel.TextOptions{}) })
 		}
 	})
 }

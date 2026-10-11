@@ -39,7 +39,7 @@ var bannedFuncs = set("Text Textf RichText Button PrimaryButton Link MenuButton 
 var bannedMethods = set("Background Border BorderColor BorderWidth BorderStyle Radius Shadow Gradient " +
 	"LinearGradient Opacity Stripes Tooltip Menu ContextMenu Transition Animate AnimateWith Loop Toast " +
 	"ToastAction AnimationFrame After FillPath StrokePath RichText Glyphs FillGradient Stroke StrokeDashed " +
-	"StrokePathGradient FillPathGradient Material Icon Image")
+	"StrokePathGradient FillPathGradient Material Icon Image Selected")
 
 func set(s string) map[string]bool {
 	out := map[string]bool{}

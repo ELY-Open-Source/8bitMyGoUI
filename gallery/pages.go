@@ -8,7 +8,10 @@ import (
 
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/display"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/icon"
+	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/input"
+	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/layout"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/text"
 )
 
 func (a *App) content(c *ui.Context) {
@@ -46,14 +49,12 @@ func page(c *ui.Context, fn func()) {
 
 func (a *App) home(c *ui.Context) {
 	k := pixel.K(c)
-	ui.Box(c).Height(k.D(52)).Draw(func(p *ui.Painter, r ui.Rect) {
-		shadowText(k.Canvas(p, r), 0, 0, logo, pixel.Accent, 3)
-	})
+	text.ShadowText(c, logo, text.ShadowTextOptions{Slot: pixel.Accent, Scale: 3})
 	pixel.Text(c, "Pixel components for MyGo. Every dot sits on the grid; every color comes from sixteen.", pixel.TextOptions{Wrap: true})
 	pixel.Text(c, "为 MyGo 打造的像素组件。每个点落在点阵上，每种颜色来自十六格调色板。", pixel.TextOptions{Wrap: true, Slot: pixel.Faint})
 	comps := len(Entries()) - count("foundations")
 	stats := fmt.Sprintf("%d COMPONENTS  %d CATEGORIES  %d PALETTES", comps, len(Categories)-1, len(pixel.Palettes))
-	ui.Box(c).Height(k.D(7)).Draw(func(p *ui.Painter, r ui.Rect) { k.Canvas(p, r).Micro(0, 1, stats, pixel.Accent, 1) })
+	text.MicroText(c, stats, text.MicroTextOptions{Slot: pixel.Accent})
 	ui.Grid(c).Columns(3).Gap(k.D(4)).Children(func() {
 		for _, cat := range Categories {
 			n := count(cat.Key)
@@ -87,11 +88,10 @@ func (a *App) category(c *ui.Context, key string) {
 		return
 	}
 	k := pixel.K(c)
-	ui.Box(c).Height(k.D(36)).Draw(func(p *ui.Painter, r ui.Rect) {
-		g := k.Canvas(p, r)
-		g.Sprite(0, 4, cat.Icon, 0, pixel.Accent, 2)
-		shadowText(g, 30, 0, cat.Name, pixel.Ink, 2)
-		g.Text(30+pixel.Measure(cat.Name)*2+8, 14, cat.Zh, pixel.Faint, 1)
+	ui.Row(c).Gap(k.D(6)).AlignItems(ui.Center).Children(func() {
+		display.Icon(c, cat.Icon, display.IconOptions{Slot: pixel.Accent, Scale: 2})
+		text.ShadowText(c, cat.Name, text.ShadowTextOptions{Scale: 2})
+		pixel.Text(c, cat.Zh, pixel.TextOptions{Slot: pixel.Faint})
 	})
 	ui.Grid(c).Columns(3).Gap(k.D(4)).Children(func() {
 		for _, e := range Entries() {
@@ -121,40 +121,37 @@ func (a *App) card(c *ui.Context, e Entry) {
 
 func (a *App) entry(c *ui.Context, e Entry) {
 	k := pixel.K(c)
-	ui.Box(c).Height(k.D(36)).Draw(func(p *ui.Painter, r ui.Rect) {
-		g := k.Canvas(p, r)
-		x := 0
+	ui.Row(c).Gap(k.D(6)).AlignItems(ui.Center).Children(func() {
 		if e.ID > 0 {
-			g.Micro(0, 2, fmt.Sprintf("%03d", e.ID), pixel.Accent, 2)
-			x = 30
+			text.MicroText(c, fmt.Sprintf("%03d", e.ID), text.MicroTextOptions{Slot: pixel.Accent, Scale: 2})
 		}
-		shadowText(g, x, 0, e.Name, pixel.Ink, 2)
-		g.Text(x+pixel.Measure(e.Name)*2+8, 14, e.Zh, pixel.Faint, 1)
+		text.ShadowText(c, e.Name, text.ShadowTextOptions{Scale: 2})
+		pixel.Text(c, e.Zh, pixel.TextOptions{Slot: pixel.Faint})
 	})
 	pixel.Text(c, e.Summary, pixel.TextOptions{Wrap: true})
-	panel(c, pixel.Window, pixel.Face, 10).MinHeight(k.D(80)).Children(func() { e.Demo(c, a.logger(e)) })
+	layout.Panel(c, layout.PanelOptions{Style: pixel.Window, Padding: 8}, func() { e.Demo(c, a.logger(e)) }).MinHeight(k.D(80))
 	code := strings.ReplaceAll(e.Code(), "\t", "  ")
 	ui.Row(c).Gap(k.D(4)).AlignItems(ui.Start).Children(func() {
-		panel(c, pixel.Sunken, pixel.Well, 4).Grow(1).Children(func() {
+		layout.Panel(c, layout.PanelOptions{Style: pixel.Sunken, Fill: pixel.Well, Padding: 2}, func() {
 			ui.ScrollBoth(c).Height(k.D(160)).Children(func() { codeBlock(c, code) })
-		})
+		}).Grow(1)
 		ui.Column(c).Width(k.D(140)).Gap(k.D(4)).Children(func() {
-			if button(c, "COPY CODE") {
+			if input.Button(c, "COPY CODE", input.ButtonOptions{}).Clicked {
 				c.WriteClipboard(code)
 				a.logger(e)("code copied")
 			}
-			panel(c, pixel.Sunken, pixel.Well, 4).Height(k.D(140)).Children(func() {
+			layout.Panel(c, layout.PanelOptions{Style: pixel.Sunken, Fill: pixel.Well, Padding: 2}, func() {
 				for _, l := range a.logs[e.Slug()] {
 					pixel.Text(c, "> "+l, pixel.TextOptions{Slot: pixel.Faint, MaxLines: 1})
 				}
-			})
+			}).Height(k.D(140))
 		})
 	})
 	ui.Row(c).Gap(k.D(4)).Children(func() {
-		if button(c, "◀ PREV") {
+		if input.Button(c, "◀ PREV", input.ButtonOptions{}).Clicked {
 			a.step(-1)
 		}
-		if button(c, "NEXT ▶") {
+		if input.Button(c, "NEXT ▶", input.ButtonOptions{}).Clicked {
 			a.step(1)
 		}
 	})
@@ -203,11 +200,11 @@ func GameOver(c *ui.Context, why string) bool {
 	cont := false
 	ui.Column(c).Gap(k.D(8)).AlignItems(ui.Center).Padding(k.D(24)).Children(func() {
 		ui.Box(c).Size(k.D(pixel.Measure(k.Msg("game_over"))*3), k.D(48)).Draw(func(p *ui.Painter, r ui.Rect) {
-			shadowText(k.Canvas(p, r), 0, 0, k.Msg("game_over"), pixel.Bad, 3)
+			shadow(k.Canvas(p, r), 0, 0, k.Msg("game_over"), pixel.Bad, 3)
 		})
 		pixel.Text(c, why, pixel.TextOptions{Slot: pixel.Faint, Wrap: true, MaxLines: 6}).Width(k.D(min(pixel.Measure(why), 280)))
 		display.Icon(c, icon.Skull, display.IconOptions{Scale: 3})
-		cont = button(c, k.Msg("continue"))
+		cont = input.Button(c, k.Msg("continue"), input.ButtonOptions{}).Clicked
 	})
 	return cont
 }

@@ -25,7 +25,7 @@ func (a *App) boot(c *ui.Context) {
 		g := k.Canvas(p, r)
 		w := pixel.Measure(logo) * 4
 		x, y := (g.W-w)/2, g.H/2-40
-		shadowText(g, x, y, logo, pixel.Accent, 4)
+		shadow(g, x, y, logo, pixel.Accent, 4)
 		g.Veil(x, y, w+4, 68, pixel.Back, 16-shown)
 		if start {
 			s := "PRESS START"

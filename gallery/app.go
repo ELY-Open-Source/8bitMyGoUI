@@ -6,6 +6,7 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
+	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/input"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
 )
 
@@ -19,7 +20,7 @@ type App struct {
 	locale  pixel.Locale
 	started bool
 	query   string
-	search  pixel.Edit
+	search  input.TextInputResult
 	logs    map[string][]string
 }
 
@@ -61,9 +62,6 @@ func (a *App) View(c *ui.Context) {
 
 // keys leaves single keys to a field being typed in.
 func (a *App) keys(c *ui.Context) {
-	if a.search.Focused && c.Shortcut(0, ui.KeyEscape) {
-		a.query = ""
-	}
 	if pixel.Typing(c) {
 		return
 	}

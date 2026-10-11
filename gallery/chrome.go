@@ -7,6 +7,8 @@ import (
 	"github.com/egoist/mygo/ui"
 
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/icon"
+	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/input"
+	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/layout"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
 )
 
@@ -25,29 +27,21 @@ func (a *App) topBar(c *ui.Context) {
 			if st.Hover {
 				ink = pixel.AccentLit
 			}
-			shadowText(g, 0, 1, logo, ink, 1)
+			shadow(g, 0, 1, logo, ink, 1)
 		}) {
 			a.Go("/")
 		}
-		ui.Column(c).Width(k.D(150)).Padding(k.D(2), k.D(4)).Draw(func(p *ui.Painter, r ui.Rect) {
-			g := k.Canvas(p, r)
-			g.Frame(0, 0, g.W, g.H, pixel.Sunken, pixel.Well)
-		}).Children(func() {
-			a.search = pixel.Editor(c, &a.query, pixel.EditorOptions{Placeholder: "/ search 搜索", Label: "Search components"})
-			if m := matches(a.query); a.search.Submitted && len(m) > 0 {
-				a.Go(m[0].Path())
-			}
-		})
+		a.search = input.SearchField(c, "Search components", &a.query, input.SearchFieldOptions{Placeholder: "/ search 搜索", Width: 150})
+		if m := matches(a.query); a.search.Submitted && len(m) > 0 {
+			a.Go(m[0].Path())
+		}
 		ui.Spacer(c)
 		a.paletteControl(c)
 		other, mark := pixel.Zh, "中"
 		if a.locale == pixel.Zh {
 			other, mark = pixel.En, "EN"
 		}
-		if press(c, 20, 16, "language", func(g pixel.Canvas, st pixel.State) {
-			g.Frame(0, 0, g.W, g.H, pixel.Notched, pixel.Face)
-			g.Text((g.W-pixel.Measure(mark))/2, 0, mark, pixel.Ink, 1)
-		}) {
+		if input.Button(c, mark, input.ButtonOptions{Size: input.Small, Label: "language"}).Clicked {
 			a.locale = other
 		}
 	})
@@ -55,9 +49,8 @@ func (a *App) topBar(c *ui.Context) {
 
 func (a *App) paletteControl(c *ui.Context) {
 	pal := pixel.Palettes[a.palette]
-	if press(c, 12, 16, "previous palette", func(g pixel.Canvas, st pixel.State) {
-		g.Sprite(0, 2, icon.ChevronLeft, 0, pixel.Ink, 1)
-	}) {
+	arrows := input.IconButtonOptions{Variant: input.Ghost, Size: input.Small}
+	if input.IconButton(c, icon.ChevronLeft, "previous palette", arrows).Clicked {
 		a.setPalette(a.palette - 1)
 	}
 	name := strings.ToUpper(pal.Name) + " " + pal.Zh
@@ -68,9 +61,7 @@ func (a *App) paletteControl(c *ui.Context) {
 		}
 		g.Text(4*pixel.Slots+6, 0, name, pixel.Ink, 1)
 	})
-	if press(c, 12, 16, "next palette", func(g pixel.Canvas, st pixel.State) {
-		g.Sprite(0, 2, icon.ChevronRight, 0, pixel.Ink, 1)
-	}) {
+	if input.IconButton(c, icon.ChevronRight, "next palette", arrows).Clicked {
 		a.setPalette(a.palette + 1)
 	}
 }
@@ -113,17 +104,30 @@ func (a *App) sidebar(c *ui.Context) {
 }
 
 func (a *App) statusBar(c *ui.Context) {
+	layout.StatusBar(c, "/ search · P palette · [ ] prev next", fmt.Sprintf("%d entries", len(Entries())))
+}
+
+// press is a custom-drawn chrome tile; true when clicked.
+func press(c *ui.Context, w, h int, name string, draw func(g pixel.Canvas, st pixel.State)) bool {
 	k := pixel.K(c)
-	hints := "/ search · P palette · [ ] prev next"
-	total := fmt.Sprintf("%d ENTRIES", len(Entries()))
-	ui.Row(c).Height(k.D(18)).Draw(func(p *ui.Painter, r ui.Rect) {
+	shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.ButtonBase(c).Label(name) })
+	if w > 0 {
+		shell.Width(k.D(w))
+	}
+	shell.Height(k.D(h)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)
-		g.Rect(0, 0, g.W, g.H, pixel.Face)
-		g.HLine(0, 0, g.W, pixel.Edge)
-		g.HLine(0, 1, g.W, pixel.Lit)
-		g.Text(6, 2, hints, pixel.Faint, 1)
-		g.Micro(g.W-pixel.MicroWidth(total)-6, 8, total, pixel.Faint, 1)
+		draw(g, st)
+		if st.Focus {
+			g.FocusMark(0, 0, g.W, g.H)
+		}
 	})
+	return base.Clicked()
+}
+
+// shadow draws s with a shadow one scaled dot down-right.
+func shadow(g pixel.Canvas, x, y int, s string, ink pixel.Slot, scale int) {
+	g.Text(x+scale, y+scale, s, pixel.Shade, scale)
+	g.Text(x, y, s, ink, scale)
 }
 
 func count(cat string) int {

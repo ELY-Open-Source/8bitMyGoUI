@@ -128,8 +128,14 @@ func TestEditorMultiline(t *testing.T) {
 	h.tt.Key(0, ui.KeyUp)
 	h.tt.Type("X")
 	h.want("abX\ncd")
+	if h.last.Line != 0 {
+		t.Fatalf("caret line %d on the first line", h.last.Line)
+	}
 	h.tt.Key(0, ui.KeyEnter)
 	h.want("abX\n\ncd")
+	if h.last.Line != 1 {
+		t.Fatalf("caret line %d after a newline", h.last.Line)
+	}
 	h.tt.Key(ui.Cmd, ui.KeyEnter)
 	if h.submits != 1 {
 		t.Fatalf("Cmd+Enter submitted %d times", h.submits)

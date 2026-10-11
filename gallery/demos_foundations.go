@@ -6,6 +6,8 @@ import (
 	"github.com/egoist/mygo/ui"
 
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/icon"
+	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/input"
+	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/layout"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
 )
 
@@ -25,7 +27,10 @@ func demoPalettes(c *ui.Context, log func(string)) {
 	ui.Grid(c).Columns(2).Gap(k.D(6)).Children(func() {
 		for _, pal := range pixel.Palettes {
 			pixel.Scope(c, pixel.Settings{Palette: pal}, func() {
-				if press(c, 0, 52, pal.Name, func(g pixel.Canvas, st pixel.State) {
+				kp := pixel.K(c)
+				shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.ButtonBase(c).Label(pal.Name) })
+				shell.Height(kp.D(52)).Draw(func(p *ui.Painter, r ui.Rect) {
+					g := kp.Canvas(p, r)
 					g.Frame(0, 0, g.W, g.H, pixel.Window, pixel.Face)
 					g.Text(6, 4, pal.Name+" "+pal.Zh, pixel.Ink, 1)
 					g.Rect(5, 23, pixel.Slots*5+2, 10, pixel.Edge)
@@ -36,7 +41,11 @@ func demoPalettes(c *ui.Context, log func(string)) {
 					g.Sprite(g.W-32, 4, icon.Star, 0, pixel.Warn, 1)
 					g.Sprite(g.W-18, 4, icon.Coin, 0, pixel.Ink, 1)
 					g.Text(6, 34, "HP 99 · 你好", pixel.Accent, 1)
-				}) {
+					if st.Focus {
+						g.FocusMark(0, 0, g.W, g.H)
+					}
+				})
+				if base.Clicked() {
 					log("palette " + pal.Name)
 				}
 			})
@@ -101,12 +110,7 @@ func demoIcons(c *ui.Context, log func(string)) {
 	k := pixel.K(c)
 	ui.Row(c).Wrap().Gap(k.D(2)).Children(func() {
 		for _, n := range icon.All {
-			if press(c, 16, 16, n.Name, func(g pixel.Canvas, st pixel.State) {
-				if st.Hover {
-					g.Rect(0, 0, 16, 16, pixel.Lit)
-				}
-				g.Sprite(2, 2, n.Sprite, 0, pixel.Ink, 1)
-			}) {
+			if input.IconButton(c, n.Sprite, n.Name, input.IconButtonOptions{Variant: input.Ghost}).Clicked {
 				log("icon " + n.Name)
 			}
 		}
@@ -151,12 +155,19 @@ func demoSprites(c *ui.Context, log func(string)) {
 	if *left {
 		sp = slimeLeft
 	}
-	if press(c, 120, 48, "slime", func(g pixel.Canvas, st pixel.State) {
+	k := pixel.K(c)
+	shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.ButtonBase(c).Label("slime") })
+	shell.Size(k.D(120), k.D(48)).Draw(func(p *ui.Painter, r ui.Rect) {
+		g := k.Canvas(p, r)
 		g.Rect(0, 40, g.W, 8, pixel.Good)
 		g.Dither(0, 40, g.W, 8, pixel.Good, pixel.Shade, 4)
 		step := g.Step(4)
 		g.Sprite(8+step%8*2, 16, sp, step/2, pixel.Ink, 2)
-	}) {
+		if st.Focus {
+			g.FocusMark(0, 0, g.W, g.H)
+		}
+	})
+	if base.Clicked() {
 		*left = !*left
 		log(fmt.Sprintf("turned, facing left %v", *left))
 	}
@@ -168,7 +179,7 @@ func demoEditor(c *ui.Context, log func(string)) {
 	k := pixel.K(c)
 	st := ui.Local(c.Root(), demoKey("editor"), func() editorDemo { return editorDemo{notes: "Two lines\nof notes"} })
 	field := func(v *string, o pixel.EditorOptions) {
-		panel(c, pixel.Sunken, pixel.Well, 3).Children(func() {
+		layout.Panel(c, layout.PanelOptions{Style: pixel.Sunken, Fill: pixel.Well, Padding: 1}, func() {
 			e := pixel.Editor(c, v, o)
 			if e.Changed {
 				log(o.Label + " changed")
@@ -189,16 +200,10 @@ func demoFocus(c *ui.Context, log func(string)) {
 	k := pixel.K(c)
 	ui.Row(c).Gap(k.D(16)).Padding(0, k.D(14)).Children(func() {
 		for _, name := range []string{"ATTACK", "MAGIC", "ITEM"} {
-			if button(c, name) {
+			if input.Button(c, name, input.ButtonOptions{}).Clicked {
 				log(name)
 			}
 		}
-		shell, _, _ := pixel.Shell(c, func() *ui.Element { return ui.ButtonBase(c).Label("RUN").Disabled(true) })
-		shell.Size(k.D(pixel.Measure("RUN")+12), k.D(16)).Draw(func(p *ui.Painter, r ui.Rect) {
-			g := k.Canvas(p, r)
-			g.Frame(0, 0, g.W, g.H-1, pixel.Raised, pixel.Face)
-			g.Text(6, 0, "RUN", pixel.Faint, 1)
-			g.Checker(0, 0, g.W, g.H-1, pixel.Face)
-		})
+		input.Button(c, "RUN", input.ButtonOptions{Disabled: true})
 	})
 }

@@ -5,6 +5,7 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
+	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/input"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/text"
 )
@@ -97,7 +98,7 @@ func demoTypewriter(c *ui.Context, log func(string)) {
 		if r.Done {
 			log(fmt.Sprintf("line %d done", *at+1))
 		}
-		if button(c, "NEXT") {
+		if input.Button(c, "NEXT", input.ButtonOptions{}).Clicked {
 			*at = (*at + 1) % len(lines)
 			log("next line")
 		}
@@ -133,9 +134,9 @@ func demoKbd(c *ui.Context, log func(string)) {
 func demoCode(c *ui.Context, log func(string)) {
 	k := pixel.K(c)
 	ui.Row(c).Gap(k.D(4)).AlignItems(ui.Center).Children(func() {
-		label(c, "Call", pixel.Ink)
+		pixel.Text(c, "Call", pixel.TextOptions{})
 		text.Code(c, "pixel.Use(c, s)", text.CodeOptions{})
-		label(c, "once per frame.", pixel.Ink)
+		pixel.Text(c, "once per frame.", pixel.TextOptions{})
 	})
 }
 
@@ -169,11 +170,11 @@ func demoOdometer(c *ui.Context, log func(string)) {
 	score := ui.Local(c.Root(), demoKey("odometer"), func() int { return 1990 })
 	ui.Row(c).Gap(k.D(8)).AlignItems(ui.Center).Children(func() {
 		text.Odometer(c, *score, text.OdometerOptions{Digits: 6})
-		if button(c, "+15") {
+		if input.Button(c, "+15", input.ButtonOptions{}).Clicked {
 			*score += 15
 			log(fmt.Sprintf("score %d", *score))
 		}
-		if button(c, "+500") {
+		if input.Button(c, "+500", input.ButtonOptions{}).Clicked {
 			*score += 500
 			log(fmt.Sprintf("score %d", *score))
 		}
@@ -202,7 +203,7 @@ func demoScrambleText(c *ui.Context, log func(string)) {
 	at := ui.Local(c.Root(), demoKey("scramble"), func() int { return 0 })
 	ui.Column(c).Gap(k.D(6)).Children(func() {
 		text.ScrambleText(c, words[*at], text.ScrambleTextOptions{Slot: pixel.Good, Scale: 2})
-		if button(c, "AGAIN") {
+		if input.Button(c, "AGAIN", input.ButtonOptions{}).Clicked {
 			*at = (*at + 1) % len(words)
 			log("scramble " + words[*at])
 		}

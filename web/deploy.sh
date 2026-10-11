@@ -29,5 +29,8 @@ until curl -fs "$site/" | grep -q "$main"; do
   fi
   sleep 2
 done
+# A first fetch warms the edge before the browser tests.
+wasm=$(sed -n "s#.*fetch('\\(a/app\\.[0-9a-f]*\\.wasm\\)').*#\\1#p" dist/a/main.*.js)
+curl -fs --max-time 120 -o /dev/null "$site/$wasm"
 BASE_URL=$site npx playwright test
 echo "deploy: $rev live at $site (version $id)"

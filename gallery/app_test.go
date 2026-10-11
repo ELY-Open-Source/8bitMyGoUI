@@ -167,3 +167,54 @@ func TestShortcutsYieldToFields(t *testing.T) {
 		t.Fatalf("typing changed palette %d or path %q", a.palette, a.Path())
 	}
 }
+
+func TestFoundationTilesShowFocus(t *testing.T) {
+	for path, tile := range map[string]string{"/f/palettes": "Spring Day", "/f/sprites": "slime"} {
+		_, tt := open(path)
+		r, _ := tt.Find(tile)
+		area := func() []uint32 {
+			img := tt.Image()
+			var out []uint32
+			for y := int(r.Y) - 6; y < int(r.Y+r.H)+6; y++ {
+				for x := int(r.X) - 30; x < int(r.X+r.W)+6; x++ {
+					c := img.RGBAAt(x, y)
+					out = append(out, uint32(c.R)<<16|uint32(c.G)<<8|uint32(c.B))
+				}
+			}
+			return out
+		}
+		before := area()
+		for range 40 {
+			if tt.Focused(tile) {
+				break
+			}
+			tt.Key(0, ui.KeyTab)
+		}
+		if !tt.Focused(tile) || slices.Equal(before, area()) {
+			t.Fatalf("%s: focus on %s left no mark", path, tile)
+		}
+	}
+}
+
+func TestInputDemosLogEveryClick(t *testing.T) {
+	a, tt := open("/c/066-button")
+	for _, l := range []string{"Small", "Save", "BIG"} {
+		click(t, tt, l)
+		if !slices.Contains(a.logs["066-button"], l) {
+			t.Fatalf("clicking %s logged %q", l, a.logs["066-button"])
+		}
+	}
+	a, tt = open("/c/067-iconbutton")
+	click(t, tt, "Delete")
+	if !slices.Contains(a.logs["067-iconbutton"], "Delete") {
+		t.Fatalf("Delete logged %q", a.logs["067-iconbutton"])
+	}
+	for slug, field := range map[string]string{"082-textinput": "Hero name", "083-passwordinput": "Password", "085-searchfield": "Find items"} {
+		a, tt = open("/c/" + slug)
+		click(t, tt, field)
+		tt.Type("ab")
+		if len(a.logs[slug]) == 0 {
+			t.Fatalf("typing into %s logged nothing", slug)
+		}
+	}
+}

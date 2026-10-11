@@ -23,6 +23,8 @@ type Edit struct {
 	// Element is laid out; Input takes the focus.
 	Element, Input              *ui.Element
 	Changed, Submitted, Focused bool
+	// Line is the caret's line, from 0.
+	Line int
 }
 
 type editKey struct{}
@@ -79,7 +81,7 @@ func Editor(c *ui.Context, value *string, o EditorOptions) Edit {
 		}
 		return took
 	})
-	res := Edit{Element: shell, Input: base, Changed: s.changed, Submitted: s.submitted, Focused: base.Focused()}
+	res := Edit{Element: shell, Input: base, Changed: s.changed, Submitted: s.submitted, Focused: base.Focused(), Line: cl}
 	if res.Focused {
 		frameOf(c).typing = true
 	}
