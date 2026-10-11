@@ -6,12 +6,16 @@ var messages = map[Locale]map[string]string{
 	En: {
 		"ok": "OK", "cancel": "CANCEL", "yes": "YES", "no": "NO", "close": "CLOSE",
 		"continue": "CONTINUE?", "game_over": "GAME OVER", "loading": "NOW LOADING",
-		"search": "SEARCH", "empty": "NO ITEMS",
+		"search": "SEARCH", "empty": "NO ITEMS", "minimize": "MINIMIZE", "resize": "RESIZE",
+		"scroll_up": "SCROLL UP", "scroll_down": "SCROLL DOWN",
+		"up": "UP", "down": "DOWN", "left": "LEFT", "right": "RIGHT", "disabled": "DISABLED",
 	},
 	Zh: {
 		"ok": "确定", "cancel": "取消", "yes": "是", "no": "否", "close": "关闭",
 		"continue": "继续？", "game_over": "游戏结束", "loading": "读取中",
-		"search": "搜索", "empty": "空空如也",
+		"search": "搜索", "empty": "空空如也", "minimize": "最小化", "resize": "调整大小",
+		"scroll_up": "向上滚动", "scroll_down": "向下滚动",
+		"up": "上", "down": "下", "left": "左", "right": "右", "disabled": "已禁用",
 	},
 }
 

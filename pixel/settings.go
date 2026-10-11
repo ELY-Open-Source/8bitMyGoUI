@@ -64,6 +64,9 @@ func Use(c *ui.Context, s Settings) {
 // Typing reports a focused Editor built so far this frame.
 func Typing(c *ui.Context) bool { return current(c).typing }
 
+// Current returns the settings in force, for Scope to change.
+func Current(c *ui.Context) Settings { return current(c).cur }
+
 // Scope builds fn under other settings.
 func Scope(c *ui.Context, s Settings, fn func()) {
 	f := current(c)

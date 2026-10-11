@@ -54,6 +54,8 @@ Imports point down only. Same-tier imports are forbidden. `internal/archtest` en
 
 - Signatures and results: PRD §5.1. Zero options give the default look. Sizes in options are dots.
 - `k := pixel.K(c)` once per component; layout sizes through `k.D(n)`.
+- Containers take content as a final `func()`; interactive results are `NameResult`.
+- Clip only boxes that sit on whole dots; split widths with whole-dot shares, not equal `Grow`. `Grow` starts from zero size, so never use it on a content-sized child.
 - Row builders that MyGo runs during layout (`List`, `GridView`, `Outline`) go through `pixel.Lazy(c, row)`.
 - Single-key shortcuts only while `pixel.Typing(c)` is false; MyGo routes shortcuts before a focused field.
 - Copy shown by a component comes from `k.Msg`; business copy comes from the caller.

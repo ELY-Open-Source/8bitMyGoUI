@@ -13,6 +13,9 @@ async function open (page, hash = '') {
 const texts = page => page.evaluate(() => window.__8bit.texts())
 const where = page => page.evaluate(() => window.__8bit.page())
 
+// searched reports whether the page shows results for q.
+const searched = async (page, q) => (await texts(page)).some(t => t.endsWith(`results for "${q}"`))
+
 // pixels hashes the canvas, to see that it changed.
 const pixels = page => page.evaluate(() => {
   const c = document.getElementById('screen')
@@ -67,7 +70,7 @@ test('slash focuses search without typing a slash', async ({ page }) => {
   await open(page, '#/')
   await page.keyboard.press('/')
   await page.keyboard.type('dith')
-  expect(await texts(page)).toContain('1 results for "dith"')
+  expect(await searched(page, 'dith')).toBe(true)
   await page.keyboard.press('Enter')
   expect(await where(page)).toBe('/f/dither')
   expect(page.url()).toContain('#/f/dither')
@@ -77,7 +80,7 @@ test('Chinese text reaches search', async ({ page }) => {
   await open(page, '#/')
   await page.keyboard.press('/')
   await page.keyboard.insertText('像素')
-  expect(await texts(page)).toContain('1 results for "像素"')
+  expect(await searched(page, '像素')).toBe(true)
 })
 
 test('clicks navigate, Back returns, P repaints', async ({ page }) => {
@@ -112,7 +115,7 @@ test('keyboard copy and paste use the system clipboard', async ({ page, context 
   await page.evaluate(() => navigator.clipboard.writeText('dith'))
   await click(page, 'Search components')
   await page.keyboard.press('ControlOrMeta+V')
-  expect(await texts(page)).toContain('1 results for "dith"')
+  expect(await searched(page, 'dith')).toBe(true)
 })
 
 test('an input method composes, then commits', async ({ page }) => {
@@ -120,9 +123,9 @@ test('an input method composes, then commits', async ({ page }) => {
   await page.keyboard.press('/')
   const cdp = await page.context().newCDPSession(page)
   await cdp.send('Input.imeSetComposition', { text: 'xiang', selectionStart: 5, selectionEnd: 5 })
-  expect(await texts(page)).not.toContain('1 results for "xiang"')
+  expect(await searched(page, 'xiang')).toBe(false)
   await cdp.send('Input.insertText', { text: '像' })
-  expect(await texts(page)).toContain('1 results for "像"')
+  expect(await searched(page, '像')).toBe(true)
 })
 
 test('Command or Super with Backspace erases the line', async ({ page }) => {
@@ -131,7 +134,7 @@ test('Command or Super with Backspace erases the line', async ({ page }) => {
   await page.keyboard.type('zz dith')
   await page.keyboard.press('Meta+Backspace')
   await page.keyboard.type('dith')
-  expect(await texts(page)).toContain('1 results for "dith"')
+  expect(await searched(page, 'dith')).toBe(true)
 })
 
 test('wheel scrolls the sidebar', async ({ page }) => {
