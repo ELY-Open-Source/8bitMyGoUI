@@ -51,7 +51,7 @@ func ScrollArea(c *ui.Context, s *ui.ScrollState, o ScrollAreaOptions, children 
 	var v *ui.Element
 	row.Children(func() {
 		scrollBar(c, k, s, view, o.Disabled)
-		// A disabled view is a new element, so the focus leaves it.
+		// A disabled view is a new element; the focus leaves.
 		v = ui.Scroll(c).Key(o.Disabled).TrackScroll(s).Grow(1).Label(o.Label).FocusRing(false)
 		if o.Disabled {
 			v.Role(ui.RoleGroup).Description(k.Msg("disabled"))
