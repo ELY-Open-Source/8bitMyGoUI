@@ -19,5 +19,15 @@ fi
 BASE_URL=$preview npx playwright test
 npx wrangler versions deploy "$id@100%" --yes --message "$rev"
 site=$(echo "$preview" | sed 's#https://[0-9a-f]*-#https://#')
+main=$(sed -n 's#.*src="\(a/main\.[0-9a-f]*\.js\)".*#\1#p' dist/index.html)
+tries=0
+until curl -fs "$site/" | grep -q "$main"; do
+  tries=$((tries + 1))
+  if [ "$tries" -ge 30 ]; then
+    echo "deploy: $site still serves an older build than $main" >&2
+    exit 1
+  fi
+  sleep 2
+done
 BASE_URL=$site npx playwright test
 echo "deploy: $rev live at $site (version $id)"
