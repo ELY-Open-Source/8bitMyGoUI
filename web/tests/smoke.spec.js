@@ -234,7 +234,7 @@ test('a Go panic shows GAME OVER in pixels; CONTINUE reloads', async ({ page }) 
 test('resizing while wasm loads is safe', async ({ page }) => {
   const errors = []
   page.on('pageerror', e => errors.push(e.message))
-  await page.route('**/app.wasm*', async route => {
+  await page.route('**/a/app.*.wasm', async route => {
     await new Promise(resolve => setTimeout(resolve, 800))
     await route.continue()
   })
@@ -244,9 +244,23 @@ test('resizing while wasm loads is safe', async ({ page }) => {
   expect(errors).toEqual([])
 })
 
+test('scripts and wasm have content-addressed, immutable URLs', async ({ page, request }) => {
+  await open(page, '#/')
+  const urls = await page.evaluate(() => performance.getEntriesByType('resource').map(r => r.name).filter(u => u.includes('/a/')))
+  expect(urls.map(u => new URL(u).pathname).sort()).toEqual([
+    expect.stringMatching(/^\/a\/app\.[0-9a-f]{12}\.wasm$/),
+    expect.stringMatching(/^\/a\/main\.[0-9a-f]{12}\.js$/),
+    expect.stringMatching(/^\/a\/wasm_exec\.[0-9a-f]{12}\.js$/)
+  ])
+  // Cache headers come from Cloudflare, not the local server.
+  if (!process.env.BASE_URL) return
+  for (const u of urls) expect((await request.head(u)).headers()['cache-control']).toContain('immutable')
+  expect((await request.head('/')).headers()['cache-control']).toContain('must-revalidate')
+})
+
 test('a load failure shows the page GAME OVER', async ({ page }) => {
-  await page.route('**/app.wasm*', route => route.fulfill({ status: 404 }))
+  await page.route('**/a/app.*.wasm', route => route.fulfill({ status: 404 }))
   await page.goto('/')
   await expect(page.locator('#over')).toBeVisible()
-  await expect(page.locator('#why')).toContainText('app.wasm: HTTP 404')
+  await expect(page.locator('#why')).toContainText(/a\/app\.[0-9a-f]{12}\.wasm: HTTP 404/)
 })

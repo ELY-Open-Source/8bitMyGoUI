@@ -4,9 +4,11 @@
   "type": "module",
   "scripts": {
     "build": "./build.sh",
-    "test": "./build.sh && playwright test"
+    "test": "./build.sh && playwright test",
+    "deploy": "./deploy.sh"
   },
   "devDependencies": {
-    "@playwright/test": "1.64.0"
+    "@playwright/test": "1.64.0",
+    "wrangler": "4.149.0"
   }
 }

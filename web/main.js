@@ -184,9 +184,9 @@ window.addEventListener('resize', () => {
 
 // load streams the wasm, filling the bar as bytes arrive.
 async function load () {
-  const res = await fetch('app.wasm?v=__BUILD__')
-  if (!res.ok) throw new Error('app.wasm: HTTP ' + res.status)
-  const total = Number(res.headers.get('content-length')) || 0
+  const res = await fetch('__WASM__')
+  if (!res.ok) throw new Error(`${res.url}: HTTP ${res.status}`)
+  const total = Number('__SIZE__')
   const reader = res.body.getReader()
   const parts = []
   let got = 0
@@ -195,7 +195,7 @@ async function load () {
     if (done) break
     parts.push(value)
     got += value.length
-    const lit = total ? Math.floor(got / total * blocks.length) : Math.min(blocks.length, parts.length)
+    const lit = Math.min(blocks.length, Math.floor(got / total * blocks.length))
     blocks.forEach((b, i) => b.classList.toggle('on', i < lit))
     document.getElementById('loading').setAttribute('aria-valuenow', lit)
   }

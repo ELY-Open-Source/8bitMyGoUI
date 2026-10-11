@@ -24,7 +24,7 @@ icon/              hand-placed sprites
 gallery/           registry, demos (demos_<category>.go), app view, invariant tests
 cmd/gallery/       native window
 cmd/web/           js/wasm host
-web/               shell, glue JS, build.sh, Playwright tests; web/dist is build output
+web/               shell, glue JS, build.sh, deploy.sh, wrangler.jsonc, _headers, Playwright tests; web/dist is build output
 tools/fontpack/    BDF to font12.bin
 internal/archtest/ import and API rules
 ```
@@ -72,6 +72,12 @@ Each component adds one `Entry` in `gallery/demos_<category>.go`: ID, Name, Zh, 
 - Behavior tests drive `ui.Tester` and assert values.
 - `gallery` checks every entry under every palette: only palette colors, whole dots. `PIXEL_SHOTS=<dir> go test ./gallery -run TestInvariants` writes PNGs for visual review.
 - Web: `npm install && npm test` in `web/` builds `web/dist` and runs Playwright on a local server; `BASE_URL=<url> npx playwright test` checks a deployed site. Tests read `window.__8bit` (`ready`, `stats()`, `texts()`, `page()`, `find(label)`, `log`).
+
+## Deploy
+
+- `npm run deploy` in `web/` (clean tree only): builds, uploads a Worker version, runs Playwright on its preview URL, promotes it to 100%, runs Playwright on https://8bitmygoui.zhangyanghaha0407.workers.dev.
+- Rollback: `npx wrangler rollback <version-id>` in `web/`; `npx wrangler deployments list` shows versions.
+- Scripts and wasm sit under `a/`, named by content hash, and `_headers` makes them immutable; `index.html` revalidates. Never cache a path whose content can change.
 
 ## Review
 
