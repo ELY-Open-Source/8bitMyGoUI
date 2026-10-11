@@ -43,8 +43,9 @@ func (k Kit) Now() time.Time    { return k.now }
 func (k Kit) Reduce() bool      { return k.reduce }
 
 type frame struct {
-	cur Settings
-	at  time.Time
+	cur    Settings
+	at     time.Time
+	typing bool
 }
 
 type frameKey struct{}
@@ -56,9 +57,12 @@ func Use(c *ui.Context, s Settings) {
 	if f.cur.Palette != s.Palette {
 		slog.Debug("8bit: palette", "name", s.Palette.Name)
 	}
-	f.cur, f.at = s, c.Now()
+	f.cur, f.at, f.typing = s, c.Now(), false
 	c.SetTheme(theme(s.Palette))
 }
+
+// Typing reports a focused Editor built so far this frame.
+func Typing(c *ui.Context) bool { return current(c).typing }
 
 // Scope builds fn under other settings.
 func Scope(c *ui.Context, s Settings, fn func()) {

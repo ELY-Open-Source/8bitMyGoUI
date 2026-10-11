@@ -1,0 +1,205 @@
+package gallery
+
+import (
+	"fmt"
+	"strings"
+
+	"github.com/egoist/mygo/ui"
+
+	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/icon"
+	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+)
+
+func (a *App) content(c *ui.Context) {
+	if strings.TrimSpace(a.query) != "" {
+		page(c, func() { a.results(c) })
+		return
+	}
+	a.router.View(c, func(r *ui.Route) {
+		page(c, func() {
+			switch {
+			case r.Match("/"):
+				r.Title("8bitMyGoUI")
+				a.home(c)
+			case r.Match("/cat/{key}"):
+				a.category(c, r.Param("key"))
+			case r.Match("/c/{slug}"), r.Match("/f/{slug}"):
+				if e, ok := find(r.Param("slug")); ok && e.Path() == r.Path() {
+					r.Title(e.Name)
+					a.entry(c, e)
+					return
+				}
+				a.lost(c, r.Path())
+			default:
+				a.lost(c, r.Path())
+			}
+		})
+	}).Grow(1)
+}
+
+// page scrolls a page; a router's column would squeeze it.
+func page(c *ui.Context, fn func()) {
+	k := pixel.K(c)
+	ui.Scroll(c).Grow(1).Padding(k.D(8)).Gap(k.D(6)).Children(fn)
+}
+
+func (a *App) home(c *ui.Context) {
+	k := pixel.K(c)
+	ui.Box(c).Height(k.D(52)).Draw(func(p *ui.Painter, r ui.Rect) {
+		shadowText(k.Canvas(p, r), 0, 0, logo, pixel.Accent, 3)
+	})
+	pixel.Text(c, "Pixel components for MyGo. Every dot sits on the grid; every color comes from sixteen.", pixel.TextOptions{Wrap: true})
+	pixel.Text(c, "为 MyGo 打造的像素组件。每个点落在点阵上，每种颜色来自十六格调色板。", pixel.TextOptions{Wrap: true, Slot: pixel.Faint})
+	comps := len(Entries()) - count("foundations")
+	stats := fmt.Sprintf("%d COMPONENTS  %d CATEGORIES  %d PALETTES", comps, len(Categories)-1, len(pixel.Palettes))
+	ui.Box(c).Height(k.D(7)).Draw(func(p *ui.Painter, r ui.Rect) { k.Canvas(p, r).Micro(0, 1, stats, pixel.Accent, 1) })
+	ui.Grid(c).Columns(3).Gap(k.D(4)).Children(func() {
+		for _, cat := range Categories {
+			n := count(cat.Key)
+			if press(c, 0, 40, cat.Name, func(g pixel.Canvas, st pixel.State) {
+				fill := pixel.Face
+				if st.Hover {
+					fill = pixel.Lit
+				}
+				g.Frame(0, 0, g.W, g.H, pixel.Window, fill)
+				g.Sprite(6, 6, cat.Icon, 0, pixel.Accent, 2)
+				g.Text(34, 4, cat.Name, pixel.Ink, 1)
+				g.Text(34, 20, cat.Zh, pixel.Faint, 1)
+				num := fmt.Sprint(n)
+				g.Micro(g.W-pixel.MicroWidth(num)-6, g.H-10, num, pixel.Faint, 1)
+			}) {
+				a.Go("/cat/" + cat.Key)
+			}
+		}
+	})
+}
+
+func (a *App) category(c *ui.Context, key string) {
+	var cat Category
+	for _, x := range Categories {
+		if x.Key == key {
+			cat = x
+		}
+	}
+	if cat.Key == "" {
+		a.lost(c, "/cat/"+key)
+		return
+	}
+	k := pixel.K(c)
+	ui.Box(c).Height(k.D(36)).Draw(func(p *ui.Painter, r ui.Rect) {
+		g := k.Canvas(p, r)
+		g.Sprite(0, 4, cat.Icon, 0, pixel.Accent, 2)
+		shadowText(g, 30, 0, cat.Name, pixel.Ink, 2)
+		g.Text(30+pixel.Measure(cat.Name)*2+8, 14, cat.Zh, pixel.Faint, 1)
+	})
+	ui.Grid(c).Columns(3).Gap(k.D(4)).Children(func() {
+		for _, e := range Entries() {
+			if e.Category == key {
+				a.card(c, e)
+			}
+		}
+	})
+}
+
+func (a *App) card(c *ui.Context, e Entry) {
+	if press(c, 0, 36, e.Name, func(g pixel.Canvas, st pixel.State) {
+		fill := pixel.Face
+		if st.Hover {
+			fill = pixel.Lit
+		}
+		g.Frame(0, 0, g.W, g.H, pixel.Raised, fill)
+		if e.ID > 0 {
+			g.Micro(5, 4, fmt.Sprintf("%03d", e.ID), pixel.Accent, 1)
+		}
+		g.Text(5, 10, e.Name, pixel.Ink, 1)
+		g.Text(g.W-pixel.Measure(e.Zh)-5, 10, e.Zh, pixel.Faint, 1)
+	}) {
+		a.Go(e.Path())
+	}
+}
+
+func (a *App) entry(c *ui.Context, e Entry) {
+	k := pixel.K(c)
+	ui.Box(c).Height(k.D(36)).Draw(func(p *ui.Painter, r ui.Rect) {
+		g := k.Canvas(p, r)
+		x := 0
+		if e.ID > 0 {
+			g.Micro(0, 2, fmt.Sprintf("%03d", e.ID), pixel.Accent, 2)
+			x = 30
+		}
+		shadowText(g, x, 0, e.Name, pixel.Ink, 2)
+		g.Text(x+pixel.Measure(e.Name)*2+8, 14, e.Zh, pixel.Faint, 1)
+	})
+	pixel.Text(c, e.Summary, pixel.TextOptions{Wrap: true})
+	panel(c, pixel.Window, pixel.Face, 10).MinHeight(k.D(80)).Children(func() { e.Demo(c, a.logger(e)) })
+	code := strings.ReplaceAll(e.Code(), "\t", "  ")
+	ui.Row(c).Gap(k.D(4)).AlignItems(ui.Start).Children(func() {
+		panel(c, pixel.Sunken, pixel.Well, 4).Grow(1).Children(func() {
+			ui.ScrollBoth(c).Height(k.D(160)).Children(func() { codeBlock(c, code) })
+		})
+		ui.Column(c).Width(k.D(140)).Gap(k.D(4)).Children(func() {
+			if button(c, "COPY CODE") {
+				c.WriteClipboard(code)
+				a.logger(e)("code copied")
+			}
+			panel(c, pixel.Sunken, pixel.Well, 4).Height(k.D(140)).Children(func() {
+				for _, l := range a.logs[e.Slug()] {
+					pixel.Text(c, "> "+l, pixel.TextOptions{Slot: pixel.Faint, MaxLines: 1})
+				}
+			})
+		})
+	})
+	ui.Row(c).Gap(k.D(4)).Children(func() {
+		if button(c, "◀ PREV") {
+			a.step(-1)
+		}
+		if button(c, "NEXT ▶") {
+			a.step(1)
+		}
+	})
+}
+
+func codeBlock(c *ui.Context, code string) {
+	k := pixel.K(c)
+	lines := strings.Split(strings.TrimRight(code, "\n"), "\n")
+	w := 0
+	for _, l := range lines {
+		w = max(w, pixel.Measure(l))
+	}
+	ui.Box(c).Size(k.D(w), k.D(len(lines)*pixel.LineHeight)).Label(code).Draw(func(p *ui.Painter, r ui.Rect) {
+		g := k.Canvas(p, r)
+		for i, l := range lines {
+			ink := pixel.Ink
+			if strings.HasPrefix(strings.TrimSpace(l), "//") {
+				ink = pixel.Faint
+			}
+			g.Text(0, i*pixel.LineHeight, l, ink, 1)
+		}
+	})
+}
+
+func (a *App) results(c *ui.Context) {
+	found := matches(a.query)
+	pixel.Text(c, fmt.Sprintf("%d results for %q", len(found), strings.TrimSpace(a.query)), pixel.TextOptions{Slot: pixel.Faint})
+	k := pixel.K(c)
+	ui.Grid(c).Columns(3).Gap(k.D(4)).Children(func() {
+		for _, e := range found {
+			a.card(c, e)
+		}
+	})
+}
+
+// lost answers unknown paths with GAME OVER and CONTINUE.
+func (a *App) lost(c *ui.Context, path string) {
+	k := pixel.K(c)
+	ui.Column(c).Gap(k.D(8)).AlignItems(ui.Center).Padding(k.D(24)).Children(func() {
+		ui.Box(c).Size(k.D(pixel.Measure(k.Msg("game_over"))*3), k.D(48)).Draw(func(p *ui.Painter, r ui.Rect) {
+			shadowText(k.Canvas(p, r), 0, 0, k.Msg("game_over"), pixel.Bad, 3)
+		})
+		label(c, "No page at "+path, pixel.Faint)
+		pixel.Icon(c, icon.Skull, pixel.IconOptions{Scale: 3})
+		if button(c, k.Msg("continue")) {
+			a.Go("/")
+		}
+	})
+}

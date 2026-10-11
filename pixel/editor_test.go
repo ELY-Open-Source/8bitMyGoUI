@@ -267,3 +267,52 @@ func TestEditorDrawsCaretAndSelection(t *testing.T) {
 		t.Fatal("selection not drawn in Accent with AccentInk text")
 	}
 }
+
+func TestEditorOwnsTypingKeys(t *testing.T) {
+	value, shortcuts := "", 0
+	tt := ui.NewTester(func(c *ui.Context) {
+		pixel.Use(c, pixel.Settings{Palette: pixel.SummerDay, Dot: 2})
+		pixel.Editor(c, &value, pixel.EditorOptions{Label: "field"})
+		if pixel.Typing(c) {
+			return
+		}
+		for _, key := range []ui.Key{ui.KeyP, ui.KeySlash, ui.KeyBracketRight, ui.KeySpace} {
+			if c.Shortcut(0, key) {
+				shortcuts++
+			}
+		}
+	}, 300, 100)
+	if err := tt.Click("field"); err != nil {
+		t.Fatal(err)
+	}
+	tt.TypeKey(0, ui.KeyP, "p")
+	tt.TypeKey(0, ui.KeySlash, "/")
+	tt.TypeKey(0, ui.KeyBracketRight, "]")
+	tt.TypeKey(0, ui.KeySpace, " ")
+	if value != "p/] " || shortcuts != 0 {
+		t.Fatalf("value %q, shortcuts fired %d times", value, shortcuts)
+	}
+	tt.ClickAt(150, 90)
+	tt.Key(0, ui.KeyP)
+	if shortcuts != 1 {
+		t.Fatalf("after leaving the field, P fired %d shortcuts", shortcuts)
+	}
+}
+
+func TestEditorSpaceDoesNotScroll(t *testing.T) {
+	value, scroll := "", ui.ScrollState{}
+	tt := ui.NewTester(func(c *ui.Context) {
+		pixel.Use(c, pixel.Settings{Palette: pixel.SummerDay, Dot: 2})
+		ui.Scroll(c).Height(100).TrackScroll(&scroll).Children(func() {
+			pixel.Editor(c, &value, pixel.EditorOptions{Label: "field"})
+			ui.Box(c).Height(1000)
+		})
+	}, 300, 100)
+	if err := tt.Click("field"); err != nil {
+		t.Fatal(err)
+	}
+	tt.TypeKey(0, ui.KeySpace, " ")
+	if value != " " || scroll.Y != 0 {
+		t.Fatalf("value %q, scrolled to %v", value, scroll.Y)
+	}
+}

@@ -20,7 +20,8 @@ type EditorOptions struct {
 }
 
 type Edit struct {
-	Element                     *ui.Element
+	// Element is laid out; Input takes the focus.
+	Element, Input              *ui.Element
 	Changed, Submitted, Focused bool
 }
 
@@ -78,7 +79,10 @@ func Editor(c *ui.Context, value *string, o EditorOptions) Edit {
 		}
 		return took
 	})
-	res := Edit{Element: shell, Changed: s.changed, Submitted: s.submitted, Focused: base.Focused()}
+	res := Edit{Element: shell, Input: base, Changed: s.changed, Submitted: s.submitted, Focused: base.Focused()}
+	if res.Focused {
+		frameOf(c).typing = true
+	}
 	if s.submitted {
 		slog.Debug("8bit: editor submit", "label", o.Label)
 	}
