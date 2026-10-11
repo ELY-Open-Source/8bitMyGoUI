@@ -1,0 +1,10 @@
+.DS_Store
+/.claude/
+/.wrangler/
+PRD.md
+docs/prd/
+TASKS.md
+/web/dist/
+/web/node_modules/
+/web/test-results/
+/web/playwright-report/
