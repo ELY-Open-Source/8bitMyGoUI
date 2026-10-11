@@ -113,6 +113,8 @@ func TestLines(t *testing.T) {
 		{"A\nB", 100, []string{"A", "B"}},
 		{"a long line", 0, []string{"a long line"}},
 		{"x  y", Measure("x"), []string{"x", "y"}},
+		{"a ", 1, []string{"a"}},
+		{"ab cd  ", Measure("ab"), []string{"ab", "cd"}},
 		{"你 ，好", 24, []string{"你 ，", "好"}},
 		{"「 像素", 18, []string{"「 像", "素"}},
 		{"［你好］世界", 36, []string{"［你", "好］世", "界"}},

@@ -92,16 +92,20 @@ func Measure(s string) int {
 func Lines(s string, width int) []string {
 	var out []string
 	for _, p := range strings.Split(s, "\n") {
-		out = append(out, wrap([]rune(p), width)...)
+		rs := []rune(p)
+		for _, r := range wrapRanges(rs, width) {
+			out = append(out, string(rs[r[0]:r[1]]))
+		}
 	}
 	return out
 }
 
-func wrap(rs []rune, width int) []string {
+// wrapRanges splits a paragraph; break lines drop trailing spaces.
+func wrapRanges(rs []rune, width int) [][2]int {
 	if width <= 0 || Measure(string(rs)) <= width {
-		return []string{string(rs)}
+		return [][2]int{{0, len(rs)}}
 	}
-	var lines []string
+	var out [][2]int
 	for start := 0; start < len(rs); {
 		w, brk, i := 0, -1, start
 		for ; i < len(rs); i++ {
@@ -114,16 +118,20 @@ func wrap(rs []rune, width int) []string {
 			}
 		}
 		if i == len(rs) {
-			lines = append(lines, string(rs[start:]))
+			out = append(out, [2]int{start, len(rs)})
 			break
 		}
 		if brk <= start {
 			brk = hardBreak(rs, start, i)
 		}
-		lines = append(lines, strings.TrimRight(string(rs[start:brk]), " "))
+		end := brk
+		for end > start && rs[end-1] == ' ' {
+			end--
+		}
+		out = append(out, [2]int{start, end})
 		start = skip(rs, brk)
 	}
-	return lines
+	return out
 }
 
 // breakable reports whether a line may break before rs[i].

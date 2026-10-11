@@ -45,9 +45,10 @@ func TestTextLinesEllipsis(t *testing.T) {
 
 type fakePainter struct{ fills int }
 
-func (f *fakePainter) Fill(ui.Rect, ui.Color, float32) { f.fills++ }
-func (f *fakePainter) After(time.Duration)             {}
-func (f *fakePainter) Now() time.Time                  { return time.Unix(0, 0) }
+func (f *fakePainter) Fill(ui.Rect, ui.Color, float32)      { f.fills++ }
+func (f *fakePainter) Clip(_ ui.Rect, _ float32, fn func()) { fn() }
+func (f *fakePainter) After(time.Duration)                  {}
+func (f *fakePainter) Now() time.Time                       { return time.Unix(0, 0) }
 
 func TestDrawingMergesRuns(t *testing.T) {
 	sp := MustSprite("aab\n.bb")

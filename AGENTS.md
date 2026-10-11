@@ -47,7 +47,7 @@ Imports point down only. Same-tier imports are forbidden. `internal/archtest` en
 ## MyGo rules
 
 - Use Bases, containers, `List`, `GridView`, `Outline`, `Router`, `Overlay`, `DialogBase`, `PopoverBase`, `FocusGroup`, `Local`, `HandleInput`, `TextCaret`, `Shortcut`, clipboard. Full list: PRD §2.4.
-- Never call styled widgets, `Background`, `Border*`, `Radius`, `Shadow`, `Gradient`, `Opacity`, `Stripes`, `Tooltip`, `Menu`, `ContextMenu`, `Transition`, `Animate*`, `Loop`, `c.Toast*`, or painter drawing other than `Fill`. Only `pixel` calls `After`.
+- Never call styled widgets, `Background`, `Border*`, `Radius`, `Shadow`, `Gradient`, `Opacity`, `Stripes`, `Tooltip`, `Menu`, `ContextMenu`, `Transition`, `Animate*`, `Loop`, `c.Toast*`, or painter calls other than `Fill` and `Clip`. Only `pixel` calls `After`.
 - A disabled element never paints. Interactive components draw on an enabled shell; the base inside fills it, carries behavior, label and `Disabled`, and turns MyGo's focus ring off.
 
 ## Component rules

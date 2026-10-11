@@ -20,6 +20,7 @@ type Canvas struct {
 // painter is what Canvas needs of *ui.Painter.
 type painter interface {
 	Fill(r ui.Rect, c ui.Color, radius float32)
+	Clip(r ui.Rect, radius float32, fn func())
 	After(d time.Duration)
 	Now() time.Time
 }
@@ -43,6 +44,12 @@ func (g Canvas) Rect(x, y, w, h int, s Slot) {
 	}
 	d := g.k.dot
 	g.p.Fill(ui.Rect{X: float32(g.gx+x) * d, Y: float32(g.gy+y) * d, W: float32(w) * d, H: float32(h) * d}, g.k.C(s), 0)
+}
+
+// Clip limits fn's drawing to a dot rectangle.
+func (g Canvas) Clip(x, y, w, h int, fn func()) {
+	d := g.k.dot
+	g.p.Clip(ui.Rect{X: float32(g.gx+x) * d, Y: float32(g.gy+y) * d, W: float32(w) * d, H: float32(h) * d}, 0, fn)
 }
 
 func (g Canvas) Dot(x, y int, s Slot)      { g.Rect(x, y, 1, 1, s) }
