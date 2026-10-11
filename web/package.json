@@ -1,0 +1,12 @@
+{
+  "name": "8bitmygoui-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "./build.sh",
+    "test": "./build.sh && playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.0"
+  }
+}

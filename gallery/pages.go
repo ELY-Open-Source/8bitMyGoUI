@@ -191,15 +191,22 @@ func (a *App) results(c *ui.Context) {
 
 // lost answers unknown paths with GAME OVER and CONTINUE.
 func (a *App) lost(c *ui.Context, path string) {
+	if GameOver(c, "No page at "+path) {
+		a.Go("/")
+	}
+}
+
+// GameOver shows why the game ended; true on CONTINUE.
+func GameOver(c *ui.Context, why string) bool {
 	k := pixel.K(c)
+	cont := false
 	ui.Column(c).Gap(k.D(8)).AlignItems(ui.Center).Padding(k.D(24)).Children(func() {
 		ui.Box(c).Size(k.D(pixel.Measure(k.Msg("game_over"))*3), k.D(48)).Draw(func(p *ui.Painter, r ui.Rect) {
 			shadowText(k.Canvas(p, r), 0, 0, k.Msg("game_over"), pixel.Bad, 3)
 		})
-		label(c, "No page at "+path, pixel.Faint)
+		pixel.Text(c, why, pixel.TextOptions{Slot: pixel.Faint, Wrap: true, MaxLines: 6}).Width(k.D(min(pixel.Measure(why), 280)))
 		pixel.Icon(c, icon.Skull, pixel.IconOptions{Scale: 3})
-		if button(c, k.Msg("continue")) {
-			a.Go("/")
-		}
+		cont = button(c, k.Msg("continue"))
 	})
+	return cont
 }

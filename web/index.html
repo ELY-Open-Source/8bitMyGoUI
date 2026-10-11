@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>8bitMyGoUI</title>
+<meta name="description" content="16-bit pixel-art components for MyGo, drawn dot by dot by the same Go code, compiled to WebAssembly.">
+<meta name="theme-color" content="#f4eedc">
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #f4eedc; }
+  #screen { position: fixed; left: 0; top: 0; image-rendering: pixelated; touch-action: none; outline: none; }
+  #ime { position: fixed; left: 0; top: 0; width: 2px; height: 16px; padding: 0; border: 0; margin: 0;
+    opacity: 0; resize: none; overflow: hidden; font-size: 16px; caret-color: transparent; }
+  #loading { position: fixed; inset: 0; display: grid; place-items: center; }
+  #bar { display: flex; gap: 8px; }
+  #bar i { width: 24px; height: 24px; background: #e4dcc6; box-shadow: inset 0 0 0 4px #3a2a3e; }
+  #bar i.on { background: #b8395c; }
+  #over { position: fixed; inset: 0; background: #1c1730; color: #f3eeff; display: grid; place-items: center;
+    font: 16px/1.5 ui-monospace, monospace; padding: 24px; }
+  #over[hidden] { display: none; }
+  #over h1 { font-size: 48px; letter-spacing: 8px; color: #f0605f; margin: 0 0 16px; }
+  #over pre { max-width: 80vw; max-height: 50vh; overflow: auto; white-space: pre-wrap; color: #a79dc4; }
+  #over button { font: inherit; font-size: 24px; color: #1c1730; background: #f07ea0; border: 4px solid #e8dff7; padding: 8px 24px; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="screen" tabindex="-1" role="img" aria-label="8bitMyGoUI gallery, drawn by Go in WebAssembly"></canvas>
+<textarea id="ime" aria-label="Keyboard input" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
+<div id="loading" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0">
+  <div id="bar"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+</div>
+<div id="over" hidden role="alertdialog" aria-labelledby="over-title">
+  <div><h1 id="over-title">GAME OVER</h1><pre id="why"></pre><button id="continue">CONTINUE?</button></div>
+</div>
+<noscript>This gallery runs Go compiled to WebAssembly. Turn on JavaScript to play.</noscript>
+<script src="wasm_exec.js?v=__BUILD__"></script>
+<script src="main.js?v=__BUILD__"></script>
+</body>
+</html>

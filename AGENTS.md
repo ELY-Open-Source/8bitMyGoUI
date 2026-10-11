@@ -71,7 +71,7 @@ Each component adds one `Entry` in `gallery/demos_<category>.go`: ID, Name, Zh, 
 - `go vet ./... && go test ./...` before reporting done.
 - Behavior tests drive `ui.Tester` and assert values.
 - `gallery` checks every entry under every palette: only palette colors, whole dots. `PIXEL_SHOTS=<dir> go test ./gallery -run TestInvariants` writes PNGs for visual review.
-- Web: `web/build.sh`, then `npx playwright test` in `web/`.
+- Web: `npm install && npm test` in `web/` builds `web/dist` and runs Playwright on a local server; `BASE_URL=<url> npx playwright test` checks a deployed site. Tests read `window.__8bit` (`ready`, `stats()`, `texts()`, `page()`, `find(label)`, `log`).
 
 ## Review
 

@@ -9,6 +9,9 @@ import (
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
 )
 
+// Dot is the gallery's DIPs per dot.
+const Dot = 2
+
 // App is the gallery that native and web share.
 type App struct {
 	router  *ui.Router
@@ -40,7 +43,7 @@ func (a *App) Go(path string) {
 }
 
 func (a *App) View(c *ui.Context) {
-	pixel.Use(c, pixel.Settings{Palette: pixel.Palettes[a.palette], Locale: a.locale})
+	pixel.Use(c, pixel.Settings{Palette: pixel.Palettes[a.palette], Dot: Dot, Locale: a.locale})
 	if !a.started {
 		a.boot(c)
 		return

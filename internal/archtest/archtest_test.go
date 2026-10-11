@@ -114,7 +114,8 @@ func TestImportsPointDown(t *testing.T) {
 
 func TestNoBannedCalls(t *testing.T) {
 	for _, f := range files(t) {
-		if strings.HasSuffix(f.path, "_test.go") || f.pkg == "pixel" || strings.HasPrefix(f.pkg, "tools/") || strings.HasPrefix(f.pkg, "internal/") {
+		// cmd/web drives a Tester and builds no views.
+		if strings.HasSuffix(f.path, "_test.go") || f.pkg == "pixel" || f.pkg == "cmd/web" || strings.HasPrefix(f.pkg, "tools/") || strings.HasPrefix(f.pkg, "internal/") {
 			continue
 		}
 		imported := map[string]string{}
@@ -218,5 +219,53 @@ func TestCommentsAndFileLength(t *testing.T) {
 				t.Errorf("%s: comment of %d lines near %q", f.path, lines, g.List[0].Text)
 			}
 		}
+	}
+}
+
+// TestWebScripts applies the comment and length rules to scripts.
+func TestWebScripts(t *testing.T) {
+	marks := map[string]*regexp.Regexp{".js": regexp.MustCompile(`^\s*//\s?(.*)$`), ".sh": regexp.MustCompile(`^\s*#\s(.*)$`)}
+	seen := 0
+	err := filepath.WalkDir("../../web", func(p string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if d.IsDir() && slices.Contains([]string{"node_modules", "dist", "test-results", "playwright-report"}, d.Name()) {
+			return filepath.SkipDir
+		}
+		mark := marks[filepath.Ext(p)]
+		if d.IsDir() || mark == nil {
+			return nil
+		}
+		seen++
+		src, err := os.ReadFile(p)
+		if err != nil {
+			return err
+		}
+		lines := strings.Split(string(src), "\n")
+		if len(lines) > 500 {
+			t.Errorf("%s: %d lines, keep files under 500", p, len(lines))
+		}
+		run := 0
+		for i, l := range lines {
+			m := mark.FindStringSubmatch(l)
+			if m == nil {
+				run = 0
+				continue
+			}
+			if run++; run > 1 {
+				t.Errorf("%s:%d: comment of %d lines", p, i+1, run)
+			}
+			if words := len(strings.Fields(m[1])); words > 10 {
+				t.Errorf("%s:%d: comment of %d words: %s", p, i+1, words, strings.TrimSpace(l))
+			}
+		}
+		return nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if seen < 4 {
+		t.Fatalf("found %d web scripts; the walk is broken", seen)
 	}
 }
