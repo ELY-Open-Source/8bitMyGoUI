@@ -30,6 +30,7 @@ type Kit struct {
 	dot    float32
 	locale Locale
 	now    time.Time
+	clock  func() time.Time
 	reduce bool
 }
 
@@ -80,7 +81,7 @@ func K(c *ui.Context) Kit {
 	if s.Now != nil {
 		now = s.Now()
 	}
-	return Kit{pal: s.Palette, dot: float32(s.Dot), locale: s.Locale, now: now, reduce: c.Preferences().ReduceMotion}
+	return Kit{pal: s.Palette, dot: float32(s.Dot), locale: s.Locale, now: now, clock: s.Now, reduce: c.Preferences().ReduceMotion}
 }
 
 func frameOf(c *ui.Context) *frame {
