@@ -28,6 +28,8 @@ var messages = map[Locale]map[string]string{
 		"head": "HEAD", "body": "BODY", "weapon": "WEAPON", "shield": "SHIELD", "ring": "RING",
 		"points": "POINTS %d", "learned": "LEARNED", "can_learn": "CAN LEARN", "locked": "LOCKED", "ready": "READY",
 		"buy": "BUY", "sell": "SELL", "done": "DONE", "tracking": "TRACKING",
+		"new_game": "NEW GAME", "file": "FILE %d", "press_start": "PRESS START", "continue_game": "CONTINUE", "the_end": "THE END",
+		"tip": "TIP", "you_got": "YOU GOT: %s!", "unlocked": "UNLOCKED %d/%d", "rank": "RANK", "craft": "CRAFT",
 	},
 	Zh: {
 		"ok": "确定", "cancel": "取消", "yes": "是", "no": "否", "close": "关闭",
@@ -54,6 +56,8 @@ var messages = map[Locale]map[string]string{
 		"head": "头", "body": "身体", "weapon": "武器", "shield": "盾牌", "ring": "戒指",
 		"points": "点数 %d", "learned": "已学会", "can_learn": "可学习", "locked": "未解锁", "ready": "就绪",
 		"buy": "购买", "sell": "出售", "done": "完成", "tracking": "追踪中",
+		"new_game": "新游戏", "file": "存档 %d", "press_start": "按下开始", "continue_game": "继续", "the_end": "完",
+		"tip": "提示", "you_got": "获得了 %s！", "unlocked": "已解锁 %d/%d", "rank": "评价", "craft": "合成",
 	},
 }
 

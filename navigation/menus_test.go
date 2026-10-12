@@ -42,6 +42,38 @@ func TestCommandMenuChoosesAndCancels(t *testing.T) {
 	}
 }
 
+func TestCommandMenuAutoFocusTakesKeysAtOnce(t *testing.T) {
+	for _, auto := range []bool{false, true} {
+		chosen := -1
+		tt := view(300, 200, newClock(), false, func(c *ui.Context) {
+			if r := navigation.CommandMenu(c, "Command", commands, navigation.CommandMenuOptions{AutoFocus: auto}); r.Chosen >= 0 {
+				chosen = r.Chosen
+			}
+		})
+		// Only a focused menu hears Enter.
+		tt.Key(0, ui.KeyEnter)
+		if (chosen == 0) != auto {
+			t.Fatalf("AutoFocus %v: Enter chose %d", auto, chosen)
+		}
+	}
+}
+
+func TestOffMenusTakeNoAutoFocus(t *testing.T) {
+	for _, inert := range []bool{false, true} {
+		chosen := -1
+		tt := ui.NewTester(func(c *ui.Context) {
+			pixel.Use(c, pixel.Settings{Palette: pixel.SpringDay, Now: newClock().now, Inert: inert})
+			if r := navigation.CommandMenu(c, "Command", commands, navigation.CommandMenuOptions{AutoFocus: true, Disabled: !inert}); r.Chosen >= 0 {
+				chosen = r.Chosen
+			}
+		}, 300, 200)
+		tt.Key(0, ui.KeyEnter)
+		if chosen != -1 {
+			t.Fatalf("inert %v: an off menu chose %d", inert, chosen)
+		}
+	}
+}
+
 func TestDropdownMenuKeysAndClicks(t *testing.T) {
 	chosen, disabled := -1, false
 	items := []navigation.MenuItem{{Label: "Save", Icon: icon.Save, Keys: "CTRL+S"}, {Separator: true}, {Label: "Load", Disabled: true}, {Label: "Quit"}}

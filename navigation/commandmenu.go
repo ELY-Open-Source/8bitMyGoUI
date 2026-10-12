@@ -9,7 +9,9 @@ import (
 )
 
 type CommandMenuOptions struct {
-	Disabled bool
+	// AutoFocus takes the focus when the menu appears.
+	AutoFocus bool
+	Disabled  bool
 }
 
 type CommandMenuResult struct {
@@ -27,6 +29,10 @@ func CommandMenu(c *ui.Context, text string, items []MenuItem, o CommandMenuOpti
 	shell, base, st := pixel.Shell(c, func() *ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleList).Label(text).Disabled(o.Disabled)
 	})
+	// An off menu never takes the focus.
+	if o.AutoFocus && !base.IsDisabled() {
+		base.AutoFocus()
+	}
 	cur := ui.Local(base, cursorKey{}, func() int { return 0 })
 	res := CommandMenuResult{Element: shell, Chosen: -1}
 	n := len(items)

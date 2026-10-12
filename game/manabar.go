@@ -25,8 +25,15 @@ func ManaBar(c *ui.Context, text string, mp, full int, o ManaBarOptions) *ui.Ele
 		g := k.Canvas(p, r)
 		head(g, w, text, ratio(mp, full))
 		meter(g, 0, top, w, 8, float64(mp)/float64(full), pixel.Info)
+		// Ticks under two dots apart are left out.
+		if float64(step)/float64(full)*float64(w-4) < 2 {
+			return
+		}
 		for v := step; v < full; v += step {
-			g.VLine(2+v*(w-4)/full, top+2, 4, pixel.Edge)
+			g.VLine(2+min(w-5, int(float64(v)/float64(full)*float64(w-4))), top+2, 4, pixel.Edge)
+			if v > full-step {
+				break
+			}
 		}
 	})
 }

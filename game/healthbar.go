@@ -56,14 +56,15 @@ func HealthBar(c *ui.Context, text string, hp, full int, o HealthBarOptions) *ui
 	if shown > float64(hp) {
 		k.Tick(c, 30)
 	}
+	// Divide, not multiply: huge HP must not overflow.
 	ink := pixel.Good
 	switch {
-	case hp*4 <= full:
+	case hp <= full/4:
 		ink = pixel.Bad
-	case hp*2 <= full:
+	case hp <= full/2:
 		ink = pixel.Warn
 	}
-	low := hp > 0 && hp*4 <= full
+	low := hp > 0 && hp <= full/4
 	top := headH(text)
 	return e.Size(k.D(w), k.D(top+8)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)

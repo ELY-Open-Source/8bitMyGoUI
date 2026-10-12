@@ -1,6 +1,7 @@
 package game_test
 
 import (
+	"math"
 	"testing"
 	"time"
 
@@ -84,6 +85,31 @@ func TestHealthBarReducedHasNoTrailAndNoBlink(t *testing.T) {
 		}
 		if blinked := seen[pixel.Lit] && seen[pixel.Bad]; blinked == reduce {
 			t.Fatalf("reduced %v: low HP showed %v", reduce, seen)
+		}
+	}
+}
+
+func TestHugeHPKeepsItsColor(t *testing.T) {
+	tt := view(500, 60, &world{clk: newClock()}, func(c *ui.Context) {
+		game.HealthBar(c, "HP", math.MaxInt64/2, math.MaxInt64, game.HealthBarOptions{Width: 200})
+	})
+	// Half the largest HP is Warn, not wrapped to Bad.
+	if n := count(t, tt.Image(), 0, 10, 200, 1, pixel.Warn); n != 98 {
+		t.Fatalf("half of the largest HP fills %d Warn dots", n)
+	}
+	tt = view(500, 60, &world{clk: newClock()}, func(c *ui.Context) {
+		game.ManaBar(c, "MP", 1, math.MaxInt64/2, game.ManaBarOptions{Width: 200, Tick: math.MaxInt64/4 + 1})
+	})
+	if n := count(t, tt.Image(), 2, 10, 196, 1, pixel.Edge); n != 1 {
+		t.Fatalf("one tick at the middle came out as %d", n)
+	}
+	// Ticks stop at the top; dense ticks drop out.
+	for _, tc := range []struct{ full, tick, want int }{{math.MaxInt64, math.MaxInt64 - 1, 1}, {1000, 10, 0}} {
+		tt = view(500, 60, &world{clk: newClock()}, func(c *ui.Context) {
+			game.ManaBar(c, "MP", 1, tc.full, game.ManaBarOptions{Width: 200, Tick: tc.tick})
+		})
+		if n := count(t, tt.Image(), 2, 10, 196, 1, pixel.Edge); n != tc.want {
+			t.Fatalf("full %d, tick %d drew %d ticks", tc.full, tc.tick, n)
 		}
 	}
 }

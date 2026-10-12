@@ -34,7 +34,7 @@ func CountUp(c *ui.Context, value int, o CountUpOptions) *ui.Element {
 		if !k.Reduce() {
 			step = k.Since(c, s.at, 15, 8)
 		}
-		return s.from + (s.to-s.from)*step/8
+		return lerp(s.from, s.to, step)
 	}
 	if value != s.to {
 		s.from, s.to, s.at = shown(), value, k.Now()
@@ -44,4 +44,14 @@ func CountUp(c *ui.Context, value int, o CountUpOptions) *ui.Element {
 	return e.Size(k.D(w*sc), k.D(pixel.LineHeight*sc)).Draw(func(p *ui.Painter, r ui.Rect) {
 		k.Canvas(p, r).Text(0, 0, n, o.Slot, sc)
 	})
+}
+
+// lerp moves step eighths from a toward b, overflow-free.
+func lerp(a, b, step int) int {
+	if b >= a {
+		d := uint64(b) - uint64(a)
+		return int(uint64(a) + d/8*uint64(step) + d%8*uint64(step)/8)
+	}
+	d := uint64(a) - uint64(b)
+	return int(uint64(a) - (d/8*uint64(step) + d%8*uint64(step)/8))
 }

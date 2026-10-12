@@ -1,6 +1,8 @@
 package feedback_test
 
 import (
+	"math"
+	"strconv"
 	"testing"
 	"time"
 
@@ -27,6 +29,36 @@ func TestCountUpStepsOrJumps(t *testing.T) {
 		if counted := !equal(mid, end); counted == reduce {
 			t.Errorf("reduce %v: counted in steps %v", reduce, counted)
 		}
+	}
+}
+
+func TestCountUpReachesAHugeValue(t *testing.T) {
+	clk := newClock()
+	v := 0
+	tt := view(600, 100, clk, false, func(c *ui.Context) {
+		feedback.CountUp(c, v, feedback.CountUpOptions{Slot: pixel.Ink})
+		pixel.Text(c, strconv.Itoa(math.MaxInt64), pixel.TextOptions{})
+	})
+	v = math.MaxInt64
+	wait(tt, clk, 0)
+	wait(tt, clk, time.Second)
+	// The count ends on the same digits as plain text.
+	img := tt.Image()
+	if !equal(slots(t, img, ui.Rect{W: 600, H: 32}), slots(t, img, ui.Rect{Y: 32, W: 600, H: 32})) {
+		t.Fatal("the count ended on other digits")
+	}
+	// From -1, halfway is 4611686018427387903, across the sign.
+	half := -1
+	tt = view(600, 100, clk, false, func(c *ui.Context) {
+		feedback.CountUp(c, half, feedback.CountUpOptions{Slot: pixel.Ink})
+		pixel.Text(c, "4611686018427387903", pixel.TextOptions{})
+	})
+	half = math.MaxInt64
+	wait(tt, clk, 0)
+	wait(tt, clk, 4*time.Second/15+time.Millisecond)
+	img = tt.Image()
+	if !equal(slots(t, img, ui.Rect{W: 600, H: 32}), slots(t, img, ui.Rect{Y: 32, W: 600, H: 32})) {
+		t.Fatal("halfway the count drew other digits")
 	}
 }
 

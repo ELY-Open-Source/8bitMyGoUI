@@ -4,6 +4,7 @@ package game
 import (
 	"fmt"
 	"strconv"
+	"time"
 
 	"github.com/egoist/mygo/ui"
 
@@ -55,7 +56,7 @@ func ratio(v, most int) string { return strconv.Itoa(v) + "/" + strconv.Itoa(mos
 
 // fits fails when a bar is narrower than its labels.
 func fits(name string, w int, text, value string) {
-	if need := tagW(text) + 4 + pixel.MicroWidth(value); w < need {
+	if need := tagW(text) + 4 + tagW(value); w < need {
 		panic(fmt.Sprintf("game: %s Width %d is under the %d its labels need", name, w, need))
 	}
 }
@@ -103,4 +104,21 @@ func abs(n int) int {
 		return -n
 	}
 	return n
+}
+
+type startKey struct{}
+
+// begun is a cue, its start and its run count.
+type begun struct {
+	cue, run int
+	at       time.Time
+}
+
+// start is e's first showing, or its last cue change.
+func start(k pixel.Kit, e *ui.Element, cue int) begun {
+	s := ui.Local(e, startKey{}, func() begun { return begun{cue: cue, at: k.Now()} })
+	if s.cue != cue {
+		s.cue, s.at, s.run = cue, k.Now(), s.run+1
+	}
+	return *s
 }
