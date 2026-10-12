@@ -38,3 +38,14 @@ func TestTreeDrawsValuesInTheirSlot(t *testing.T) {
 		t.Fatalf("choosing hp (%q) did not swap which value is inked", sel)
 	}
 }
+
+func TestTreeRevealsAChoiceInAClosedBranch(t *testing.T) {
+	// Ether sits in Bag, which starts closed.
+	sel := "0/1"
+	tt := view(400, 300, newClock(), false, func(c *ui.Context) {
+		data.Tree(c, "Items", bag, &sel, data.TreeOptions{})
+	})
+	if r := find(t, tt, "Items"); sel != "0/1" || r.H != 4*2*pixel.LineHeight {
+		t.Fatalf("the choice became %q in %v, want Bag opened on Ether", sel, r)
+	}
+}

@@ -7,7 +7,7 @@ import (
 	"github.com/egoist/mygo/ui"
 )
 
-var letters = map[string]ui.Key{"A": ui.KeyA, "Right": ui.KeyRight, "Up": ui.KeyUp, "Enter": ui.KeyEnter}
+var letters = map[string]ui.Key{"A": ui.KeyA, "Right": ui.KeyRight, "Up": ui.KeyUp, "Down": ui.KeyDown, "Enter": ui.KeyEnter, "Tab": ui.KeyTab}
 
 func TestMediaDemosLogTheirActions(t *testing.T) {
 	for _, tc := range []struct {

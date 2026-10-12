@@ -59,6 +59,14 @@ func Tree(c *ui.Context, text string, roots []TreeNode, selected *string, o Tree
 		return ui.Box(c).Focusable().Role(ui.RoleTree).Label(text).Disabled(o.Disabled)
 	})
 	opened := ui.Local(base, treeKey{}, func() map[string]bool { return map[string]bool{} })
+	// A choice set inside closed branches opens its way.
+	if _, ok := nodes[*selected]; ok {
+		for i, r := range *selected {
+			if r == '/' {
+				(*opened)[(*selected)[:i]] = true
+			}
+		}
+	}
 	rows := flatten(tops, children, *opened)
 	if len(rows) == 0 {
 		return TreeResult{Element: shell}

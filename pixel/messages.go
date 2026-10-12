@@ -45,6 +45,11 @@ var messages = map[Locale]map[string]string{
 		"added": "ADDED", "fixed": "FIXED", "changed": "CHANGED", "hair": "HAIR", "eyes": "EYES", "outfit": "OUTFIT",
 		"hair_color": "HAIR COLOR", "outfit_color": "OUTFIT COLOR", "bgm": "BGM", "se": "SE", "voice": "VOICE",
 		"styles": "SPIKY BOB BALD", "looks": "DOTS WIDE SLEEPY", "outfits": "TUNIC ROBE ARMOR", "hues": "DARK GOLD RED VIOLET SKY", "time_left": "TIME LEFT", "in_use": "IN USE", "rating": "RATING", "message": "MESSAGE", "symbols": "SYMBOLS",
+		"folder": "FOLDER", "text_file": "TEXT", "image_file": "IMAGE", "audio_file": "AUDIO", "code_file": "CODE", "archive_file": "ARCHIVE",
+		"folders": "FOLDERS", "free": "FREE", "blocks_used": "%d/15 BLOCKS", "delete": "DELETE", "used_of": "%s OF %s", "failed": "FAILED",
+		"in_bin": "IN THE BIN: %d", "empty_trash": "EMPTY", "no_preview": "NO PREVIEW", "kind": "KIND", "size": "SIZE", "created": "CREATED",
+		"modified": "MODIFIED", "packed": "PACKED", "archive_total": "%d FILES: %s → %s", "link": "LINK", "access": "ACCESS",
+		"access_levels": "VIEW COMMENT EDIT", "synced": "SYNCED", "syncing": "SYNCING", "sync_failed": "SYNC FAILED",
 	},
 	Zh: {
 		"ok": "确定", "cancel": "取消", "yes": "是", "no": "否", "close": "关闭",
@@ -88,6 +93,11 @@ var messages = map[Locale]map[string]string{
 		"added": "新增", "fixed": "修复", "changed": "改动", "hair": "发型", "eyes": "眼睛", "outfit": "服装",
 		"hair_color": "发色", "outfit_color": "衣色", "bgm": "音乐", "se": "音效", "voice": "语音",
 		"styles": "刺头 短发 光头", "looks": "圆眼 大眼 睡眼", "outfits": "短衣 长袍 铠甲", "hues": "墨 金 红 堇 蓝", "time_left": "剩余时间", "in_use": "使用中", "rating": "评分", "message": "留言", "symbols": "符号",
+		"folder": "文件夹", "text_file": "文本", "image_file": "图片", "audio_file": "音频", "code_file": "代码", "archive_file": "压缩包",
+		"folders": "文件夹", "free": "空闲", "blocks_used": "已用 %d/15 块", "delete": "删除", "used_of": "已用 %s，共 %s", "failed": "失败",
+		"in_bin": "回收站：%d 项", "empty_trash": "清空", "no_preview": "无法预览", "kind": "类型", "size": "大小", "created": "创建",
+		"modified": "修改", "packed": "压缩后", "archive_total": "%d 个文件：%s → %s", "link": "链接", "access": "权限",
+		"access_levels": "查看 评论 编辑", "synced": "已同步", "syncing": "同步中", "sync_failed": "同步出错",
 	},
 }
 
