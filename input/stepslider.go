@@ -36,7 +36,7 @@ func StepSlider(c *ui.Context, text string, value *float64, o StepSliderOptions)
 				g.Dot(knobAt(v, lo, hi, w-6)+3, 13, pixel.Faint)
 			}
 			g.Frame(x, 1, 6, 10, pixel.Raised, pixel.Face)
-			finish(g, st)
+			g.Finish(st)
 		})
 		res = report(shell, changed, "step slider", text, *value)
 		pixel.Text(c, fmtValue(*value), pixel.TextOptions{})

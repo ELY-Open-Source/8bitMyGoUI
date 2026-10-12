@@ -52,15 +52,3 @@ func cue(e *ui.Element, k pixel.Kit, n int) time.Time {
 	}
 	return s.at
 }
-
-// since counts steps at fps from t, up to done.
-func since(c *ui.Context, k pixel.Kit, t time.Time, fps, done int) int {
-	if t.IsZero() {
-		return done
-	}
-	n := int(k.Now().Sub(t) * time.Duration(fps) / time.Second)
-	if n < done {
-		k.Tick(c, fps)
-	}
-	return min(n, done)
-}

@@ -38,7 +38,7 @@ func Select(c *ui.Context, text string, value *string, options []string, o Selec
 		ink, dy := face(g, Normal, st, sel.Open() && !off)
 		g.Text(6, 2+dy, *value, ink, 1)
 		g.Sprite(g.W-10, (g.H-tinyDown.H)/2+dy, tinyDown, 0, ink, 1)
-		finish(g, st)
+		g.Finish(st)
 	})
 	if !off {
 		sel.Popup(func(panel *ui.Element) {

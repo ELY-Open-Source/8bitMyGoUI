@@ -95,7 +95,7 @@ func DPad(c *ui.Context, text string, o DPadOptions) DPadResult {
 			g.Sprite(a.x+(a.w-a.sp.W)/2, a.y+(a.h-a.sp.H)/2+dy, a.sp, 0, pixel.Ink, 1)
 		}
 		g.Rect(13, 13, 10, 10, pixel.Shade)
-		finish(g, st)
+		g.Finish(st)
 	})
 	return res
 }

@@ -55,6 +55,7 @@ Imports point down only. Same-tier imports are forbidden. `internal/archtest` en
 
 - Signatures and results: PRD §5.1. Zero options give the default look. Sizes in options are dots.
 - `k := pixel.K(c)` once per component; layout sizes through `k.D(n)`. Integer options default through `pixel.Or`.
+- Custom-drawn controls end their Draw with `g.Finish(st)`. Grids of cells moved by arrows use `pixel.Pad`; one-shot timing steps with `k.Since`.
 - A one-shot effect inside a lasting view starts when its cue changes (a `Cue` option, or a value that rises), never on its first frame. A state screen (`ErrorState`, `SuccessState`) starts when it appears. Decorative motion jumps to its end under Reduce Motion; countdowns and loaders keep time.
 - Containers take content as a final `func()`; interactive results are `NameResult`.
 - A Clicked, Shortcut, Changed or drag during the build makes MyGo build the frame again, so what they change shows at once. State changed any other way after its element was built (`Pressed`, `Edit.Changed`) is read at paint time.

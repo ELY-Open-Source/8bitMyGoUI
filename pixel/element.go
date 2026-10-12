@@ -97,24 +97,28 @@ func Shell(c *ui.Context, base func() *ui.Element) (shell, b *ui.Element, st Sta
 		b.Disabled(true)
 	}
 	off := own || inert
-	// MyGo keeps focus and keys on a newly disabled element.
-	parked := ui.Local(b, parkKey{}, func() bool { return false })
-	switch {
-	case off && b.Focused():
-		c.Root().Focus()
-		*parked = true
-	case !off && *parked:
-		// Focus comes back unless something else took it.
-		if root := c.Root(); root.Focused() || !root.FocusWithin() {
-			b.Focus()
-		}
-		*parked = false
-	}
+	Park(c, b, off)
 	st = State{Hover: b.Hovered(), Press: b.Pressed() && !off, Focus: b.FocusVisible(), Disabled: own}
 	return shell, b, st
 }
 
 type parkKey struct{}
+
+// Park moves focus off e while off, back once on.
+func Park(c *ui.Context, e *ui.Element, off bool) {
+	parked := ui.Local(e, parkKey{}, func() bool { return false })
+	switch {
+	case off && e.Focused():
+		c.Root().Focus()
+		*parked = true
+	case !off && *parked:
+		// Focus comes back unless something else took it.
+		if root := c.Root(); root.Focused() || !root.FocusWithin() {
+			e.Focus()
+		}
+		*parked = false
+	}
+}
 
 // Hand is the pointing cursor of focus and menus.
 var Hand = MustSprite(`
@@ -125,6 +129,16 @@ var Hand = MustSprite(`
 	elllle....
 	.eeee.....
 `)
+
+// Finish dithers out a disabled control and marks its focus.
+func (g Canvas) Finish(st State) {
+	if st.Disabled {
+		g.Checker(0, 0, g.W, g.H, Face)
+	}
+	if st.Focus {
+		g.FocusMark(0, 0, g.W, g.H)
+	}
+}
 
 // FocusMark rings a box with dots and points a hand.
 func (g Canvas) FocusMark(x, y, w, h int) {

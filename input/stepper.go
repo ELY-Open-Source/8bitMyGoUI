@@ -51,7 +51,7 @@ func Stepper(c *ui.Context, text string, value *int, o StepperOptions) StepperRe
 			shown := strconv.Itoa(*value)
 			g.Frame(0, 0, g.W, g.H, pixel.Sunken, pixel.Well)
 			g.Text((g.W-pixel.Measure(shown))/2, 2, shown, pixel.Ink, 1)
-			finish(g, st)
+			g.Finish(st)
 		})
 		set(*value + step*held(c, k, tinyRight, o.Disabled))
 		base.Description(strconv.Itoa(*value))

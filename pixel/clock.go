@@ -55,6 +55,18 @@ func (k Kit) Tick(c *ui.Context, fps int) int {
 	return n
 }
 
+// Since counts steps from t at fps, up to done.
+func (k Kit) Since(c *ui.Context, t time.Time, fps, done int) int {
+	if t.IsZero() {
+		return done
+	}
+	n := int(k.now.Sub(t) * time.Duration(fps) / time.Second)
+	if n < done {
+		k.Tick(c, fps)
+	}
+	return min(n, done)
+}
+
 // frameAt is the frame at t and the next wait.
 func frameAt(t time.Time, fps int) (int, time.Duration) {
 	checkFPS(fps)

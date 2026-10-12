@@ -45,7 +45,7 @@ func Segmented(c *ui.Context, text string, labels []string, selected *int, o Seg
 					g.VLine(0, 1, g.H-2, pixel.Edge)
 				}
 				g.Text(6, 2, l, ink, 1)
-				finish(g, st)
+				g.Finish(st)
 			})
 		}
 	})

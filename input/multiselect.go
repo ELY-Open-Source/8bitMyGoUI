@@ -49,7 +49,7 @@ func MultiSelect(c *ui.Context, text string, chosen *[]string, options []string,
 		}
 		tags(g, *chosen, 3, 2+dy, g.W-14)
 		g.Sprite(g.W-10, (g.H-tinyDown.H)/2+dy, tinyDown, 0, ink, 1)
-		finish(g, st)
+		g.Finish(st)
 	})
 	res := MultiSelectResult{Element: shell}
 	ui.PopoverBase(c, base, open, func(panel *ui.Element) {

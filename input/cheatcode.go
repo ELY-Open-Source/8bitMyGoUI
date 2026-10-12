@@ -82,7 +82,7 @@ func CheatCode(c *ui.Context, text string, o CheatCodeOptions) CheatCodeResult {
 			}
 			glyph(g, 2+i*10, 4, key, kink)
 		}
-		finish(g, st)
+		g.Finish(st)
 	})
 	return res
 }

@@ -57,7 +57,7 @@ func VirtualKeyboard(c *ui.Context, text string, value *string, o VirtualKeyboar
 			g.Text(3, 2, string(rs), pixel.Ink, 1)
 			g.Rect(4+pixel.Measure(string(rs)), 4, 5, 12, pixel.Accent)
 		})
-		shell, base, st, picked := pad(c, text, 10, len(caps), 14, pixel.LineHeight, cur, o.Disabled)
+		shell, base, st, picked := pixel.Pad(c, text, 10, len(caps), 14, pixel.LineHeight, cur, o.Disabled)
 		if picked >= 0 {
 			switch r := caps[picked]; r {
 			case '\b':
@@ -95,7 +95,7 @@ func VirtualKeyboard(c *ui.Context, text string, value *string, o VirtualKeyboar
 					g.Text(x+(13-pixel.Measure(l))/2, y, l, pixel.Ink, 1)
 				}
 			}
-			finish(g, st)
+			g.Finish(st)
 		})
 	})
 	if res.Submitted {

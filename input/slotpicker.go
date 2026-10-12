@@ -86,7 +86,7 @@ func SlotPicker(c *ui.Context, text string, value *int, options []string, o Slot
 		mid := 2 + pixel.LineHeight + (pixel.LineHeight-tinyRight.H)/2
 		g.Sprite(3, mid, tinyRight, 0, pixel.Accent, 1)
 		g.Sprite(g.W-6, mid, tinyLeft, 0, pixel.Accent, 1)
-		finish(g, st)
+		g.Finish(st)
 	})
 	return res
 }

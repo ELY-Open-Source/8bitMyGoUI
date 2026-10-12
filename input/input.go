@@ -78,16 +78,6 @@ func face(g pixel.Canvas, v Variant, st pixel.State, on bool) (ink pixel.Slot, d
 	return ink, dy
 }
 
-// finish dithers out a disabled control and marks focus.
-func finish(g pixel.Canvas, st pixel.State) {
-	if st.Disabled {
-		g.Checker(0, 0, g.W, g.H, pixel.Face)
-	}
-	if st.Focus {
-		g.FocusMark(0, 0, g.W, g.H)
-	}
-}
-
 // label is s, or the fallback when s is empty.
 func label(s, fallback string) string {
 	if s != "" {

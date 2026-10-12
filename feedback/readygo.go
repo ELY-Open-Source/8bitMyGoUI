@@ -38,7 +38,7 @@ func ReadyGo(c *ui.Context, o ReadyGoOptions) ReadyGoResult {
 		*s = ready{n: o.Cue, at: k.Now()}
 	}
 	res := ReadyGoResult{Element: e}
-	sec := since(c, k, s.at, 10, 40) / 10
+	sec := k.Since(c, s.at, 10, 40) / 10
 	// Done comes once, even when time jumps past GO!.
 	if sec >= 3 && !s.said && !s.at.IsZero() {
 		s.said, res.Done = true, true

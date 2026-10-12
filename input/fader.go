@@ -33,7 +33,7 @@ func Fader(c *ui.Context, text string, value *float64, o FaderOptions) FaderResu
 		g.Rect(7, y+3, 2, g.H-y-4, pixel.Accent)
 		g.Frame(2, y, 12, 7, pixel.Raised, pixel.Face)
 		g.HLine(4, y+3, 8, pixel.Edge)
-		finish(g, st)
+		g.Finish(st)
 	})
 	return report(shell, changed, "fader", text, *value)
 }

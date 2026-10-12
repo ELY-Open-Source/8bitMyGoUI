@@ -21,7 +21,7 @@ type ColorSlotResult struct {
 func ColorSlot(c *ui.Context, text string, value *pixel.Slot, o ColorSlotOptions) ColorSlotResult {
 	k := pixel.K(c)
 	cur := int(*value)
-	shell, base, st, _ := pad(c, text, 8, pixel.Slots, 12, 12, &cur, o.Disabled)
+	shell, base, st, _ := pixel.Pad(c, text, 8, pixel.Slots, 12, 12, &cur, o.Disabled)
 	res := ColorSlotResult{Element: shell, Changed: pixel.Slot(cur) != *value}
 	*value = pixel.Slot(cur)
 	base.Description(value.String())
@@ -36,7 +36,7 @@ func ColorSlot(c *ui.Context, text string, value *pixel.Slot, o ColorSlotOptions
 			g.Rect(x+2, y+2, 8, 8, pixel.Edge)
 			g.Rect(x+3, y+3, 6, 6, pixel.Slot(i))
 		}
-		finish(g, st)
+		g.Finish(st)
 	})
 	if res.Changed {
 		slog.Debug("8bit: color slot", "label", text, "slot", *value)

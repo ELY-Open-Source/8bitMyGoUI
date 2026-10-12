@@ -38,7 +38,7 @@ func ButtonGroup(c *ui.Context, labels []string, o ButtonGroupOptions) ButtonGro
 				g := k.Canvas(p, r)
 				ink, dy := face(g, o.Variant, st, false)
 				g.Text(pad, top+dy, l, ink, sc)
-				finish(g, st)
+				g.Finish(st)
 			})
 			if base.Clicked() {
 				res.Clicked = i

@@ -39,7 +39,7 @@ func Switch(c *ui.Context, text string, on *bool, o SwitchOptions) SwitchResult 
 			ink = pixel.Faint
 		}
 		g.Text(32, 0, text, ink, 1)
-		finish(g, st)
+		g.Finish(st)
 	})
 	res := SwitchResult{Element: shell, Changed: base.Changed()}
 	if res.Changed {

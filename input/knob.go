@@ -49,7 +49,7 @@ func Knob(c *ui.Context, text string, value *float64, o KnobOptions) KnobResult 
 		x, y := 12+int(math.Round(7*math.Sin(a))), 12-int(math.Round(7*math.Cos(a)))
 		g.Line(12, 12, x, y, pixel.Accent)
 		g.Dot(x, y, pixel.Ink)
-		finish(g, st)
+		g.Finish(st)
 	})
 	return report(shell, *value != old, "knob", text, *value)
 }

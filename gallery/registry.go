@@ -56,7 +56,7 @@ var Categories = []Category{
 	{"tabletop", "Tabletop", "桌游", icon.Crown},
 }
 
-var entries = slices.Concat(foundationEntries, layoutEntries, textEntries, displayEntries, inputEntries, controlEntries, feedbackEntries)
+var entries = slices.Concat(foundationEntries, layoutEntries, textEntries, displayEntries, inputEntries, controlEntries, feedbackEntries, navigationEntries)
 
 func Entries() []Entry { return entries }
 

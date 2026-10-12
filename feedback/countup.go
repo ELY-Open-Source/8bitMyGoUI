@@ -32,7 +32,7 @@ func CountUp(c *ui.Context, value int, o CountUpOptions) *ui.Element {
 	shown := func() int {
 		step := 8
 		if !k.Reduce() {
-			step = since(c, k, s.at, 15, 8)
+			step = k.Since(c, s.at, 15, 8)
 		}
 		return s.from + (s.to-s.from)*step/8
 	}

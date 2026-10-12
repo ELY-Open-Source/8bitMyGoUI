@@ -73,7 +73,7 @@ func EditableText(c *ui.Context, text string, value *string, o EditableTextOptio
 			}
 			g.Text(4, 3, shown, ink, 1)
 			g.Veil(0, g.H-1, g.W, 1, pixel.Faint, 8)
-			finish(g, st)
+			g.Finish(st)
 		})
 	})
 	if res.Changed {

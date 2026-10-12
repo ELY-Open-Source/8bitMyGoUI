@@ -42,7 +42,7 @@ func Toggle(c *ui.Context, text string, on *bool, o ToggleOptions) ToggleResult 
 			g.Sprite(pad, (h-o.Icon.H)/2+dy, o.Icon, 0, ink, 1)
 		}
 		g.Text(pad+lead, top+dy, text, ink, sc)
-		finish(g, st)
+		g.Finish(st)
 	})
 	res := ToggleResult{Element: shell, Changed: base.Changed()}
 	if res.Changed {

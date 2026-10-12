@@ -66,7 +66,7 @@ func Button(c *ui.Context, text string, o ButtonOptions) ButtonResult {
 		if text != "" {
 			g.Text(x, top+dy, text, ink, sc)
 		}
-		finish(g, st)
+		g.Finish(st)
 	})
 	res := ButtonResult{Element: shell, Clicked: base.Clicked()}
 	if res.Clicked {

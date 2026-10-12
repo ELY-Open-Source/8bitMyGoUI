@@ -73,7 +73,7 @@ func PinInput(c *ui.Context, text string, value *string, o PinInputOptions) PinI
 				g.HLine(x+2, h-4, pinBox-4, pixel.Accent)
 			}
 		}
-		finish(g, st)
+		g.Finish(st)
 	})
 	if res.Complete {
 		slog.Debug("8bit: pin complete", "label", text)

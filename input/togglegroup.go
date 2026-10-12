@@ -40,7 +40,7 @@ func ToggleGroup(c *ui.Context, labels []string, on []bool, o ToggleGroupOptions
 				g := k.Canvas(p, r)
 				ink, dy := face(g, Normal, st, on[i])
 				g.Text(pad, top+dy, l, ink, sc)
-				finish(g, st)
+				g.Finish(st)
 			})
 			if base.Changed() {
 				res.Changed = true

@@ -34,7 +34,7 @@ func Slider(c *ui.Context, text string, value *float64, o SliderOptions) SliderR
 		x := knobAt(*value, lo, hi, g.W-6)
 		groove(g, x+3, 4)
 		g.Frame(x, 1, 6, 10, pixel.Raised, pixel.Face)
-		finish(g, st)
+		g.Finish(st)
 	})
 	return report(shell, changed, "slider", text, *value)
 }

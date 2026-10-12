@@ -66,6 +66,6 @@ func knob(c *ui.Context, k pixel.Kit, track *ui.Element, v *float64, r rail, lo,
 	shell.Absolute().Left(k.D(knobAt(*v, lo, hi, w-6))).Top(k.D(1)).Size(k.D(6), k.D(10)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)
 		g.Frame(0, 0, 6, 10, pixel.Raised, pixel.Face)
-		finish(g, st)
+		g.Finish(st)
 	})
 }

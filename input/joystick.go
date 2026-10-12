@@ -79,7 +79,7 @@ func Joystick(c *ui.Context, text string, o JoystickOptions) JoystickResult {
 		g.Disc(x, y, 7, pixel.Edge)
 		g.Disc(x, y, 6, pixel.Accent)
 		g.Disc(x-2, y-2, 2, pixel.AccentLit)
-		finish(g, st)
+		g.Finish(st)
 	})
 	return JoystickResult{Element: shell, X: s.x, Y: s.y, Moved: s.x != ox || s.y != oy}
 }

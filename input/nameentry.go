@@ -47,7 +47,7 @@ func NameEntry(c *ui.Context, text string, name *string, o NameEntryOptions) Nam
 				g.Rect(x, 14, 12, 2, ink)
 			}
 		})
-		shell, base, st, picked := pad(c, text, 7, nameEnd+1, 14, pixel.LineHeight, cur, o.Disabled)
+		shell, base, st, picked := pixel.Pad(c, text, 7, nameEnd+1, 14, pixel.LineHeight, cur, o.Disabled)
 		switch {
 		case picked == nameDel && len(*name) > 0:
 			*name, res.Changed = (*name)[:len(*name)-1], true
@@ -66,7 +66,7 @@ func NameEntry(c *ui.Context, text string, name *string, o NameEntryOptions) Nam
 			for i := range nameEnd + 1 {
 				x, y := i%7*14, i/7*pixel.LineHeight
 				if focused && i == *cur {
-					cursor(g, x, y, 14, pixel.LineHeight)
+					g.Cursor(x, y, 14, pixel.LineHeight)
 				}
 				switch i {
 				case nameDel:
@@ -78,7 +78,7 @@ func NameEntry(c *ui.Context, text string, name *string, o NameEntryOptions) Nam
 					g.Text(x+(14-pixel.Measure(l))/2, y, l, pixel.Ink, 1)
 				}
 			}
-			finish(g, st)
+			g.Finish(st)
 		})
 	})
 	if res.Confirmed {

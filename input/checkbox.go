@@ -64,5 +64,5 @@ func box(g pixel.Canvas, text string, mark *pixel.Sprite, st pixel.State) {
 		ink = pixel.Faint
 	}
 	g.Text(12, 0, text, ink, 1)
-	finish(g, st)
+	g.Finish(st)
 }

@@ -93,7 +93,7 @@ func HoldButton(c *ui.Context, text string, o HoldButtonOptions) HoldButtonResul
 		g.Rect(1, 1+dy, w, g.H-2-dy, fill)
 		g.Text(8, 2+dy, text, ink, 1)
 		g.Clip(1, 0, w, g.H, func() { g.Text(8, 2+dy, text, pixel.AccentInk, 1) })
-		finish(g, st)
+		g.Finish(st)
 	})
 	return res
 }

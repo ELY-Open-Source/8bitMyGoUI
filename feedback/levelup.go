@@ -30,7 +30,7 @@ func LevelUp(c *ui.Context, level int, o LevelUpOptions) *ui.Element {
 	}
 	s.level = level
 	// Ten steps a second: six slide in, twenty stay.
-	step := since(c, k, s.at, 10, 26)
+	step := k.Since(c, s.at, 10, 26)
 	if step >= 26 {
 		return e
 	}

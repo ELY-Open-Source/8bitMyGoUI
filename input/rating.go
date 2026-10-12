@@ -61,7 +61,7 @@ func Rating(c *ui.Context, text string, value *int, o RatingOptions) RatingResul
 					sp, ink = full, pixel.Accent
 				}
 				g.Sprite(1, 1, sp, 0, ink, 1)
-				finish(g, st)
+				g.Finish(st)
 			})
 		}
 	})

@@ -24,7 +24,7 @@ func ComboCounter(c *ui.Context, count int, o ComboCounterOptions) *ui.Element {
 	if count <= 0 {
 		return e
 	}
-	pop := !k.Reduce() && since(c, k, s.at, 10, 2) < 2
+	pop := !k.Reduce() && k.Since(c, s.at, 10, 2) < 2
 	n, tag := "×"+strconv.Itoa(count), k.Msg("combo")
 	w := pixel.Measure(n)*3 + 6 + pixel.Measure(tag)*2 + 2
 	return e.Role(ui.RoleStatus).Label(n+" "+tag).Size(k.D(w), k.D(3*pixel.LineHeight+2)).Draw(func(p *ui.Painter, r ui.Rect) {

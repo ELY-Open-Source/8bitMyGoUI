@@ -1,15 +1,11 @@
-package input
+package pixel
 
-import (
-	"github.com/egoist/mygo/ui"
+import "github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
-)
-
-// pad is a focusable grid returning the picked cell.
-func pad(c *ui.Context, text string, cols, n, cw, ch int, cur *int, disabled bool) (shell, base *ui.Element, st pixel.State, picked int) {
-	k := pixel.K(c)
-	shell, base, st = pixel.Shell(c, func() *ui.Element {
+// Pad is a focusable grid; it returns the picked cell.
+func Pad(c *ui.Context, text string, cols, n, cw, ch int, cur *int, disabled bool) (shell, base *ui.Element, st State, picked int) {
+	k := K(c)
+	shell, base, st = Shell(c, func() *ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleGroup).Label(text).Disabled(disabled)
 	})
 	shell.Size(k.D(cols*cw), k.D((n+cols-1)/cols*ch))
@@ -40,8 +36,8 @@ func pad(c *ui.Context, text string, cols, n, cw, ch int, cur *int, disabled boo
 	return shell, base, st, picked
 }
 
-// cursor lights a cell with an Accent ring.
-func cursor(g pixel.Canvas, x, y, w, h int) {
-	g.Rect(x, y, w, h, pixel.Accent)
-	g.Rect(x+1, y+1, w-2, h-2, pixel.Lit)
+// Cursor lights a cell with an Accent ring.
+func (g Canvas) Cursor(x, y, w, h int) {
+	g.Rect(x, y, w, h, Accent)
+	g.Rect(x+1, y+1, w-2, h-2, Lit)
 }
