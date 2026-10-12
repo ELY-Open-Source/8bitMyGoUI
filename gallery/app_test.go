@@ -238,6 +238,25 @@ func TestControlDemosLogTheirEvents(t *testing.T) {
 	}
 }
 
+func TestDataDemosLogSubmits(t *testing.T) {
+	for slug, row := range map[string]string{"152-table": "Brom, Monk, 5", "154-outline": "Region 3", "174-searchresults": "Fira"} {
+		a, tt := open("/c/" + slug)
+		click(t, tt, row)
+		n := len(a.logs[slug])
+		tt.Key(0, ui.KeyEnter)
+		if len(a.logs[slug]) == n {
+			t.Errorf("%s logged no submit: %q", slug, a.logs[slug])
+		}
+	}
+	a, tt := open("/c/153-tree")
+	click(t, tt, "Items")
+	n := len(a.logs["153-tree"])
+	tt.Key(0, ui.KeyRight)
+	if len(a.logs["153-tree"]) == n {
+		t.Errorf("opening a branch logged nothing: %q", a.logs["153-tree"])
+	}
+}
+
 func TestFieldDemoLogsSubmit(t *testing.T) {
 	a, tt := open("/c/100-field")
 	// The group shares its name; the input sits below.
@@ -248,5 +267,28 @@ func TestFieldDemoLogsSubmit(t *testing.T) {
 	tt.Key(0, ui.KeyEnter)
 	if len(a.logs["100-field"]) == n {
 		t.Fatal("Enter in the field logged nothing")
+	}
+}
+
+func TestDataDemosLogTheirEvents(t *testing.T) {
+	for slug, act := range map[string]func(tt *ui.Tester){
+		"151-list":          func(tt *ui.Tester) { click(t, tt, "Bat") },
+		"152-table":         func(tt *ui.Tester) { click(t, tt, "LV") },
+		"153-tree":          func(tt *ui.Tester) { click(t, tt, "Items"); tt.Key(0, ui.KeyRight) },
+		"154-outline":       func(tt *ui.Tester) { click(t, tt, "Region 2") },
+		"174-searchresults": func(tt *ui.Tester) { click(t, tt, "Fira") },
+		"155-gridview":      func(tt *ui.Tester) { click(t, tt, "loot 3") },
+		"160-accordion":     func(tt *ui.Tester) { click(t, tt, "Where is the key?") },
+		"162-carousel":      func(tt *ui.Tester) { click(t, tt, "NEXT") },
+		"167-pager":         func(tt *ui.Tester) { click(t, tt, "NEXT") },
+		"170-sortable":      func(tt *ui.Tester) { click(t, tt, "Quest order"); tt.Key(ui.Alt, ui.KeyDown) },
+		"171-transfer":      func(tt *ui.Tester) { click(t, tt, "RIGHT") },
+		"173-filterbar":     func(tt *ui.Tester) { click(t, tt, "FIRE") },
+	} {
+		a, tt := open("/c/" + slug)
+		act(tt)
+		if len(a.logs[slug]) == 0 {
+			t.Errorf("%s logged nothing", slug)
+		}
 	}
 }

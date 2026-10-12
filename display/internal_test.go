@@ -86,5 +86,5 @@ func TestExtremesAndNames(t *testing.T) {
 			t.Fatal("unknown rarity did not panic")
 		}
 	}()
-	Rarity(9).slot()
+	Rarity(9).Slot()
 }

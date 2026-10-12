@@ -47,8 +47,8 @@ Imports point down only. Same-tier imports are forbidden. `internal/archtest` en
 
 ## MyGo rules
 
-- Use Bases, containers, `List`, `GridView`, `Outline`, `Router`, `Overlay`, `DialogBase`, `PopoverBase`, `FocusGroup`, `Local`, `HandleInput`, `TextCaret`, `Shortcut`, clipboard. Full list: PRD §2.4.
-- Never call styled widgets, `Background`, `Border*`, `Radius`, `Shadow`, `Gradient`, `Opacity`, `Stripes`, `Tooltip`, `Menu`, `ContextMenu`, `Transition`, `Animate*`, `Loop`, `c.Toast*`, or painter calls other than `Fill` and `Clip`. Only `pixel` calls `After`.
+- Use Bases, containers, `List`, `Router`, `Overlay`, `DialogBase`, `PopoverBase`, `FocusGroup`, `Local`, `HandleInput`, `TextCaret`, `Shortcut`, clipboard. Full list: PRD §2.4.
+- Never call styled widgets, `ui.Outline` (stroked arrows), `ui.GridView` (theme gaps, tinted choice), `Background`, `Border*`, `Radius`, `Shadow`, `Gradient`, `Opacity`, `Stripes`, `Tooltip`, `Menu`, `ContextMenu`, `Transition`, `Animate*`, `Loop`, `c.Toast*`, or painter calls other than `Fill` and `Clip`. Only `pixel` calls `After`.
 - A disabled element never paints. Interactive components draw on an enabled shell; the base inside fills it, carries behavior, label and `Disabled`, and turns MyGo's focus ring off.
 
 ## Component rules
@@ -59,14 +59,15 @@ Imports point down only. Same-tier imports are forbidden. `internal/archtest` en
 - A one-shot effect inside a lasting view starts when its cue changes (a `Cue` option, or a value that rises), never on its first frame. A state screen (`ErrorState`, `SuccessState`) starts when it appears. Decorative motion jumps to its end under Reduce Motion; countdowns and loaders keep time.
 - Containers take content as a final `func()`; interactive results are `NameResult`.
 - A Clicked, Shortcut, Changed or drag during the build makes MyGo build the frame again, so what they change shows at once. State changed any other way after its element was built (`Pressed`, `Edit.Changed`) is read at paint time.
-- Never call `Selected`: MyGo paints it in the accent color.
+- Never call `Selected`. The pixel theme keeps MyGo's row highlights clear, since scrolled rows sit between dots: draw chosen rows yourself.
+- A disabled or inert scroll view must not move: cover it, so the wheel stops above it.
 - A press focuses the nearest focusable element under it, or nothing; a closing overlay hands the focus back to its opener. While a press is on, `Hovered` is false for every other element: ask `Pressed`.
 - Enter and Space click a focused clickable element unless a `Shortcut` takes them. Take them wherever a click reads the pointer's position.
 - Under `pixel.Settings.Inert` (a busy veil) `pixel.Shell` disables every base and gives the focus back after. A popup sits above any veil: a control closes its popup when disabled or inert.
 - Elements are known by their place among siblings. Wrap one whose earlier siblings come and go in `ui.Box(c).Key(k)`, or it loses focus and state.
 - Hosts send a key's release with its press, so tell a held key by its repeats.
 - Clip only boxes that sit on whole dots; split widths with whole-dot shares, not equal `Grow`. `Grow` starts from zero size, so never use it on a content-sized child.
-- Row builders that MyGo runs during layout (`List`, `GridView`, `Outline`) go through `pixel.Lazy(c, row)`.
+- `List` row builders run during layout: wrap them in `pixel.Lazy(c, row)`. A click met there lands after the build; keep it in `Local` state, invalidate, and report it next frame.
 - Single-key shortcuts only while `pixel.Typing(c)` is false; MyGo routes shortcuts before a focused field.
 - Copy shown by a component comes from `k.Msg`; business copy comes from the caller.
 - Fail fast: panic on programmer errors such as bad options. Never swallow an error.

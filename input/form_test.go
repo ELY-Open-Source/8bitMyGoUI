@@ -221,3 +221,14 @@ func TestGridCopyFollowsTheLocale(t *testing.T) {
 		t.Fatal("END or the unlock banner ignores the locale")
 	}
 }
+
+func TestSwitchLabelNamesABarePlate(t *testing.T) {
+	lever := false
+	tt := view(300, 100, nil, func(c *ui.Context) {
+		input.Switch(c, "", &lever, input.SwitchOptions{Label: "Fly"})
+	})
+	click(t, tt, "Fly")
+	if !lever || len(tt.Texts()) != 1 {
+		t.Fatalf("switch %v, texts %q", lever, tt.Texts())
+	}
+}

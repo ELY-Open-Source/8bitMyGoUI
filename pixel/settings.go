@@ -121,14 +121,14 @@ func (s Settings) valid() Settings {
 	return s
 }
 
-// theme keeps MyGo's own drawing inside the palette.
+// theme keeps MyGo's drawing in the palette; row highlights clear.
 func theme(p *Palette) *ui.Theme {
 	t := ui.LightTheme()
 	c := p.Colors
 	t.Dark = p.Night
-	t.Background, t.Surface, t.SurfaceHover, t.SurfacePressed = c[Back], c[Face], c[Lit], c[Shade]
+	t.Background, t.Surface, t.SurfaceHover, t.SurfacePressed = c[Back], c[Face], ui.Transparent, c[Shade]
 	t.Border, t.Text, t.TextMuted = c[Edge], c[Ink], c[Faint]
-	t.Accent, t.AccentHover, t.AccentPressed, t.AccentText = c[Accent], c[AccentLit], c[Accent], c[AccentInk]
+	t.Accent, t.AccentHover, t.AccentPressed, t.AccentText = ui.Transparent, c[AccentLit], c[Accent], c[AccentInk]
 	t.Danger, t.Warning, t.Success = c[Bad], c[Warn], c[Good]
 	t.Selection, t.Focus, t.Scrollbar, t.Radius = c[AccentLit], c[Accent], ui.Transparent, 0
 	return t

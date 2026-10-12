@@ -16,6 +16,8 @@ var messages = map[Locale]map[string]string{
 		"retry": "RETRY", "stage_clear": "STAGE CLEAR!", "level_up": "LEVEL UP!", "achievement": "ACHIEVEMENT UNLOCKED",
 		"combo": "COMBO!", "saving": "SAVING", "saved": "SAVED", "go": "GO!", "wait": "PLEASE WAIT",
 		"prev": "PREVIOUS", "next": "NEXT", "back": "BACK", "forward": "FORWARD", "history": "HISTORY",
+		"on": "ON", "off": "OFF", "clear": "CLEAR", "per_page": "PER PAGE", "range": "%d–%d OF %d", "found": "FOUND: %d",
+		"unknown": "???",
 	},
 	Zh: {
 		"ok": "确定", "cancel": "取消", "yes": "是", "no": "否", "close": "关闭",
@@ -30,6 +32,8 @@ var messages = map[Locale]map[string]string{
 		"retry": "重试", "stage_clear": "过关！", "level_up": "升级！", "achievement": "成就解锁",
 		"combo": "连击！", "saving": "存档中", "saved": "已存档", "go": "开始！", "wait": "请稍候",
 		"prev": "上一页", "next": "下一页", "back": "后退", "forward": "前进", "history": "历史",
+		"on": "开", "off": "关", "clear": "清除", "per_page": "每页", "range": "%d–%d / 共 %d", "found": "找到：%d",
+		"unknown": "？？？",
 	},
 }
 

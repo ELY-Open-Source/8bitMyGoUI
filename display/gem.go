@@ -18,7 +18,8 @@ const (
 	Legendary
 )
 
-func (r Rarity) slot() pixel.Slot {
+// Slot is the rarity's color.
+func (r Rarity) Slot() pixel.Slot {
 	if r > Legendary {
 		panic(fmt.Sprintf("display: unknown Rarity %d", r))
 	}
@@ -64,7 +65,7 @@ type GemOptions struct {
 // Gem is a cut gem by rarity, sparkling in steps.
 func Gem(c *ui.Context, r Rarity, o GemOptions) *ui.Element {
 	k, sc := pixel.K(c), scale(o.Scale)
-	ink := r.slot()
+	ink := r.Slot()
 	return art(c, k, r.name(k), (gem.W+3)*sc, (gem.H+2)*sc, func(g pixel.Canvas) {
 		g.Sprite(0, 2*sc, gem, 0, ink, sc)
 		if f := g.Step(4) % 4; f < 2 {

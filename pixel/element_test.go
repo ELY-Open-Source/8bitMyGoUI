@@ -19,6 +19,14 @@ func TestSpriteLettersMatchSlots(t *testing.T) {
 	}
 }
 
+func TestSilhouetteKeepsShapeInOneSlot(t *testing.T) {
+	sp := pixel.MustSprite("#a.g")
+	d := canvas(t, 8, 2, func(g pixel.Canvas) { g.Silhouette(0, 0, sp, 0, pixel.Shade, 2) })
+	if d.count(0, 0, 4, 2, pixel.Shade) != 8 || d.count(4, 0, 2, 2, pixel.Back) != 4 || d.count(6, 0, 2, 2, pixel.Shade) != 4 {
+		t.Fatal("Silhouette must fill the shape, scaled, in one slot")
+	}
+}
+
 func TestSpriteFramesMirrorScale(t *testing.T) {
 	sp := pixel.MustSprite(`
 		#a.

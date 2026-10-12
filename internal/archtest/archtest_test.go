@@ -33,7 +33,7 @@ var bannedFuncs = set("Text Textf RichText Button PrimaryButton Link MenuButton 
 	"NumberInput SearchField Combobox Autocomplete TokenField EditableText FindBar Calendar DateInput TimeInput " +
 	"ColorPicker ColorWell Table Tree TreeItem Accordion AccordionItem Collapsible Form Field Fieldset Tabs " +
 	"Sidebar SidebarItem SidebarSection Breadcrumbs BackButton ForwardButton Modal AlertDialog Popover Progress " +
-	"Spinner Meter Badge Image Icon Avatar Divider Split SplitVertical")
+	"Spinner Meter Badge Image Icon Avatar Divider Split SplitVertical Outline OutlineTable GridView")
 
 // Element, Context and Painter methods that blend, ease or draw.
 var bannedMethods = set("Background Border BorderColor BorderWidth BorderStyle Radius Shadow Gradient " +

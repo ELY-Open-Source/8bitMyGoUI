@@ -10,6 +10,8 @@ import (
 
 type SwitchOptions struct {
 	Disabled bool
+	// Label names it for assistive technology; zero uses text.
+	Label string
 }
 
 type SwitchResult struct {
@@ -20,7 +22,7 @@ type SwitchResult struct {
 // Switch is a lever on an OFF/ON plate.
 func Switch(c *ui.Context, text string, on *bool, o SwitchOptions) SwitchResult {
 	k := pixel.K(c)
-	shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.SwitchBase(c, on).Label(text).Disabled(o.Disabled) })
+	shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.SwitchBase(c, on).Label(label(o.Label, text)).Disabled(o.Disabled) })
 	shell.Size(k.D(32+pixel.Measure(text)), k.D(pixel.LineHeight)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)
 		g.Frame(0, 1, 27, 14, pixel.Raised, pixel.Shade)

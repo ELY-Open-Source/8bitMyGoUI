@@ -88,6 +88,15 @@ func (s *Sprite) Mirror() *Sprite {
 
 // Sprite draws frame of sp; # takes ink; frames wrap.
 func (g Canvas) Sprite(x, y int, sp *Sprite, frame int, ink Slot, scale int) {
+	g.sprite(x, y, sp, frame, ink, scale, false)
+}
+
+// Silhouette draws sp's shape all in one slot.
+func (g Canvas) Silhouette(x, y int, sp *Sprite, frame int, s Slot, scale int) {
+	g.sprite(x, y, sp, frame, s, scale, true)
+}
+
+func (g Canvas) sprite(x, y int, sp *Sprite, frame int, ink Slot, scale int, mono bool) {
 	checkScale(scale)
 	n := len(sp.frames)
 	px := sp.frames[(frame%n+n)%n]
@@ -101,7 +110,7 @@ func (g Canvas) Sprite(x, y int, sp *Sprite, frame int, ink Slot, scale int) {
 			}
 			if v != cellClear {
 				s := ink
-				if v >= 0 {
+				if v >= 0 && !mono {
 					s = Slot(v)
 				}
 				g.Rect(x+col*scale, y+row*scale, (end-col)*scale, scale, s)
