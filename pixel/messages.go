@@ -54,6 +54,12 @@ var messages = map[Locale]map[string]string{
 		"filters": "FILTERS", "task_filters": "OPEN DONE URGENT", "quest_complete": "QUEST COMPLETE!", "focus": "FOCUS", "rest": "REST",
 		"ahead": "AHEAD", "behind": "BEHIND", "ideal": "IDEAL", "work_left": "LEFT", "total": "TOTAL", "days_left": "%d DAYS LEFT",
 		"last_day": "LAST DAY", "over": "OVER", "sprint_points": "%d/%d POINTS", "hours_of": "%s/%s H",
+		"wallet": "WALLET", "coins": "GOLD", "gems": "GEMS", "was": "WAS %s", "not_enough": "NOT ENOUGH", "checkout_steps": "CART PAY CONFIRM DONE",
+		"place_order": "PLACE ORDER", "thank_you": "THANK YOU!", "rate": "%d GOLD = 1 GEM", "convert": "CONVERT", "sale": "SALE",
+		"choose": "CHOOSE", "chosen": "CHOSEN", "claim": "CLAIM", "claimed": "CLAIMED", "missed": "MISSED", "day_n": "DAY %d",
+		"see_you": "SEE YOU TOMORROW!", "highest": "HIGHEST: %s, %d %s", "you": "YOU", "confirm": "CONFIRM", "confirmed": "CONFIRMED",
+		"waiting": "WAITING", "traded": "TRADE DONE!", "snacks": "SNACKS", "keypad": "KEYPAD", "sold_out": "SOLD OUT",
+		"insert_coin": "INSERT COIN", "enjoy": "ENJOY!", "code_prompt": "CODE?",
 	},
 	Zh: {
 		"ok": "确定", "cancel": "取消", "yes": "是", "no": "否", "close": "关闭",
@@ -106,6 +112,12 @@ var messages = map[Locale]map[string]string{
 		"filters": "筛选", "task_filters": "未完成 已完成 火急", "quest_complete": "任务完成！", "focus": "专注", "rest": "休息",
 		"ahead": "超前", "behind": "落后", "ideal": "理想", "work_left": "剩余", "total": "合计", "days_left": "还剩 %d 天",
 		"last_day": "最后一天", "over": "已结束", "sprint_points": "%d/%d 点", "hours_of": "%s/%s 小时",
+		"wallet": "钱包", "coins": "金币", "gems": "宝石", "was": "原价 %s", "not_enough": "钱不够", "checkout_steps": "购物车 支付 确认 完成",
+		"place_order": "下单", "thank_you": "谢谢惠顾！", "rate": "%d 金币 = 1 宝石", "convert": "兑换", "sale": "特价",
+		"choose": "选择", "chosen": "已选", "claim": "领取", "claimed": "已领", "missed": "错过", "day_n": "第 %d 天",
+		"see_you": "明天见！", "highest": "最高：%s，%d %s", "you": "你", "confirm": "确认", "confirmed": "已确认",
+		"waiting": "等待中", "traded": "交易完成！", "snacks": "零食", "keypad": "键盘", "sold_out": "售罄",
+		"insert_coin": "请投币", "enjoy": "请享用！", "code_prompt": "编号？",
 	},
 }
 

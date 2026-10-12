@@ -56,7 +56,7 @@ var Categories = []Category{
 	{"tabletop", "Tabletop", "桌游", icon.Crown},
 }
 
-var entries = slices.Concat(foundationEntries, layoutEntries, textEntries, displayEntries, inputEntries, controlEntries, feedbackEntries, navigationEntries, dataEntries, recordEntries, overlayEntries, popupEntries, datetimeEntries, timeEntries, chartEntries, plotEntries, gameEntries, rpgEntries, screenEntries, lootEntries, fxEntries, screenFxEntries, chatEntries, mailEntries, mediaEntries, studioEntries, codeEntries, debugEntries, accountEntries, playerEntries, filesEntries, storageEntries, projectEntries, teamEntries)
+var entries = slices.Concat(foundationEntries, layoutEntries, textEntries, displayEntries, inputEntries, controlEntries, feedbackEntries, navigationEntries, dataEntries, recordEntries, overlayEntries, popupEntries, datetimeEntries, timeEntries, chartEntries, plotEntries, gameEntries, rpgEntries, screenEntries, lootEntries, fxEntries, screenFxEntries, chatEntries, mailEntries, mediaEntries, studioEntries, codeEntries, debugEntries, accountEntries, playerEntries, filesEntries, storageEntries, projectEntries, teamEntries, shopEntries, marketEntries)
 
 func Entries() []Entry { return entries }
 

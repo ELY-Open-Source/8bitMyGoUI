@@ -337,7 +337,8 @@ func TestOdometerRollsToValue(t *testing.T) {
 	five := digits()
 	value = 6
 	tt.Frame()
-	clk.add(34 * time.Millisecond)
+	// One step at 15 fps, S5's fastest.
+	clk.add(67 * time.Millisecond)
 	tt.Frame()
 	mid := digits()
 	clk.add(time.Second)
