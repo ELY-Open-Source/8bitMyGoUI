@@ -238,13 +238,13 @@ test('resize keeps whole pixels per dot', async ({ page }) => {
   expect(Number.isInteger(s.zoom)).toBe(true)
 })
 
-test('a Go panic shows GAME OVER in pixels; RETRY reloads', async ({ page }) => {
+test('a Go panic shows GAME OVER in pixels; CONTINUE reloads', async ({ page }) => {
   test.info().annotations.push({ type: 'console errors', description: 'the panic is on purpose' })
   await open(page, '#/f/icons')
   await page.evaluate(() => window.__8bitGo.pointer('bogus', 0, 0))
   expect(await texts(page)).toContain('web: unknown pointer kind bogus')
   await expect(page.locator('#over')).toBeHidden()
-  await click(page, 'RETRY')
+  await click(page, 'CONTINUE')
   await page.waitForFunction(() => window.__8bit?.ready && window.__8bit.page() === '/f/icons')
   expect(await texts(page)).toContain('COPY CODE')
 })

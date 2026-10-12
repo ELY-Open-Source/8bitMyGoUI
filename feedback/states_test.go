@@ -70,9 +70,9 @@ func TestErrorStateCountsDownAndContinues(t *testing.T) {
 	find(t, tt, "CONTINUE? 6")
 	wait(tt, clk, 10*time.Second)
 	find(t, tt, "CONTINUE? 0")
-	click(t, tt, "RETRY")
+	click(t, tt, "CONTINUE")
 	if cont != 1 {
-		t.Fatal("RETRY did not report Continue")
+		t.Fatal("CONTINUE did not report Continue")
 	}
 }
 
@@ -212,7 +212,7 @@ func TestDisabledFeedbackButtonsDoNothing(t *testing.T) {
 		on(feedback.ContinuePrompt(c, feedback.ContinuePromptOptions{Disabled: true}).Yes)
 		on(feedback.Toasts(c, &q, feedback.ToastsOptions{Disabled: true}).Acted != nil)
 	})
-	for _, l := range []string{"CLOSE", "GO", "SHOP", "RETRY", "YES", "UNDO"} {
+	for _, l := range []string{"CLOSE", "GO", "SHOP", "CONTINUE", "YES", "UNDO"} {
 		click(t, tt, l)
 	}
 	if events != 0 {

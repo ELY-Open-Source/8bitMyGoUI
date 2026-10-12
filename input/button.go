@@ -76,19 +76,3 @@ func Button(c *ui.Context, text string, o ButtonOptions) ButtonResult {
 	}
 	return res
 }
-
-type IconButtonOptions struct {
-	Variant  Variant
-	Size     Size
-	Disabled bool
-}
-
-type IconButtonResult = ButtonResult
-
-// IconButton is a square button named for assistive technology.
-func IconButton(c *ui.Context, icon *pixel.Sprite, name string, o IconButtonOptions) IconButtonResult {
-	if name == "" {
-		panic("input: IconButton needs a name")
-	}
-	return Button(c, "", ButtonOptions{Variant: o.Variant, Size: o.Size, Icon: icon, Disabled: o.Disabled, Label: name})
-}

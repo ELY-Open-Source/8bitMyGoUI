@@ -274,18 +274,23 @@ func TestWebScripts(t *testing.T) {
 	}
 }
 
-// TestComponentsTakeTheirOptions holds PRD 5.1's shape: Name takes NameOptions.
+// TestComponentsTakeTheirOptions holds PRD 5.1's shape, one per file.
 func TestComponentsTakeTheirOptions(t *testing.T) {
 	for _, f := range files(t) {
 		tier, ok := tiers[f.pkg]
 		if !ok || tier < 2 || tier > 6 || strings.HasSuffix(f.path, "_test.go") {
 			continue
 		}
+		var found []string
 		for _, d := range f.ast.Decls {
 			fn, ok := d.(*ast.FuncDecl)
 			// Undrawn bases, as MyGo's own, are parts, not components.
 			if !ok || fn.Recv != nil || !fn.Name.IsExported() || strings.HasSuffix(fn.Name.Name, "Base") || len(fn.Type.Params.List) == 0 || !isContext(fn.Type.Params.List[0].Type) {
 				continue
+			}
+			// PRD G1: one component per file.
+			if found = append(found, fn.Name.Name); len(found) > 1 {
+				t.Errorf("%s holds %v; one component per file", f.path, found)
 			}
 			want := fn.Name.Name + "Options"
 			if !slices.ContainsFunc(fn.Type.Params.List, func(p *ast.Field) bool { return typeName(p.Type) == want }) {

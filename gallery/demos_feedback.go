@@ -20,7 +20,7 @@ var feedbackEntries = []Entry{
 	{110, "Alert", "提示框", "feedback", "A framed callout: info, success, warning or danger, with an optional ×.", demoAlert},
 	{111, "Banner", "横幅", "feedback", "A full-width strip with actions and a ×.", demoBanner},
 	{112, "EmptyState", "空状态", "feedback", "NO ITEMS over an empty chest, and something to do about it.", demoEmptyState},
-	{113, "ErrorState", "错误态", "feedback", "GAME OVER, a CONTINUE? countdown and RETRY. The gallery's own errors use it.", demoErrorState},
+	{113, "ErrorState", "错误态", "feedback", "GAME OVER, a CONTINUE? countdown, and CONTINUE. The gallery's own errors use it.", demoErrorState},
 	{114, "SuccessState", "通关", "feedback", "STAGE CLEAR! The stars pop in one by one.", demoSuccessState},
 	{115, "LoadingScreen", "加载画面", "feedback", "NOW LOADING with stepping dots and a tip every four seconds.", demoLoadingScreen},
 	{116, "DotsLoader", "点点加载", "feedback", "Three dots hopping in turn.", demoDotsLoader},

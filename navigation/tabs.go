@@ -23,20 +23,6 @@ func Tabs(c *ui.Context, text string, labels []string, selected *int, o TabsOpti
 	return tabs(c, text, labels, selected, false, o, panel)
 }
 
-type VerticalTabsOptions struct {
-	Disabled bool
-}
-
-type VerticalTabsResult struct {
-	Element *ui.Element
-	Changed bool
-}
-
-// VerticalTabs are tabs down the panel's left edge.
-func VerticalTabs(c *ui.Context, text string, labels []string, selected *int, o VerticalTabsOptions, panel func()) VerticalTabsResult {
-	return VerticalTabsResult(tabs(c, text, labels, selected, true, TabsOptions(o), panel))
-}
-
 // tabs lays tabs beside a panel; side means left.
 func tabs(c *ui.Context, text string, labels []string, selected *int, side bool, o TabsOptions, panel func()) TabsResult {
 	k := pixel.K(c)
