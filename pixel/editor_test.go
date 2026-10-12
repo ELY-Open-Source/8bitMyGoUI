@@ -336,3 +336,12 @@ func TestEditorSpaceDoesNotScroll(t *testing.T) {
 		t.Fatalf("value %q, scrolled to %v", value, scroll.Y)
 	}
 }
+
+func TestEditorTakesAValueChangedBetweenFrames(t *testing.T) {
+	h := newEdit(t, "help", 200, pixel.EditorOptions{})
+	h.focus()
+	// The caller clears it; a key lands before a frame.
+	h.value = ""
+	h.tt.Type("x")
+	h.want("x")
+}

@@ -81,6 +81,10 @@ func Editor(c *ui.Context, value *string, o EditorOptions) Edit {
 	composing := cb > ca
 	base.TextCaret(ui.Rect{X: k.D(cx - scroll), Y: k.D(cl * LineHeight), W: k.dot, H: k.D(LineHeight)})
 	base.HandleInput(func(ev ui.InputEvent) bool {
+		// The caller may have changed the value since this frame.
+		if string(s.text) != *value {
+			s.reset(*value)
+		}
 		took := s.handle(ev, env)
 		if s.changed {
 			*value = string(s.text)

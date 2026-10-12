@@ -39,6 +39,12 @@ func loadFont(b []byte) *font {
 	return &font{ascent: int(b[4]), descent: int(b[5]), n: n, index: b[10 : 10+8*n], data: b}
 }
 
+// Has reports whether the font draws r, not tofu.
+func Has(r rune) bool {
+	_, ok := font12.find(r)
+	return ok
+}
+
 func (f *font) find(r rune) (glyph, bool) {
 	lo, hi := 0, f.n
 	for lo < hi {

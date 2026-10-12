@@ -38,3 +38,36 @@ func TestMediaDemosLogTheirActions(t *testing.T) {
 		}
 	}
 }
+
+func TestCodeDemosLogTheirActions(t *testing.T) {
+	quiet := map[string]bool{"COMMAND": true}
+	for _, tc := range []struct {
+		path  string
+		steps []string
+	}{
+		{"/c/366-terminal", []string{"COMMAND", "type:help", "key:Enter", "key:Up"}}, {"/c/367-codeblock", []string{"COPY"}},
+		{"/c/368-logviewer", []string{"WARN", "+ LINE"}}, {"/c/369-hexviewer", []string{"save.dat"}},
+		{"/c/371-jsontree", []string{"save.json"}}, {"/c/373-crashscreen", []string{"CONTINUE?", "CRASH AGAIN"}},
+		{"/c/376-breakpoints", []string{"jump.go"}}, {"/c/377-variables", []string{"Locals"}},
+		{"/c/378-commandhistory", []string{"run", "key:Enter"}}, {"/c/380-debuggrid", []string{"ALIGNED?"}},
+		{"/c/381-pixeleditor", []string{"Heart", "COPY"}}, {"/c/382-paletteeditor", []string{"R"}},
+		{"/c/383-spritesheet", []string{"PLAY"}}, {"/c/384-glyphmap", []string{"Font"}}, {"/c/385-registerview", []string{"STEP"}},
+	} {
+		a, tt := open(tc.path)
+		slug := tc.path[3:]
+		for _, step := range tc.steps {
+			before := len(a.logs[slug])
+			switch {
+			case strings.HasPrefix(step, "key:"):
+				tt.Key(0, letters[step[4:]])
+			case strings.HasPrefix(step, "type:"):
+				tt.Type(step[5:])
+			default:
+				click(t, tt, step)
+			}
+			if len(a.logs[slug]) <= before && !quiet[step] && !strings.HasPrefix(step, "type:") {
+				t.Errorf("%s: %s logged nothing: %q", slug, step, a.logs[slug])
+			}
+		}
+	}
+}

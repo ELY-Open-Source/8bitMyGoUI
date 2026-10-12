@@ -107,6 +107,30 @@ func SpriteOf(w, h int, at func(x, y int) (Slot, bool)) *Sprite {
 	return &Sprite{W: w, H: h, frames: [][]int8{px}}
 }
 
+// Art writes s as MustSprite reads it, frames apart.
+func (s *Sprite) Art() string {
+	var b strings.Builder
+	for f, px := range s.frames {
+		if f > 0 {
+			b.WriteByte('\n')
+		}
+		for y := range s.H {
+			for _, v := range px[y*s.W : (y+1)*s.W] {
+				switch v {
+				case cellClear:
+					b.WriteByte('.')
+				case cellInk:
+					b.WriteByte('#')
+				default:
+					b.WriteByte(artSlots[v])
+				}
+			}
+			b.WriteByte('\n')
+		}
+	}
+	return b.String()
+}
+
 // Mirror returns s flipped left to right.
 func (s *Sprite) Mirror() *Sprite {
 	m := &Sprite{W: s.W, H: s.H}

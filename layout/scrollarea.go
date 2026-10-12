@@ -25,7 +25,9 @@ var (
 
 type ScrollAreaOptions struct {
 	// Label names the region for assistive technology.
-	Label    string
+	Label string
+	// Follow keeps the view at the end while there.
+	Follow   bool
 	Disabled bool
 }
 
@@ -37,17 +39,32 @@ type ScrollAreaResult struct {
 
 type scrollKey struct{}
 
+// area is the last view and the end last reached.
+type area struct {
+	last, end float32
+}
+
 // ScrollArea scrolls children vertically beside a pixel scrollbar.
 func ScrollArea(c *ui.Context, s *ui.ScrollState, o ScrollAreaOptions, children func()) ScrollAreaResult {
 	k := pixel.K(c)
 	// The bar comes first: TrackScroll reads s when called.
 	row := ui.Row(c).AlignItems(ui.Stretch).Reverse()
-	last := ui.Local(row, scrollKey{}, func() float32 { return s.Y })
+	st := ui.Local(row, scrollKey{}, func() area { return area{last: s.Y} })
 	view := row.Bounds().H
 	// Off freezes the view: any move is undone before paint.
 	inert := pixel.Current(c).Inert
-	if o.Disabled || inert {
-		s.Y = *last
+	off := o.Disabled || inert
+	if off {
+		s.Y = st.last
+	}
+	// Content grew under a view at its old end: follow.
+	grew := func() bool { return o.Follow && s.MaxY > st.end && s.Y >= st.end }
+	// Off, the end waits until it wakes.
+	if !off {
+		if grew() {
+			s.Y = s.MaxY
+		}
+		st.end = s.MaxY
 	}
 	var v *ui.Element
 	row.Children(func() {
@@ -69,7 +86,8 @@ func ScrollArea(c *ui.Context, s *ui.ScrollState, o ScrollAreaOptions, children 
 	})
 	focus := v.FocusVisible()
 	row.Draw(func(p *ui.Painter, r ui.Rect) {
-		if r.H != view {
+		// Layout has just measured; resize or follow next frame.
+		if r.H != view || !off && grew() {
 			c.Invalidate()
 		}
 	}).DrawOver(func(p *ui.Painter, r ui.Rect) {
@@ -82,8 +100,8 @@ func ScrollArea(c *ui.Context, s *ui.ScrollState, o ScrollAreaOptions, children 
 			g.Checker(w-1, 0, 1, g.H, pixel.Accent)
 		}
 	})
-	res := ScrollAreaResult{Element: row, Changed: s.Y != *last}
-	*last = s.Y
+	res := ScrollAreaResult{Element: row, Changed: s.Y != st.last}
+	st.last = s.Y
 	if res.Changed {
 		slog.Debug("8bit: scrollarea scrolled", "y", s.Y)
 	}

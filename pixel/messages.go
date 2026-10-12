@@ -35,6 +35,8 @@ var messages = map[Locale]map[string]string{
 		"mute": "MUTE", "camera": "CAMERA", "hang_up": "HANG UP", "new_count": "%d NEW", "votes": "%d VOTES", "unread": "%d UNREAD",
 		"day_date": "%[1]s %[2]d %[3]s", "category": "CATEGORY", "days": "SUN MON TUE WED THU FRI SAT",
 		"prev_track": "PREVIOUS", "next_track": "NEXT", "play": "PLAY", "volume": "VOLUME", "rec": "REC", "playing": "PLAYING", "seek": "SEEK",
+		"copy": "COPY", "copied": "COPIED!", "command": "COMMAND", "breakpoint": "BREAKPOINT",
+		"tool": "TOOL", "pen": "PEN", "fill": "FILL", "erase": "ERASE", "pick": "PICK", "grid": "GRID", "color": "COLOR", "preview": "PREVIEW",
 	},
 	Zh: {
 		"ok": "确定", "cancel": "取消", "yes": "是", "no": "否", "close": "关闭",
@@ -68,6 +70,8 @@ var messages = map[Locale]map[string]string{
 		"mute": "静音", "camera": "摄像头", "hang_up": "挂断", "new_count": "%d 条新", "votes": "%d 票", "unread": "%d 未读",
 		"day_date": "%[4]d月%[2]d日 周%[1]s", "category": "类别", "days": "日 一 二 三 四 五 六",
 		"prev_track": "上一首", "next_track": "下一首", "play": "播放", "volume": "音量", "rec": "录制", "playing": "正在播放", "seek": "进度",
+		"copy": "复制", "copied": "已复制！", "command": "命令", "breakpoint": "断点",
+		"tool": "工具", "pen": "铅笔", "fill": "填充", "erase": "橡皮", "pick": "吸管", "grid": "网格", "color": "颜色", "preview": "预览",
 	},
 }
 

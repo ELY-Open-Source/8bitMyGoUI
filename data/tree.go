@@ -3,6 +3,7 @@ package data
 import (
 	"log/slog"
 	"strconv"
+	"strings"
 
 	"github.com/egoist/mygo/ui"
 
@@ -10,7 +11,10 @@ import (
 )
 
 type TreeNode struct {
-	Label    string
+	Label string
+	// Value follows the label in Slot, as a key's value.
+	Value    string
+	Slot     pixel.Slot
 	Children []TreeNode
 }
 
@@ -102,7 +106,7 @@ func Tree(c *ui.Context, text string, roots []TreeNode, selected *string, o Tree
 	}
 	*selected = rows[at].key
 	res.Changed = *selected != old
-	base.Description(nodes[*selected].Label)
+	base.Description(strings.TrimSpace(nodes[*selected].Label + " " + nodes[*selected].Value))
 	shown := rows
 	shell.Size(k.D(pixel.Or("Tree Width", o.Width, 160)), k.D(len(shown)*pixel.LineHeight)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)
@@ -119,7 +123,15 @@ func Tree(c *ui.Context, text string, roots []TreeNode, selected *string, o Tree
 					g.Sprite(x+4, y+5, pointer, 0, ink, 1)
 				}
 			}
-			g.Text(x+12, y, nodes[rw.key].Label, ink, 1)
+			n := nodes[rw.key]
+			g.Text(x+12, y, n.Label, ink, 1)
+			// On the chosen row the value takes its ink.
+			if vs := n.Slot; n.Value != "" {
+				if i == at {
+					vs = ink
+				}
+				g.Text(x+18+pixel.Measure(n.Label), y, n.Value, vs, 1)
+			}
 		}
 		g.Finish(st)
 	})
