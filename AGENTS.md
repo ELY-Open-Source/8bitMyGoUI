@@ -57,7 +57,11 @@ Imports point down only. Same-tier imports are forbidden. `internal/archtest` en
 - `k := pixel.K(c)` once per component; layout sizes through `k.D(n)`.
 - Containers take content as a final `func()`; interactive results are `NameResult`.
 - A Clicked, Shortcut, Changed or drag during the build makes MyGo build the frame again, so what they change shows at once. State changed any other way after its element was built (`Pressed`, `Edit.Changed`) is read at paint time.
-- Never call `Selected`: MyGo paints it in the accent color. Radios are `CheckboxBase` with `RoleRadio`.
+- Never call `Selected`: MyGo paints it in the accent color.
+- A press focuses the nearest focusable element under it, or nothing; a closing overlay hands the focus back to its opener. While a press is on, `Hovered` is false for every other element: ask `Pressed`.
+- Enter and Space click a focused clickable element unless a `Shortcut` takes them. Take them wherever a click reads the pointer's position.
+- Elements are known by their place among siblings. Wrap one whose earlier siblings come and go in `ui.Box(c).Key(k)`, or it loses focus and state.
+- Hosts send a key's release with its press, so tell a held key by its repeats.
 - Clip only boxes that sit on whole dots; split widths with whole-dot shares, not equal `Grow`. `Grow` starts from zero size, so never use it on a content-sized child.
 - Row builders that MyGo runs during layout (`List`, `GridView`, `Outline`) go through `pixel.Lazy(c, row)`.
 - Single-key shortcuts only while `pixel.Typing(c)` is false; MyGo routes shortcuts before a focused field.

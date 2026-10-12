@@ -47,21 +47,25 @@ func field(c *ui.Context, value *string, eo pixel.EditorOptions, width int, bad 
 	})
 	focus := ed.Focused
 	e.Draw(func(p *ui.Painter, r ui.Rect) {
-		g := k.Canvas(p, r)
 		edge := pixel.Edge
 		if bad != nil && bad() {
 			edge = pixel.Bad
 		}
-		g.Frame(0, 0, g.W, g.H, pixel.Sunken, pixel.Well)
-		g.HLine(1, 0, g.W-2, edge)
-		g.HLine(1, g.H-1, g.W-2, edge)
-		g.VLine(0, 1, g.H-2, edge)
-		g.VLine(g.W-1, 1, g.H-2, edge)
-		if focus {
-			g.Checker(0, g.H-2, g.W, 1, pixel.Accent)
-		}
+		well(k.Canvas(p, r), edge, focus)
 	})
 	return ed, e
+}
+
+// well is a field's sunken box; focus dots its foot.
+func well(g pixel.Canvas, edge pixel.Slot, focus bool) {
+	g.Frame(0, 0, g.W, g.H, pixel.Sunken, pixel.Well)
+	g.HLine(1, 0, g.W-2, edge)
+	g.HLine(1, g.H-1, g.W-2, edge)
+	g.VLine(0, 1, g.H-2, edge)
+	g.VLine(g.W-1, 1, g.H-2, edge)
+	if focus {
+		g.Checker(0, g.H-2, g.W, 1, pixel.Accent)
+	}
 }
 
 // result wraps an editor's events and logs submits.

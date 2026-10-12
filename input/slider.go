@@ -53,16 +53,7 @@ func slide(c *ui.Context, v *float64, r rail) (*ui.Element, pixel.State, bool) {
 		return ui.Box(c).Focusable().Role(ui.RoleSlider).Label(r.label).Description(fmtValue(*v)).Disabled(r.disabled)
 	})
 	old := *v
-	top := r.hi
-	if r.step > 0 {
-		top = r.lo + math.Floor((r.hi-r.lo)/r.step+1e-9)*r.step
-	}
-	set := func(x float64) {
-		if r.step > 0 {
-			x = r.lo + math.Round((x-r.lo)/r.step)*r.step
-		}
-		*v = max(r.lo, min(top, x))
-	}
+	set := r.snap(v)
 	if !r.disabled {
 		if _, _, held := base.Dragged(); held {
 			px, py, _ := base.PointerPosition()
@@ -73,24 +64,46 @@ func slide(c *ui.Context, v *float64, r rail) (*ui.Element, pixel.State, bool) {
 			}
 			set(r.lo + frac*(r.hi-r.lo))
 		}
-		step := r.step
-		if step == 0 {
-			step = (r.hi - r.lo) / 20
-		}
-		for _, kd := range []struct {
-			key ui.Key
-			to  func() float64
-		}{
-			{ui.KeyLeft, func() float64 { return *v - step }}, {ui.KeyDown, func() float64 { return *v - step }},
-			{ui.KeyRight, func() float64 { return *v + step }}, {ui.KeyUp, func() float64 { return *v + step }},
-			{ui.KeyHome, func() float64 { return r.lo }}, {ui.KeyEnd, func() float64 { return r.hi }},
-		} {
-			if base.Shortcut(0, kd.key) {
-				set(kd.to())
-			}
-		}
+		r.keys(base, v, set)
 	}
 	return shell, st, *v != old
+}
+
+// snap sets *v rounded to steps and kept in range.
+func (r rail) snap(v *float64) func(float64) {
+	if r.step < 0 {
+		panic(fmt.Sprintf("input: Step %v is negative", r.step))
+	}
+	top := r.hi
+	if r.step > 0 {
+		top = r.lo + math.Floor((r.hi-r.lo)/r.step+1e-9)*r.step
+	}
+	return func(x float64) {
+		if r.step > 0 {
+			x = r.lo + math.Round((x-r.lo)/r.step)*r.step
+		}
+		*v = max(r.lo, min(top, x))
+	}
+}
+
+// keys step *v by arrows; Home and End jump.
+func (r rail) keys(base *ui.Element, v *float64, set func(float64)) {
+	step := r.step
+	if step == 0 {
+		step = (r.hi - r.lo) / 20
+	}
+	for _, kd := range []struct {
+		key ui.Key
+		to  func() float64
+	}{
+		{ui.KeyLeft, func() float64 { return *v - step }}, {ui.KeyDown, func() float64 { return *v - step }},
+		{ui.KeyRight, func() float64 { return *v + step }}, {ui.KeyUp, func() float64 { return *v + step }},
+		{ui.KeyHome, func() float64 { return r.lo }}, {ui.KeyEnd, func() float64 { return r.hi }},
+	} {
+		if base.Shortcut(0, kd.key) {
+			set(kd.to())
+		}
+	}
 }
 
 // bounds are lo and hi; zeros mean 0 to 1.

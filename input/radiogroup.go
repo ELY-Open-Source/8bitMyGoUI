@@ -41,11 +41,11 @@ func RadioGroup(c *ui.Context, labels []string, selected *int, o RadioGroupOptio
 			shell, base, st := pixel.Shell(c, func() *ui.Element {
 				return ui.CheckboxBase(c, &on).Role(ui.RoleRadio).Label(l).Disabled(o.Disabled)
 			})
-			if base.FocusVisible() {
+			if base.Focused() {
 				focus = i
 			}
-			// Focus moved by arrows chooses; entering by Tab does not.
-			moved := focus == i && *last >= 0 && *last != i
+			// Arrow moves show focus and choose; Tab entry does not.
+			moved := base.FocusVisible() && *last >= 0 && *last != i
 			if !was && (base.Changed() || moved) {
 				*selected, res.Changed = i, true
 			}

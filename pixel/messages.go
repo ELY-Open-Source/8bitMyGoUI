@@ -12,6 +12,7 @@ var messages = map[Locale]map[string]string{
 		"remove": "REMOVE", "online": "ONLINE", "away": "AWAY", "busy": "BUSY", "offline": "OFFLINE",
 		"gold": "GOLD", "silver": "SILVER", "bronze": "BRONZE",
 		"common": "COMMON", "uncommon": "UNCOMMON", "rare": "RARE", "epic": "EPIC", "legendary": "LEGENDARY",
+		"hold": "HOLD TO CONFIRM", "del": "DEL", "end": "END", "lives": "+30 LIVES!",
 	},
 	Zh: {
 		"ok": "确定", "cancel": "取消", "yes": "是", "no": "否", "close": "关闭",
@@ -22,6 +23,7 @@ var messages = map[Locale]map[string]string{
 		"remove": "移除", "online": "在线", "away": "离开", "busy": "忙碌", "offline": "离线",
 		"gold": "金", "silver": "银", "bronze": "铜",
 		"common": "普通", "uncommon": "优秀", "rare": "稀有", "epic": "史诗", "legendary": "传说",
+		"hold": "长按确认", "del": "删", "end": "完", "lives": "命数 +30！",
 	},
 }
 

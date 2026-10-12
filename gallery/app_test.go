@@ -218,3 +218,35 @@ func TestInputDemosLogEveryClick(t *testing.T) {
 		}
 	}
 }
+
+func TestControlDemosLogTheirEvents(t *testing.T) {
+	for slug, act := range map[string]func(tt *ui.Tester){
+		"088-combobox":        func(tt *ui.Tester) { click(t, tt, "Item"); tt.Type("p") },
+		"089-autocomplete":    func(tt *ui.Tester) { click(t, tt, "Spell"); tt.Type("f") },
+		"094-pininput":        func(tt *ui.Tester) { click(t, tt, "Vault code"); tt.Type("1") },
+		"095-nameentry":       func(tt *ui.Tester) { click(t, tt, "Initials") },
+		"096-virtualkeyboard": func(tt *ui.Tester) { click(t, tt, "Message") },
+		"103-joystick":        func(tt *ui.Tester) { click(t, tt, "Stick"); tt.Key(0, ui.KeyRight) },
+		"105-slotpicker":      func(tt *ui.Tester) { click(t, tt, "Reel 1"); tt.Key(0, ui.KeyDown) },
+		"101-fieldset":        func(tt *ui.Tester) { click(t, tt, "Guild name"); tt.Type("a") },
+	} {
+		a, tt := open("/c/" + slug)
+		act(tt)
+		if len(a.logs[slug]) == 0 {
+			t.Errorf("%s logged nothing", slug)
+		}
+	}
+}
+
+func TestFieldDemoLogsSubmit(t *testing.T) {
+	a, tt := open("/c/100-field")
+	// The group shares its name; the input sits below.
+	r, _ := tt.Find("Call sign")
+	tt.ClickAt(r.X+20, r.Y+58)
+	tt.Type("Ace")
+	n := len(a.logs["100-field"])
+	tt.Key(0, ui.KeyEnter)
+	if len(a.logs["100-field"]) == n {
+		t.Fatal("Enter in the field logged nothing")
+	}
+}

@@ -92,11 +92,17 @@ type State struct{ Hover, Press, Focus, Disabled bool }
 func Shell(c *ui.Context, base func() *ui.Element) (shell, b *ui.Element, st State) {
 	shell = ui.Box(c)
 	shell.Children(func() { b = base().Fill().FocusRing(false) })
-	st = State{Hover: b.Hovered(), Press: b.Pressed(), Focus: b.FocusVisible(), Disabled: b.IsDisabled()}
+	off := b.IsDisabled()
+	// MyGo keeps focus and keys on a newly disabled element.
+	if off && b.Focused() {
+		c.Root().Focus()
+	}
+	st = State{Hover: b.Hovered(), Press: b.Pressed() && !off, Focus: b.FocusVisible(), Disabled: off}
 	return shell, b, st
 }
 
-var hand = MustSprite(`
+// Hand is the pointing cursor of focus and menus.
+var Hand = MustSprite(`
 	.eee......
 	elllleeee.
 	elllllllle
@@ -116,7 +122,7 @@ func (g Canvas) FocusMark(x, y, w, h int) {
 		g.ant(rx, ry+j)
 		g.ant(rx+rw-1, ry+j)
 	}
-	g.Sprite(rx-hand.W-1+g.Step(4)%2, y+(h-hand.H)/2, hand, 0, Edge, 1)
+	g.Sprite(rx-Hand.W-1+g.Step(4)%2, y+(h-Hand.H)/2, Hand, 0, Edge, 1)
 }
 
 func (g Canvas) ant(x, y int) {
