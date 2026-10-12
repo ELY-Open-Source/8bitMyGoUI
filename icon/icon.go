@@ -31,7 +31,7 @@ var All = []Named{
 	{"heart", Heart}, {"heart-empty", HeartEmpty}, {"star", Star}, {"star-empty", StarEmpty},
 	{"sparkle", Sparkle}, {"volume", Volume}, {"mute", Mute}, {"play", Play},
 	{"pause", Pause}, {"stop", Stop}, {"next", Next}, {"prev", Prev},
-	{"coin", Coin}, {"gem", Gem}, {"crystal", Crystal}, {"potion", Potion}, {"sword", Sword},
+	{"coin", Coin}, {"gem", Gem}, {"crystal", Crystal}, {"bomb", Bomb}, {"potion", Potion}, {"sword", Sword},
 	{"shield", Shield}, {"chest", Chest}, {"crown", Crown}, {"trophy", Trophy},
 	{"skull", Skull}, {"scroll", Scroll}, {"flame", Flame}, {"drop", Drop},
 	{"leaf", Leaf}, {"flower", Flower}, {"sun", Sun}, {"moon", Moon},

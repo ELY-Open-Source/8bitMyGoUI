@@ -65,6 +65,12 @@ var messages = map[Locale]map[string]string{
 		"danger": "DANGER!", "log_thought": "%s ponders: %s", "log_cast": "%s casts %s!", "log_hit": "A hit! %s",
 		"log_miss": "A miss! %s", "log_said": "%s: %s", "empty_crystal": "EMPTY CRYSTAL", "files_changed": "FILES CHANGED: %d",
 		"speed": "SPD", "power": "POW", "cost": "COST", "cast": "CAST", "restore": "RESTORE",
+		"paper_checks": "CHECKS", "paper_bricks": "BRICKS", "paper_weave": "WEAVE", "paper_dots": "DOTS", "paper_waves": "WAVES",
+		"paper_fade": "FADE", "arrows_move": "ARROWS MOVE IT", "menu_bar": "MENU", "file_menu": "FILE", "edit_menu": "EDIT",
+		"new_file": "NEW", "save": "SAVE", "time_date": "TIME/DATE", "open_windows": "OPEN WINDOWS", "tray": "TRAY",
+		"run": "RUN", "run_prompt": "TYPE A PROGRAM'S NAME, AND IT WILL OPEN.", "open_label": "OPEN:",
+		"safe_to_turn_off": "IT'S NOW SAFE TO TURN OFF YOUR COMPUTER.", "memory_test": "MEMORY TEST: %dK",
+		"press_any_key": "PRESS ANY KEY", "minefield": "MINEFIELD", "flag": "FLAG", "mine": "MINE", "percent_done": "%d%% DONE",
 	},
 	Zh: {
 		"ok": "确定", "cancel": "取消", "yes": "是", "no": "否", "close": "关闭",
@@ -128,6 +134,12 @@ var messages = map[Locale]map[string]string{
 		"danger": "危险！", "log_thought": "%s沉思：%s", "log_cast": "%s释放了%s！", "log_hit": "命中！%s",
 		"log_miss": "落空！%s", "log_said": "%s：%s", "empty_crystal": "空水晶", "files_changed": "改动文件：%d",
 		"speed": "速度", "power": "力量", "cost": "花费", "cast": "释放", "restore": "读档",
+		"paper_checks": "格子", "paper_bricks": "砖墙", "paper_weave": "编织", "paper_dots": "圆点", "paper_waves": "波浪",
+		"paper_fade": "渐变", "arrows_move": "方向键移动", "menu_bar": "菜单", "file_menu": "文件", "edit_menu": "编辑",
+		"new_file": "新建", "save": "保存", "time_date": "时间/日期", "open_windows": "已开程序", "tray": "托盘",
+		"run": "运行", "run_prompt": "输入程序的名称，就能打开它。", "open_label": "打开：",
+		"safe_to_turn_off": "现在可以安全地关闭计算机了。", "memory_test": "内存测试：%dK",
+		"press_any_key": "按任意键", "minefield": "雷区", "flag": "旗子", "mine": "地雷", "percent_done": "已完成 %d%%",
 	},
 }
 
