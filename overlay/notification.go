@@ -52,7 +52,7 @@ func Notifications(c *ui.Context, queue *[]Notification, o NotificationsOptions)
 		if life == 0 {
 			life = 5 * time.Second
 		}
-		if n.shown.IsZero() || now.Sub(n.shown) < life {
+		if n.shown.IsZero() || k.Elapsed(&n.shown) < life {
 			kept = append(kept, n)
 		}
 	}

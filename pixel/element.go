@@ -102,6 +102,12 @@ func Shell(c *ui.Context, base func() *ui.Element) (shell, b *ui.Element, st Sta
 	return shell, b, st
 }
 
+// Shortcut is e's key this frame, while e is enabled.
+func Shortcut(e *ui.Element, mods ui.Modifiers, key ui.Key) bool {
+	// MyGo still hands keys to a base just turned off.
+	return e.Shortcut(mods, key) && !e.IsDisabled()
+}
+
 type parkKey struct{}
 
 // Park moves focus off e while off, back once on.

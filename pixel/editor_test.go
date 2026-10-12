@@ -345,3 +345,36 @@ func TestEditorTakesAValueChangedBetweenFrames(t *testing.T) {
 	h.tt.Type("x")
 	h.want("x")
 }
+
+func TestEditorVeilKeepsCallersAndClipboard(t *testing.T) {
+	// The caller writes during the build the veil falls in.
+	v, inert, update := "old", false, false
+	tt := ui.NewTester(func(c *ui.Context) {
+		pixel.Use(c, pixel.Settings{Palette: pixel.SpringDay, Inert: inert})
+		if update {
+			v, update = "server", false
+		}
+		pixel.Editor(c, &v, pixel.EditorOptions{Label: "Edit"}).Element.Width(200)
+	}, 400, 100)
+	tt.Key(0, ui.KeyTab)
+	inert, update = true, true
+	tt.Type("x")
+	if v != "server" {
+		t.Fatalf("the caller's write became %q", v)
+	}
+	for _, command := range []string{"copy", "cut"} {
+		v, inert := "SecretValue", false
+		tt := ui.NewTester(func(c *ui.Context) {
+			pixel.Use(c, pixel.Settings{Palette: pixel.SpringDay, Inert: inert})
+			pixel.Editor(c, &v, pixel.EditorOptions{Label: "Edit"}).Element.Width(200)
+		}, 400, 100)
+		tt.Key(0, ui.KeyTab)
+		tt.Key(ui.Cmd, ui.KeyA)
+		tt.SetClipboard("original")
+		inert = true
+		tt.Command(command)
+		if got := tt.Clipboard(); got != "original" || v != "SecretValue" {
+			t.Errorf("%s as the veil fell: clipboard %q, value %q", command, got, v)
+		}
+	}
+}

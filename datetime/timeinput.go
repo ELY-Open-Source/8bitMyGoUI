@@ -47,22 +47,22 @@ func TimeInput(c *ui.Context, text string, tm *time.Time, o TimeInputOptions) Ti
 		}
 		s.first = -1
 	}
-	if base.Shortcut(0, ui.KeyUp) {
+	if pixel.Shortcut(base, 0, ui.KeyUp) {
 		step(1)
 	}
-	if base.Shortcut(0, ui.KeyDown) {
+	if pixel.Shortcut(base, 0, ui.KeyDown) {
 		step(-1)
 	}
 	for _, mv := range []struct {
 		key ui.Key
 		seg int
 	}{{ui.KeyLeft, 0}, {ui.KeyRight, 1}} {
-		if base.Shortcut(0, mv.key) {
+		if pixel.Shortcut(base, 0, mv.key) {
 			s.seg, s.first = mv.seg, -1
 		}
 	}
 	for d := range 10 {
-		if !base.Shortcut(0, ui.Key0+ui.Key(d)) {
+		if !pixel.Shortcut(base, 0, ui.Key0+ui.Key(d)) {
 			continue
 		}
 		top := 23
@@ -86,8 +86,8 @@ func TimeInput(c *ui.Context, text string, tm *time.Time, o TimeInputOptions) Ti
 		}
 	}
 	// Enter and Space are taken, so clicks come from pointers.
-	base.Shortcut(0, ui.KeyEnter)
-	base.Shortcut(0, ui.KeySpace)
+	pixel.Shortcut(base, 0, ui.KeyEnter)
+	pixel.Shortcut(base, 0, ui.KeySpace)
 	if base.Clicked() {
 		x, _, _ := base.PointerPosition()
 		s.seg, s.first = 0, -1

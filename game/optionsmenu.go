@@ -73,21 +73,21 @@ func OptionsMenu(c *ui.Context, text string, settings []Setting, row *int, o Opt
 			*s.Value, res.Changed = v, true
 		}
 	}
-	if base.Shortcut(0, ui.KeyUp) && *row > 0 {
+	if pixel.Shortcut(base, 0, ui.KeyUp) && *row > 0 {
 		*row--
 	}
-	if base.Shortcut(0, ui.KeyDown) && *row < len(settings)-1 {
+	if pixel.Shortcut(base, 0, ui.KeyDown) && *row < len(settings)-1 {
 		*row++
 	}
-	if base.Shortcut(0, ui.KeyLeft) {
+	if pixel.Shortcut(base, 0, ui.KeyLeft) {
 		step(-1)
 	}
-	if base.Shortcut(0, ui.KeyRight) {
+	if pixel.Shortcut(base, 0, ui.KeyRight) {
 		step(1)
 	}
 	// Enter and Space are taken, so clicks come from pointers.
-	base.Shortcut(0, ui.KeyEnter)
-	base.Shortcut(0, ui.KeySpace)
+	pixel.Shortcut(base, 0, ui.KeyEnter)
+	pixel.Shortcut(base, 0, ui.KeySpace)
 	aw := pixel.Measure("◀")
 	ax := pixel.Hand.W + 4 + name + 10
 	vx := ax + aw + 3

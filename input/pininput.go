@@ -22,6 +22,12 @@ type PinInputResult struct {
 
 type pinKey struct{}
 
+// pin: a change since last frame, and the prior value.
+type pin struct {
+	changed bool
+	kept    string
+}
+
 const pinBox, pinGap = 12, 4
 
 // PinInput types digits into boxes; Backspace goes back, paste fills.
@@ -31,7 +37,12 @@ func PinInput(c *ui.Context, text string, value *string, o PinInputOptions) PinI
 	shell, base, st := pixel.Shell(c, func() *ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleTextField).Label(text).Description(*value).Disabled(o.Disabled)
 	})
-	changed := ui.Local(base, pinKey{}, func() bool { return false })
+	p := ui.Local(base, pinKey{}, func() pin { return pin{} })
+	changed := &p.changed
+	// The handler runs before this frame knows it is off.
+	if p.changed && base.IsDisabled() {
+		*value, p.changed = p.kept, false
+	}
 	put := func(s string) {
 		for _, r := range s {
 			if r >= '0' && r <= '9' && len(*value) < n {
@@ -41,6 +52,9 @@ func PinInput(c *ui.Context, text string, value *string, o PinInputOptions) PinI
 		}
 	}
 	base.HandleInput(func(ev ui.InputEvent) bool {
+		if !p.changed {
+			p.kept = *value
+		}
 		switch {
 		case ev.Kind == ui.InputText:
 			put(ev.Text)

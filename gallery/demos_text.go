@@ -113,7 +113,7 @@ func demoBlinkText(c *ui.Context, log func(string)) {
 	k := pixel.K(c)
 	ui.Row(c).Gap(k.D(12)).Children(func() {
 		text.BlinkText(c, "PRESS START", text.BlinkTextOptions{Scale: 2})
-		text.BlinkText(c, "LOW HP", text.BlinkTextOptions{Slot: pixel.Bad, FPS: 6})
+		text.BlinkText(c, "LOW HP", text.BlinkTextOptions{Slot: pixel.Bad, FPS: 12})
 	})
 }
 

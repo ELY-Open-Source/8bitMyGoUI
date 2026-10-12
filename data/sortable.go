@@ -50,16 +50,16 @@ func Sortable(c *ui.Context, text string, items *[]string, o SortableOptions) So
 		*items = slices.Insert(slices.Delete(*items, from, from+1), to, it)
 		s.cur, res.Changed = to, true
 	}
-	if base.Shortcut(0, ui.KeyDown) {
+	if pixel.Shortcut(base, 0, ui.KeyDown) {
 		s.cur = min(s.cur+1, n-1)
 	}
-	if base.Shortcut(0, ui.KeyUp) {
+	if pixel.Shortcut(base, 0, ui.KeyUp) {
 		s.cur = max(s.cur-1, 0)
 	}
-	if base.Shortcut(ui.Alt, ui.KeyDown) {
+	if pixel.Shortcut(base, ui.Alt, ui.KeyDown) {
 		move(s.cur, s.cur+1)
 	}
-	if base.Shortcut(ui.Alt, ui.KeyUp) {
+	if pixel.Shortcut(base, ui.Alt, ui.KeyUp) {
 		move(s.cur, s.cur-1)
 	}
 	// A press takes a row; dragging carries it.

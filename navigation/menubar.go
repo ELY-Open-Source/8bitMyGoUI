@@ -44,9 +44,8 @@ func MenuBar(c *ui.Context, text string, menus []Menu, o MenuBarOptions) MenuBar
 		b.open = i
 		b.m.show(menus[i].Items)
 	}
+	// The title keeps the focus and parks it while off.
 	if off && b.open >= 0 {
-		// Closing on disable must not return focus to it.
-		c.Root().Focus()
 		b.open = -1
 	}
 	if b.open >= 0 && !b.m.open {
@@ -55,7 +54,7 @@ func MenuBar(c *ui.Context, text string, menus []Menu, o MenuBarOptions) MenuBar
 	n := len(menus)
 	// Left and Right hand an open menu to its neighbor.
 	if b.open >= 0 {
-		left, right := row.Shortcut(0, ui.KeyLeft), row.Shortcut(0, ui.KeyRight)
+		left, right := pixel.Shortcut(row, 0, ui.KeyLeft), pixel.Shortcut(row, 0, ui.KeyRight)
 		switch {
 		case left:
 			open((b.open + n - 1) % n)
@@ -87,7 +86,7 @@ func MenuBar(c *ui.Context, text string, menus []Menu, o MenuBarOptions) MenuBar
 			case t.Clicked:
 				open(i)
 				anchor = t.Element
-			case b.open < 0 && !off && t.Element.FocusWithin() && row.Shortcut(0, ui.KeyDown):
+			case b.open < 0 && !off && t.Element.FocusWithin() && pixel.Shortcut(row, 0, ui.KeyDown):
 				open(i)
 				anchor = t.Element
 			}

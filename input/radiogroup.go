@@ -46,7 +46,7 @@ func RadioGroup(c *ui.Context, labels []string, selected *int, o RadioGroupOptio
 			}
 			// Arrow moves show focus and choose; Tab entry does not.
 			moved := base.FocusVisible() && *last >= 0 && *last != i
-			if !was && (base.Changed() || moved) {
+			if !was && (base.Changed() || moved) && !base.IsDisabled() {
 				*selected, res.Changed = i, true
 			}
 			shell.Size(k.D(12+pixel.Measure(l)), k.D(pixel.LineHeight)).Draw(func(p *ui.Painter, r ui.Rect) {

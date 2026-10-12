@@ -36,7 +36,7 @@ func PromptDialog(c *ui.Context, title string, value *string, open *bool, o Prom
 						f := input.TextInput(c, title, value, input.TextInputOptions{Placeholder: o.Placeholder, MaxLength: o.MaxLength, Width: 196, Disabled: o.Disabled})
 						f.Input.AutoFocus()
 						// A Shortcut, not Submitted: the frame builds again closed.
-						if f.Element.Shortcut(0, ui.KeyEnter) && !o.Disabled {
+						if pixel.Shortcut(f.Element, 0, ui.KeyEnter) && !o.Disabled {
 							res.Submitted, *open = true, false
 						}
 						actions(c, []string{k.Msg("cancel"), k.Msg("ok")}, o.Disabled, func(i int) {

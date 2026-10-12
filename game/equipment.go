@@ -66,7 +66,7 @@ func Equipment(c *ui.Context, text string, gear []data.Item, selected *int, o Eq
 	})
 	arrows(base, spots, selected)
 	res := EquipmentResult{Element: shell, Picked: -1}
-	if base.Shortcut(0, ui.KeyEnter) || base.Shortcut(0, ui.KeySpace) {
+	if pixel.Shortcut(base, 0, ui.KeyEnter) || pixel.Shortcut(base, 0, ui.KeySpace) {
 		res.Picked = *selected
 	}
 	left := (w - (3*pitch - 4)) / 2

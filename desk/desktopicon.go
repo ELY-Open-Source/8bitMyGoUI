@@ -34,7 +34,7 @@ func DesktopIcon(c *ui.Context, label string, icon *pixel.Sprite, o DesktopIconO
 	})
 	res := DesktopIconResult{Element: shell}
 	if !base.IsDisabled() {
-		res.Opened = base.Shortcut(0, ui.KeyEnter) || base.DoubleClicked()
+		res.Opened = pixel.Shortcut(base, 0, ui.KeyEnter) || base.DoubleClicked()
 		res.Clicked = base.Clicked()
 	}
 	if res.Clicked || res.Opened {

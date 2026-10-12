@@ -50,6 +50,11 @@ func DialogueBox(c *ui.Context, pages []string, page *int, o DialogueBoxOptions)
 		panic(fmt.Sprintf("overlay: DialogueBox page %d of %d", *page, len(pages)))
 	}
 	cps := pixel.Or("DialogueBox CPS", o.CPS, 30)
+	if cps > 1000 {
+		panic(fmt.Sprintf("overlay: DialogueBox CPS %d over 1000", cps))
+	}
+	// S5 steps at 4–15 fps; fast typing shows more.
+	fps := max(4, min(cps, 15))
 	off := o.Disabled || pixel.Current(c).Inert
 	box := ui.Box(c).Role(ui.RoleText).Label(strings.TrimSpace(o.Name + " " + pages[*page])).FocusRing(false)
 	if !off {
@@ -98,7 +103,7 @@ func DialogueBox(c *ui.Context, pages []string, page *int, o DialogueBoxOptions)
 				}
 				shown := total
 				if !st.out && !k.Reduce() {
-					shown = k.Since(c, st.since, cps, total)
+					shown = min(total, k.Since(c, st.since, fps, (total*fps+cps-1)/cps)*cps/fps)
 				}
 				st.out = shown == total
 				words.Height(k.D(max(2, len(lines)) * pixel.LineHeight)).Draw(func(p *ui.Painter, r ui.Rect) {
@@ -112,7 +117,7 @@ func DialogueBox(c *ui.Context, pages []string, page *int, o DialogueBoxOptions)
 						left -= len(lr)
 						end = pixel.Measure(string(lr[:n]))
 					}
-					if shown == total && g.Step(2)%2 == 0 {
+					if shown == total && g.Step(4)%4 < 2 {
 						g.Sprite(end+3, len(lines)*pixel.LineHeight-6, more, 0, pixel.Accent, 1)
 					}
 				})

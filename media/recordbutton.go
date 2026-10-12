@@ -59,13 +59,13 @@ func RecordButton(c *ui.Context, text string, rec *bool, o RecordButtonOptions) 
 	case *rec && tk.since.IsZero():
 		tk.since, tk.took = now, 0
 	case !*rec && !tk.since.IsZero():
-		tk.since, tk.took = time.Time{}, now.Sub(tk.since)
+		tk.since, tk.took = time.Time{}, k.Elapsed(&tk.since)
 	}
 	took, dot := tk.took, recDot
 	if *rec {
-		took = now.Sub(tk.since)
+		took = k.Elapsed(&tk.since)
 		k.At(c, tk.since.Add(took.Truncate(time.Second)+time.Second))
-		if !k.Reduce() && k.Tick(c, 2)%2 == 1 {
+		if !k.Reduce() && k.Tick(c, 4)%4 >= 2 {
 			dot = recOff
 		}
 	}

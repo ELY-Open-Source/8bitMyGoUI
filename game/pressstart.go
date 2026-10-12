@@ -29,7 +29,7 @@ func PressStart(c *ui.Context, o PressStartOptions) PressStartResult {
 	shell.Size(k.D(pixel.Measure(s)+8), k.D(pixel.LineHeight+4)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)
 		// It blinks at 1 Hz; reduced, it holds still.
-		if g.Step(2)%2 == 0 {
+		if g.Step(4)%4 < 2 {
 			g.Text(4, 2, s, pixel.Ink, 1)
 		}
 		g.Finish(st)

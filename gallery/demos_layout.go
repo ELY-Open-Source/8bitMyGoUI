@@ -14,12 +14,12 @@ import (
 
 var layoutEntries = []Entry{
 	{1, "Screen", "屏幕", "layout", "The root of a screen: Back fills the window, with an optional dithered vignette.", demoScreen},
-	{2, "Window", "窗口", "layout", "A beveled window with a title tab, the shape of every RPG menu.", demoWindow},
+	{2, "Window", "框体", "layout", "A beveled window with a title tab, the shape of every RPG menu.", demoWindow},
 	{3, "Panel", "面板", "layout", "A box framed raised, sunken, flat, double, window or notched.", demoPanel},
 	{4, "Card", "卡片", "layout", "A raised panel with a header strip, a body and a footer.", demoCard},
 	{5, "Section", "分节", "layout", "A titled group inside a dotted rule.", demoSection},
 	{6, "Divider", "分隔线", "layout", "Rules across or down: solid, dotted, dashed, double, ornament.", demoDivider},
-	{7, "ScrollArea", "滚动区", "layout", "A scroll view with a pixel scrollbar: arrows step, the track pages, the thumb drags.", demoScrollArea},
+	{7, "ScrollArea", "卷动区", "layout", "A scroll view with a pixel scrollbar: arrows step, the track pages, the thumb drags.", demoScrollArea},
 	{8, "Split", "分栏", "layout", "Two panes and a grip. Drag it, or focus it and use the arrow keys.", demoSplit},
 	{9, "Grid", "网格", "layout", "Equal columns with solid or dotted lines between the cells.", demoGrid},
 	{10, "Tiles", "平铺", "layout", "Equal tiles that wrap into rows as the width allows.", demoTiles},
@@ -207,7 +207,7 @@ func demoAspectBox(c *ui.Context, log func(string)) {
 
 func demoLayers(c *ui.Context, log func(string)) {
 	k := pixel.K(c)
-	layout.Layers(c, func() {
+	layout.Layers(c, layout.LayersOptions{}, func() {
 		ui.Box(c).Fill().Draw(func(p *ui.Painter, r ui.Rect) {
 			g := k.Canvas(p, r)
 			g.Dither(0, 0, g.W, g.H, pixel.Well, pixel.Info, 6)
@@ -251,7 +251,7 @@ func demoTitleBar(c *ui.Context, log func(string)) {
 func demoStatusBar(c *ui.Context, log func(string)) {
 	k := pixel.K(c)
 	ui.Box(c).Width(k.D(260)).Children(func() {
-		layout.StatusBar(c, "Ready", "Ln 1, Col 1", "UTF-8")
+		layout.StatusBar(c, []string{"Ready", "Ln 1, Col 1", "UTF-8"}, layout.StatusBarOptions{})
 	})
 }
 
@@ -275,7 +275,7 @@ func demoHandheld(c *ui.Context, log func(string)) {
 		ui.Box(c).Fill().Draw(func(p *ui.Painter, r ui.Rect) {
 			g := k.Canvas(p, r)
 			g.Rect(0, 0, g.W, g.H, pixel.Well)
-			g.Sprite(at[0], at[1], slime, g.Step(2), pixel.Ink, 1)
+			g.Sprite(at[0], at[1], slime, g.Step(4)/2, pixel.Ink, 1)
 		})
 	})
 	moves := map[string][2]int{"up": {0, -4}, "down": {0, 4}, "left": {-4, 0}, "right": {4, 0}}

@@ -39,7 +39,7 @@ func Carousel(c *ui.Context, text string, pages int, page *int, o CarouselOption
 	wait := every == 0 || o.Disabled || pixel.Current(c).Inert || k.Reduce() || col.Hovered() || col.FocusWithin()
 	if wait {
 		*since = k.Now()
-	} else if k.Since(c, *since, 1, every) == every {
+	} else if k.Since(c, *since, 4, 4*every) == 4*every {
 		turn(1)
 	}
 	col.Children(func() {

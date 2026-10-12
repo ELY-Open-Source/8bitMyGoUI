@@ -49,17 +49,17 @@ func knob(c *ui.Context, k pixel.Kit, track *ui.Element, v *float64, r rail, lo,
 		return ui.Box(c).Focusable().Role(ui.RoleSlider).Label(r.label).Description(fmtValue(*v)).Disabled(r.disabled)
 	})
 	set := func(x float64) { *v = max(r.lo, min(r.hi, x)) }
-	if !r.disabled {
+	if !base.IsDisabled() {
 		if _, _, held := base.Dragged(); held {
 			px, _, _ := base.PointerPosition()
 			t := track.Bounds()
 			set(lo + float64((base.Bounds().X+px-t.X)/max(1, t.W))*(hi-lo))
 		}
 		step := (hi - lo) / 20
-		if base.Shortcut(0, ui.KeyLeft) || base.Shortcut(0, ui.KeyDown) {
+		if pixel.Shortcut(base, 0, ui.KeyLeft) || pixel.Shortcut(base, 0, ui.KeyDown) {
 			set(*v - step)
 		}
-		if base.Shortcut(0, ui.KeyRight) || base.Shortcut(0, ui.KeyUp) {
+		if pixel.Shortcut(base, 0, ui.KeyRight) || pixel.Shortcut(base, 0, ui.KeyUp) {
 			set(*v + step)
 		}
 	}

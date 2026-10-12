@@ -16,14 +16,14 @@ var navigationEntries = []Entry{
 	{131, "Tabs", "标签页", "navigation", "Folder tabs; the chosen one joins its panel. Arrows move.", demoTabs},
 	{132, "VerticalTabs", "竖排标签", "navigation", "Tabs down the left edge, for settings screens.", demoVerticalTabs},
 	{133, "Sidebar", "侧边栏", "navigation", "Sections of items with icons and badges. Up and Down choose; one Tab stop.", demoSidebar},
-	{134, "Breadcrumbs", "面包屑", "navigation", "Where you are, split by ›. Every part but the last walks back.", demoBreadcrumbs},
+	{134, "Breadcrumbs", "面包屑", "navigation", "Where you are, split by pointers. Every part but the last walks back.", demoBreadcrumbs},
 	{135, "CommandMenu", "指令菜单", "navigation", "FIGHT, MAGIC, ITEM, RUN, with a bobbing ▶. Enter picks; Escape backs out.", demoCommandMenu},
 	{136, "MenuBar", "菜单栏", "navigation", "A bar of menus. Click one, then the arrows go across and down.", demoMenuBar},
 	{137, "DropdownMenu", "下拉菜单", "navigation", "A button with a menu: icons, rules and shortcut names.", demoDropdownMenu},
 	{138, "ContextMenu", "右键菜单", "navigation", "Right click, or the menu key, opens a menu at the pointer.", demoContextMenu},
 	{139, "Pagination", "分页", "navigation", "◀ 1 … 4 5 6 … 12 ▶. The current page is pressed in.", demoPagination},
 	{140, "PageDots", "页码点", "navigation", "A dot per page; click one, or use the arrows.", demoPageDots},
-	{141, "Steps", "关卡步骤", "navigation", "Flags along a trail: cleared, waving where you are, locked ahead.", demoSteps},
+	{141, "Steps", "关卡阶段", "navigation", "Flags along a trail: cleared, waving where you are, locked ahead.", demoSteps},
 	{142, "NavRail", "导航栏", "navigation", "A rail of icons. Hover or focus one and it says its name.", demoNavRail},
 	{143, "BottomNav", "底部导航", "navigation", "Icons over labels along the bottom, for small screens.", demoBottomNav},
 	{144, "CommandPalette", "命令面板", "navigation", "Cmd+K, type a few letters, press Enter.", demoCommandPalette},
@@ -68,7 +68,7 @@ func demoTabs(c *ui.Context, log func(string)) {
 func demoVerticalTabs(c *ui.Context, log func(string)) {
 	s := navState(c)
 	names := []string{"Video", "Audio", "Controls"}
-	if navigation.VerticalTabs(c, "Settings", names, &s.vtab, navigation.TabsOptions{}, func() {
+	if navigation.VerticalTabs(c, "Settings", names, &s.vtab, navigation.VerticalTabsOptions{}, func() {
 		pixel.Text(c, names[s.vtab]+" settings go here.", pixel.TextOptions{Slot: pixel.Faint})
 	}).Changed {
 		log(names[s.vtab])

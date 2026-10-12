@@ -37,7 +37,7 @@ func ContinuePrompt(c *ui.Context, o ContinuePromptOptions) ContinuePromptResult
 	n := pixel.Or("ContinuePrompt Seconds", o.Seconds, 10)
 	col := ui.Column(c).Gap(k.D(6)).AlignItems(ui.Center).Role(ui.RoleGroup).Label(k.Msg("continue"))
 	st := ui.Local(col, promptKey{}, func() prompt { return prompt{start: k.Now()} })
-	left := max(0, n-int(k.Now().Sub(st.start)/time.Second))
+	left := max(0, n-max(0, int(k.Now().Sub(st.start)/time.Second)))
 	res := ContinuePromptResult{Element: col}
 	if left == 0 && !st.over {
 		st.over, res.TimedOut = true, true

@@ -17,7 +17,7 @@ func Letterbox(c *ui.Context, on bool, o LetterboxOptions, content func()) *ui.E
 	k := pixel.K(c)
 	bar := pixel.Or("Letterbox Bar", o.Bar, 16)
 	var cover *ui.Element
-	e := layout.Layers(c, content, func() { cover = ui.Box(c).Fill().PassThrough() })
+	e := layout.Layers(c, layout.LayersOptions{}, content, func() { cover = ui.Box(c).Fill().PassThrough() })
 	h := bar * k.Toward(c, e, on, 8, 4) / 4
 	cover.Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)

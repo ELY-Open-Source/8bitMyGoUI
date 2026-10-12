@@ -25,9 +25,15 @@ type ToggleResult struct {
 func Toggle(c *ui.Context, text string, on *bool, o ToggleOptions) ToggleResult {
 	k := pixel.K(c)
 	h, pad, top, sc := o.Size.metrics()
+	// The base turns before it learns it is off.
+	v := *on
 	shell, base, st := pixel.Shell(c, func() *ui.Element {
-		return ui.ToggleBase(c, on).Label(label(o.Label, text)).Disabled(o.Disabled)
+		return ui.ToggleBase(c, &v).Label(label(o.Label, text)).Disabled(o.Disabled)
 	})
+	changed := v != *on && !base.IsDisabled()
+	if changed {
+		*on = v
+	}
 	lead := 0
 	if o.Icon != nil {
 		lead = o.Icon.W
@@ -44,7 +50,7 @@ func Toggle(c *ui.Context, text string, on *bool, o ToggleOptions) ToggleResult 
 		g.Text(pad+lead, top+dy, text, ink, sc)
 		g.Finish(st)
 	})
-	res := ToggleResult{Element: shell, Changed: base.Changed()}
+	res := ToggleResult{Element: shell, Changed: changed}
 	if res.Changed {
 		slog.Debug("8bit: toggle", "label", label(o.Label, text), "on", *on)
 	}

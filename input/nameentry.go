@@ -2,6 +2,7 @@ package input
 
 import (
 	"log/slog"
+	"unicode/utf8"
 
 	"github.com/egoist/mygo/ui"
 
@@ -82,7 +83,7 @@ func NameEntry(c *ui.Context, text string, name *string, o NameEntryOptions) Nam
 		})
 	})
 	if res.Confirmed {
-		slog.Debug("8bit: name entered", "label", text, "name", *name)
+		slog.Debug("8bit: name entered", "label", text, "runes", utf8.RuneCountInString(*name))
 	}
 	return res
 }

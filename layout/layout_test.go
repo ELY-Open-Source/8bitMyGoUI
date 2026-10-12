@@ -328,8 +328,8 @@ func TestLayersSizes(t *testing.T) {
 	tt := ui.NewTester(func(c *ui.Context) {
 		use(c)
 		ui.Column(c).AlignItems(ui.Start).Children(func() {
-			auto = layout.Layers(c, func() { ui.Box(c).Size(50, 30) }, func() { ui.Box(c).Fill() })
-			sized = layout.Layers(c, func() { fill = ui.Box(c).Fill() }).Size(120, 64)
+			auto = layout.Layers(c, layout.LayersOptions{}, func() { ui.Box(c).Size(50, 30) }, func() { ui.Box(c).Fill() })
+			sized = layout.Layers(c, layout.LayersOptions{}, func() { fill = ui.Box(c).Fill() }).Size(120, 64)
 		})
 	}, 400, 300)
 	tt.Frame()
@@ -352,7 +352,7 @@ func TestTitledContainersAndOrder(t *testing.T) {
 		layout.Card(c, layout.CardOptions{Title: "QUEST", Footer: func() { pixel.Text(c, "FOOT", pixel.TextOptions{}) }}, func() {
 			pixel.Text(c, "BODY", pixel.TextOptions{})
 		})
-		layout.StatusBar(c, "Ready", "Ln 1")
+		layout.StatusBar(c, []string{"Ready", "Ln 1"}, layout.StatusBarOptions{})
 	}, 400, 400)
 	got := tt.Texts()
 	for _, l := range []string{"ITEMS", "Sound", "QUEST", "Ready", "Ln 1"} {

@@ -73,12 +73,12 @@ func CardHand(c *ui.Context, text string, cards []Card, o CardHandOptions) CardH
 				key ui.Key
 				to  int
 			}{{ui.KeyLeft, *cur - 1}, {ui.KeyRight, *cur + 1}, {ui.KeyHome, 0}, {ui.KeyEnd, n - 1}} {
-				if base.Shortcut(0, m.key) {
+				if pixel.Shortcut(base, 0, m.key) {
 					*cur = max(0, min(n-1, m.to))
 				}
 			}
 			// Enter and Space are taken, so clicks come from pointers.
-			if base.Shortcut(0, ui.KeyEnter) || base.Shortcut(0, ui.KeySpace) {
+			if pixel.Shortcut(base, 0, ui.KeyEnter) || pixel.Shortcut(base, 0, ui.KeySpace) {
 				res.Played = *cur
 			}
 			x, y, over := base.PointerPosition()

@@ -21,6 +21,8 @@ type ButtonOptions struct {
 
 type ButtonResult struct {
 	Element *ui.Element
+	// Base is the focusable inside Element.
+	Base    *ui.Element
 	Clicked bool
 }
 
@@ -68,7 +70,7 @@ func Button(c *ui.Context, text string, o ButtonOptions) ButtonResult {
 		}
 		g.Finish(st)
 	})
-	res := ButtonResult{Element: shell, Clicked: base.Clicked()}
+	res := ButtonResult{Element: shell, Base: base, Clicked: base.Clicked()}
 	if res.Clicked {
 		slog.Debug("8bit: button", "label", name)
 	}

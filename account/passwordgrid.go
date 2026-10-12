@@ -59,7 +59,7 @@ func PasswordGrid(c *ui.Context, text string, password *string, o PasswordGridOp
 		if picked >= 0 && len(*password) < n {
 			*password += symbols[picked : picked+1]
 		}
-		if !base.IsDisabled() && base.Shortcut(0, ui.KeyBackspace) && *password != "" {
+		if !base.IsDisabled() && pixel.Shortcut(base, 0, ui.KeyBackspace) && *password != "" {
 			*password = (*password)[:len(*password)-1]
 		}
 		base.Description(symbols[*cur : *cur+1])

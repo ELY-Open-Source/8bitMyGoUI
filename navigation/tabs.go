@@ -23,9 +23,18 @@ func Tabs(c *ui.Context, text string, labels []string, selected *int, o TabsOpti
 	return tabs(c, text, labels, selected, false, o, panel)
 }
 
+type VerticalTabsOptions struct {
+	Disabled bool
+}
+
+type VerticalTabsResult struct {
+	Element *ui.Element
+	Changed bool
+}
+
 // VerticalTabs are tabs down the panel's left edge.
-func VerticalTabs(c *ui.Context, text string, labels []string, selected *int, o TabsOptions, panel func()) TabsResult {
-	return tabs(c, text, labels, selected, true, o, panel)
+func VerticalTabs(c *ui.Context, text string, labels []string, selected *int, o VerticalTabsOptions, panel func()) VerticalTabsResult {
+	return VerticalTabsResult(tabs(c, text, labels, selected, true, TabsOptions(o), panel))
 }
 
 // tabs lays tabs beside a panel; side means left.
@@ -49,7 +58,9 @@ func tabs(c *ui.Context, text string, labels []string, selected *int, side bool,
 	}
 	res := TabsResult{Element: outer}
 	outer.Children(func() {
-		p := ui.TabsBase(c, selected, len(labels))
+		// The base turns before it learns it is off.
+		v := *selected
+		p := ui.TabsBase(c, &v, len(labels))
 		if side {
 			p.List.Column().Width(k.D(tw))
 		}
@@ -65,7 +76,7 @@ func tabs(c *ui.Context, text string, labels []string, selected *int, side bool,
 				})
 			}
 		})
-		res.Changed = p.List.Changed()
+		res.Changed = keep(c, v, selected, o.Disabled)
 		at := 0
 		for i := range *selected {
 			at += size(i)
@@ -122,4 +133,13 @@ func folder(g pixel.Canvas, l string, on, side bool, st pixel.State) {
 		}
 	}
 	g.Finish(st)
+}
+
+// keep takes v as *selected while the control is on.
+func keep(c *ui.Context, v int, selected *int, disabled bool) bool {
+	if v == *selected || disabled || pixel.Current(c).Inert {
+		return false
+	}
+	*selected = v
+	return true
 }

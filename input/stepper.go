@@ -39,10 +39,10 @@ func Stepper(c *ui.Context, text string, value *int, o StepperOptions) StepperRe
 			return ui.Box(c).Focusable().Role(ui.RoleStepper).Label(text).Description(strconv.Itoa(*value)).Disabled(o.Disabled)
 		})
 		if !o.Disabled {
-			if base.Shortcut(0, ui.KeyLeft) || base.Shortcut(0, ui.KeyDown) {
+			if pixel.Shortcut(base, 0, ui.KeyLeft) || pixel.Shortcut(base, 0, ui.KeyDown) {
 				set(*value - step)
 			}
-			if base.Shortcut(0, ui.KeyRight) || base.Shortcut(0, ui.KeyUp) {
+			if pixel.Shortcut(base, 0, ui.KeyRight) || pixel.Shortcut(base, 0, ui.KeyUp) {
 				set(*value + step)
 			}
 		}
@@ -96,8 +96,9 @@ func held(c *ui.Context, k pixel.Kit, sp *pixel.Sprite, disabled bool) int {
 		*h = hold{since: k.Now(), n: 1}
 		return 1
 	}
-	want := 1 + max(0, int((k.Now().Sub(h.since)-400*time.Millisecond)/(100*time.Millisecond)))
-	n := want - h.n
-	h.n = want
+	want := 1 + max(0, int((k.Elapsed(&h.since)-400*time.Millisecond)/(100*time.Millisecond)))
+	// A clock stepping back restarts the count, never reverses it.
+	n := max(0, want-h.n)
+	h.n = max(h.n, want)
 	return n
 }

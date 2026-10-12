@@ -88,14 +88,15 @@ func TestTabsChooseAndShowTheirPanel(t *testing.T) {
 	for _, side := range []bool{false, true} {
 		tab, changes := 0, 0
 		tt := view(500, 300, newClock(), false, func(c *ui.Context) {
-			build := navigation.Tabs
-			if side {
-				build = navigation.VerticalTabs
-			}
 			names := []string{"Items", "Magic", "Status"}
-			if build(c, "Menu", names, &tab, navigation.TabsOptions{}, func() {
-				pixel.Text(c, "panel "+names[tab], pixel.TextOptions{})
-			}).Changed {
+			panel := func() { pixel.Text(c, "panel "+names[tab], pixel.TextOptions{}) }
+			changed := false
+			if side {
+				changed = navigation.VerticalTabs(c, "Menu", names, &tab, navigation.VerticalTabsOptions{}, panel).Changed
+			} else {
+				changed = navigation.Tabs(c, "Menu", names, &tab, navigation.TabsOptions{}, panel).Changed
+			}
+			if changed {
 				changes++
 			}
 		})

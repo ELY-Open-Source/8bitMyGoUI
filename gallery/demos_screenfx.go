@@ -127,7 +127,7 @@ func demoGlitch(c *ui.Context, log func(string)) {
 
 func demoSparkle(c *ui.Context, log func(string)) {
 	k := pixel.K(c)
-	layout.Layers(c, func() {
+	layout.Layers(c, layout.LayersOptions{}, func() {
 		ui.Box(c).Size(k.D(48), k.D(48)).AlignItems(ui.Center).Justify(ui.Center).Children(func() {
 			display.Gem(c, display.Legendary, display.GemOptions{Scale: 2})
 		})
@@ -148,7 +148,7 @@ func demoExplosion(c *ui.Context, log func(string)) {
 
 func demoConfetti(c *ui.Context, log func(string)) {
 	k := pixel.K(c)
-	layout.Layers(c, func() {
+	layout.Layers(c, layout.LayersOptions{}, func() {
 		ui.Box(c).Size(k.D(140), k.D(64)).AlignItems(ui.Center).Justify(ui.Center).Children(func() {
 			pixel.Text(c, "YOU WIN!", pixel.TextOptions{Scale: 2, Slot: pixel.Accent})
 		})

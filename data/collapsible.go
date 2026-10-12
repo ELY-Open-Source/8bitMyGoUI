@@ -23,10 +23,14 @@ func Collapsible(c *ui.Context, title string, open *bool, o CollapsibleOptions, 
 	col := ui.Column(c).AlignItems(ui.Stretch)
 	res := CollapsibleResult{Element: col}
 	col.Children(func() {
+		// The base turns before it learns it is off.
+		v := *open
 		shell, base, st := pixel.Shell(c, func() *ui.Element {
-			return ui.CollapsibleBase(c, open).Trigger.Label(title).Disabled(o.Disabled)
+			return ui.CollapsibleBase(c, &v).Trigger.Label(title).Disabled(o.Disabled)
 		})
-		res.Changed = base.Changed()
+		if res.Changed = v != *open && !base.IsDisabled(); res.Changed {
+			*open = v
+		}
 		shown := *open
 		shell.Height(k.D(pixel.LineHeight + 6)).MinWidth(k.D(pixel.Measure(title) + 20)).Draw(func(p *ui.Painter, r ui.Rect) {
 			g := k.Canvas(p, r)

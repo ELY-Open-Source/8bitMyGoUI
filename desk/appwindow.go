@@ -77,7 +77,7 @@ func AppWindow(c *ui.Context, title string, x, y *int, o AppWindowOptions, conte
 					key    ui.Key
 					dx, dy int
 				}{{ui.KeyLeft, -4, 0}, {ui.KeyRight, 4, 0}, {ui.KeyUp, 0, -4}, {ui.KeyDown, 0, 4}} {
-					if base.Shortcut(0, m.key) {
+					if pixel.Shortcut(base, 0, m.key) {
 						*x, *y = *x+m.dx, *y+m.dy
 					}
 				}

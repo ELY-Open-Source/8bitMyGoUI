@@ -11,7 +11,7 @@ import (
 )
 
 type StepSequencerOptions struct {
-	// Tempo is BPM, four steps a beat; zero means 120.
+	// Tempo is 1–225 BPM, four steps a beat; zero: 120.
 	Tempo    int
 	Playing  bool
 	Disabled bool
@@ -42,6 +42,10 @@ func StepSequencer(c *ui.Context, text string, tracks []string, steps [][16]bool
 		panic(fmt.Sprintf("media: StepSequencer has %d tracks and %d rows", len(tracks), len(steps)))
 	}
 	tempo := pixel.Or("StepSequencer Tempo", o.Tempo, 120)
+	// S5 caps the playhead at fifteen steps a second.
+	if tempo > 225 {
+		panic(fmt.Sprintf("media: StepSequencer Tempo %d over 225", tempo))
+	}
 	res := StepSequencerResult{Step: -1}
 	labels := 0
 	for _, t := range tracks {
@@ -59,7 +63,7 @@ func StepSequencer(c *ui.Context, text string, tracks []string, steps [][16]bool
 	// The playhead is the music; Reduce Motion keeps it.
 	if o.Playing {
 		per := time.Minute / time.Duration(4*tempo)
-		n := int(k.Now().Sub(sq.since) / per)
+		n := int(k.Elapsed(&sq.since) / per)
 		res.Step = n % 16
 		k.At(c, sq.since.Add(time.Duration(n+1)*per))
 	}

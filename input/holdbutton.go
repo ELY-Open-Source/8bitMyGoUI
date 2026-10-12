@@ -48,28 +48,28 @@ func HoldButton(c *ui.Context, text string, o HoldButtonOptions) HoldButtonResul
 		return ui.ButtonBase(c).Label(text).Description(k.Msg("hold")).Disabled(o.Disabled)
 	})
 	h := ui.Local(base, holdButtonKey{}, func() holding { return holding{} })
-	if o.Disabled {
+	if base.IsDisabled() {
 		*h = holding{}
 	}
 	now := k.Now()
 	// Held keys repeat; each repeat moves the hold on.
-	enter, space := base.Shortcut(0, ui.KeyEnter), base.Shortcut(0, ui.KeySpace)
+	enter, space := pixel.Shortcut(base, 0, ui.KeyEnter), pixel.Shortcut(base, 0, ui.KeySpace)
 	if enter || space {
-		if now.Sub(h.key) > repeatGap {
+		if k.Elapsed(&h.key) > repeatGap {
 			h.since = now
 		}
 		h.key = now
 	}
-	keyed := now.Sub(h.key) <= repeatGap
+	keyed := k.Elapsed(&h.key) <= repeatGap
 	var held time.Duration
 	switch {
 	case st.Press:
 		if h.since.IsZero() {
 			h.since = now
 		}
-		held = now.Sub(h.since)
+		held = k.Elapsed(&h.since)
 	case keyed:
-		held = h.key.Sub(h.since)
+		held = max(0, h.key.Sub(h.since))
 	default:
 		*h = holding{}
 	}
@@ -79,7 +79,7 @@ func HoldButton(c *ui.Context, text string, o HoldButtonOptions) HoldButtonResul
 		slog.Debug("8bit: hold confirmed", "label", text)
 	}
 	if st.Press || keyed {
-		k.Tick(c, 30)
+		k.Tick(c, 15)
 	}
 	steps := min(8, int(held*8/d))
 	fill := pixel.Accent

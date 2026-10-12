@@ -1,6 +1,7 @@
 package text
 
 import (
+	"fmt"
 	"log/slog"
 
 	"github.com/egoist/mygo/ui"
@@ -39,6 +40,11 @@ type typeState struct {
 func Typewriter(c *ui.Context, s string, o TypewriterOptions) TypewriterResult {
 	k := pixel.K(c)
 	cps := pixel.Or("Typewriter CPS", o.CPS, 20)
+	if cps > 1000 {
+		panic(fmt.Sprintf("text: Typewriter CPS %d over 1000", cps))
+	}
+	// S5 steps at 4–15 fps; fast typing shows more.
+	fps := max(4, min(cps, 15))
 	shell, base, st := pixel.Shell(c, func() *ui.Element {
 		e := ui.Box(c).Role(ui.RoleText).Label(s).Disabled(o.Disabled)
 		if !o.Disabled {
@@ -61,11 +67,11 @@ func Typewriter(c *ui.Context, s string, o TypewriterOptions) TypewriterResult {
 	if !ts.done {
 		ts.last = total
 		if !k.Reduce() {
-			tick := k.Tick(c, cps)
+			tick := k.Tick(c, fps)
 			if ts.start < 0 {
 				ts.start = tick
 			}
-			ts.last = min(total, tick-ts.start)
+			ts.last = min(total, (tick-ts.start)*cps/fps)
 		}
 		if base.Clicked() {
 			ts.last = total
@@ -90,7 +96,7 @@ func Typewriter(c *ui.Context, s string, o TypewriterOptions) TypewriterResult {
 			left -= len(lr)
 			end = pixel.Measure(string(lr[:n]))
 		}
-		if shown == total && g.Step(2)%2 == 0 {
+		if shown == total && g.Step(4)%4 < 2 {
 			g.Sprite(end+3, len(lines)*pixel.LineHeight-6, more, 0, pixel.Accent, 1)
 		}
 		if st.Focus {

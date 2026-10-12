@@ -34,7 +34,7 @@ func Lightbox(c *ui.Context, text string, n int, at *int, open *bool, o Lightbox
 	res.Element = ui.DialogBase(c, open, func(back, panel *ui.Element) {
 		deep, light := dark(k)
 		dim(k, back, deep, 13)
-		left, right := panel.Shortcut(0, ui.KeyLeft), panel.Shortcut(0, ui.KeyRight)
+		left, right := pixel.Shortcut(panel, 0, ui.KeyLeft), pixel.Shortcut(panel, 0, ui.KeyRight)
 		switch {
 		case off:
 		case left:

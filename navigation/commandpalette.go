@@ -68,16 +68,16 @@ func CommandPalette(c *ui.Context, text string, commands []MenuItem, open *bool,
 			if f.Changed {
 				st.lit = 0
 			}
-			if f.Element.Shortcut(0, ui.KeyDown) {
+			if pixel.Shortcut(f.Element, 0, ui.KeyDown) {
 				st.lit++
 			}
-			if f.Element.Shortcut(0, ui.KeyUp) {
+			if pixel.Shortcut(f.Element, 0, ui.KeyUp) {
 				st.lit--
 			}
 			st.lit = max(0, min(st.lit, len(shown)-1))
 			st.top = max(0, min(st.top, st.lit, len(shown)-paletteRows), st.lit-paletteRows+1)
 			// A Shortcut, not Submitted: the frame builds again closed.
-			if f.Element.Shortcut(0, ui.KeyEnter) && len(shown) > 0 {
+			if pixel.Shortcut(f.Element, 0, ui.KeyEnter) && len(shown) > 0 {
 				run(shown[st.lit])
 			}
 			ui.Column(c).AlignItems(ui.Stretch).Children(func() {

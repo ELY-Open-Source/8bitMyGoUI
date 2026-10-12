@@ -71,11 +71,11 @@ func month(c *ui.Context, text string, cur *time.Time, disabled, focus bool, mar
 			{ui.KeyPageUp, addMonths(*cur, -1)}, {ui.KeyPageDown, addMonths(*cur, 1)},
 			{ui.KeyHome, cur.AddDate(0, 0, 1-d)}, {ui.KeyEnd, addMonths(cur.AddDate(0, 0, 1-d), 1).AddDate(0, 0, -1)},
 		} {
-			if base.Shortcut(0, mv.key) {
+			if pixel.Shortcut(base, 0, mv.key) {
 				*cur = mv.to
 			}
 		}
-		enter, space := base.Shortcut(0, ui.KeyEnter), base.Shortcut(0, ui.KeySpace)
+		enter, space := pixel.Shortcut(base, 0, ui.KeyEnter), pixel.Shortcut(base, 0, ui.KeySpace)
 		picked = enter || space
 		first := time.Date(y, m, 1, 0, 0, 0, 0, cur.Location())
 		first = first.AddDate(0, 0, -int(first.Weekday()))

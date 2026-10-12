@@ -71,7 +71,7 @@ func ErrorState(c *ui.Context, message string, o ErrorStateOptions) ErrorStateRe
 	k := pixel.K(c)
 	col := ui.Column(c).Gap(k.D(8)).Padding(k.D(16)).AlignItems(ui.Center).Role(ui.RoleGroup).Label(k.Msg("game_over"))
 	start := ui.Local(col, startKey{}, func() time.Time { return k.Now() })
-	left := max(0, 9-int(k.Now().Sub(*start)/time.Second))
+	left := max(0, 9-max(0, int(k.Now().Sub(*start)/time.Second)))
 	if left > 0 {
 		k.Tick(c, 10)
 	}
@@ -103,7 +103,7 @@ func SuccessState(c *ui.Context, message string, o SuccessStateOptions) *ui.Elem
 	// Stars come four a second; Reduce Motion shows them all.
 	shown := n + 1
 	if !k.Reduce() {
-		shown = min(n+1, int(k.Now().Sub(*start)*4/time.Second))
+		shown = min(n+1, max(0, int(k.Now().Sub(*start)*4/time.Second)))
 		if shown <= n {
 			k.Tick(c, 8)
 		}

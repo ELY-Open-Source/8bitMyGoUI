@@ -42,21 +42,26 @@ func SlotPicker(c *ui.Context, text string, value *int, options []string, o Slot
 		s.changed = true
 	}
 	row := k.D(pixel.LineHeight)
+	// The handler runs before this frame knows it is off.
 	base.HandleInput(func(ev ui.InputEvent) bool {
-		if ev.Kind != ui.InputScroll || o.Disabled {
+		if ev.Kind != ui.InputScroll {
 			return false
 		}
 		s.wheel += ev.DY
-		turn(&s.wheel, row, spin)
 		return true
 	})
-	if base.Shortcut(0, ui.KeyDown) {
+	if base.IsDisabled() {
+		s.wheel = 0
+	}
+	turn(&s.wheel, row, spin)
+	on := !base.IsDisabled()
+	if pixel.Shortcut(base, 0, ui.KeyDown) {
 		spin(1)
 	}
-	if base.Shortcut(0, ui.KeyUp) {
+	if pixel.Shortcut(base, 0, ui.KeyUp) {
 		spin(-1)
 	}
-	if _, dy, held := base.Dragged(); held && !o.Disabled {
+	if _, dy, held := base.Dragged(); held && on {
 		s.drag += dy
 		turn(&s.drag, row, func(d int) { spin(-d) })
 	} else {

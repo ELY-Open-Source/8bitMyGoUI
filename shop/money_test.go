@@ -3,6 +3,7 @@ package shop_test
 import (
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/egoist/mygo/ui"
 
@@ -163,5 +164,21 @@ func TestCouponCopiesQuietly(t *testing.T) {
 	log = logged(func() { click(t, tt, "COPY") })
 	if tt.Clipboard() != "SECRET42" || !tt.HasText("COPIED!") || strings.Contains(log, "SECRET42") {
 		t.Fatalf("clipboard %q; log:\n%s", tt.Clipboard(), log)
+	}
+}
+
+func TestCouponSaysCopiedForTwoSeconds(t *testing.T) {
+	wd := newWorld()
+	tt := view(400, 200, wd, func(c *ui.Context) { shop.Coupon(c, "10% OFF", "UPUP", shop.CouponOptions{}) })
+	click(t, tt, "COPY")
+	for _, tc := range []struct {
+		at   time.Duration
+		says string
+	}{{1500 * time.Millisecond, "COPIED!"}, {2100 * time.Millisecond, "COPY"}} {
+		wd.clk.t = wd.clk.t.Add(tc.at - map[string]time.Duration{"COPIED!": 0, "COPY": 1500 * time.Millisecond}[tc.says])
+		tt.Frame()
+		if !tt.HasText(tc.says) {
+			t.Errorf("after %v the button does not say %s", tc.at, tc.says)
+		}
 	}
 }

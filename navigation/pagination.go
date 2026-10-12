@@ -109,13 +109,13 @@ func PageDots(c *ui.Context, text string, page *int, total int, o PageDotsOption
 		{ui.KeyLeft, func() int { return *page - 1 }}, {ui.KeyRight, func() int { return *page + 1 }},
 		{ui.KeyHome, func() int { return 1 }}, {ui.KeyEnd, func() int { return total }},
 	} {
-		if base.Shortcut(0, m.key) {
+		if pixel.Shortcut(base, 0, m.key) {
 			*page = max(1, min(total, m.to()))
 		}
 	}
 	// Taking Enter and Space keeps keys from clicking.
-	base.Shortcut(0, ui.KeyEnter)
-	base.Shortcut(0, ui.KeySpace)
+	pixel.Shortcut(base, 0, ui.KeyEnter)
+	pixel.Shortcut(base, 0, ui.KeySpace)
 	if base.Clicked() {
 		x, _, _ := base.PointerPosition()
 		*page = max(1, min(total, int(x/k.Dot())/8+1))

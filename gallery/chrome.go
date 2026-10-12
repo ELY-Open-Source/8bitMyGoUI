@@ -104,7 +104,7 @@ func (a *App) sidebar(c *ui.Context) {
 }
 
 func (a *App) statusBar(c *ui.Context) {
-	layout.StatusBar(c, "/ search · P palette · [ ] prev next", fmt.Sprintf("%d entries", len(Entries())))
+	layout.StatusBar(c, []string{"/ search · P palette · [ ] prev next", fmt.Sprintf("%d entries", len(Entries()))}, layout.StatusBarOptions{})
 }
 
 // press is a custom-drawn chrome tile; true when clicked.

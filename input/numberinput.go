@@ -69,10 +69,10 @@ func NumberInput(c *ui.Context, label string, value *float64, o NumberInputOptio
 			*value, st.seen, res.Changed = v, v, true
 		}
 		st.focused = ed.Focused
-		if ed.Input.Shortcut(0, ui.KeyUp) {
+		if pixel.Shortcut(ed.Input, 0, ui.KeyUp) {
 			set(*value + step)
 		}
-		if ed.Input.Shortcut(0, ui.KeyDown) {
+		if pixel.Shortcut(ed.Input, 0, ui.KeyDown) {
 			set(*value - step)
 		}
 		res.Input, res.Submitted, res.Focused = ed.Input, ed.Submitted, ed.Focused

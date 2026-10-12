@@ -140,7 +140,7 @@ func demoDamageNumbers(c *ui.Context, log func(string)) {
 	s, dice := rpgState(c), gameState(c).dice
 	ui.Column(c).Gap(k.D(4)).Children(func() {
 		// The numbers float over a slime having a bad day.
-		layout.Layers(c, func() {
+		layout.Layers(c, layout.LayersOptions{}, func() {
 			ui.Box(c).Fill().Draw(func(p *ui.Painter, r ui.Rect) {
 				g := k.Canvas(p, r)
 				g.Sprite((g.W-3*slime.W)/2, g.H-3*slime.H, slime, 0, pixel.Ink, 3)

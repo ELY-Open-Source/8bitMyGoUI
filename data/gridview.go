@@ -86,7 +86,8 @@ func GridView(c *ui.Context, text string, n int, selected *int, o GridViewOption
 		{ui.KeyLeft, old - 1}, {ui.KeyRight, old + 1}, {ui.KeyUp, old - cols}, {ui.KeyDown, old + cols},
 		{ui.KeyHome, 0}, {ui.KeyEnd, n - 1},
 	} {
-		if box.Shortcut(0, m.key) && m.to >= 0 && m.to < n {
+		// The grid stays enabled, so off is checked here.
+		if !off && pixel.Shortcut(box, 0, m.key) && m.to >= 0 && m.to < n {
 			*selected = m.to
 		}
 	}
@@ -94,7 +95,7 @@ func GridView(c *ui.Context, text string, n int, selected *int, o GridViewOption
 		res.Changed = true
 		s.rows.ScrollIntoView(*selected / cols)
 	}
-	if box.Shortcut(0, ui.KeyEnter) {
+	if !off && pixel.Shortcut(box, 0, ui.KeyEnter) {
 		res.Submitted = true
 	}
 	if off {

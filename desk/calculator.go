@@ -54,12 +54,12 @@ func Calculator(c *ui.Context, text string, o CalculatorOptions) CalculatorResul
 		// Digits and signs typed on the keyboard press their keys.
 		if picked < 0 && !base.IsDisabled() && !pixel.Typing(c) {
 			for i := range 10 {
-				if base.Shortcut(0, ui.Key0+ui.Key(i)) {
+				if pixel.Shortcut(base, 0, ui.Key0+ui.Key(i)) {
 					picked = indexOf(strconv.Itoa(i))
 				}
 			}
 			for _, s := range signs {
-				if base.Shortcut(s.mods, s.key) {
+				if pixel.Shortcut(base, s.mods, s.key) {
 					picked = indexOf(s.sign)
 				}
 			}

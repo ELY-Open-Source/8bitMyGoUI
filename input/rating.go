@@ -49,6 +49,7 @@ func Rating(c *ui.Context, text string, value *int, o RatingOptions) RatingResul
 			}
 			// Arrow moves show focus and choose; clicks toggle.
 			switch {
+			case base.IsDisabled():
 			case base.Changed() && was:
 				*value, res.Changed = 0, true
 			case base.Changed(), base.FocusVisible() && *last >= 0 && *last != i && !was:

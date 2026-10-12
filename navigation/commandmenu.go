@@ -41,17 +41,17 @@ func CommandMenu(c *ui.Context, text string, items []MenuItem, o CommandMenuOpti
 			res.Chosen = i
 		}
 	}
-	if base.Shortcut(0, ui.KeyDown) {
+	if pixel.Shortcut(base, 0, ui.KeyDown) {
 		*cur = (*cur + 1) % n
 	}
-	if base.Shortcut(0, ui.KeyUp) {
+	if pixel.Shortcut(base, 0, ui.KeyUp) {
 		*cur = (*cur + n - 1) % n
 	}
-	enter, space := base.Shortcut(0, ui.KeyEnter), base.Shortcut(0, ui.KeySpace)
+	enter, space := pixel.Shortcut(base, 0, ui.KeyEnter), pixel.Shortcut(base, 0, ui.KeySpace)
 	if enter || space {
 		pick(*cur)
 	}
-	res.Canceled = base.Shortcut(0, ui.KeyEscape)
+	res.Canceled = pixel.Shortcut(base, 0, ui.KeyEscape)
 	// Enter and Space are taken, so clicks come from pointers.
 	if base.Clicked() {
 		_, y, _ := base.PointerPosition()

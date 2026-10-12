@@ -50,7 +50,7 @@ func Timer(c *ui.Context, text string, set *time.Duration, o TimerOptions) Timer
 		}
 	}
 	// It flashes for three seconds after ringing.
-	flash := !t.rang.IsZero() && now.Sub(t.rang) < 3*time.Second
+	flash := !t.rang.IsZero() && k.Elapsed(&t.rang) < 3*time.Second
 	if flash {
 		k.Tick(c, 4)
 	}

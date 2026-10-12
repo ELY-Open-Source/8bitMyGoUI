@@ -70,7 +70,7 @@ func RunDialog(c *ui.Context, text string, value *string, o RunDialogOptions) Ru
 		})
 	})
 	// Escape quits from anywhere inside, as CANCEL does.
-	if !o.Disabled && !pixel.Current(c).Inert && win.Shortcut(0, ui.KeyEscape) {
+	if !o.Disabled && !pixel.Current(c).Inert && pixel.Shortcut(win, 0, ui.KeyEscape) {
 		res.Canceled = true
 	}
 	res.Element = win

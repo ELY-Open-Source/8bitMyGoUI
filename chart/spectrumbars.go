@@ -37,9 +37,9 @@ func SpectrumBars(c *ui.Context, text string, levels []float64, o SpectrumBarsOp
 	if len(pk.at) != len(levels) {
 		pk.at = append([]float64(nil), levels...)
 	}
-	now := k.Now()
-	// A peak falls a bar a second; reduced, it rests.
-	fall := now.Sub(pk.last).Seconds()
+	// Peaks fall a bar a second, stepped; reduced, they rest.
+	now := k.Now().Truncate(time.Second / 15)
+	fall := max(0, now.Sub(pk.last).Seconds())
 	switch {
 	case pk.last.IsZero() || k.Reduce():
 		fall = 1
@@ -53,7 +53,7 @@ func SpectrumBars(c *ui.Context, text string, levels []float64, o SpectrumBarsOp
 		pk.moving = pk.moving || pk.at[i] > l
 	}
 	if pk.moving {
-		k.Tick(c, 20)
+		k.Tick(c, 15)
 	}
 	shown := append([]float64(nil), pk.at...)
 	return e.Draw(func(p *ui.Painter, r ui.Rect) {

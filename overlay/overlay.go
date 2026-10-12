@@ -40,18 +40,19 @@ func choose(c *ui.Context, text string, items []string, cur *int, digits, off bo
 	if off {
 		box.Description(k.Msg("disabled"))
 	}
-	if box.Shortcut(0, ui.KeyDown) {
+	// The list stays enabled, so off is checked here.
+	if !off && pixel.Shortcut(box, 0, ui.KeyDown) {
 		*cur = (*cur + 1) % n
 	}
-	if box.Shortcut(0, ui.KeyUp) {
+	if !off && pixel.Shortcut(box, 0, ui.KeyUp) {
 		*cur = (*cur + n - 1) % n
 	}
-	enter, space := box.Shortcut(0, ui.KeyEnter), box.Shortcut(0, ui.KeySpace)
-	if enter || space {
+	enter, space := pixel.Shortcut(box, 0, ui.KeyEnter), pixel.Shortcut(box, 0, ui.KeySpace)
+	if (enter || space) && !off {
 		picked = *cur
 	}
 	for i := range min(9, n) {
-		if digits && box.Shortcut(0, ui.Key1+ui.Key(i)) {
+		if digits && !off && pixel.Shortcut(box, 0, ui.Key1+ui.Key(i)) {
 			*cur, picked = i, i
 		}
 	}

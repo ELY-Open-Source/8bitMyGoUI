@@ -26,14 +26,13 @@ type NavRailResult struct {
 func NavRail(c *ui.Context, text string, items []NavItem, selected *int, o NavRailOptions) NavRailResult {
 	k := pixel.K(c)
 	res := NavRailResult{}
+	// The bases turn before they learn they are off.
+	v := *selected
 	res.Element = ui.RadioGroup(c, func() {
 		for i, it := range items {
-			shell, base, st := pixel.Shell(c, func() *ui.Element {
-				return ui.RadioBase(c, selected, i).Label(it.Label).Disabled(o.Disabled)
+			shell, _, st := pixel.Shell(c, func() *ui.Element {
+				return ui.RadioBase(c, &v, i).Label(it.Label).Disabled(o.Disabled)
 			})
-			if base.Changed() {
-				res.Changed = true
-			}
 			shell.Size(k.D(22), k.D(22)).Draw(func(p *ui.Painter, r ui.Rect) {
 				g := k.Canvas(p, r)
 				ink := pixel.Ink
@@ -56,7 +55,7 @@ func NavRail(c *ui.Context, text string, items []NavItem, selected *int, o NavRa
 		g.Rect(0, 0, g.W, g.H, pixel.Face)
 		g.VLine(g.W-1, 0, g.H, pixel.Edge)
 	})
-	if res.Changed {
+	if res.Changed = keep(c, v, selected, o.Disabled); res.Changed {
 		slog.Debug("8bit: nav rail", "label", text, "selected", *selected)
 	}
 	return res
@@ -88,14 +87,13 @@ type BottomNavResult struct {
 func BottomNav(c *ui.Context, text string, items []NavItem, selected *int, o BottomNavOptions) BottomNavResult {
 	k := pixel.K(c)
 	res := BottomNavResult{}
+	// The bases turn before they learn they are off.
+	v := *selected
 	res.Element = ui.RadioGroup(c, func() {
 		for i, it := range items {
-			shell, base, st := pixel.Shell(c, func() *ui.Element {
-				return ui.RadioBase(c, selected, i).Label(it.Label).Disabled(o.Disabled)
+			shell, _, st := pixel.Shell(c, func() *ui.Element {
+				return ui.RadioBase(c, &v, i).Label(it.Label).Disabled(o.Disabled)
 			})
-			if base.Changed() {
-				res.Changed = true
-			}
 			w := max(pixel.Measure(it.Label), 12) + 12
 			shell.Size(k.D(w), k.D(16+pixel.LineHeight)).Draw(func(p *ui.Painter, r ui.Rect) {
 				g := k.Canvas(p, r)
@@ -116,7 +114,7 @@ func BottomNav(c *ui.Context, text string, items []NavItem, selected *int, o Bot
 		g.Rect(0, 0, g.W, g.H, pixel.Face)
 		g.HLine(0, 0, g.W, pixel.Edge)
 	})
-	if res.Changed {
+	if res.Changed = keep(c, v, selected, o.Disabled); res.Changed {
 		slog.Debug("8bit: bottom nav", "label", text, "selected", *selected)
 	}
 	return res

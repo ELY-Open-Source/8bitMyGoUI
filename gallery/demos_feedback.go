@@ -14,7 +14,7 @@ import (
 
 var feedbackEntries = []Entry{
 	{106, "Progress", "进度条", "feedback", "A bar that fills chunk by chunk. Below zero, a block runs back and forth.", demoProgress},
-	{107, "Spinner", "旋转器", "feedback", "Eight frames of beads going round. It keeps turning under Reduce Motion: it means work.", demoSpinner},
+	{107, "Spinner", "转圈器", "feedback", "Eight frames of beads going round. It keeps turning under Reduce Motion: it means work.", demoSpinner},
 	{108, "Meter", "计量条", "feedback", "A level that turns Warn past a mark and Bad past the next.", demoMeter},
 	{109, "Skeleton", "骨架屏", "feedback", "Dithered stand-ins with a shine sweeping across in steps.", demoSkeleton},
 	{110, "Alert", "提示框", "feedback", "A framed callout: info, success, warning or danger, with an optional ×.", demoAlert},
@@ -27,15 +27,15 @@ var feedbackEntries = []Entry{
 	{117, "BarsLoader", "柱状加载", "feedback", "Five bars rising and falling, a step apart.", demoBarsLoader},
 	{118, "Hourglass", "沙漏", "feedback", "Sand falls in steps, then the glass flips.", demoHourglass},
 	{119, "Toast", "吐司", "feedback", "Short messages at the bottom, three at a time, each for a few seconds. Some can be undone.", demoToast},
-	{120, "InlineMessage", "行内提示", "feedback", "A small ! or ✓ note under a field.", demoInlineMessage},
+	{120, "InlineMessage", "行内提示", "feedback", "A small warning or check note under a field.", demoInlineMessage},
 	{121, "CountUp", "计数", "feedback", "Numbers count up in steps, the way scores should.", demoCountUp},
 	{122, "Pulse", "脉冲", "feedback", "A dithered ring grows around what wants attention.", demoPulse},
 	{123, "LevelUp", "升级", "feedback", "LEVEL UP! slides in with sparkles when the level rises.", demoLevelUp},
 	{124, "Achievement", "成就", "feedback", "A trophy card slides in, waits, and slides away.", demoAchievement},
 	{125, "ComboCounter", "连击", "feedback", "×12 COMBO! It pops a dot bigger with every hit.", demoComboCounter},
 	{126, "ContinuePrompt", "继续？", "feedback", "CONTINUE? YES or NO before the count runs out.", demoContinuePrompt},
-	{127, "SaveIndicator", "存档指示", "feedback", "A floppy spins while saving, then SAVED ✓.", demoSaveIndicator},
-	{128, "BusyOverlay", "忙碌遮罩", "feedback", "A checker veil and spinner over busy content; it takes the pointer and the focus.", demoBusyOverlay},
+	{127, "SaveIndicator", "存档指示", "feedback", "A floppy spins while saving, then SAVED with a check.", demoSaveIndicator},
+	{128, "BusyOverlay", "加载遮罩", "feedback", "A checker veil and spinner over busy content; it takes the pointer and the focus.", demoBusyOverlay},
 	{129, "ReadyGo", "预备开始", "feedback", "3, 2, 1, GO! in big digits, a second each.", demoReadyGo},
 	{130, "Shake", "抖动", "feedback", "Jolts its child side to side, for a wrong answer.", demoShake},
 }

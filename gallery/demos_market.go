@@ -16,10 +16,10 @@ import (
 var marketEntries = []Entry{
 	{444, "Quantity", "数量", "shop", "- and + within limits. The side at its limit fades.", demoQuantity},
 	{445, "PricingTiers", "价格方案", "shop", "Bronze, silver and gold. Gold comes with a hat.", demoPricingTiers},
-	{446, "Coupon", "优惠券", "shop", "A ticket with notched edges. COPY takes the code.", demoCoupon},
-	{447, "DailyReward", "每日奖励", "shop", "Seven days, seven chests. Come back daily; today's is ready.", demoDailyReward},
+	{446, "Coupon", "优惠码", "shop", "A ticket with notched edges. COPY takes the code.", demoCoupon},
+	{447, "DailyReward", "每日福利", "shop", "Seven days, seven chests. Come back daily; today's is ready.", demoDailyReward},
 	{448, "BidTicker", "竞价", "shop", "The latest bids on top; the highest wears the crown.", demoBidTicker},
-	{449, "TradeWindow", "交易窗口", "shop", "Two offers. Both must confirm, and any change takes the confirms back.", demoTradeWindow},
+	{449, "TradeWindow", "交易框", "shop", "Two offers. Both must confirm, and any change takes the confirms back.", demoTradeWindow},
 	{450, "VendingMachine", "自动售货机", "shop", "Type a code like B3 and press OK. Credit first, snacks after.", demoVendingMachine},
 }
 

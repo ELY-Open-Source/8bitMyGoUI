@@ -1,6 +1,7 @@
 package pixel_test
 
 import (
+	"fmt"
 	"testing"
 	"time"
 
@@ -152,4 +153,80 @@ func TestTowardStepsAndTurnsWhereItIs(t *testing.T) {
 			pixel.K(c).Toward(c, ui.Box(c), true, 8, 0)
 		}, 10, 10)
 	})
+}
+
+func TestMotionStepsAtFourToFifteen(t *testing.T) {
+	at := time.Unix(1_700_000_000, 0)
+	run := func(fn func(c *ui.Context, k pixel.Kit)) {
+		ui.NewTester(func(c *ui.Context) {
+			pixel.Use(c, pixel.Settings{Palette: pixel.SpringDay, Now: func() time.Time { return at }})
+			fn(c, pixel.K(c))
+		}, 10, 10)
+	}
+	// S5: whole frames at 4–15 fps, for every clock.
+	for _, fps := range []int{1, 2, 3, 16, 30} {
+		mustPanic(t, fmt.Sprint("Tick at ", fps), func() { run(func(c *ui.Context, k pixel.Kit) { k.Tick(c, fps) }) })
+		mustPanic(t, fmt.Sprint("Since at ", fps), func() { run(func(c *ui.Context, k pixel.Kit) { k.Since(c, at, fps, 9) }) })
+		mustPanic(t, fmt.Sprint("Toward at ", fps), func() { run(func(c *ui.Context, k pixel.Kit) { k.Toward(c, ui.Box(c), true, fps, 2) }) })
+		mustPanic(t, fmt.Sprint("Since from zero at ", fps), func() { run(func(c *ui.Context, k pixel.Kit) { k.Since(c, time.Time{}, fps, 9) }) })
+		mustPanic(t, fmt.Sprint("Shot at ", fps), func() { run(func(c *ui.Context, k pixel.Kit) { k.Shot(c, ui.Box(c), 0, fps, 9) }) })
+		// Reduce Motion spends a shot without counting.
+		mustPanic(t, fmt.Sprint("a reduced Shot at ", fps), func() {
+			ui.NewTester(func(c *ui.Context) {
+				pixel.Use(c, pixel.Settings{Palette: pixel.SpringDay, Now: func() time.Time { return at }, Reduce: true})
+				pixel.K(c).Shot(c, ui.Box(c), 0, fps, 9)
+			}, 10, 10)
+		})
+		mustPanic(t, fmt.Sprint("Step at ", fps), func() {
+			run(func(c *ui.Context, k pixel.Kit) {
+				ui.Box(c).Size(4, 4).Draw(func(p *ui.Painter, r ui.Rect) { k.Canvas(p, r).Step(fps) })
+			})
+		})
+	}
+	for _, fps := range []int{4, 15} {
+		run(func(c *ui.Context, k pixel.Kit) {
+			k.Tick(c, fps)
+			k.Since(c, at, fps, 9)
+			k.Toward(c, ui.Box(c), true, fps, 2)
+		})
+	}
+}
+
+func TestSinceHoldsAtZeroWhenTheClockStepsBack(t *testing.T) {
+	at := time.Unix(1_700_000_000, 0)
+	got := -1
+	ui.NewTester(func(c *ui.Context) {
+		pixel.Use(c, pixel.Settings{Palette: pixel.SpringDay, Now: func() time.Time { return at }})
+		got = pixel.K(c).Since(c, at.Add(time.Hour), 8, 5)
+	}, 10, 10)
+	if got != 0 {
+		t.Fatalf("a start an hour ahead counted %d steps", got)
+	}
+	// Thirty years ahead must not overflow into a full count.
+	ui.NewTester(func(c *ui.Context) {
+		pixel.Use(c, pixel.Settings{Palette: pixel.SpringDay, Now: func() time.Time { return at }})
+		got = pixel.K(c).Since(c, at.AddDate(30, 0, 0), 15, 5)
+	}, 10, 10)
+	if got != 0 {
+		t.Fatalf("a start thirty years ahead counted %d steps", got)
+	}
+	ui.NewTester(func(c *ui.Context) {
+		pixel.Use(c, pixel.Settings{Palette: pixel.SpringDay, Now: func() time.Time { return at }})
+		got = pixel.K(c).Since(c, at.AddDate(-30, 0, 0), 15, 5)
+	}, 10, 10)
+	if got != 5 {
+		t.Fatalf("a start thirty years back counted %d of 5 steps", got)
+	}
+}
+
+func TestElapsedRebasesWhenTheClockStepsBack(t *testing.T) {
+	at := time.Unix(1_700_000_000, 0)
+	start, got := at.Add(time.Hour), time.Duration(-1)
+	ui.NewTester(func(c *ui.Context) {
+		pixel.Use(c, pixel.Settings{Palette: pixel.SpringDay, Now: func() time.Time { return at }})
+		got = pixel.K(c).Elapsed(&start)
+	}, 10, 10)
+	if got != 0 || !start.Equal(at) {
+		t.Fatalf("elapsed %v, start moved to %v", got, start)
+	}
 }

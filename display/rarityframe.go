@@ -41,7 +41,7 @@ func RarityFrame(c *ui.Context, r Rarity, o RarityFrameOptions, children func())
 			return
 		}
 		per := 2*(g.W+g.H) - 4
-		at := g.Step(20) * 2 % per
+		at := g.Step(10) * 4 % per
 		for i := range 6 {
 			x, y := around(g.W, g.H, (at+i)%per)
 			g.Dot(x, y, pixel.Lit)

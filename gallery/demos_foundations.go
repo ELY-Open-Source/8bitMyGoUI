@@ -26,7 +26,9 @@ func demoPalettes(c *ui.Context, log func(string)) {
 	k := pixel.K(c)
 	ui.Grid(c).Columns(2).Gap(k.D(6)).Children(func() {
 		for _, pal := range pixel.Palettes {
-			pixel.Scope(c, pixel.Settings{Palette: pal}, func() {
+			s := pixel.Current(c)
+			s.Palette = pal
+			pixel.Scope(c, s, func() {
 				kp := pixel.K(c)
 				shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.ButtonBase(c).Label(pal.Name) })
 				shell.Height(kp.D(52)).Draw(func(p *ui.Painter, r ui.Rect) {

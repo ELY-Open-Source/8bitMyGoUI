@@ -40,27 +40,32 @@ func Hotbar(c *ui.Context, text string, items []data.Item, selected *int, o Hotb
 	old := *selected
 	shell, base, st, used := pixel.Pad(c, text, n, n, data.SlotSize, data.SlotSize, selected, o.Disabled)
 	for i := range n {
-		if base.Shortcut(0, ui.Key1+ui.Key(i)) {
+		if pixel.Shortcut(base, 0, ui.Key1+ui.Key(i)) {
 			*selected = i
 		}
 	}
 	wh := ui.Local(base, wheelKey{}, func() wheel { return wheel{} })
 	notch := k.D(pixel.LineHeight)
+	// The handler runs before this frame knows it is off.
 	base.HandleInput(func(ev ui.InputEvent) bool {
 		if ev.Kind != ui.InputScroll {
 			return false
 		}
-		// A notch moves one slot; the bar wraps around.
-		for wh.left += ev.DY; wh.left >= notch || wh.left <= -notch; {
-			d := 1
-			if wh.left < 0 {
-				d = -1
-			}
-			wh.left -= float32(d) * notch
-			*selected, wh.moved = ((*selected+d)%n+n)%n, true
-		}
+		wh.left += ev.DY
 		return true
 	})
+	if base.IsDisabled() {
+		wh.left = 0
+	}
+	// A notch moves one slot; the bar wraps around.
+	for wh.left >= notch || wh.left <= -notch {
+		d := 1
+		if wh.left < 0 {
+			d = -1
+		}
+		wh.left -= float32(d) * notch
+		*selected, wh.moved = ((*selected+d)%n+n)%n, true
+	}
 	res := HotbarResult{Element: shell, Changed: *selected != old || wh.moved, Used: used}
 	wh.moved = false
 	base.Description(items[*selected].String())

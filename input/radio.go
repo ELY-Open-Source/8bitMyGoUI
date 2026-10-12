@@ -26,7 +26,7 @@ func Radio[T comparable](c *ui.Context, text string, value T, selected *T, o Rad
 		return ui.CheckboxBase(c, &on).Role(ui.RoleRadio).Label(text).Disabled(o.Disabled)
 	})
 	res := RadioResult{Element: shell}
-	if base.Changed() && !was {
+	if base.Changed() && !was && !base.IsDisabled() {
 		*selected, res.Changed = value, true
 		slog.Debug("8bit: radio", "label", text)
 	}

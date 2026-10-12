@@ -36,7 +36,7 @@ func PauseMenu(c *ui.Context, paused *bool, o PauseMenuOptions) PauseMenuResult 
 			pixel.Harbor(c, panel, func() {
 				ui.Box(c).Size(k.D(pixel.Measure(title)*3), k.D(pixel.LineHeight*3)).Role(ui.RoleText).Label(title).Draw(func(p *ui.Painter, r ui.Rect) {
 					g := k.Canvas(p, r)
-					if g.Step(2)%2 == 0 || k.Reduce() {
+					if g.Step(4)%4 < 2 || k.Reduce() {
 						g.Text(0, 0, title, light, 3)
 					}
 				})

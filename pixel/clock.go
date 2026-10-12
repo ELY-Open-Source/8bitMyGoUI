@@ -62,12 +62,25 @@ func (k Kit) At(c *ui.Context, t time.Time) {
 	ask(c.Now().Add(d).UnixNano())
 }
 
+// Elapsed: time since *t; clock steps back, *t becomes now.
+func (k Kit) Elapsed(t *time.Time) time.Duration {
+	if k.now.Before(*t) {
+		*t = k.now
+	}
+	return k.now.Sub(*t)
+}
+
 // Since counts steps from t at fps, up to done.
 func (k Kit) Since(c *ui.Context, t time.Time, fps, done int) int {
+	checkFPS(fps)
 	if t.IsZero() {
 		return done
 	}
-	n := int(k.now.Sub(t) * time.Duration(fps) / time.Second)
+	// A clock stepping back holds at zero; division cannot overflow.
+	n := 0
+	if d := k.now.Sub(t); d > 0 {
+		n = int(min(d/(time.Second/time.Duration(fps)), time.Duration(done)))
+	}
 	if n < done {
 		k.Tick(c, fps)
 	}
@@ -125,6 +138,7 @@ type shot struct {
 
 // Shot steps a cued one-shot; Reduce Motion spends it whole.
 func (k Kit) Shot(c *ui.Context, e *ui.Element, cue, fps, done int) int {
+	checkFPS(fps)
 	// Before any change the zero start reads as done.
 	s := ui.Local(e, shotKey{}, func() shot { return shot{cue: cue} })
 	if cue != s.cue {
@@ -165,8 +179,9 @@ func frameAt(t time.Time, fps int) (int, time.Duration) {
 	return int(n), time.Duration((n+1)*period - ns)
 }
 
+// checkFPS holds every clock to S5's 4–15 fps.
 func checkFPS(fps int) {
-	if fps < 1 || fps > 60 {
-		panic(fmt.Sprintf("pixel: fps %d outside 1–60", fps))
+	if fps < 4 || fps > 15 {
+		panic(fmt.Sprintf("pixel: fps %d outside 4–15", fps))
 	}
 }

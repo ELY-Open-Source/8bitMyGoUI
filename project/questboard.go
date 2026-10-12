@@ -80,11 +80,11 @@ func QuestBoard(c *ui.Context, text string, cols *[3][]string, o QuestBoardOptio
 			key    ui.Key
 			dc, dr int
 		}{{ui.KeyUp, 0, -1}, {ui.KeyDown, 0, 1}, {ui.KeyLeft, -1, 0}, {ui.KeyRight, 1, 0}} {
-			if base.Shortcut(0, m.key) {
+			if pixel.Shortcut(base, 0, m.key) {
 				b.col, b.row = b.col+m.dc, b.row+m.dr
 				fit()
 			}
-			if base.Shortcut(ui.Alt, m.key) {
+			if pixel.Shortcut(base, ui.Alt, m.key) {
 				move(b.col+m.dc, b.row+m.dr)
 			}
 		}

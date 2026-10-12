@@ -31,7 +31,7 @@ func InteractPrompt(c *ui.Context, target *ui.Element, action string, o Interact
 	at := max(3, int((b.X+b.W/2-x)/k.Dot()))
 	bob := 0
 	if !k.Reduce() {
-		bob = k.Tick(c, 2) % 2
+		bob = k.Tick(c, 4) / 2 % 2
 	}
 	var e *ui.Element
 	ui.Overlay(c, func() {

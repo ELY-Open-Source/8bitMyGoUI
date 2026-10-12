@@ -30,10 +30,12 @@ func Legend(c *ui.Context, text string, series []Series, hidden []bool, o Legend
 		for i, s := range series {
 			shown := !hidden[i]
 			shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.ToggleBase(c, &shown).Label(s.Name).Disabled(o.Disabled) })
-			if base.Changed() {
+			// The base turns before it learns it is off.
+			if base.Changed() && !base.IsDisabled() {
 				hidden[i], res.Changed = !shown, true
 				slog.Debug("8bit: legend", "label", text, "series", s.Name, "shown", shown)
 			}
+			shown = !hidden[i]
 			ink := pick(s.Slot, i)
 			shell.Size(k.D(10+pixel.Measure(s.Name)), k.D(pixel.LineHeight)).Draw(func(p *ui.Painter, r ui.Rect) {
 				g := k.Canvas(p, r)

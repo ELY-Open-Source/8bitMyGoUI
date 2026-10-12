@@ -80,7 +80,8 @@ func turned(c *ui.Context, k pixel.Kit, e *ui.Element, playing bool, fps int) in
 	on := playing && !k.Reduce()
 	if on {
 		n := k.Tick(c, fps)
-		if !s.playing {
+		// A clock stepping back rebases, so the count never falls.
+		if !s.playing || n-s.from < s.held {
 			s.from = n - s.held
 		}
 		s.held = n - s.from

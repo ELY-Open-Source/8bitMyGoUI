@@ -26,8 +26,8 @@ var chartEntries = []Entry{
 	{225, "Histogram", "直方图", "chart", "Damage rolls in bins. ROLL throws ten more.", demoHistogram},
 	{226, "ScatterPlot", "散点图", "chart", "Every hit by distance and damage, one 2×2 dot each.", demoScatterPlot},
 	{227, "BubbleChart", "气泡图", "chart", "Towns by trade and danger, sized by how many live there.", demoBubbleChart},
-	{228, "Heatmap", "热力图", "chart", "Raids by day and hour. Hot cells dither red.", demoHeatmap},
-	{229, "CalendarHeatmap", "日历热力图", "chart", "A year of play, a square a day. A commit graph for slimes.", demoCalendarHeatmap},
+	{228, "Heatmap", "密度图", "chart", "Raids by day and hour. Hot cells dither red.", demoHeatmap},
+	{229, "CalendarHeatmap", "日历密度图", "chart", "A year of play, a square a day. A commit graph for slimes.", demoCalendarHeatmap},
 	{230, "Gauge", "仪表", "chart", "Push the throttle; the needle follows.", demoGauge},
 }
 

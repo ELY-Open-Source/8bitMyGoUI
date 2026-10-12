@@ -59,7 +59,7 @@ func SpriteSheet(c *ui.Context, text string, sp *pixel.Sprite, frame *int, playi
 	}
 	if *playing {
 		per := time.Second / time.Duration(fps)
-		m := int(k.Now().Sub(sh.since) / per)
+		m := int(k.Elapsed(&sh.since) / per)
 		*frame = (sh.from + m) % n
 		k.At(c, sh.since.Add(time.Duration(m+1)*per))
 	}

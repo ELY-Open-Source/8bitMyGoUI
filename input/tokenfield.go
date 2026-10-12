@@ -34,6 +34,8 @@ func TokenField(c *ui.Context, text string, tokens *[]string, o TokenFieldOption
 	e := ui.Row(c).Wrap().Width(k.D(pixel.Or("TokenField Width", o.Width, 200))).Padding(k.D(3), k.D(4)).Gap(k.D(3)).AlignItems(ui.Center)
 	e.Role(ui.RoleGroup).Label(text).Description(strings.Join(*tokens, ", "))
 	draft := ui.Local(e, tokenKey{}, func() string { return "" })
+	// The row stays enabled, so off is checked here.
+	off := o.Disabled || pixel.Current(c).Inert
 	res := TokenFieldResult{Element: e}
 	add := func(s string) {
 		if s = strings.TrimSpace(s); s != "" && !slices.Contains(*tokens, s) {
@@ -41,17 +43,17 @@ func TokenField(c *ui.Context, text string, tokens *[]string, o TokenFieldOption
 		}
 	}
 	// A comma typed since the last frame cuts the draft.
-	if parts := strings.Split(*draft, ","); len(parts) > 1 {
+	if parts := strings.Split(*draft, ","); len(parts) > 1 && !off {
 		for _, p := range parts[:len(parts)-1] {
 			add(p)
 		}
 		*draft = parts[len(parts)-1]
 	}
-	if e.Shortcut(0, ui.KeyEnter) {
+	if !off && pixel.Shortcut(e, 0, ui.KeyEnter) {
 		add(*draft)
 		*draft = ""
 	}
-	if *draft == "" && len(*tokens) > 0 && e.Shortcut(0, ui.KeyBackspace) {
+	if !off && *draft == "" && len(*tokens) > 0 && pixel.Shortcut(e, 0, ui.KeyBackspace) {
 		*tokens, res.Changed = (*tokens)[:len(*tokens)-1], true
 	}
 	var ed pixel.Edit
@@ -73,7 +75,7 @@ func TokenField(c *ui.Context, text string, tokens *[]string, o TokenFieldOption
 	focus := ed.Focused
 	e.Draw(func(p *ui.Painter, r ui.Rect) { well(k.Canvas(p, r), pixel.Edge, focus) })
 	if res.Changed {
-		slog.Debug("8bit: tokens", "label", text, "tokens", *tokens)
+		slog.Debug("8bit: tokens", "label", text, "tokens", len(*tokens))
 	}
 	return res
 }

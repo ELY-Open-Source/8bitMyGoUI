@@ -20,7 +20,7 @@ var studioEntries = []Entry{
 	{359, "Waveform", "波形", "media", "Every sample a line, up or down from zero.", demoWaveform},
 	{360, "VideoFrame", "视频框", "media", "A 16:9 screen with play and a scrubber. The slime does the rest.", demoVideoFrame},
 	{361, "ImageCompare", "对比滑块", "media", "Drag the grip: sketch on the left, paint on the right.", demoImageCompare},
-	{362, "Gallery", "画廊", "media", "Arrows walk the thumbnails; the big picture follows.", demoGallery},
+	{362, "Gallery", "相册", "media", "Arrows walk the thumbnails; the big picture follows.", demoGallery},
 	{363, "Filmstrip", "胶片条", "media", "A sprite's frames on film, sprocket holes and all.", demoFilmstrip},
 	{364, "RecordButton", "录制按钮", "media", "The dot blinks while it records, and the time runs.", demoRecordButton},
 	{365, "Tuner", "调频器", "media", "Drag the needle across FM. A few stations are on the air.", demoTuner},

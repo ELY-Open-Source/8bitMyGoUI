@@ -52,13 +52,13 @@ func DPad(c *ui.Context, text string, o DPadOptions) DPadResult {
 		key ui.Key
 		arm Direction
 	}{{ui.KeyUp, Up}, {ui.KeyDown, Down}, {ui.KeyLeft, Left}, {ui.KeyRight, Right}} {
-		if base.Shortcut(0, m.key) {
+		if pixel.Shortcut(base, 0, m.key) {
 			res.Pressed = m.arm
 		}
 	}
 	// Taking Enter and Space keeps keys from clicking.
-	base.Shortcut(0, ui.KeyEnter)
-	base.Shortcut(0, ui.KeySpace)
+	pixel.Shortcut(base, 0, ui.KeyEnter)
+	pixel.Shortcut(base, 0, ui.KeySpace)
 	at := func() Direction {
 		x, y, _ := base.PointerPosition()
 		return armAt(int(x/k.Dot()), int(y/k.Dot()))
@@ -71,7 +71,7 @@ func DPad(c *ui.Context, text string, o DPadOptions) DPadResult {
 		slog.Debug("8bit: dpad", "label", text, "arm", res.Pressed)
 	}
 	down := None
-	if k.Now().Sub(lit.at) < 150*time.Millisecond {
+	if k.Elapsed(&lit.at) < 150*time.Millisecond {
 		down = lit.arm
 		k.Tick(c, 10)
 	}

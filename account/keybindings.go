@@ -75,23 +75,23 @@ func KeyBindings(c *ui.Context, text string, binds []Binding, o KeyBindingsOptio
 		kb.waiting = false
 	case kb.waiting:
 		// Waiting, every key binds, arrows too; Escape gives up.
-		if base.Shortcut(0, ui.KeyEscape) {
+		if pixel.Shortcut(base, 0, ui.KeyEscape) {
 			kb.waiting = false
 		}
 		for key := range caps {
-			if base.Shortcut(0, key) && kb.waiting {
+			if pixel.Shortcut(base, 0, key) && kb.waiting {
 				binds[kb.cur].Key, kb.waiting, res.Changed = key, false, true
 				slog.Debug("8bit: key bindings", "label", text, "action", binds[kb.cur].Action, "key", caps[key])
 			}
 		}
 	default:
-		if base.Shortcut(0, ui.KeyUp) {
+		if pixel.Shortcut(base, 0, ui.KeyUp) {
 			kb.cur = max(0, kb.cur-1)
 		}
-		if base.Shortcut(0, ui.KeyDown) {
+		if pixel.Shortcut(base, 0, ui.KeyDown) {
 			kb.cur = min(len(binds)-1, kb.cur+1)
 		}
-		if base.Shortcut(0, ui.KeyEnter) || base.Shortcut(0, ui.KeySpace) {
+		if pixel.Shortcut(base, 0, ui.KeyEnter) || pixel.Shortcut(base, 0, ui.KeySpace) {
 			kb.waiting = true
 		}
 		if base.Clicked() {

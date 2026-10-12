@@ -48,7 +48,7 @@ func Resizable(c *ui.Context, w, h *int, o ResizableOptions, children func()) Re
 			*w, *h = *w+dx, *h+dy
 		}
 		for key, d := range map[ui.Key][2]int{ui.KeyLeft: {-4, 0}, ui.KeyRight: {4, 0}, ui.KeyUp: {0, -4}, ui.KeyDown: {0, 4}} {
-			if !o.Disabled && base.Shortcut(0, key) {
+			if !o.Disabled && pixel.Shortcut(base, 0, key) {
 				*w, *h = *w+d[0], *h+d[1]
 			}
 		}

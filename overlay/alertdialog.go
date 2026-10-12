@@ -49,7 +49,7 @@ func AlertDialog(c *ui.Context, title, message string, open *bool, o AlertDialog
 	res.Element = ui.DialogBase(c, open, func(back, panel *ui.Element) {
 		dim(k, back, pixel.Back, 8)
 		panel.Width(k.D(220)).Role(ui.RoleAlertDialog).Label(title).Description(message).Focusable().FocusRing(false)
-		if panel.Shortcut(0, ui.KeyEnter) && !o.Disabled && !pixel.Current(c).Inert {
+		if pixel.Shortcut(panel, 0, ui.KeyEnter) && !o.Disabled && !pixel.Current(c).Inert {
 			press(o.Default)
 		}
 		panel.Children(func() {

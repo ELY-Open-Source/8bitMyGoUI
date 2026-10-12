@@ -61,7 +61,7 @@ func paletteOf(c *ui.Context, s pixel.Season, night bool) pixel.Settings {
 
 // over stacks an effect on a same-sized sky.
 func over(c *ui.Context, w, h int, effect func()) {
-	layout.Layers(c, func() { fx.Sky(c, fx.SkyOptions{Width: w, Height: h}) }, effect)
+	layout.Layers(c, layout.LayersOptions{}, func() { fx.Sky(c, fx.SkyOptions{Width: w, Height: h}) }, effect)
 }
 
 // portalBand rings the portal, outside in.
@@ -154,7 +154,7 @@ func demoLava(c *ui.Context, log func(string)) {
 
 func demoAurora(c *ui.Context, log func(string)) {
 	pixel.Scope(c, paletteOf(c, pixel.K(c).Palette().Season, true), func() {
-		layout.Layers(c, func() { fx.Sky(c, fx.SkyOptions{Width: 140, Height: 80}) },
+		layout.Layers(c, layout.LayersOptions{}, func() { fx.Sky(c, fx.SkyOptions{Width: 140, Height: 80}) },
 			func() { fx.Aurora(c, fx.AuroraOptions{Width: 140, Height: 80, Label: "aurora"}) },
 			func() { fx.Mountains(c, fx.MountainsOptions{Width: 140, Height: 80}) })
 	})

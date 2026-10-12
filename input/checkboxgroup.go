@@ -51,7 +51,7 @@ func CheckboxGroup(c *ui.Context, text string, items []string, checked []bool, o
 			}
 			box(k.Canvas(p, r), text, mark, st)
 		})
-		if base.Changed() {
+		if base.Changed() && !base.IsDisabled() {
 			for i := range checked {
 				checked[i] = all
 			}

@@ -36,12 +36,12 @@ func Quantity(c *ui.Context, text string, value *int, o QuantityOptions) Quantit
 	if !base.IsDisabled() {
 		step := 0
 		// Enter and Space are taken, so clicks come from pointers.
-		base.Shortcut(0, ui.KeyEnter)
-		base.Shortcut(0, ui.KeySpace)
-		if base.Shortcut(0, ui.KeyLeft) || base.Shortcut(0, ui.KeyDown) {
+		pixel.Shortcut(base, 0, ui.KeyEnter)
+		pixel.Shortcut(base, 0, ui.KeySpace)
+		if pixel.Shortcut(base, 0, ui.KeyLeft) || pixel.Shortcut(base, 0, ui.KeyDown) {
 			step--
 		}
-		if base.Shortcut(0, ui.KeyRight) || base.Shortcut(0, ui.KeyUp) {
+		if pixel.Shortcut(base, 0, ui.KeyRight) || pixel.Shortcut(base, 0, ui.KeyUp) {
 			step++
 		}
 		if base.Clicked() {
@@ -58,10 +58,10 @@ func Quantity(c *ui.Context, text string, value *int, o QuantityOptions) Quantit
 		for ; step < 0 && *value > lo; step++ {
 			*value--
 		}
-		if base.Shortcut(0, ui.KeyHome) {
+		if pixel.Shortcut(base, 0, ui.KeyHome) {
 			*value = lo
 		}
-		if base.Shortcut(0, ui.KeyEnd) {
+		if pixel.Shortcut(base, 0, ui.KeyEnd) {
 			*value = hi
 		}
 	}

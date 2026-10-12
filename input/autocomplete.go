@@ -3,6 +3,7 @@ package input
 import (
 	"log/slog"
 	"strings"
+	"unicode/utf8"
 
 	"github.com/egoist/mygo/ui"
 
@@ -28,10 +29,12 @@ func Autocomplete(c *ui.Context, text string, value *string, suggestions []strin
 	ed, e := field(c, value, pixel.EditorOptions{Label: text, Placeholder: o.Placeholder, Disabled: o.Disabled}, o.Width, nil, nil, nil)
 	res := AutocompleteResult{Element: e, Changed: ed.Changed, Submitted: ed.Submitted}
 	best := completion(suggestions, *value)
-	tab, enter := best != "" && e.Shortcut(0, ui.KeyTab), best != "" && e.Shortcut(0, ui.KeyEnter)
+	// Keys reach the wrapper; the editor's state gates them.
+	on := best != "" && !ed.Input.IsDisabled()
+	tab, enter := on && pixel.Shortcut(e, 0, ui.KeyTab), on && pixel.Shortcut(e, 0, ui.KeyEnter)
 	if tab || enter {
 		*value, res.Changed, res.Accepted = best, true, true
-		slog.Debug("8bit: autocomplete accepted", "label", text, "value", best)
+		slog.Debug("8bit: autocomplete accepted", "label", text, "runes", utf8.RuneCountInString(best))
 		return res
 	}
 	if best != "" {

@@ -3,6 +3,7 @@ package gallery
 import (
 	"fmt"
 	"time"
+	"unicode/utf8"
 
 	"github.com/egoist/mygo/ui"
 
@@ -16,7 +17,7 @@ var chatEntries = []Entry{
 	{323, "Composer", "输入栏", "chat", "Enter sends, Shift+Enter breaks the line. SEND ▶ works too.", demoComposer},
 	{324, "TypingIndicator", "正在输入", "chat", "Three dots hop while someone types. Suspense!", demoTypingIndicator},
 	{325, "ChatList", "会话列表", "chat", "Who said what last, and how much you missed.", demoChatList},
-	{326, "ReadReceipt", "已读回执", "chat", "One check: sent. Two checks: seen. No excuses.", demoReadReceipt},
+	{326, "ReadReceipt", "已读标记", "chat", "One check: sent. Two checks: seen. No excuses.", demoReadReceipt},
 	{327, "Reactions", "表情回应", "chat", "Click a chip to add your face to the pile, again to take it back.", demoReactions},
 	{328, "EmojiPicker", "表情选择", "chat", "Faces, the world and loot, eight to a row.", demoEmojiPicker},
 	{329, "MentionInput", "提及输入", "chat", "Type @ and a few letters; Tab finishes the name.", demoMentionInput},
@@ -92,10 +93,11 @@ func demoComposer(c *ui.Context, log func(string)) {
 	s := chatState(c)
 	r := chat.Composer(c, "Message", &s.draft, chat.ComposerOptions{Placeholder: "Say something…"})
 	if r.Changed {
-		log(fmt.Sprintf("draft %q", s.draft))
+		log(fmt.Sprintf("draft of %d letters", utf8.RuneCountInString(s.draft)))
 	}
+	// Counts, not words: logs never hold what was typed.
 	if r.Sent != "" {
-		log("sent: " + r.Sent)
+		log(fmt.Sprintf("sent %d letters", utf8.RuneCountInString(r.Sent)))
 	}
 }
 
@@ -149,13 +151,13 @@ func demoMentionInput(c *ui.Context, log func(string)) {
 	s := chatState(c)
 	r := chat.MentionInput(c, "Mention", &s.mention, []string{"Aria", "Arthur", "Brom", "Mittens"}, chat.MentionInputOptions{Placeholder: "Try @ar"})
 	if r.Changed {
-		log(fmt.Sprintf("text %q", s.mention))
+		log(fmt.Sprintf("text of %d letters", utf8.RuneCountInString(s.mention)))
 	}
 	if r.Mentioned != "" {
 		log("mentioned " + r.Mentioned)
 	}
 	if r.Submitted {
-		log("sent: " + s.mention)
+		log(fmt.Sprintf("sent %d letters", utf8.RuneCountInString(s.mention)))
 	}
 }
 

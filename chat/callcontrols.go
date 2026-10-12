@@ -34,15 +34,17 @@ func CallControls(c *ui.Context, text string, muted, camera *bool, o CallControl
 			}
 			g.Finish(st)
 		})
-		return b.Changed() || b.Clicked()
+		// The bases turn before they learn they are off.
+		return (b.Changed() || b.Clicked()) && !b.IsDisabled()
 	}
+	m, cam := *muted, *camera
 	res.Element = ui.Row(c).Gap(k.D(4)).FocusGroup(ui.Horizontal).Role(ui.RoleToolbar).Label(text).Children(func() {
-		if button(func() *ui.Element { return ui.ToggleBase(c, muted).Label(k.Msg("mute")) }, icon.Mic, pixel.Face, pixel.Ink, *muted) {
-			res.Changed = true
+		if button(func() *ui.Element { return ui.ToggleBase(c, &m).Label(k.Msg("mute")) }, icon.Mic, pixel.Face, pixel.Ink, *muted) {
+			*muted, res.Changed = m, true
 			slog.Debug("8bit: call mute", "label", text, "muted", *muted)
 		}
-		if button(func() *ui.Element { return ui.ToggleBase(c, camera).Label(k.Msg("camera")) }, icon.Camera, pixel.Face, pixel.Ink, !*camera) {
-			res.Changed = true
+		if button(func() *ui.Element { return ui.ToggleBase(c, &cam).Label(k.Msg("camera")) }, icon.Camera, pixel.Face, pixel.Ink, !*camera) {
+			*camera, res.Changed = cam, true
 			slog.Debug("8bit: call camera", "label", text, "on", *camera)
 		}
 		if button(func() *ui.Element { return ui.ButtonBase(c).Label(k.Msg("hang_up")) }, icon.Phone, pixel.Bad, pixel.AccentInk, false) {

@@ -40,7 +40,9 @@ func HealthBar(c *ui.Context, text string, hp, full int, o HealthBarOptions) *ui
 	now := k.Now()
 	// end is the trail's end: held, then draining fast.
 	end := func() float64 {
-		return max(float64(tr.seen), tr.from-max(0, now.Sub(tr.at)-hold).Seconds()*float64(full))
+		// S5: the drain moves in whole frames, fifteen a second.
+		drained := max(0, now.Sub(tr.at)-hold).Truncate(time.Second / 15)
+		return max(float64(tr.seen), tr.from-drained.Seconds()*float64(full))
 	}
 	if hp < tr.seen {
 		tr.from, tr.at = end(), now
@@ -54,7 +56,7 @@ func HealthBar(c *ui.Context, text string, hp, full int, o HealthBarOptions) *ui
 		shown = float64(hp)
 	}
 	if shown > float64(hp) {
-		k.Tick(c, 30)
+		k.Tick(c, 15)
 	}
 	// Divide, not multiply: huge HP must not overflow.
 	ink := pixel.Good

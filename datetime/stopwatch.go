@@ -43,7 +43,7 @@ func Stopwatch(c *ui.Context, text string, o StopwatchOptions) StopwatchResult {
 	running := !w.since.IsZero()
 	elapsed := w.banked
 	if running {
-		elapsed += now.Sub(w.since)
+		elapsed += k.Elapsed(&w.since)
 		k.Tick(c, 10)
 	}
 	res := StopwatchResult{Element: col}

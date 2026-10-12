@@ -55,7 +55,7 @@ func Credits(c *ui.Context, text string, credits []Credit, o CreditsOptions) Cre
 	end, roll := h/2+full-pixel.LineHeight/2, start(k, e, o.Cue)
 	top, step := 0, end
 	if !k.Reduce() {
-		step = k.Since(c, roll.at, 16, end)
+		step = k.Since(c, roll.at, 15, end)
 		top = h - step
 	} else {
 		h = full

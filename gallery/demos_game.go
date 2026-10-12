@@ -178,7 +178,7 @@ func demoTimerHUD(c *ui.Context, log func(string)) {
 	s := gameState(c)
 	left := max(0, s.deadline.Sub(k.Now()))
 	if left > 0 {
-		k.Tick(c, 2)
+		k.Tick(c, 4)
 	}
 	ui.Row(c).Gap(k.D(12)).AlignItems(ui.Center).Children(func() {
 		game.TimerHUD(c, left, game.TimerHUDOptions{})

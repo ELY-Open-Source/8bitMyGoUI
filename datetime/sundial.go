@@ -33,10 +33,10 @@ func SunDial(c *ui.Context, text string, hour *int, o SunDialOptions) SunDialRes
 	shell, base, st := pixel.Shell(c, func() *ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleSlider).Label(text).Disabled(o.Disabled)
 	})
-	if base.Shortcut(0, ui.KeyLeft) {
+	if pixel.Shortcut(base, 0, ui.KeyLeft) {
 		*hour = (*hour + 23) % 24
 	}
-	if base.Shortcut(0, ui.KeyRight) {
+	if pixel.Shortcut(base, 0, ui.KeyRight) {
 		*hour = (*hour + 1) % 24
 	}
 	// The width spans the whole day, midnight to midnight.

@@ -61,13 +61,13 @@ func Snake(c *ui.Context, text string, o SnakeOptions) SnakeResult {
 			d   [2]int
 		}{{ui.KeyUp, [2]int{0, -1}}, {ui.KeyDown, [2]int{0, 1}}, {ui.KeyLeft, [2]int{-1, 0}}, {ui.KeyRight, [2]int{1, 0}}} {
 			// A turn back onto its own neck is ignored.
-			if base.Shortcut(0, m.key) && m.d != [2]int{-s.dir[0], -s.dir[1]} && !s.dead {
+			if pixel.Shortcut(base, 0, m.key) && m.d != [2]int{-s.dir[0], -s.dir[1]} && !s.dead {
 				res.Started = res.Started || !s.playing
 				s.next, s.playing = m.d, true
 			}
 		}
 		// Enter, Space or a click starts it, or CONTINUEs.
-		enter, space := base.Shortcut(0, ui.KeyEnter), base.Shortcut(0, ui.KeySpace)
+		enter, space := pixel.Shortcut(base, 0, ui.KeyEnter), pixel.Shortcut(base, 0, ui.KeySpace)
 		if enter || space || base.Clicked() {
 			if s.dead {
 				s.reset(cols, rows, o.Seed, uint64(k.Now().UnixNano()))

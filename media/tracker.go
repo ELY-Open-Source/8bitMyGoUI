@@ -49,7 +49,7 @@ func Tracker(c *ui.Context, text string, rows []Row, cur *int, o TrackerOptions)
 			slog.Debug("8bit: tracker", "label", text, "row", *cur, "note", rows[*cur].Note)
 			*cur = min(len(rows)-1, *cur+1)
 		}
-		if base.Shortcut(0, ui.KeyDelete) || base.Shortcut(0, ui.KeyBackspace) {
+		if pixel.Shortcut(base, 0, ui.KeyDelete) || pixel.Shortcut(base, 0, ui.KeyBackspace) {
 			rows[*cur], res.Changed = Row{}, true
 			slog.Debug("8bit: tracker", "label", text, "row", *cur, "note", "")
 		}

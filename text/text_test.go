@@ -223,17 +223,18 @@ func TestMarqueeScrollsAndPauses(t *testing.T) {
 		}
 		return -1
 	}
+	// Steps come at 15 a second, a dot each.
 	r0 := last()
-	clk.add(500 * time.Millisecond)
+	clk.add(10 * time.Second / 15)
 	tt.Frame()
 	r1 := last()
 	tt.Move(10, 10)
-	clk.add(500 * time.Millisecond)
+	clk.add(10 * time.Second / 15)
 	tt.Frame()
 	r2 := last()
 	tt.Move(300, 90)
 	tt.Frame()
-	clk.add(250 * time.Millisecond)
+	clk.add(5 * time.Second / 15)
 	tt.Frame()
 	if r3 := last(); r0 < 0 || r0-r1 != 10 || r2 != r1 || r1-r3 != 5 {
 		t.Fatalf("ends at %d, %d (10 steps), %d (hovered), %d (5 more)", r0, r1, r2, r3)
@@ -371,7 +372,7 @@ func TestScrambleSettles(t *testing.T) {
 	if same() {
 		t.Fatal("scramble started settled")
 	}
-	clk.add(200 * time.Millisecond)
+	clk.add(400 * time.Millisecond)
 	tt.Frame()
 	if !same() {
 		t.Fatal("after 6 steps the text had not settled")

@@ -2,6 +2,7 @@ package datetime
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/egoist/mygo/ui"
 
@@ -21,13 +22,14 @@ func DigitalClock(c *ui.Context, o DigitalClockOptions) *ui.Element {
 	if sc > 4 {
 		panic(fmt.Sprintf("datetime: DigitalClock Scale %d outside 1–4", sc))
 	}
-	k.Tick(c, 1)
+	// Wake on the next whole second.
 	now := k.Now()
+	k.At(c, now.Truncate(time.Second).Add(time.Second))
 	colon := func() {
 		ui.Box(c).Size(k.D(3*sc), k.D(11*sc)).Role(ui.RoleNone).Draw(func(p *ui.Painter, r ui.Rect) {
 			g := k.Canvas(p, r)
 			// The colon blinks each half second, unless reduced.
-			if k.Reduce() || g.Step(2)%2 == 0 {
+			if k.Reduce() || g.Step(4)%4 < 2 {
 				g.Rect(sc, 3*sc, sc, sc, pixel.Bad)
 				g.Rect(sc, 7*sc, sc, sc, pixel.Bad)
 			}

@@ -3,6 +3,7 @@ package input
 import (
 	"log/slog"
 	"strings"
+	"unicode/utf8"
 
 	"github.com/egoist/mygo/ui"
 
@@ -53,14 +54,16 @@ func Combobox(c *ui.Context, text string, value *string, options []string, o Com
 	if ed.Changed {
 		st.open, st.typed, st.lit = true, true, 0
 	}
-	if e.Shortcut(0, ui.KeyDown) {
+	// Keys reach the wrapper; the editor's state gates them.
+	on := !ed.Input.IsDisabled()
+	if on && pixel.Shortcut(e, 0, ui.KeyDown) {
 		if st.open {
 			st.lit++
 		} else {
 			st.open, st.typed, st.lit = true, false, 0
 		}
 	}
-	if st.open && e.Shortcut(0, ui.KeyUp) {
+	if st.open && on && pixel.Shortcut(e, 0, ui.KeyUp) {
 		st.lit--
 	}
 	shown := options
@@ -70,8 +73,11 @@ func Combobox(c *ui.Context, text string, value *string, options []string, o Com
 	st.lit = max(0, min(st.lit, len(shown)-1))
 	// The rows shown follow the lit option.
 	st.top = max(0, min(st.top, st.lit, len(shown)-comboRows), st.lit-comboRows+1)
-	if st.open && len(shown) > 0 && e.Shortcut(0, ui.KeyEnter) {
+	if st.open && on && len(shown) > 0 && pixel.Shortcut(e, 0, ui.KeyEnter) {
 		take(shown[st.lit])
+	}
+	if !on {
+		st.open = false
 	}
 	show, held := st.open && len(shown) > 0, false
 	panel := ui.PopoverBase(c, e, &show, func(panel *ui.Element) {
@@ -132,7 +138,7 @@ func Combobox(c *ui.Context, text string, value *string, options []string, o Com
 		c.Invalidate()
 	}
 	if res.Chosen {
-		slog.Debug("8bit: combobox chosen", "label", text, "value", *value)
+		slog.Debug("8bit: combobox chosen", "label", text, "runes", utf8.RuneCountInString(*value))
 	}
 	return res
 }

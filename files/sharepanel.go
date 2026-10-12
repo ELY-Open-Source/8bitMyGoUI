@@ -57,7 +57,7 @@ func SharePanel(c *ui.Context, text, link string, access *Access, o SharePanelOp
 			at := ui.Local(e, shareKey{}, func() time.Time { return time.Time{} })
 			// The button says COPIED! for two seconds.
 			label := k.Msg("copy")
-			if k.Since(c, *at, 1, 2) < 2 {
+			if k.Since(c, *at, 4, 8) < 8 {
 				label = k.Msg("copied")
 			}
 			e.Children(func() {

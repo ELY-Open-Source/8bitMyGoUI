@@ -80,7 +80,7 @@ func Outline[K comparable](c *ui.Context, text string, roots []K, children func(
 				pixel.Text(c, label(r.key), pixel.TextOptions{Slot: ink})
 			})
 		})).Height(k.D(pixel.Or("Outline Height", o.Height, 140))).Label(text)
-		right, left := e.Shortcut(0, ui.KeyRight), e.Shortcut(0, ui.KeyLeft)
+		right, left := pixel.Shortcut(e, 0, ui.KeyRight), pixel.Shortcut(e, 0, ui.KeyLeft)
 		if (right || left) && st.at >= 0 && !off {
 			at, toggled := steer(rows, st.at, st.opened, right)
 			if toggled {

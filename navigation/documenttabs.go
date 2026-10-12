@@ -1,6 +1,7 @@
 package navigation
 
 import (
+	"fmt"
 	"log/slog"
 
 	"github.com/egoist/mygo/ui"
@@ -30,35 +31,48 @@ type DocumentTabsResult struct {
 // DocumentTabs are closable tabs; × or Delete reports Closed.
 func DocumentTabs(c *ui.Context, text string, titles []string, selected *int, o DocumentTabsOptions) DocumentTabsResult {
 	k := pixel.K(c)
+	seen := map[string]bool{}
+	for _, t := range titles {
+		if seen[t] {
+			panic(fmt.Sprintf("navigation: DocumentTabs has %q twice", t))
+		}
+		seen[t] = true
+	}
 	res := DocumentTabsResult{Closed: -1}
-	p := ui.TabsBase(c, selected, len(titles))
+	// The base turns before it learns it is off.
+	v := *selected
+	p := ui.TabsBase(c, &v, len(titles))
 	p.List.Label(text).Children(func() {
 		for i, t := range titles {
-			var x *ui.Element
-			shell, base, st := pixel.Shell(c, func() *ui.Element {
-				tab := p.Tab(i).Label(t).Disabled(o.Disabled)
-				// The × is no Tab stop; Delete closes by keyboard.
-				tab.Children(func() {
-					x = ui.Box(c).Absolute().Right(k.D(4)).Top(k.D(6)).Size(k.D(7), k.D(7)).Role(ui.RoleButton).Label(k.Msg("close") + " " + t)
+			// Keyed by title, so focus follows its tab.
+			ui.Box(c).Key(t).Children(func() {
+				var x *ui.Element
+				shell, base, st := pixel.Shell(c, func() *ui.Element {
+					tab := p.Tab(i).Label(t).Disabled(o.Disabled)
+					// The × is no Tab stop; Delete closes by keyboard.
+					tab.Children(func() {
+						x = ui.Box(c).Absolute().Right(k.D(4)).Top(k.D(6)).Size(k.D(7), k.D(7)).Role(ui.RoleButton).Label(k.Msg("close") + " " + t)
+					})
+					return tab
 				})
-				return tab
-			})
-			if x.Clicked() || base.Shortcut(0, ui.KeyDelete) {
-				res.Closed = i
-			}
-			hot := x.Hovered()
-			shell.Size(k.D(pixel.Measure(t)+24), k.D(pixel.LineHeight+6)).Draw(func(p *ui.Painter, r ui.Rect) {
-				g := k.Canvas(p, r)
-				folder(g, t, i == *selected, false, st)
-				ink := pixel.Faint
-				if hot {
-					ink = pixel.Bad
+				del := pixel.Shortcut(base, 0, ui.KeyDelete)
+				if x.Clicked() || del {
+					res.Closed = i
 				}
-				g.Sprite(g.W-10, 7, cross, 0, ink, 1)
+				hot := x.Hovered()
+				shell.Size(k.D(pixel.Measure(t)+24), k.D(pixel.LineHeight+6)).Draw(func(p *ui.Painter, r ui.Rect) {
+					g := k.Canvas(p, r)
+					folder(g, t, i == *selected, false, st)
+					ink := pixel.Faint
+					if hot {
+						ink = pixel.Bad
+					}
+					g.Sprite(g.W-10, 7, cross, 0, ink, 1)
+				})
 			})
 		}
 	})
-	res.Element, res.Changed = p.List, p.List.Changed()
+	res.Element, res.Changed = p.List, keep(c, v, selected, o.Disabled)
 	if res.Closed >= 0 {
 		slog.Debug("8bit: tab closed", "label", text, "tab", titles[res.Closed])
 	}

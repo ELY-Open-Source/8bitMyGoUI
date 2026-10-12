@@ -24,18 +24,15 @@ func DropdownMenu(c *ui.Context, text string, items []MenuItem, o DropdownMenuOp
 	off := o.Disabled || pixel.Current(c).Inert
 	b := input.Button(c, text+" ▼", input.ButtonOptions{Label: text, Disabled: o.Disabled})
 	m := ui.Local(b.Element, menuKey{}, func() menu { return menu{lit: -1} })
+	// The button keeps the focus and parks it while off.
 	if off {
-		// Closing on disable must not return focus to it.
-		if m.open {
-			c.Root().Focus()
-		}
 		m.open = false
 	}
 	res := DropdownMenuResult{Element: b.Element, Chosen: -1}
 	switch {
 	case b.Clicked && m.open:
 		m.open = false
-	case b.Clicked, !m.open && !off && b.Element.Shortcut(0, ui.KeyDown):
+	case b.Clicked, !m.open && !off && pixel.Shortcut(b.Element, 0, ui.KeyDown):
 		m.show(items)
 	}
 	res.Chosen = m.keys(b.Element.Shortcut, items)

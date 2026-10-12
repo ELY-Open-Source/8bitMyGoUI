@@ -16,7 +16,7 @@ import (
 
 var overlayEntries = []Entry{
 	{176, "Dialog", "对话框", "overlay", "A titled window over a checkered backdrop. Escape or a click outside closes it.", demoDialog},
-	{177, "AlertDialog", "警告框", "overlay", "Icon, title, message, buttons. Enter presses the highlighted one.", demoAlertDialog},
+	{177, "AlertDialog", "提醒框", "overlay", "Icon, title, message, buttons. Enter presses the highlighted one.", demoAlertDialog},
 	{178, "ConfirmDialog", "确认框", "overlay", "ARE YOU SURE? The hand starts on NO, to be safe.", demoConfirmDialog},
 	{179, "Popover", "弹出层", "overlay", "A panel under its button, notched toward it. It flips above near the bottom.", demoPopover},
 	{180, "Tooltip", "提示气泡", "overlay", "Rest the pointer half a second, or Tab in, and a bubble says what it does.", demoTooltip},

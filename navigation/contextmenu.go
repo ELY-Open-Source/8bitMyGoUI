@@ -47,7 +47,7 @@ func ContextMenu(c *ui.Context, text string, items []MenuItem, o ContextMenuOpti
 		s.x, s.y, _ = area.PointerPosition()
 		s.m.show(items)
 	}
-	key, shiftF10 := area.Shortcut(0, ui.KeyContextMenu), area.Shortcut(ui.Shift, ui.KeyF10)
+	key, shiftF10 := pixel.Shortcut(area, 0, ui.KeyContextMenu), pixel.Shortcut(area, ui.Shift, ui.KeyF10)
 	if (key || shiftF10) && !off {
 		// At the pointer when over the area, else its corner.
 		x, y, over := area.PointerPosition()

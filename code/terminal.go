@@ -71,7 +71,7 @@ func Terminal(c *ui.Context, text string, lines []string, input *string, o Termi
 				}
 			})
 			// Up and Down are history here, taken from the editor.
-			if up, down := row.Shortcut(0, ui.KeyUp), row.Shortcut(0, ui.KeyDown); (up || down) && !off {
+			if up, down := pixel.Shortcut(row, 0, ui.KeyUp), pixel.Shortcut(row, 0, ui.KeyDown); (up || down) && !off {
 				res.Changed = recall(tm, input, up) || res.Changed
 			}
 		})

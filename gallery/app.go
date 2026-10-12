@@ -99,7 +99,8 @@ func (a *App) step(d int) {
 // logger records a demo's events for the log panel.
 func (a *App) logger(e Entry) func(string) {
 	return func(ev string) {
-		slog.Debug("8bit: demo", "entry", e.Slug(), "event", ev)
+		// The panel shows what was typed; logs never do.
+		slog.Debug("8bit: demo", "entry", e.Slug())
 		l := append(a.logs[e.Slug()], ev)
 		a.logs[e.Slug()] = l[max(0, len(l)-8):]
 	}

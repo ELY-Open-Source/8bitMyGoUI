@@ -22,7 +22,13 @@ type SwitchResult struct {
 // Switch is a lever on an OFF/ON plate.
 func Switch(c *ui.Context, text string, on *bool, o SwitchOptions) SwitchResult {
 	k := pixel.K(c)
-	shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.SwitchBase(c, on).Label(label(o.Label, text)).Disabled(o.Disabled) })
+	// The base turns before it learns it is off.
+	v := *on
+	shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.SwitchBase(c, &v).Label(label(o.Label, text)).Disabled(o.Disabled) })
+	changed := v != *on && !base.IsDisabled()
+	if changed {
+		*on = v
+	}
 	shell.Size(k.D(32+pixel.Measure(text)), k.D(pixel.LineHeight)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)
 		g.Frame(0, 1, 27, 14, pixel.Raised, pixel.Shade)
@@ -43,7 +49,7 @@ func Switch(c *ui.Context, text string, on *bool, o SwitchOptions) SwitchResult 
 		g.Text(32, 0, text, ink, 1)
 		g.Finish(st)
 	})
-	res := SwitchResult{Element: shell, Changed: base.Changed()}
+	res := SwitchResult{Element: shell, Changed: changed}
 	if res.Changed {
 		slog.Debug("8bit: switch", "label", text, "on", *on)
 	}

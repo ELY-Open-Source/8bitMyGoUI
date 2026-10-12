@@ -25,9 +25,9 @@ func Marquee(c *ui.Context, s string, o MarqueeOptions) *ui.Element {
 	if k.Reduce() || e.Hovered() {
 		ms.last = -1
 	} else {
-		step := k.Tick(c, 20)
+		step := k.Tick(c, 15)
 		if ms.last >= 0 {
-			ms.offset += step - ms.last
+			ms.offset += max(0, step-ms.last)
 		}
 		ms.last = step
 	}

@@ -51,7 +51,7 @@ func Toasts(c *ui.Context, queue *[]Toast, o ToastsOptions) ToastsResult {
 		if life == 0 {
 			life = 3 * time.Second
 		}
-		if t.shown.IsZero() || now.Sub(t.shown) < life {
+		if t.shown.IsZero() || k.Elapsed(&t.shown) < life {
 			kept = append(kept, t)
 		}
 	}

@@ -38,14 +38,13 @@ func TableOfContents(c *ui.Context, text string, items []TocItem, current *int, 
 	k := pixel.K(c)
 	w := pixel.Or("TableOfContents Width", o.Width, 160)
 	res := TableOfContentsResult{}
+	// The bases turn before they learn they are off.
+	v := *current
 	res.Element = ui.RadioGroup(c, func() {
 		for i, it := range items {
-			shell, base, st := pixel.Shell(c, func() *ui.Element {
-				return ui.RadioBase(c, current, i).Label(it.Title).Disabled(o.Disabled)
+			shell, _, st := pixel.Shell(c, func() *ui.Element {
+				return ui.RadioBase(c, &v, i).Label(it.Title).Disabled(o.Disabled)
 			})
-			if base.Changed() {
-				res.Changed = true
-			}
 			shell.Size(k.D(w), k.D(pixel.LineHeight)).Draw(func(p *ui.Painter, r ui.Rect) {
 				g := k.Canvas(p, r)
 				x, ink := 8+it.Level*10, pixel.Faint
@@ -60,7 +59,7 @@ func TableOfContents(c *ui.Context, text string, items []TocItem, current *int, 
 			})
 		}
 	}).Gap(0).Label(text)
-	if res.Changed {
+	if res.Changed = keep(c, v, current, o.Disabled); res.Changed {
 		slog.Debug("8bit: toc", "label", text, "section", items[*current].Title)
 	}
 	return res

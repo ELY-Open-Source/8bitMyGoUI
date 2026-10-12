@@ -20,7 +20,9 @@ type SegmentedResult struct {
 // Segmented joins segments choosing one; arrows move.
 func Segmented(c *ui.Context, text string, labels []string, selected *int, o SegmentedOptions) SegmentedResult {
 	k := pixel.K(c)
-	p := ui.SegmentedBase(c, selected, len(labels))
+	// The base turns before it learns it is off.
+	v := *selected
+	p := ui.SegmentedBase(c, &v, len(labels))
 	w := 0
 	for _, l := range labels {
 		w += pixel.Measure(l) + 12
@@ -49,8 +51,9 @@ func Segmented(c *ui.Context, text string, labels []string, selected *int, o Seg
 			})
 		}
 	})
-	res := SegmentedResult{Element: p.Track, Changed: p.Track.Changed()}
+	res := SegmentedResult{Element: p.Track, Changed: v != *selected && !o.Disabled && !pixel.Current(c).Inert}
 	if res.Changed {
+		*selected = v
 		slog.Debug("8bit: segmented", "label", text, "selected", *selected)
 	}
 	return res

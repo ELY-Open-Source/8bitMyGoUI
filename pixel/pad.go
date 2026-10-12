@@ -22,11 +22,11 @@ func Pad(c *ui.Context, text string, cols, n, cw, ch int, cur *int, disabled boo
 		{ui.KeyUp, func() int { return *cur - cols }}, {ui.KeyDown, func() int { return *cur + cols }},
 		{ui.KeyHome, func() int { return 0 }}, {ui.KeyEnd, func() int { return n - 1 }},
 	} {
-		if to := m.to(); base.Shortcut(0, m.key) && to >= 0 && to < n {
+		if to := m.to(); Shortcut(base, 0, m.key) && to >= 0 && to < n {
 			*cur = to
 		}
 	}
-	enter, space := base.Shortcut(0, ui.KeyEnter), base.Shortcut(0, ui.KeySpace)
+	enter, space := Shortcut(base, 0, ui.KeyEnter), Shortcut(base, 0, ui.KeySpace)
 	if enter || space {
 		picked = *cur
 	}

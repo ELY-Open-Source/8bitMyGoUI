@@ -19,7 +19,7 @@ var controlEntries = []Entry{
 	{90, "TokenField", "标记输入", "input", "Tags before the caret. Enter or a comma adds; Backspace on empty takes the last back.", demoTokenField},
 	{91, "Segmented", "分段控件", "input", "Joined segments, one lit. Arrows move the light.", demoSegmented},
 	{92, "Rating", "评分", "input", "Stars or hearts. Click or arrows to rate; click the same mark to clear.", demoRating},
-	{93, "Knob", "旋钮", "input", "A rotary knob that clicks through 16 angles. Drag up or down, or use the arrows.", demoKnob},
+	{93, "Knob", "转钮", "input", "A rotary knob that clicks through 16 angles. Drag up or down, or use the arrows.", demoKnob},
 	{94, "PinInput", "验证码", "input", "One box per digit: typing moves on, Backspace steps back, paste fills them all.", demoPinInput},
 	{95, "NameEntry", "姓名登记", "input", "HIGH SCORE! Three initials from the letter grid, then END.", demoNameEntry},
 	{96, "VirtualKeyboard", "屏幕键盘", "input", "A keyboard on screen, for pads and touch: letters, digits, space, erase, enter.", demoVirtualKeyboard},
@@ -29,9 +29,9 @@ var controlEntries = []Entry{
 	{100, "Field", "表单项", "input", "A label above, a hint below, and a red ! when something is wrong.", demoField},
 	{101, "Fieldset", "字段组", "input", "A framed group of fields under a legend.", demoFieldset},
 	{102, "ColorSlot", "色槽选择", "input", "Pick one of the sixteen palette slots. It follows the palette.", demoColorSlot},
-	{103, "Joystick", "摇杆", "input", "Drag the stick inside its ring; it springs home. Arrows nudge it.", demoJoystick},
+	{103, "Joystick", "操作杆", "input", "Drag the stick inside its ring; it springs home. Arrows nudge it.", demoJoystick},
 	{104, "CheatCode", "秘籍", "input", "Focus it and enter ↑↑↓↓←→←→BA. You know the one.", demoCheatCode},
-	{105, "SlotPicker", "滚轮选择", "input", "Reels that spin by drag, wheel or arrows. Line up three for the jackpot.", demoSlotPicker},
+	{105, "SlotPicker", "转轮选择", "input", "Reels that spin by drag, wheel or arrows. Line up three for the jackpot.", demoSlotPicker},
 }
 
 type controlDemo struct {
@@ -149,7 +149,7 @@ func demoPinInput(c *ui.Context, log func(string)) {
 		if s.pin == "0451" {
 			log("ACCESS GRANTED")
 		} else {
-			log("WRONG CODE " + s.pin)
+			log("WRONG CODE")
 		}
 	}
 }

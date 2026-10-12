@@ -9,7 +9,7 @@ import (
 )
 
 type PaletteCycleOptions struct {
-	// FPS is steps a second; zero means 8.
+	// FPS is 4–15 steps a second; zero means 8.
 	FPS int
 	// Slot inks the sprite's # dots.
 	Slot  pixel.Slot

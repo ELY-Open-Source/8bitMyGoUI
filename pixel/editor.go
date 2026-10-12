@@ -57,6 +57,15 @@ func Editor(c *ui.Context, value *string, o EditorOptions) Edit {
 		return ui.Box(c).Focusable().Role(ui.RoleTextField).Label(o.Label).Disabled(o.Disabled)
 	})
 	s := ui.Local(base, editKey{}, func() editState { return editState{} })
+	// Copies wait here, so a veil's first frame copies nothing.
+	if s.clipped && !base.IsDisabled() {
+		c.WriteClipboard(s.clip)
+	}
+	s.clip, s.clipped = "", false
+	// A veil's first frame types nothing; callers' writes win.
+	if s.changed && base.IsDisabled() && *value == string(s.text) {
+		*value = s.kept
+	}
 	if string(s.text) != *value {
 		s.reset(*value)
 	}
@@ -64,7 +73,7 @@ func Editor(c *ui.Context, value *string, o EditorOptions) Edit {
 		base.Description(*value)
 	}
 	width, check := WrapWidth(c, shell)
-	env := editEnv{multi: o.Multiline, sends: o.EnterSends, maxLen: o.MaxLength, mask: o.Mask, width: width, dot: k.dot, read: c.ReadClipboard, write: c.WriteClipboard}
+	env := editEnv{multi: o.Multiline, sends: o.EnterSends, maxLen: o.MaxLength, mask: o.Mask, width: width, dot: k.dot, read: c.ReadClipboard, write: func(v string) { s.clip, s.clipped = v, true }}
 	shown := s.view(o.Mask, true)
 	caret := s.caret + s.composeCaret
 	lines := editLayout(shown, width, o.Multiline)
@@ -91,14 +100,15 @@ func Editor(c *ui.Context, value *string, o EditorOptions) Edit {
 		}
 		return took
 	})
-	res := Edit{Element: shell, Input: base, Changed: s.changed, Submitted: s.submitted, Focused: base.Focused(), Line: cl}
+	// A send from the frame a veil falls is dropped.
+	res := Edit{Element: shell, Input: base, Changed: s.changed, Submitted: s.submitted && !base.IsDisabled(), Focused: base.Focused(), Line: cl}
 	if res.Focused {
 		frameOf(c).typing = true
 	}
-	if s.submitted {
+	if res.Submitted {
 		slog.Debug("8bit: editor submit", "label", o.Label)
 	}
-	s.changed, s.submitted = false, false
+	s.changed, s.submitted, s.kept = false, false, *value
 	shell.Draw(func(p *ui.Painter, r ui.Rect) {
 		check(r)
 		g := k.Canvas(p, r)
@@ -127,7 +137,7 @@ func Editor(c *ui.Context, value *string, o EditorOptions) Edit {
 					}
 				}
 			}
-			if res.Focused && !o.Disabled && g.Step(2)%2 == 0 {
+			if res.Focused && !o.Disabled && g.Step(4)%4 < 2 {
 				g.VLine(cx-scroll, cl*LineHeight+1, LineHeight-2, Ink)
 			}
 		})
@@ -270,7 +280,7 @@ func (s *editState) handle(ev ui.InputEvent, e editEnv) bool {
 
 func (s *editState) press(ev ui.InputEvent, e editEnv) {
 	now := time.Now()
-	if now.Sub(s.pressAt) < 500*time.Millisecond && abs32(ev.X-s.pressX) < 5 && abs32(ev.Y-s.pressY) < 5 {
+	if d := now.Sub(s.pressAt); d >= 0 && d < 500*time.Millisecond && abs32(ev.X-s.pressX) < 5 && abs32(ev.Y-s.pressY) < 5 {
 		s.clicks++
 	} else {
 		s.clicks = 1

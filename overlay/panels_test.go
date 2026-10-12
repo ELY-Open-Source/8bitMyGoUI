@@ -1,6 +1,8 @@
 package overlay_test
 
 import (
+	"fmt"
+	"strings"
 	"testing"
 	"time"
 
@@ -347,4 +349,49 @@ func TestDisabledPanelsTakeNoClicks(t *testing.T) {
 	if at != 0 || !open || !saving || next != 0 || len(queue) != 1 {
 		t.Fatalf("disabled: at %d open %v saving %v next %d queue %d", at, open, saving, next, len(queue))
 	}
+}
+
+func TestDialogueBoxKeepsItsSpeedOnS5Steps(t *testing.T) {
+	for _, wait := range []time.Duration{900 * time.Millisecond, 1050 * time.Millisecond} {
+		clk, page := newClock(), 0
+		// Thirty letters at the default thirty a second.
+		pages := []string{"ABCDEFGHIJKLMNOPQRSTUVWXYZ1234", "NEXT"}
+		tt := view(640, 400, clk, false, func(c *ui.Context) {
+			overlay.DialogueBox(c, pages, &page, overlay.DialogueBoxOptions{})
+		})
+		clk.t = clk.t.Add(wait)
+		tt.Frame()
+		r := find(t, tt, pages[0])
+		tt.ClickAt(r.X+4, r.Y+4)
+		// A press on typed-out text turns the page.
+		if turned := page == 1; turned != (wait > time.Second) {
+			t.Errorf("after %v a press left page %d", wait, page)
+		}
+	}
+}
+
+func TestPausedBlinksOnceASecond(t *testing.T) {
+	clk, paused := newClock(), true
+	tt := view(640, 400, clk, false, func(c *ui.Context) { overlay.PauseMenu(c, &paused, overlay.PauseMenuOptions{}) })
+	var ink []int
+	for _, at := range []time.Duration{100, 350, 600} {
+		clk.t = time.Unix(3_000_000, 0).Add(at * time.Millisecond)
+		tt.Frame()
+		ink = append(ink, count(t, tt.Image(), find(t, tt, "PAUSED"), pixel.Back))
+	}
+	if ink[0] != ink[1] || ink[1] == ink[2] {
+		t.Fatalf("PAUSED ink at .1, .35 and .6 s: %v", ink)
+	}
+}
+
+func TestDialogueBoxSpeedHasACeiling(t *testing.T) {
+	defer func() {
+		if r := fmt.Sprint(recover()); !strings.HasPrefix(r, "overlay: DialogueBox CPS") {
+			t.Fatalf("CPS 1001 gave %q", r)
+		}
+	}()
+	page := 0
+	view(640, 400, newClock(), false, func(c *ui.Context) {
+		overlay.DialogueBox(c, []string{"HI"}, &page, overlay.DialogueBoxOptions{CPS: 1001})
+	})
 }

@@ -73,7 +73,7 @@ func SkillTree(c *ui.Context, text string, skills []Skill, cursor, points *int, 
 		return ui.Box(c).Focusable().Role(ui.RoleGroup).Label(text).Disabled(o.Disabled)
 	})
 	arrows(base, spots, cursor)
-	learn := base.Shortcut(0, ui.KeyEnter) || base.Shortcut(0, ui.KeySpace)
+	learn := pixel.Shortcut(base, 0, ui.KeyEnter) || pixel.Shortcut(base, 0, ui.KeySpace)
 	top := pixel.LineHeight + 4
 	// A click moves the cursor; clicking it again learns.
 	if base.Clicked() {

@@ -35,10 +35,10 @@ func GlyphMap(c *ui.Context, text string, at *rune, o GlyphMapOptions) GlyphMapR
 		*at = page + rune(cur)
 		// PageUp and PageDown turn a page, keeping the column.
 		if !base.IsDisabled() {
-			if base.Shortcut(0, ui.KeyPageUp) && *at >= 128 {
+			if pixel.Shortcut(base, 0, ui.KeyPageUp) && *at >= 128 {
 				*at -= 128
 			}
-			if base.Shortcut(0, ui.KeyPageDown) && *at+128 <= unicode.MaxRune {
+			if pixel.Shortcut(base, 0, ui.KeyPageDown) && *at+128 <= unicode.MaxRune {
 				*at += 128
 			}
 		}

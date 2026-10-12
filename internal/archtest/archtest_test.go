@@ -162,6 +162,10 @@ func TestNoBannedCalls(t *testing.T) {
 				if pkg && isUI(sel.X, "", imported) && bannedFuncs[sel.Sel.Name] || !pkg && bannedMethods[sel.Sel.Name] {
 					t.Errorf("%s: banned call %s", f.path, sel.Sel.Name)
 				}
+				// An element's keys go through pixel.Shortcut; c's are the window's.
+				if id, ok := sel.X.(*ast.Ident); sel.Sel.Name == "Shortcut" && !pkg && !(ok && id.Name == "c") {
+					t.Errorf("%s: %s.Shortcut skips the enabled check; use pixel.Shortcut", f.path, receiver(sel.X))
+				}
 			}
 			return true
 		})
@@ -268,4 +272,62 @@ func TestWebScripts(t *testing.T) {
 	if seen < 4 {
 		t.Fatalf("found %d web scripts; the walk is broken", seen)
 	}
+}
+
+// TestComponentsTakeTheirOptions holds PRD 5.1's shape: Name takes NameOptions.
+func TestComponentsTakeTheirOptions(t *testing.T) {
+	for _, f := range files(t) {
+		tier, ok := tiers[f.pkg]
+		if !ok || tier < 2 || tier > 6 || strings.HasSuffix(f.path, "_test.go") {
+			continue
+		}
+		for _, d := range f.ast.Decls {
+			fn, ok := d.(*ast.FuncDecl)
+			// Undrawn bases, as MyGo's own, are parts, not components.
+			if !ok || fn.Recv != nil || !fn.Name.IsExported() || strings.HasSuffix(fn.Name.Name, "Base") || len(fn.Type.Params.List) == 0 || !isContext(fn.Type.Params.List[0].Type) {
+				continue
+			}
+			want := fn.Name.Name + "Options"
+			if !slices.ContainsFunc(fn.Type.Params.List, func(p *ast.Field) bool { return typeName(p.Type) == want }) {
+				t.Errorf("%s: %s takes no %s", f.path, fn.Name.Name, want)
+			}
+			if r := fn.Type.Results; r != nil && len(r.List) == 1 && strings.HasSuffix(typeName(r.List[0].Type), "Result") && typeName(r.List[0].Type) != fn.Name.Name+"Result" {
+				t.Errorf("%s: %s returns %s", f.path, fn.Name.Name, typeName(r.List[0].Type))
+			}
+		}
+	}
+}
+
+// isContext reports whether x is *ui.Context.
+func isContext(x ast.Expr) bool {
+	star, ok := x.(*ast.StarExpr)
+	if !ok {
+		return false
+	}
+	sel, ok := star.X.(*ast.SelectorExpr)
+	return ok && sel.Sel.Name == "Context"
+}
+
+// typeName is a plain or generic type's name, else "".
+func typeName(x ast.Expr) string {
+	switch x := x.(type) {
+	case *ast.Ident:
+		return x.Name
+	case *ast.IndexExpr:
+		return typeName(x.X)
+	case *ast.IndexListExpr:
+		return typeName(x.X)
+	}
+	return ""
+}
+
+// receiver names a selector's receiver for a message.
+func receiver(x ast.Expr) string {
+	switch x := x.(type) {
+	case *ast.Ident:
+		return x.Name
+	case *ast.SelectorExpr:
+		return receiver(x.X) + "." + x.Sel.Name
+	}
+	return "an element"
 }

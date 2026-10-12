@@ -15,7 +15,7 @@ import (
 var mediaEntries = []Entry{
 	{346, "AudioPlayer", "音乐播放器", "media", "A whole deck in one box. Stop rewinds to the top.", demoAudioPlayer},
 	{347, "Transport", "播放控制", "media", "Back, play or pause, stop, skip: the four buttons every deck agrees on.", demoTransport},
-	{348, "Scrubber", "进度拖动", "media", "Drag to seek, or nudge with arrows. Time at both ends.", demoScrubber},
+	{348, "Scrubber", "进度定位", "media", "Drag to seek, or nudge with arrows. Time at both ends.", demoScrubber},
 	{349, "Volume", "音量", "media", "Eight bars; click one or use arrows. The speaker mutes.", demoVolume},
 	{350, "Equalizer", "均衡器", "media", "Five faders, ±12 dB. Bass boost at your own risk.", demoEqualizer},
 	{351, "Visualizer", "频谱", "media", "Bars bounce out from the middle, hottest at the tips.", demoVisualizer},
@@ -76,7 +76,8 @@ func beat(s string) [16]bool {
 func spin(c *ui.Context, last *time.Time, playing bool, at *time.Duration, length time.Duration) {
 	k := pixel.K(c)
 	if playing && !last.IsZero() {
-		*at = (*at + k.Now().Sub(*last)) % length
+		// A clock stepping back plays nothing backward.
+		*at = (*at + max(0, k.Now().Sub(*last))) % length
 	}
 	*last = time.Time{}
 	if playing {

@@ -52,7 +52,7 @@ func (a *App) home(c *ui.Context) {
 	k := pixel.K(c)
 	p := k.Palette()
 	// The banner lives in the palette's own season and hour.
-	layout.Layers(c, func() {
+	layout.Layers(c, layout.LayersOptions{}, func() {
 		fx.SeasonScene(c, p.Season, hourOf(p), fx.SeasonSceneOptions{Height: 96, Label: p.Name + " scene"}).FillWidth()
 	}, func() {
 		ui.Column(c).Padding(k.D(10)).Children(func() {
@@ -94,7 +94,7 @@ func (a *App) palettes(c *ui.Context) {
 		for i, pal := range pixel.Palettes {
 			name := pal.Name
 			if i == a.palette {
-				name += ", in use"
+				name += ", " + strings.ToLower(k.Msg("in_use"))
 			}
 			set := pixel.Current(c)
 			set.Palette = pal

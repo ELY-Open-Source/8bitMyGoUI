@@ -32,7 +32,9 @@ func ToggleGroup(c *ui.Context, labels []string, on []bool, o ToggleGroupOptions
 	res := ToggleGroupResult{}
 	res.Element = ui.Row(c).Role(ui.RoleToolbar).Label(o.Label).FocusGroup(ui.Horizontal).Children(func() {
 		for i, l := range labels {
-			shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.ToggleBase(c, &on[i]).Label(l).Disabled(o.Disabled) })
+			// The base turns before it learns it is off.
+			v := on[i]
+			shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.ToggleBase(c, &v).Label(l).Disabled(o.Disabled) })
 			if i > 0 {
 				shell.Margin(0, 0, 0, k.D(-1))
 			}
@@ -42,8 +44,8 @@ func ToggleGroup(c *ui.Context, labels []string, on []bool, o ToggleGroupOptions
 				g.Text(pad, top+dy, l, ink, sc)
 				g.Finish(st)
 			})
-			if base.Changed() {
-				res.Changed = true
+			if v != on[i] && !base.IsDisabled() {
+				on[i], res.Changed = v, true
 				if o.Single && on[i] {
 					for j := range on {
 						on[j] = j == i

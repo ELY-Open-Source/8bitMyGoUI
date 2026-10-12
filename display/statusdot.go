@@ -40,7 +40,7 @@ func StatusDot(c *ui.Context, s Status, o StatusDotOptions) *ui.Element {
 	}
 	return art(c, k, label, 7, 7, func(g pixel.Canvas) {
 		g.Disc(3, 3, 3, pixel.Edge)
-		if !(o.Live && s == Online && g.Step(2)%2 == 1) {
+		if !(o.Live && s == Online && g.Step(4)%4 >= 2) {
 			g.Disc(3, 3, 2, statusSlots[s])
 			g.Dot(2, 2, pixel.Lit)
 		}

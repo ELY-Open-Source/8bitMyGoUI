@@ -92,7 +92,7 @@ func TestSpritePlaysAndMirrors(t *testing.T) {
 	sp := pixel.MustSprite("r.\n..\n\n.r\n..")
 	tt := view(100, 100, e, func(c *ui.Context) {
 		ui.Column(c).Children(func() {
-			display.Sprite(c, sp, display.SpriteOptions{FPS: 1, Label: "s"})
+			display.Sprite(c, sp, display.SpriteOptions{FPS: 4, Label: "s"})
 			display.Sprite(c, sp, display.SpriteOptions{Mirror: true, Label: "m"})
 		})
 	})
@@ -101,7 +101,7 @@ func TestSpritePlaysAndMirrors(t *testing.T) {
 	if f0[0] != pixel.Bad || at("m")[1] != pixel.Bad {
 		t.Fatalf("frame 0 %v, mirrored %v", f0, at("m"))
 	}
-	e.clk.t = e.clk.t.Add(time.Second)
+	e.clk.t = e.clk.t.Add(time.Second / 4)
 	tt.Frame()
 	if at("s")[1] != pixel.Bad {
 		t.Fatal("the sprite did not play its second frame")

@@ -93,7 +93,7 @@ func arrows(base *ui.Element, spots []Spot, cur *int) {
 		key    ui.Key
 		dx, dy int
 	}{{ui.KeyLeft, -1, 0}, {ui.KeyRight, 1, 0}, {ui.KeyUp, 0, -1}, {ui.KeyDown, 0, 1}} {
-		if base.Shortcut(0, m.key) {
+		if pixel.Shortcut(base, 0, m.key) {
 			*cur = nearest(spots, *cur, m.dx, m.dy)
 		}
 	}
@@ -120,5 +120,6 @@ func start(k pixel.Kit, e *ui.Element, cue int) begun {
 	if s.cue != cue {
 		s.cue, s.at, s.run = cue, k.Now(), s.run+1
 	}
+	k.Elapsed(&s.at)
 	return *s
 }

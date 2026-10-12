@@ -9,7 +9,7 @@ import (
 type SpriteOptions struct {
 	Slot  pixel.Slot
 	Scale int
-	// FPS plays the frames; zero shows the first.
+	// FPS plays the frames at 4–15; zero shows the first.
 	FPS    int
 	Mirror bool
 	Label  string

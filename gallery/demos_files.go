@@ -20,7 +20,7 @@ var filesEntries = []Entry{
 	{409, "PathBar", "路径栏", "files", "Where you are, folder by folder. Click one to climb back up.", demoPathBar},
 	{410, "MemoryCard", "记忆卡", "files", "Fifteen blocks, like the grey card of old. DELETE frees one.", demoMemoryCard},
 	{411, "DiskUsage", "磁盘占用", "files", "Where the room went, stacked in one bar.", demoDiskUsage},
-	{412, "UploadQueue", "上传队列", "files", "Files on their way up. ✕ calls one back.", demoUploadQueue},
+	{412, "UploadQueue", "上传队列", "files", "Files on their way up. × calls one back.", demoUploadQueue},
 	{413, "Trash", "回收站", "files", "A bin that looks full when it is. EMPTY takes it out.", demoTrash},
 }
 

@@ -50,7 +50,7 @@ func TreasureChest(c *ui.Context, text string, it data.Item, open *bool, o Treas
 	if *open {
 		frame, rise = 2, 10
 		if !k.Reduce() {
-			frame, rise = k.Since(c, s.at, 8, 2), k.Since(c, s.at, 16, 10)
+			frame, rise = k.Since(c, s.at, 8, 2), k.Since(c, s.at, 15, 10)
 		}
 	}
 	if *open {

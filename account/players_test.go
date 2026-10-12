@@ -145,7 +145,7 @@ func TestPlayerSelectChooses(t *testing.T) {
 func TestAboutAndPatchNotesRead(t *testing.T) {
 	tt := view(500, 400, newWorld(), func(c *ui.Context) {
 		ui.Row(c).Children(func() {
-			account.About(c, "GAME", account.AboutOptions{Version: "1.2", Credits: []account.Credit{{Role: "Art", Name: "Ann"}}})
+			account.About(c, "GAME", "1.2", account.AboutOptions{Credits: []account.Credit{{Role: "Art", Name: "Ann"}}})
 			account.PatchNotes(c, "Notes", []account.Patch{{Version: "v2", Added: []string{"Boats"}, Fixed: []string{"Rain"}}}, account.PatchNotesOptions{Width: 120})
 		})
 	})
@@ -157,6 +157,6 @@ func TestAboutAndPatchNotesRead(t *testing.T) {
 		t.Fatal("the ADDED tag is not Good")
 	}
 	mustPanic(t, "no version", func() {
-		view(500, 400, newWorld(), func(c *ui.Context) { account.About(c, "G", account.AboutOptions{}) })
+		view(500, 400, newWorld(), func(c *ui.Context) { account.About(c, "G", "", account.AboutOptions{}) })
 	})
 }

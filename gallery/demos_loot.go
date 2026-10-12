@@ -18,7 +18,7 @@ var lootEntries = []Entry{
 	{281, "Crafting", "合成台", "game", "Click a cell to swap ingredients. Herb over water makes a potion.", demoCrafting},
 	{282, "LootPopup", "获得物品", "game", "YOU GOT: something nice! The item rises out of the box.", demoLootPopup},
 	{283, "TreasureChest", "宝箱", "game", "Press the chest. It creaks open; the gem floats up.", demoTreasureChest},
-	{284, "GachaReel", "抽奖转轮", "game", "SPIN: three reels, stopping one by one. No real money involved.", demoGachaReel},
+	{284, "GachaReel", "扭蛋转轮", "game", "SPIN: three reels, stopping one by one. No real money involved.", demoGachaReel},
 	{285, "InteractPrompt", "互动提示", "game", "Walk up to the mayor and a TALK bubble bobs above him.", demoInteractPrompt},
 	{286, "TurnOrder", "行动顺序", "game", "Who acts next. The active one stands raised.", demoTurnOrder},
 	{287, "BattleLog", "战斗日志", "game", "Combat lines roll up as the fight goes on.", demoBattleLog},
@@ -222,7 +222,7 @@ func demoStaminaBar(c *ui.Context, log func(string)) {
 	s := lootState(c)
 	now := k.Now()
 	// Sprinting drains a quarter a second; rest refills a tenth.
-	if dt := now.Sub(s.last).Seconds(); s.sprint {
+	if dt := max(0, now.Sub(s.last).Seconds()); s.sprint {
 		s.stamina = max(0, s.stamina-dt/4)
 	} else {
 		s.stamina = min(1, s.stamina+dt/10)

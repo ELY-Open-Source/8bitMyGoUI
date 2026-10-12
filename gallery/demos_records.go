@@ -17,13 +17,13 @@ import (
 
 var recordEntries = []Entry{
 	{164, "StatCompare", "属性对比", "data", "What a new sword does to you: ▲ in green, ▼ in red.", demoStatCompare},
-	{165, "Bestiary", "图鉴", "data", "Monsters you met, and ??? shadows of those you have not.", demoBestiary},
+	{165, "Bestiary", "怪物图录", "data", "Monsters you met, and ??? shadows of those you have not.", demoBestiary},
 	{166, "PropertyGrid", "属性表", "data", "Edit text, numbers and switches row by row.", demoPropertyGrid},
 	{167, "Pager", "分页器", "data", "Pick a page size; ◀ ▶ step through 312 items.", demoPager},
 	{168, "Feed", "动态流", "data", "What happened, newest first, with icons and times.", demoFeed},
 	{169, "Matrix", "矩阵", "data", "Who knows which spell. Arrows move; Space flips.", demoMatrix},
 	{170, "Sortable", "可排序列表", "data", "Drag a quest by its grip, or move it with Alt and the arrows.", demoSortable},
-	{171, "Transfer", "穿梭框", "data", "Pick a hero, then → or ← to swap benches.", demoTransfer},
+	{171, "Transfer", "双栏选择", "data", "Pick a hero, then → or ← to swap benches.", demoTransfer},
 	{172, "InfiniteList", "无限列表", "data", "Scroll to the end; it loads twenty more.", demoInfiniteList},
 	{173, "FilterBar", "筛选栏", "data", "Chips turn filters on; CLEAR turns them all off.", demoFilterBar},
 	{174, "SearchResults", "搜索结果", "data", "Type a spell name; matches light up.", demoSearchResults},
@@ -100,7 +100,7 @@ func demoInfiniteList(c *ui.Context, log func(string)) {
 	k := pixel.K(c)
 	s := dataState(c)
 	// A pretend server answers after one second.
-	if !s.loading.IsZero() && k.Since(c, s.loading, 1, 1) == 1 {
+	if !s.loading.IsZero() && k.Since(c, s.loading, 4, 4) == 4 {
 		s.logs, s.loading = s.logs+20, time.Time{}
 		log(fmt.Sprintf("loaded %d rows", s.logs))
 	}

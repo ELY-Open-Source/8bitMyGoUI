@@ -16,7 +16,7 @@ import (
 var popupEntries = []Entry{
 	{186, "ChoicePrompt", "选项提示", "overlay", "A question and a hand. Arrows and Enter, or press 1–9.", demoChoicePrompt},
 	{187, "Coachmark", "新手引导", "overlay", "A guided tour: a bubble points at each button in turn.", demoCoachmark},
-	{188, "Spotlight", "聚光灯", "overlay", "Everything but one button sinks into dither.", demoSpotlight},
+	{188, "Spotlight", "探照灯", "overlay", "Everything but one button sinks into dither.", demoSpotlight},
 	{189, "Notification", "通知", "overlay", "Cards stack at the top right and leave on their own. × sends one away.", demoNotification},
 	{190, "Popconfirm", "气泡确认", "overlay", "A small YES / NO bubble before the button acts.", demoPopconfirm},
 	{191, "PauseMenu", "暂停菜单", "overlay", "PAUSED blinks over the game. Escape resumes.", demoPauseMenu},
@@ -173,7 +173,7 @@ func demoKeyHints(c *ui.Context, log func(string)) {
 func demoTitleCard(c *ui.Context, log func(string)) {
 	k := pixel.K(c)
 	s := overlayState(c)
-	layout.Layers(c, func() {
+	layout.Layers(c, layout.LayersOptions{}, func() {
 		ui.Box(c).Fill().Draw(func(p *ui.Painter, r ui.Rect) {
 			g := k.Canvas(p, r)
 			g.Dither(0, 0, g.W, g.H, pixel.Well, pixel.Info, 4)

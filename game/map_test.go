@@ -166,8 +166,9 @@ func TestDamageNumbersRiseAndExpire(t *testing.T) {
 		t0, crit := top(pixel.Ink), top(pixel.Warn)
 		wd.clk.t = wd.clk.t.Add(400 * time.Millisecond)
 		tt.Frame()
-		// Halfway through its life it has risen 6 dots.
-		if rose := t0 - top(pixel.Ink); t0 < 0 || crit < 0 || (rose == 6) == reduce || rose != 6 && rose != 0 {
+		// Halfway through its life: 6 dots, or 5 stepped.
+		rose := t0 - top(pixel.Ink)
+		if moved := rose == 5 || rose == 6; t0 < 0 || crit < 0 || moved == reduce || !moved && rose != 0 {
 			t.Fatalf("reduced %v: the number rose %d from %d", reduce, rose, t0)
 		}
 		wd.clk.t = wd.clk.t.Add(500 * time.Millisecond)

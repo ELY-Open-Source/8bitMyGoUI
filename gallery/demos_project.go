@@ -15,7 +15,7 @@ var projectEntries = []Entry{
 	{422, "TaskItem", "任务项", "project", "A box to tick, a title, how urgent, and who.", demoTaskItem},
 	{423, "TaskList", "任务列表", "project", "Tasks with OPEN, DONE and URGENT chips to narrow them down.", demoTaskList},
 	{424, "Milestones", "里程碑", "project", "Flags along the road. The little hero stands at today.", demoMilestones},
-	{425, "Burndown", "燃尽图", "project", "The straight line is the plan. The other one is what happened.", demoBurndown},
+	{425, "Burndown", "冲刺进度", "project", "The straight line is the plan. The other one is what happened.", demoBurndown},
 	{426, "Pomodoro", "番茄钟", "project", "Twenty-five minutes of work, five of rest. The tomato naps on the break.", demoPomodoro},
 	{427, "Priority", "优先级", "project", "LOW, MEDIUM, HIGH and, for the worst, CRITICAL: it is on fire.", demoPriority},
 	{428, "AssigneePicker", "指派", "project", "The party lines up. Pick who takes the quest, or nobody.", demoAssigneePicker},

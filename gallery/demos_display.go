@@ -20,11 +20,11 @@ var displayEntries = []Entry{
 	{43, "Picture", "像素图", "display", "Any image reduced to the palette with Bayer dither. Press P: it recolors.", demoPicture},
 	{44, "Avatar", "头像", "display", "A face built from a name: skin, hair, eyes, mouth and background.", demoAvatar},
 	{45, "AvatarGroup", "头像组", "display", "Overlapping faces and a chip for the rest.", demoAvatarGroup},
-	{46, "Badge", "徽标", "display", "A count or a word in a notched pill; counts stop at 99+.", demoBadge},
+	{46, "Badge", "角标", "display", "A count or a word in a notched pill; counts stop at 99+.", demoBadge},
 	{47, "Tag", "标签", "display", "A chip with text, an icon and a remove box.", demoTag},
 	{48, "StatusDot", "状态点", "display", "Online, away, busy or offline; a live online dot blinks.", demoStatusDot},
-	{49, "Medal", "奖牌", "display", "Gold, silver and bronze on ribbons, rank on the face.", demoMedal},
-	{50, "Trophy", "奖杯", "display", "A gold cup over an engraved plaque.", demoTrophy},
+	{49, "Medal", "勋章", "display", "Gold, silver and bronze on ribbons, rank on the face.", demoMedal},
+	{50, "Trophy", "金杯", "display", "A gold cup over an engraved plaque.", demoTrophy},
 	{51, "Stat", "数据", "display", "A big value, its label and a change up or down.", demoStat},
 	{52, "KeyValue", "键值", "display", "A label and a value joined by a dotted leader.", demoKeyValue},
 	{53, "Portrait", "立绘框", "display", "A character in a frame over a nameplate.", demoPortrait},
@@ -73,8 +73,8 @@ func demoIcon(c *ui.Context, log func(string)) {
 func demoSprite(c *ui.Context, log func(string)) {
 	k := pixel.K(c)
 	ui.Row(c).Gap(k.D(12)).Children(func() {
-		display.Sprite(c, slime, display.SpriteOptions{Scale: 3, FPS: 2, Label: "slime"})
-		display.Sprite(c, slime, display.SpriteOptions{Scale: 3, FPS: 2, Mirror: true, Label: "slime, mirrored"})
+		display.Sprite(c, slime, display.SpriteOptions{Scale: 3, FPS: 4, Label: "slime"})
+		display.Sprite(c, slime, display.SpriteOptions{Scale: 3, FPS: 4, Mirror: true, Label: "slime, mirrored"})
 	})
 }
 

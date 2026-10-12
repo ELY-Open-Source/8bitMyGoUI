@@ -12,8 +12,8 @@ import (
 )
 
 var tabletopEntries = []Entry{
-	{486, "Dice", "骰子", "tabletop", "A d6 with pips. ROLL and it tumbles before it lands.", demoDice},
-	{487, "DiceTray", "骰盘", "tabletop", "Several dice on felt, and what they add up to.", demoDiceTray},
+	{486, "Dice", "色子", "tabletop", "A d6 with pips. ROLL and it tumbles before it lands.", demoDice},
+	{487, "DiceTray", "色子盘", "tabletop", "Several dice on felt, and what they add up to.", demoDiceTray},
 	{488, "PlayingCard", "扑克牌", "tabletop", "Rank and suit, court cards with their pieces, or the back.", demoPlayingCard},
 	{489, "CardHand", "手牌", "tabletop", "A fanned hand. The card you point at or choose lifts; a click plays it.", demoCardHand},
 	{490, "Deck", "牌堆", "tabletop", "A face-down pile with its count. Click to draw.", demoDeck},

@@ -31,13 +31,15 @@ const life = 800 * time.Millisecond
 func DamageNumbers(c *ui.Context, text string, hits *[]Hit, o DamageNumbersOptions) *ui.Element {
 	k := pixel.K(c)
 	w, h := pixel.Or("DamageNumbers Width", o.Width, 160), pixel.Or("DamageNumbers Height", o.Height, 80)
-	now := k.Now()
+	// S5: hits rise in whole frames, fifteen a second.
+	now := k.Now().Truncate(time.Second / 15)
 	live := (*hits)[:0]
 	for _, hit := range *hits {
 		if hit.X < 0 || hit.X >= w || hit.Y < 0 || hit.Y >= h {
 			panic(fmt.Sprintf("game: hit at %d,%d is off the %d×%d box", hit.X, hit.Y, w, h))
 		}
-		if hit.at.IsZero() {
+		// A clock stepping back starts a hit again.
+		if hit.at.IsZero() || now.Before(hit.at) {
 			hit.at = now
 		}
 		if now.Sub(hit.at) < life {
@@ -54,7 +56,7 @@ func DamageNumbers(c *ui.Context, text string, hits *[]Hit, o DamageNumbersOptio
 		}
 	}
 	if len(shown) > 0 {
-		k.Tick(c, 20)
+		k.Tick(c, 15)
 	}
 	return ui.Box(c).Role(ui.RoleImage).Label(text).Description(strings.Join(parts, ", ")).Size(k.D(w), k.D(h)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)

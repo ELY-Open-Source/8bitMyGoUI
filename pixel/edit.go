@@ -14,13 +14,18 @@ type snapshot struct {
 
 // editState is one Editor's text, caret and history.
 type editState struct {
-	text           []rune
-	caret, anchor  int
-	compose        []rune
-	composeCaret   int
-	undo, redo     []snapshot
-	changed        bool
-	submitted      bool
+	text          []rune
+	caret, anchor int
+	compose       []rune
+	composeCaret  int
+	undo, redo    []snapshot
+	changed       bool
+	submitted     bool
+	// kept is the value the last frame ended with.
+	kept string
+	// clip is a copy waiting for an enabled build.
+	clip           string
+	clipped        bool
 	scroll         int
 	dragging       bool
 	pressAt        time.Time
@@ -28,8 +33,9 @@ type editState struct {
 	clicks         int
 }
 
+// reset takes v as the text and the value kept.
 func (s *editState) reset(v string) {
-	*s = editState{text: []rune(v)}
+	*s = editState{text: []rune(v), kept: v}
 	s.caret = len(s.text)
 	s.anchor = s.caret
 }

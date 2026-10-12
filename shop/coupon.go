@@ -71,7 +71,7 @@ func Coupon(c *ui.Context, title, code string, o CouponOptions) CouponResult {
 		at := ui.Local(e, couponKey{}, func() time.Time { return time.Time{} })
 		// The button says COPIED! for two seconds.
 		label := k.Msg("copy")
-		if k.Since(c, *at, 1, 2) < 2 {
+		if k.Since(c, *at, 4, 8) < 8 {
 			label = k.Msg("copied")
 		}
 		e.Children(func() {

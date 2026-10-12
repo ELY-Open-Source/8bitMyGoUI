@@ -29,16 +29,16 @@ func WeekStrip(c *ui.Context, text string, date *time.Time, o WeekStripOptions) 
 	shell, base, st := pixel.Shell(c, func() *ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleGroup).Label(text).Disabled(o.Disabled)
 	})
-	if base.Shortcut(0, ui.KeyLeft) {
+	if pixel.Shortcut(base, 0, ui.KeyLeft) {
 		*date = date.AddDate(0, 0, -1)
 	}
-	if base.Shortcut(0, ui.KeyRight) {
+	if pixel.Shortcut(base, 0, ui.KeyRight) {
 		*date = date.AddDate(0, 0, 1)
 	}
 	first := date.AddDate(0, 0, -int(date.Weekday()))
 	// Enter and Space are taken, so clicks come from pointers.
-	base.Shortcut(0, ui.KeyEnter)
-	base.Shortcut(0, ui.KeySpace)
+	pixel.Shortcut(base, 0, ui.KeyEnter)
+	pixel.Shortcut(base, 0, ui.KeySpace)
 	if base.Clicked() {
 		x, _, _ := base.PointerPosition()
 		if i := int(x / k.D(dayW)); x >= 0 && i < 7 {

@@ -13,19 +13,18 @@ type Credit struct {
 }
 
 type AboutOptions struct {
-	Version string
 	Credits []Credit
 }
 
 // About shows the title as a logo, version, then credits.
-func About(c *ui.Context, title string, o AboutOptions) *ui.Element {
+func About(c *ui.Context, title, version string, o AboutOptions) *ui.Element {
 	k := pixel.K(c)
-	if o.Version == "" {
+	if version == "" {
 		panic("account: About needs a version")
 	}
 	return ui.Column(c).Gap(k.D(4)).AlignItems(ui.Center).Role(ui.RoleGroup).Label(title).Children(func() {
 		text.OutlineText(c, title, text.OutlineTextOptions{Slot: pixel.Accent, Scale: 3})
-		pixel.Text(c, k.Msg("version")+" "+o.Version, pixel.TextOptions{Slot: pixel.Faint})
+		pixel.Text(c, k.Msg("version")+" "+version, pixel.TextOptions{Slot: pixel.Faint})
 		if len(o.Credits) == 0 {
 			return
 		}

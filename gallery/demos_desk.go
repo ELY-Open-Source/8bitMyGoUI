@@ -16,7 +16,7 @@ var deskEntries = []Entry{
 	{467, "DesktopIcon", "桌面图标", "desk", "Click to choose and it inverts; double-click or Enter opens it.", demoDesktopIcon},
 	{468, "Taskbar", "任务栏", "desk", "START, a button for each open window, the tray and the clock.", demoTaskbar},
 	{469, "StartMenu", "开始菜单", "desk", "Programs in cascading menus. Arrows walk in and out; Enter runs one.", demoStartMenu},
-	{470, "AppWindow", "应用窗口", "desk", "Drag a window by its title bar, or focus the bar and use the arrows.", demoAppWindow},
+	{470, "AppWindow", "应用框体", "desk", "Drag a window by its title bar, or focus the bar and use the arrows.", demoAppWindow},
 	{471, "Calculator", "计算器", "desk", "It really adds up. Divide by zero for a GAME OVER; C continues.", demoCalculator},
 	{472, "Notepad", "记事本", "desk", "A text area under FILE and EDIT. TIME/DATE stamps the moment.", demoNotepad},
 	{473, "Minesweeper", "扫雷", "desk", "Open with a click or Enter, flag with a right click or F. The face starts over.", demoMinesweeper},

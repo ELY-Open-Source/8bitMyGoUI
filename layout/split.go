@@ -60,10 +60,10 @@ func Split(c *ui.Context, size *int, o SplitOptions, first, second func()) Split
 			}
 			*size += dx
 		}
-		if !o.Disabled && base.Shortcut(0, back) {
+		if !o.Disabled && pixel.Shortcut(base, 0, back) {
 			*size -= 4
 		}
-		if !o.Disabled && base.Shortcut(0, fwd) {
+		if !o.Disabled && pixel.Shortcut(base, 0, fwd) {
 			*size += 4
 		}
 		*size = limit(*size)

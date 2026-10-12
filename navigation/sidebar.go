@@ -36,7 +36,8 @@ func Sidebar(c *ui.Context, text string, sections []SidebarSection, selected *in
 	k := pixel.K(c)
 	w := pixel.Or("Sidebar Width", o.Width, 140)
 	res := SidebarResult{}
-	n := 0
+	// The bases turn before they learn they are off.
+	n, v := 0, *selected
 	res.Element = ui.RadioGroup(c, func() {
 		for _, sec := range sections {
 			if sec.Title != "" {
@@ -45,19 +46,16 @@ func Sidebar(c *ui.Context, text string, sections []SidebarSection, selected *in
 			for _, it := range sec.Items {
 				i := n
 				n++
-				shell, base, st := pixel.Shell(c, func() *ui.Element {
-					return ui.RadioBase(c, selected, i).Label(it.Label).Disabled(o.Disabled)
+				shell, _, st := pixel.Shell(c, func() *ui.Element {
+					return ui.RadioBase(c, &v, i).Label(it.Label).Disabled(o.Disabled)
 				})
-				if base.Changed() {
-					res.Changed = true
-				}
 				shell.Size(k.D(w), k.D(pixel.LineHeight+2)).Draw(func(p *ui.Painter, r ui.Rect) {
 					entry(k.Canvas(p, r), it, i == *selected, st)
 				})
 			}
 		}
 	}).Gap(k.D(1)).Label(text)
-	if res.Changed {
+	if res.Changed = keep(c, v, selected, o.Disabled); res.Changed {
 		slog.Debug("8bit: sidebar", "label", text, "selected", *selected)
 	}
 	return res

@@ -2,6 +2,7 @@ package input
 
 import (
 	"log/slog"
+	"unicode/utf8"
 
 	"github.com/egoist/mygo/ui"
 
@@ -41,7 +42,9 @@ func EditableText(c *ui.Context, text string, value *string, o EditableTextOptio
 		if s.on {
 			ed, e := field(c, &s.draft, pixel.EditorOptions{Label: text, Placeholder: o.Placeholder}, w, nil, nil, nil)
 			ed.Input.AutoFocus()
-			enter, escape := e.Shortcut(0, ui.KeyEnter), e.Shortcut(0, ui.KeyEscape)
+			// Keys reach the wrapper; the editor's state gates them.
+			on := !ed.Input.IsDisabled()
+			enter, escape := on && pixel.Shortcut(e, 0, ui.KeyEnter), on && pixel.Shortcut(e, 0, ui.KeyEscape)
 			if enter {
 				res.Changed = *value != s.draft
 				*value = s.draft
@@ -58,7 +61,7 @@ func EditableText(c *ui.Context, text string, value *string, o EditableTextOptio
 			base.Focus()
 			s.refocus = false
 		}
-		enter, double := base.Shortcut(0, ui.KeyEnter), base.DoubleClicked()
+		enter, double := pixel.Shortcut(base, 0, ui.KeyEnter), base.DoubleClicked()
 		if enter || double {
 			s.on, s.draft = true, *value
 		}
@@ -77,7 +80,7 @@ func EditableText(c *ui.Context, text string, value *string, o EditableTextOptio
 		})
 	})
 	if res.Changed {
-		slog.Debug("8bit: text edited", "label", text, "value", *value)
+		slog.Debug("8bit: text edited", "label", text, "runes", utf8.RuneCountInString(*value))
 	}
 	return res
 }

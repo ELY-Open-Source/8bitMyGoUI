@@ -189,7 +189,7 @@ func demoFPSMeter(c *ui.Context, log func(string)) {
 		}
 	}
 	if !k.Reduce() {
-		if t := k.Tick(c, 12); s.last.IsZero() || k.Now().Sub(s.last) >= time.Second/12 {
+		if t := k.Tick(c, 12); s.last.IsZero() || k.Elapsed(&s.last) >= time.Second/12 {
 			s.last = k.Now()
 			add(t)
 		}

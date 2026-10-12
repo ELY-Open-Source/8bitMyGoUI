@@ -86,7 +86,7 @@ func Pomodoro(c *ui.Context, text string, o PomodoroOptions) PomodoroResult {
 	now := k.Now()
 	left, running := p.left, !p.since.IsZero()
 	if running {
-		left -= now.Sub(p.since)
+		left -= k.Elapsed(&p.since)
 	}
 	var res PomodoroResult
 	if running && left <= 0 {

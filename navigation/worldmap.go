@@ -80,13 +80,13 @@ func WorldMap(c *ui.Context, text string, nodes []MapNode, paths [][2]int, at *i
 		key    ui.Key
 		dx, dy int
 	}{{ui.KeyLeft, -1, 0}, {ui.KeyRight, 1, 0}, {ui.KeyUp, 0, -1}, {ui.KeyDown, 0, 1}} {
-		if base.Shortcut(0, m.key) {
+		if pixel.Shortcut(base, 0, m.key) {
 			if j := toward(nodes, paths, *at, m.dx, m.dy); j >= 0 {
 				walkTo(j)
 			}
 		}
 	}
-	enter, space := base.Shortcut(0, ui.KeyEnter), base.Shortcut(0, ui.KeySpace)
+	enter, space := pixel.Shortcut(base, 0, ui.KeyEnter), pixel.Shortcut(base, 0, ui.KeySpace)
 	res.Entered = enter || space
 	// Enter and Space are taken, so clicks come from pointers.
 	if base.Clicked() {

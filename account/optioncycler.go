@@ -34,11 +34,11 @@ func OptionCycler(c *ui.Context, text string, options []string, selected *int, o
 	n, old := len(options), *selected
 	if !base.IsDisabled() {
 		step := 0
-		if base.Shortcut(0, ui.KeyLeft) {
+		if pixel.Shortcut(base, 0, ui.KeyLeft) {
 			step--
 		}
 		// Enter and Space step on; taken, clicks come from pointers.
-		right, enter, space := base.Shortcut(0, ui.KeyRight), base.Shortcut(0, ui.KeyEnter), base.Shortcut(0, ui.KeySpace)
+		right, enter, space := pixel.Shortcut(base, 0, ui.KeyRight), pixel.Shortcut(base, 0, ui.KeyEnter), pixel.Shortcut(base, 0, ui.KeySpace)
 		if right || enter || space {
 			step++
 		}

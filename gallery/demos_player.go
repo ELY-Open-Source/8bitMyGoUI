@@ -111,7 +111,7 @@ func demoTwoFactor(c *ui.Context, log func(string)) {
 }
 
 func demoAbout(c *ui.Context, log func(string)) {
-	account.About(c, "8BIT", account.AboutOptions{Version: "1.0.0", Credits: []account.Credit{
+	account.About(c, "8BIT", "1.0.0", account.AboutOptions{Credits: []account.Credit{
 		{Role: "Pixels and code", Name: "The 8bit team"}, {Role: "Native UI", Name: "MyGo"}, {Role: "Font", Name: "Ark Pixel"},
 	}})
 }

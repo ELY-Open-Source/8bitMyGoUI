@@ -79,7 +79,7 @@ func Minesweeper(c *ui.Context, label string, o MinesweeperOptions) MinesweeperR
 		})
 		shell, base, st, picked := pixel.Pad(c, k.Msg("minefield"), cols, cols*rows, mcell, mcell, &f.cur, o.Disabled)
 		if !base.IsDisabled() && !f.over {
-			if !pixel.Typing(c) && base.Shortcut(0, ui.KeyF) {
+			if !pixel.Typing(c) && pixel.Shortcut(base, 0, ui.KeyF) {
 				res.Flagged = f.toggle(f.cur)
 			}
 			if base.RightClicked() {

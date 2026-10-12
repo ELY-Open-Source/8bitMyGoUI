@@ -2,6 +2,7 @@ package datetime
 
 import (
 	"math"
+	"time"
 
 	"github.com/egoist/mygo/ui"
 
@@ -17,8 +18,9 @@ type AnalogClockOptions struct {
 func AnalogClock(c *ui.Context, o AnalogClockOptions) *ui.Element {
 	k := pixel.K(c)
 	size := pixel.Or("AnalogClock Size", o.Size, 48)
-	k.Tick(c, 1)
+	// Wake on the next whole second.
 	now := k.Now()
+	k.At(c, now.Truncate(time.Second).Add(time.Second))
 	h, m, s := now.Clock()
 	// hand ends at turn (0–1 from twelve) and length r.
 	hand := func(cx, cy int, turn float64, r int) (int, int) {

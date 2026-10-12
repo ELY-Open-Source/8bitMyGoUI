@@ -6,7 +6,9 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
+	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/data"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/game"
+	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/icon"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
 )
 
@@ -254,5 +256,92 @@ func TestLoadingTipsTurnEveryFourSeconds(t *testing.T) {
 	tt.Frame()
 	if !a || tt.HasText("TIP: Tip one.") == before {
 		t.Fatalf("tips did not turn: %q", tt.Texts())
+	}
+}
+
+func TestInteractPromptBobsOnceASecond(t *testing.T) {
+	wd := &world{clk: newClock()}
+	tt := view(300, 200, wd, func(c *ui.Context) {
+		var target *ui.Element
+		ui.Column(c).Padding(60).Children(func() { target = ui.Box(c).Size(20, 20) })
+		game.InteractPrompt(c, target, "OPEN", game.InteractPromptOptions{})
+	})
+	start := wd.clk.t
+	var ys []float32
+	for _, at := range []time.Duration{100, 350, 600} {
+		wd.clk.t = start.Add(at * time.Millisecond)
+		tt.Frame()
+		// The bottom edge bobs; the top may sit clipped.
+		r := find(t, tt, "A OPEN")
+		ys = append(ys, r.Y+r.H)
+	}
+	if ys[0] != ys[1] || ys[1] == ys[2] {
+		t.Fatalf("the prompt sat at %v at .1, .35 and .6 s", ys)
+	}
+}
+
+func TestHealthBarTrailStepsAtFifteen(t *testing.T) {
+	wd, hp := &world{clk: newClock()}, 100
+	tt := view(300, 100, wd, func(c *ui.Context) { game.HealthBar(c, "HP", hp, 100, game.HealthBarOptions{}) })
+	hp = 50
+	tt.Frame()
+	wd.clk.t = wd.clk.t.Add(350 * time.Millisecond)
+	// Frames each 10 ms show two steps at most.
+	seen := map[string]bool{}
+	for range 6 {
+		wd.clk.t = wd.clk.t.Add(10 * time.Millisecond)
+		tt.Frame()
+		seen[string(tt.Image().Pix)] = true
+	}
+	if len(seen) > 2 {
+		t.Fatalf("the trail drew %d pictures in 60 ms", len(seen))
+	}
+}
+
+func TestDamageNumbersRiseInWholeFrames(t *testing.T) {
+	wd := &world{clk: newClock()}
+	hits := []game.Hit{{Value: 999, X: 60, Y: 60}}
+	tt := view(300, 200, wd, func(c *ui.Context) { game.DamageNumbers(c, "Damage", &hits, game.DamageNumbersOptions{}) })
+	wd.clk.t = wd.clk.t.Add(500 * time.Millisecond)
+	tt.Frame()
+	seen := map[string]bool{}
+	for range 7 {
+		seen[string(tt.Image().Pix)] = true
+		wd.clk.t = wd.clk.t.Add(10 * time.Millisecond)
+		tt.Frame()
+	}
+	if len(seen) > 2 {
+		t.Fatalf("%d pictures in 60 ms", len(seen))
+	}
+}
+
+func TestSpinsAndHitsRestartWhenTheClockStepsBack(t *testing.T) {
+	wd := &world{clk: newClock()}
+	faces := []data.Item{{Sprite: icon.Star, Name: "Star"}, {Sprite: icon.Coin, Name: "Coin"}}
+	spin, done := 0, 0
+	tt := view(300, 100, wd, func(c *ui.Context) {
+		if game.GachaReel(c, "Reels", faces, [3]int{1, 1, 1}, spin, game.GachaReelOptions{}).Done {
+			done++
+		}
+	})
+	spin = 1
+	tt.Frame()
+	// An hour back, the spin times from now and lands.
+	wd.clk.t = wd.clk.t.Add(-time.Hour)
+	tt.Frame()
+	for range 30 {
+		wd.clk.t = wd.clk.t.Add(200 * time.Millisecond)
+		tt.Frame()
+	}
+	if done != 1 {
+		t.Fatalf("the reels landed %d times", done)
+	}
+	hits := []game.Hit{{Value: 7, X: 60, Y: 40}}
+	tt = view(300, 200, wd, func(c *ui.Context) { game.DamageNumbers(c, "Damage", &hits, game.DamageNumbersOptions{}) })
+	fresh := string(tt.Image().Pix)
+	wd.clk.t = wd.clk.t.Add(-time.Second)
+	tt.Frame()
+	if string(tt.Image().Pix) != fresh {
+		t.Fatal("a hit moved as the clock stepped back")
 	}
 }

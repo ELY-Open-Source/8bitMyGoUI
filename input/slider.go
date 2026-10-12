@@ -115,7 +115,7 @@ func (r rail) keys(base *ui.Element, v *float64, set func(float64)) {
 		{ui.KeyRight, func() float64 { return *v + step }}, {ui.KeyUp, func() float64 { return *v + step }},
 		{ui.KeyHome, func() float64 { return r.lo }}, {ui.KeyEnd, func() float64 { return r.hi }},
 	} {
-		if base.Shortcut(0, kd.key) {
+		if pixel.Shortcut(base, 0, kd.key) {
 			set(kd.to())
 		}
 	}

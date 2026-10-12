@@ -4,6 +4,8 @@ import (
 	"fmt"
 
 	"github.com/egoist/mygo/ui"
+
+	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
 )
 
 // keyboard plays C4–C5: A–K white, WETYU black.
@@ -26,7 +28,7 @@ func note(semi int) string {
 func played(e *ui.Element) []int {
 	var out []int
 	for semi, kb := range keyboard {
-		if e.Shortcut(0, kb.key) {
+		if pixel.Shortcut(e, 0, kb.key) {
 			out = append(out, semi)
 		}
 	}

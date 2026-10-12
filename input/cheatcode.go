@@ -42,6 +42,10 @@ func CheatCode(c *ui.Context, text string, o CheatCodeOptions) CheatCodeResult {
 		return ui.Box(c).Focusable().Role(ui.RoleGroup).Label(text).Disabled(o.Disabled)
 	})
 	s := ui.Local(base, cheatKey{}, func() cheat { return cheat{} })
+	// The handler runs before this frame knows it is off.
+	if base.IsDisabled() {
+		*s = cheat{}
+	}
 	// Keys come in order here, however fast they are typed.
 	base.HandleInput(func(ev ui.InputEvent) bool {
 		if ev.Kind != ui.InputKeyDown || ev.Mods != 0 {

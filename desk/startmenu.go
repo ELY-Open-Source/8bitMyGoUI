@@ -48,11 +48,8 @@ func StartMenu(c *ui.Context, text string, programs []Program, o StartMenuOption
 	off := o.Disabled || pixel.Current(c).Inert
 	b := input.Button(c, k.Msg("start"), input.ButtonOptions{Icon: icon.Gamepad, Label: text, Disabled: o.Disabled})
 	m := ui.Local(b.Element, startKey{}, func() start { return start{} })
+	// START keeps the focus and parks it while off.
 	if off {
-		// Closing on disable must not return focus to it.
-		if m.open {
-			c.Root().Focus()
-		}
 		m.open = false
 	}
 	res := StartMenuResult{Element: b.Element}
@@ -60,7 +57,7 @@ func StartMenu(c *ui.Context, text string, programs []Program, o StartMenuOption
 	switch {
 	case b.Clicked && m.open:
 		m.open = false
-	case b.Clicked, !m.open && !off && b.Element.Shortcut(0, ui.KeyUp):
+	case b.Clicked, !m.open && !off && pixel.Shortcut(b.Element, 0, ui.KeyUp):
 		m.open, m.path = true, []int{0}
 	}
 	if m.open {

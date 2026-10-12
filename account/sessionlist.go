@@ -1,6 +1,7 @@
 package account
 
 import (
+	"fmt"
 	"log/slog"
 	"time"
 
@@ -34,10 +35,18 @@ type SessionListResult struct {
 // SessionList lists signed-in devices, each with SIGN OUT.
 func SessionList(c *ui.Context, text string, sessions []Session, o SessionListOptions) SessionListResult {
 	k := pixel.K(c)
+	// Rows are keyed by device, so focus follows its row.
+	seen := map[string]bool{}
+	for _, s := range sessions {
+		if seen[s.Device] {
+			panic(fmt.Sprintf("account: SessionList has %q twice", s.Device))
+		}
+		seen[s.Device] = true
+	}
 	res := SessionListResult{SignedOut: -1}
 	res.Element = ui.Column(c).Width(k.D(pixel.Or("SessionList Width", o.Width, 240))).Gap(k.D(4)).Role(ui.RoleList).Label(text).Children(func() {
 		for i, s := range sessions {
-			ui.Row(c).FillWidth().Gap(k.D(4)).AlignItems(ui.Center).Role(ui.RoleListItem).Children(func() {
+			ui.Row(c).Key(s.Device).FillWidth().Gap(k.D(4)).AlignItems(ui.Center).Role(ui.RoleListItem).Children(func() {
 				if s.Icon != nil {
 					ui.Box(c).Size(k.D(s.Icon.W), k.D(s.Icon.H)).Draw(func(p *ui.Painter, r ui.Rect) {
 						k.Canvas(p, r).Sprite(0, 0, s.Icon, 0, pixel.Ink, 1)

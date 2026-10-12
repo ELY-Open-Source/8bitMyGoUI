@@ -24,21 +24,26 @@ type MultiSelectResult struct {
 
 type multiKey struct{}
 
+// popup is open, and held the focus last frame.
+type popup struct{ open, held bool }
+
 // MultiSelect checks many options in a popup; tags show them.
 func MultiSelect(c *ui.Context, text string, chosen *[]string, options []string, o MultiSelectOptions) MultiSelectResult {
 	k := pixel.K(c)
 	shell, base, st := pixel.Shell(c, func() *ui.Element {
 		return ui.ButtonBase(c).Role(ui.RolePopUpButton).Label(text).Description(strings.Join(*chosen, ", ")).Disabled(o.Disabled)
 	})
-	open := ui.Local(base, multiKey{}, func() bool { return false })
+	pop := ui.Local(base, multiKey{}, func() popup { return popup{} })
+	open := &pop.open
 	if o.Disabled || pixel.Current(c).Inert {
-		// Closing on disable must not return focus to it.
-		if *open {
-			c.Root().Focus()
+		// A focus in the closing popup parks on the field.
+		if *open && pop.held {
+			base.Focus()
+			pixel.Park(c, base, true)
 		}
 		*open = false
 	}
-	if base.Clicked() || !*open && base.Shortcut(0, ui.KeyDown) {
+	if base.Clicked() || !*open && pixel.Shortcut(base, 0, ui.KeyDown) {
 		*open = !*open
 	}
 	shell.Size(k.D(pixel.Or("MultiSelect Width", o.Width, 160)), k.D(pixel.LineHeight+4)).Draw(func(p *ui.Painter, r ui.Rect) {
@@ -52,6 +57,7 @@ func MultiSelect(c *ui.Context, text string, chosen *[]string, options []string,
 		g.Finish(st)
 	})
 	res := MultiSelectResult{Element: shell}
+	pop.held = false
 	ui.PopoverBase(c, base, open, func(panel *ui.Element) {
 		menu(c, panel, func() {
 			col := ui.Column(c).Gap(k.D(1)).FocusGroup(ui.Vertical)
@@ -62,6 +68,8 @@ func MultiSelect(c *ui.Context, text string, chosen *[]string, options []string,
 					if i == 0 {
 						cb.AutoFocus()
 					}
+					// Focused, not FocusWithin: MyGo links parents after frames.
+					pop.held = pop.held || cb.Focused()
 					if cb.Changed() {
 						res.Changed = true
 						if on {

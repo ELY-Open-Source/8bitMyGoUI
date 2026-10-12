@@ -71,7 +71,8 @@ func Tree(c *ui.Context, text string, roots []TreeNode, selected *string, o Tree
 	if len(rows) == 0 {
 		return TreeResult{Element: shell}
 	}
-	at := 0
+	// An unknown choice stays, unlit, until a key or click.
+	at := -1
 	for i, r := range rows {
 		if r.key == *selected {
 			at = i
@@ -79,23 +80,23 @@ func Tree(c *ui.Context, text string, roots []TreeNode, selected *string, o Tree
 	}
 	old := *selected
 	res := TreeResult{Element: shell}
-	if base.Shortcut(0, ui.KeyDown) {
+	if pixel.Shortcut(base, 0, ui.KeyDown) {
 		at = min(at+1, len(rows)-1)
 	}
-	if base.Shortcut(0, ui.KeyUp) {
+	if pixel.Shortcut(base, 0, ui.KeyUp) {
 		at = max(at-1, 0)
 	}
-	right, left := base.Shortcut(0, ui.KeyRight), base.Shortcut(0, ui.KeyLeft)
-	if right || left {
+	right, left := pixel.Shortcut(base, 0, ui.KeyRight), pixel.Shortcut(base, 0, ui.KeyLeft)
+	if (right || left) && at >= 0 {
 		at, res.Toggled = steer(rows, at, *opened, right)
 	}
-	enter, space := base.Shortcut(0, ui.KeyEnter), base.Shortcut(0, ui.KeySpace)
+	enter, space := pixel.Shortcut(base, 0, ui.KeyEnter), pixel.Shortcut(base, 0, ui.KeySpace)
 	toggle := func(i int) {
 		if key := rows[i].key; rows[i].branch {
 			(*opened)[key], res.Toggled = !(*opened)[key], true
 		}
 	}
-	if enter || space {
+	if (enter || space) && at >= 0 {
 		toggle(at)
 	}
 	// Enter and Space are taken, so clicks come from pointers.
@@ -112,7 +113,9 @@ func Tree(c *ui.Context, text string, roots []TreeNode, selected *string, o Tree
 		rows = flatten(tops, children, *opened)
 		at = min(at, len(rows)-1)
 	}
-	*selected = rows[at].key
+	if at >= 0 {
+		*selected = rows[at].key
+	}
 	res.Changed = *selected != old
 	base.Description(strings.TrimSpace(nodes[*selected].Label + " " + nodes[*selected].Value))
 	shown := rows

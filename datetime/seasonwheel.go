@@ -35,15 +35,15 @@ func SeasonWheel(c *ui.Context, text string, season *pixel.Season, o SeasonWheel
 	shell, base, st := pixel.Shell(c, func() *ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleRadioGroup).Label(text).Disabled(o.Disabled)
 	})
-	if base.Shortcut(0, ui.KeyRight) || base.Shortcut(0, ui.KeyDown) {
+	if pixel.Shortcut(base, 0, ui.KeyRight) || pixel.Shortcut(base, 0, ui.KeyDown) {
 		*season = (*season + 1) % 4
 	}
-	if base.Shortcut(0, ui.KeyLeft) || base.Shortcut(0, ui.KeyUp) {
+	if pixel.Shortcut(base, 0, ui.KeyLeft) || pixel.Shortcut(base, 0, ui.KeyUp) {
 		*season = (*season + 3) % 4
 	}
 	// Enter and Space are taken, so clicks come from pointers.
-	base.Shortcut(0, ui.KeyEnter)
-	base.Shortcut(0, ui.KeySpace)
+	pixel.Shortcut(base, 0, ui.KeyEnter)
+	pixel.Shortcut(base, 0, ui.KeySpace)
 	if base.Clicked() {
 		x, y, _ := base.PointerPosition()
 		*season = pixel.Season(quarter(int(x/k.Dot())-wheel/2, int(y/k.Dot())-wheel/2))

@@ -34,7 +34,7 @@ func LootPopup(c *ui.Context, it data.Item, open *bool, o LootPopupOptions) Loot
 		// The item rises 8 dots; reduced, it starts up.
 		rise := 8
 		if !k.Reduce() {
-			rise = k.Since(c, start(k, e, 0).at, 16, 8)
+			rise = k.Since(c, start(k, e, 0).at, 15, 8)
 		}
 		e.Draw(func(p *ui.Painter, r ui.Rect) {
 			g := k.Canvas(p, r)

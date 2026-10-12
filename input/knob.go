@@ -31,7 +31,7 @@ func Knob(c *ui.Context, text string, value *float64, o KnobOptions) KnobResult 
 	old, set := *value, r.snap(value)
 	// raw is the unrounded value a drag carries.
 	raw := ui.Local(base, knobKey{}, func() float64 { return *value })
-	if !o.Disabled {
+	if !base.IsDisabled() {
 		if _, dy, held := base.Dragged(); held {
 			*raw = max(lo, min(hi, *raw-float64(dy/k.Dot())*(hi-lo)/64))
 			set(*raw)

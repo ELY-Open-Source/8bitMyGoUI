@@ -42,23 +42,23 @@ func Joystick(c *ui.Context, text string, o JoystickOptions) JoystickResult {
 		return ui.Box(c).Focusable().Role(ui.RoleGroup).Label(text).Disabled(o.Disabled)
 	})
 	s := ui.Local(base, stickKey{}, func() stick { return stick{} })
-	ox, oy, now := s.x, s.y, k.Now()
+	ox, oy, now, on := s.x, s.y, k.Now(), !base.IsDisabled()
 	for _, m := range []struct {
 		key    ui.Key
 		dx, dy float64
 	}{{ui.KeyLeft, -0.25, 0}, {ui.KeyRight, 0.25, 0}, {ui.KeyUp, 0, -0.25}, {ui.KeyDown, 0, 0.25}} {
-		if base.Shortcut(0, m.key) {
+		if pixel.Shortcut(base, 0, m.key) {
 			s.x, s.y, s.key = s.x+m.dx, s.y+m.dy, now
 		}
 	}
 	_, _, held := base.Dragged()
 	switch {
-	case held && !o.Disabled:
+	case held && on:
 		px, py, _ := base.PointerPosition()
 		s.x = (float64(px/k.Dot()) - stickSize/2) / stickReach
 		s.y = (float64(py/k.Dot()) - stickSize/2) / stickReach
 		s.key = time.Time{}
-	case now.Sub(s.key) > repeatGap:
+	case k.Elapsed(&s.key) > repeatGap:
 		s.x, s.y = 0, 0
 	default:
 		k.Tick(c, 10)

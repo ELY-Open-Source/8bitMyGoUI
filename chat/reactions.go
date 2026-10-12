@@ -38,10 +38,13 @@ func Reactions(c *ui.Context, text string, rs []Reaction, o ReactionsOptions) Re
 				panic(fmt.Sprintf("chat: reaction %q counts %d, mine %v", r.Emoji, r.Count, r.Mine))
 			}
 			art := emoji(r.Emoji)
+			// The base turns before it learns it is off.
+			v := r.Mine
 			shell, base, st := pixel.Shell(c, func() *ui.Element {
-				return ui.ToggleBase(c, &r.Mine).Label(fmt.Sprintf("%s %d", r.Emoji, r.Count)).Disabled(o.Disabled).FocusRing(false)
+				return ui.ToggleBase(c, &v).Label(fmt.Sprintf("%s %d", r.Emoji, r.Count)).Disabled(o.Disabled).FocusRing(false)
 			})
-			if base.Changed() {
+			if v != r.Mine && !base.IsDisabled() {
+				r.Mine = v
 				if r.Mine {
 					r.Count++
 				} else {
