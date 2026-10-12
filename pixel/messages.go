@@ -60,6 +60,11 @@ var messages = map[Locale]map[string]string{
 		"see_you": "SEE YOU TOMORROW!", "highest": "HIGHEST: %s, %d %s", "you": "YOU", "confirm": "CONFIRM", "confirmed": "CONFIRMED",
 		"waiting": "WAITING", "traded": "TRADE DONE!", "snacks": "SNACKS", "keypad": "KEYPAD", "sold_out": "SOLD OUT",
 		"insert_coin": "INSERT COIN", "enjoy": "ENJOY!", "code_prompt": "CODE?",
+		"idle": "IDLE", "working": "WORKING", "blocked": "BLOCKED", "hp": "HP", "mp": "MP", "cast_tool": "CAST %s",
+		"casting": "CASTING", "thinking": "THINKING", "out_of_mana": "OUT OF MANA!", "allow_spell": "ALLOW SPELL?",
+		"danger": "DANGER!", "log_thought": "%s ponders: %s", "log_cast": "%s casts %s!", "log_hit": "A hit! %s",
+		"log_miss": "A miss! %s", "log_said": "%s: %s", "empty_crystal": "EMPTY CRYSTAL", "files_changed": "FILES CHANGED: %d",
+		"speed": "SPD", "power": "POW", "cost": "COST", "cast": "CAST", "restore": "RESTORE",
 	},
 	Zh: {
 		"ok": "确定", "cancel": "取消", "yes": "是", "no": "否", "close": "关闭",
@@ -118,6 +123,11 @@ var messages = map[Locale]map[string]string{
 		"see_you": "明天见！", "highest": "最高：%s，%d %s", "you": "你", "confirm": "确认", "confirmed": "已确认",
 		"waiting": "等待中", "traded": "交易完成！", "snacks": "零食", "keypad": "键盘", "sold_out": "售罄",
 		"insert_coin": "请投币", "enjoy": "请享用！", "code_prompt": "编号？",
+		"idle": "待机", "working": "工作中", "blocked": "受阻", "hp": "HP", "mp": "MP", "cast_tool": "释放 %s",
+		"casting": "咏唱中", "thinking": "思考中", "out_of_mana": "魔力耗尽！", "allow_spell": "允许释放法术吗？",
+		"danger": "危险！", "log_thought": "%s沉思：%s", "log_cast": "%s释放了%s！", "log_hit": "命中！%s",
+		"log_miss": "落空！%s", "log_said": "%s：%s", "empty_crystal": "空水晶", "files_changed": "改动文件：%d",
+		"speed": "速度", "power": "力量", "cost": "花费", "cast": "释放", "restore": "读档",
 	},
 }
 
