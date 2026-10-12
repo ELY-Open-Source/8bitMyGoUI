@@ -383,3 +383,70 @@ func boolInt(b bool) int {
 	}
 	return 0
 }
+
+func TestScrollAreaHoldsStillWhenInert(t *testing.T) {
+	s, inert := ui.ScrollState{}, false
+	tt := ui.NewTester(func(c *ui.Context) {
+		pixel.Use(c, pixel.Settings{Palette: pixel.SpringDay, Inert: inert})
+		layout.ScrollArea(c, &s, layout.ScrollAreaOptions{Label: "List"}, func() {
+			for range 40 {
+				ui.Box(c).Height(32)
+			}
+		}).Element.Size(200, 100)
+	}, 300, 200)
+	tt.Frame()
+	r := box(t, tt, "List")
+	if err := tt.Click("List"); err != nil {
+		t.Fatal(err)
+	}
+	bar := func() []uint8 {
+		return tt.Image().SubImage(image.Rect(int(r.X+r.W), int(r.Y), int(r.X+r.W)+20, int(r.Y+r.H))).(*image.RGBA).Pix
+	}
+	looks := bar()
+	inert = true
+	tt.Frame()
+	// Inert keeps the look; only Disabled dims the bar.
+	if string(bar()) != string(looks) {
+		t.Fatal("an inert scroll area changed its look")
+	}
+	// Keys, the wheel and the arrows all leave it be.
+	tt.Key(0, ui.KeyDown)
+	tt.Move(r.X+20, r.Y+30)
+	tt.Scroll(r.X+20, r.Y+30, 0, 80)
+	if err := tt.Click("SCROLL DOWN"); err != nil {
+		t.Fatal(err)
+	}
+	if s.Y != 0 {
+		t.Fatalf("an inert scroll area moved to %v", s.Y)
+	}
+}
+
+func TestInertScrollAreaLetsTabPass(t *testing.T) {
+	s, inert, clicks := ui.ScrollState{}, false, 0
+	tt := ui.NewTester(func(c *ui.Context) {
+		use(c)
+		set := pixel.Current(c)
+		set.Inert = inert
+		pixel.Scope(c, set, func() {
+			layout.ScrollArea(c, &s, layout.ScrollAreaOptions{Label: "List"}, func() {
+				for range 40 {
+					ui.Box(c).Height(32)
+				}
+			}).Element.Size(200, 100)
+		})
+		if ui.ButtonBase(c).Label("Next").Size(60, 20).Clicked() {
+			clicks++
+		}
+	}, 300, 200)
+	if err := tt.Click("List"); err != nil {
+		t.Fatal(err)
+	}
+	inert = true
+	tt.Frame()
+	// Parked on the root, Tab passes the inert view.
+	tt.Key(0, ui.KeyTab)
+	tt.Key(0, ui.KeyEnter)
+	if clicks != 1 {
+		t.Fatal("Tab stuck on an inert scroll area")
+	}
+}

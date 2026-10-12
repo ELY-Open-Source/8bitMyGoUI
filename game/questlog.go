@@ -32,7 +32,7 @@ func QuestLog(c *ui.Context, text string, quests []Quest, tracked *int, o QuestL
 	row := ui.Row(c).Gap(k.D(10)).AlignItems(ui.Start)
 	res := QuestLogResult{Element: row}
 	row.Children(func() {
-		r := data.List(c, text, len(quests), tracked, data.ListOptions{Height: 6 * pixel.LineHeight, Disabled: o.Disabled}, func(i int) {
+		r := data.List(c, text, len(quests), tracked, data.ListOptions{Height: 6 * pixel.LineHeight, Disabled: o.Disabled}, func(i int) string { return quests[i].Title }, func(i int) {
 			ui.Row(c).Gap(k.D(3)).AlignItems(ui.Center).Children(func() {
 				mark, ink := icon.Flag, pixel.Accent
 				switch {

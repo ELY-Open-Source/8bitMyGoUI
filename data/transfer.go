@@ -33,7 +33,7 @@ func Transfer(c *ui.Context, text string, left, right *[]string, o TransferOptio
 	// side lists one side's items, its choice kept in range.
 	side := func(name string, items []string, at *int) {
 		*at = max(0, min(*at, len(items)-1))
-		List(c, name, len(items), at, ListOptions{Height: o.Height, Disabled: o.Disabled}, func(i int) {
+		List(c, name, len(items), at, ListOptions{Height: o.Height, Disabled: o.Disabled}, func(i int) string { return items[i] }, func(i int) {
 			pixel.Text(c, items[i], pixel.TextOptions{})
 		}).Element.Width(k.D(100))
 	}

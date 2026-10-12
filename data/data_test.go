@@ -79,7 +79,7 @@ func keeps(t *testing.T, img *image.RGBA) {
 var heroes = []string{"Aria", "Brom", "Cyra", "Dax", "Eko"}
 
 func party(c *ui.Context, sel *int, o data.ListOptions, changes, sent *int) {
-	r := data.List(c, "Party", len(heroes), sel, o, func(i int) {
+	r := data.List(c, "Party", len(heroes), sel, o, func(i int) string { return heroes[i] }, func(i int) {
 		pixel.Text(c, heroes[i], pixel.TextOptions{})
 	})
 	if r.Changed {
@@ -309,7 +309,7 @@ func TestListsKeepWholeDotsWhenScrolledByHalfADot(t *testing.T) {
 	}
 	tt := view(600, 300, newClock(), false, func(c *ui.Context) {
 		ui.Row(c).Children(func() {
-			data.List(c, "Rows", len(many), &sel, data.ListOptions{Height: 60}, func(i int) {
+			data.List(c, "Rows", len(many), &sel, data.ListOptions{Height: 60}, func(i int) string { return many[i] }, func(i int) {
 				pixel.Text(c, many[i], pixel.TextOptions{})
 			}).Element.Width(100)
 			data.Table(c, "Grid", []data.Column{{Title: "Row"}}, len(many), &sort, &row, data.TableOptions{Height: 60}, func(r, _ int) string { return many[r] })
@@ -334,7 +334,7 @@ func TestOffListsIgnoreTheWheel(t *testing.T) {
 		sel, sort, row, file, tile := 0, data.Sort{}, 0, "row 0", 0
 		tt := view(800, 300, newClock(), inert, func(c *ui.Context) {
 			ui.Row(c).Children(func() {
-				data.List(c, "Rows", len(many), &sel, data.ListOptions{Height: 60, Disabled: !inert}, func(i int) {
+				data.List(c, "Rows", len(many), &sel, data.ListOptions{Height: 60, Disabled: !inert}, func(i int) string { return many[i] }, func(i int) {
 					pixel.Text(c, many[i], pixel.TextOptions{})
 				})
 				data.Table(c, "Grid", []data.Column{{Title: "Row"}}, len(many), &sort, &row, data.TableOptions{Height: 60, Disabled: !inert}, func(r, _ int) string { return many[r] })
@@ -374,5 +374,23 @@ func TestInertInfiniteListIgnoresTheWheel(t *testing.T) {
 	}
 	if !shows(tt, "line 0") || asks != 0 {
 		t.Fatalf("the wheel moved an inert list to %q; %d asks", tt.Texts(), asks)
+	}
+}
+
+func TestListNamesRowsForReadersAndTyping(t *testing.T) {
+	fruit := []string{"Apple", "Banana", "Cherry"}
+	sel := 0
+	tt := view(300, 200, newClock(), false, func(c *ui.Context) {
+		data.List(c, "Fruit", len(fruit), &sel, data.ListOptions{}, func(i int) string { return fruit[i] + " row" }, func(i int) {
+			pixel.Text(c, fruit[i], pixel.TextOptions{})
+		})
+	})
+	find(t, tt, "Banana row")
+	// Type-ahead reads key presses, as a keyboard sends them.
+	click(t, tt, "Apple")
+	tt.Key(0, ui.KeyC)
+	tt.Key(0, ui.KeyH)
+	if sel != 2 {
+		t.Fatalf("typing ch chose row %d", sel)
 	}
 }

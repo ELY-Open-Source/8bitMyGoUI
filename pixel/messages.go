@@ -30,6 +30,10 @@ var messages = map[Locale]map[string]string{
 		"buy": "BUY", "sell": "SELL", "done": "DONE", "tracking": "TRACKING",
 		"new_game": "NEW GAME", "file": "FILE %d", "press_start": "PRESS START", "continue_game": "CONTINUE", "the_end": "THE END",
 		"tip": "TIP", "you_got": "YOU GOT: %s!", "unlocked": "UNLOCKED %d/%d", "rank": "RANK", "craft": "CRAFT",
+		"send": "SEND ▶", "typing": "%s IS TYPING", "today": "TODAY", "new_messages": "NEW MESSAGES", "sent": "SENT", "seen": "READ",
+		"from": "FROM", "subject": "SUBJECT", "date": "DATE", "faces": "FACES", "nature": "NATURE", "items": "ITEMS",
+		"mute": "MUTE", "camera": "CAMERA", "hang_up": "HANG UP", "new_count": "%d NEW", "votes": "%d VOTES", "unread": "%d UNREAD",
+		"day_date": "%[1]s %[2]d %[3]s", "category": "CATEGORY", "days": "SUN MON TUE WED THU FRI SAT",
 	},
 	Zh: {
 		"ok": "确定", "cancel": "取消", "yes": "是", "no": "否", "close": "关闭",
@@ -58,6 +62,10 @@ var messages = map[Locale]map[string]string{
 		"buy": "购买", "sell": "出售", "done": "完成", "tracking": "追踪中",
 		"new_game": "新游戏", "file": "存档 %d", "press_start": "按下开始", "continue_game": "继续", "the_end": "完",
 		"tip": "提示", "you_got": "获得了 %s！", "unlocked": "已解锁 %d/%d", "rank": "评价", "craft": "合成",
+		"send": "发送 ▶", "typing": "%s 正在输入", "today": "今天", "new_messages": "新消息", "sent": "已发送", "seen": "已读",
+		"from": "发件人", "subject": "主题", "date": "日期", "faces": "表情", "nature": "万物", "items": "道具",
+		"mute": "静音", "camera": "摄像头", "hang_up": "挂断", "new_count": "%d 条新", "votes": "%d 票", "unread": "%d 未读",
+		"day_date": "%[4]d月%[2]d日 周%[1]s", "category": "类别", "days": "日 一 二 三 四 五 六",
 	},
 }
 

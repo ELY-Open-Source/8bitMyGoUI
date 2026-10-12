@@ -1,6 +1,7 @@
 package gallery
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/egoist/mygo/ui"
@@ -82,5 +83,38 @@ func TestHomeSceneFollowsThePaletteStrip(t *testing.T) {
 	}
 	if _, ok := tt.Find("Winter Night, in use"); !ok {
 		t.Fatal("the strip does not mark the palette in use")
+	}
+}
+
+func TestChatDemosLogTheirActions(t *testing.T) {
+	for _, tc := range []struct {
+		path  string
+		steps []string
+	}{
+		{"/c/322-chatlog", []string{"SAY HI"}}, {"/c/323-composer", []string{"Message", "type:hi", "Enter"}},
+		{"/c/325-chatlist", []string{"Brom"}}, {"/c/327-reactions", []string{"fire 5"}}, {"/c/329-mentioninput", []string{"Mention", "type:@a"}},
+		{"/c/328-emojipicker", []string{"Emoji"}}, {"/c/333-channellist", []string{"quests", "Enter"}}, {"/c/335-usercard", []string{"INVITE"}},
+		{"/c/336-mailbox", []string{"Aria: Re: boss fight, NEW MESSAGES", "Enter"}}, {"/c/339-notificationbell", []string{"NEWS!", "Notifications"}},
+		{"/c/340-callcontrols", []string{"MUTE", "HANG UP"}}, {"/c/342-attachmentchip", []string{"REMOVE notes.txt"}},
+		{"/c/343-linkpreview", []string{"MyGo UI: native widgets, written in Go"}}, {"/c/344-poll", []string{"Bard, 1"}},
+		{"/c/345-stickerpicker", []string{"Stickers"}},
+	} {
+		a, tt := open(tc.path)
+		slug := tc.path[3:]
+		for _, step := range tc.steps {
+			before := len(a.logs[slug])
+			switch {
+			case step == "Enter":
+				tt.Key(0, ui.KeyEnter)
+			case strings.HasPrefix(step, "type:"):
+				tt.Type(step[5:])
+			default:
+				click(t, tt, step)
+			}
+			// Focusing a field changes nothing worth a line.
+			if len(a.logs[slug]) <= before && step != "Message" && step != "Mention" {
+				t.Errorf("%s: %s logged nothing: %q", slug, step, a.logs[slug])
+			}
+		}
 	}
 }

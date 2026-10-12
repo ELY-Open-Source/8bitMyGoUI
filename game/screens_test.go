@@ -27,14 +27,14 @@ func TestQuestLogTracksTheChosenQuest(t *testing.T) {
 	shown := func(title string) int {
 		return len(slices.DeleteFunc(tt.Texts(), func(s string) bool { return s != title }))
 	}
-	// The tracked title shows in the list and the tracker.
-	if shown("Slime trouble") != 2 || shown("Lost cat") != 1 || !tt.HasText("TRACKING") {
+	// Rows are named after their quests; the tracker repeats one.
+	if shown("Slime trouble") != 3 || shown("Lost cat") != 2 || !tt.HasText("TRACKING") {
 		t.Fatalf("texts %q", tt.Texts())
 	}
 	if err := tt.Click("Lost cat"); err != nil {
 		t.Fatal(err)
 	}
-	if tracked != 1 || changes != 1 || shown("Lost cat") != 2 {
+	if tracked != 1 || changes != 1 || shown("Lost cat") != 3 {
 		t.Fatalf("clicking Lost cat tracked %d", tracked)
 	}
 	panics(t, "an objective past its need", func() {

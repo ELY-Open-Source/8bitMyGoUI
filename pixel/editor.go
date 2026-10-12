@@ -17,6 +17,8 @@ type EditorOptions struct {
 	Placeholder string
 	Label       string
 	Disabled    bool
+	// EnterSends submits a multi-line field on Enter; Shift+Enter breaks lines.
+	EnterSends bool
 }
 
 type Edit struct {
@@ -33,6 +35,7 @@ type editLine struct{ start, end int }
 
 type editEnv struct {
 	multi  bool
+	sends  bool
 	maxLen int
 	mask   rune
 	width  int
@@ -47,6 +50,9 @@ func Editor(c *ui.Context, value *string, o EditorOptions) Edit {
 	if o.MaxLength < 0 {
 		panic(fmt.Sprintf("pixel: MaxLength %d", o.MaxLength))
 	}
+	if o.EnterSends && !o.Multiline {
+		panic("pixel: EnterSends needs a multi-line field")
+	}
 	shell, base, _ := Shell(c, func() *ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleTextField).Label(o.Label).Disabled(o.Disabled)
 	})
@@ -58,7 +64,7 @@ func Editor(c *ui.Context, value *string, o EditorOptions) Edit {
 		base.Description(*value)
 	}
 	width, check := WrapWidth(c, shell)
-	env := editEnv{multi: o.Multiline, maxLen: o.MaxLength, mask: o.Mask, width: width, dot: k.dot, read: c.ReadClipboard, write: c.WriteClipboard}
+	env := editEnv{multi: o.Multiline, sends: o.EnterSends, maxLen: o.MaxLength, mask: o.Mask, width: width, dot: k.dot, read: c.ReadClipboard, write: c.WriteClipboard}
 	shown := s.view(o.Mask, true)
 	caret := s.caret + s.composeCaret
 	lines := editLayout(shown, width, o.Multiline)
@@ -403,7 +409,8 @@ func (s *editState) key(ev ui.InputEvent, e editEnv) bool {
 			s.eraseOr(s.caret, s.caret+1)
 		}
 	case ui.KeyEnter:
-		if !e.multi || m != 0 {
+		brk := e.multi && m == 0 && (shift || !e.sends)
+		if !brk {
 			s.submitted = true
 			return true
 		}

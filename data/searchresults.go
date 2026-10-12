@@ -30,7 +30,7 @@ func SearchResults(c *ui.Context, label, query string, hits []Hit, selected *int
 	var res ListResult
 	col.Children(func() {
 		pixel.Text(c, fmt.Sprintf(k.Msg("found"), len(hits)), pixel.TextOptions{Slot: pixel.Faint})
-		res = List(c, label, len(hits), selected, ListOptions{Height: o.Height, Disabled: o.Disabled}, func(i int) {
+		res = List(c, label, len(hits), selected, ListOptions{Height: o.Height, Disabled: o.Disabled}, func(i int) string { return hits[i].Title + ", " + hits[i].Text }, func(i int) {
 			ui.Column(c).Children(func() {
 				text.Highlight(c, hits[i].Title, query, text.HighlightOptions{})
 				text.Highlight(c, hits[i].Text, query, text.HighlightOptions{Slot: pixel.Faint})

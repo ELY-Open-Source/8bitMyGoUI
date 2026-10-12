@@ -68,7 +68,7 @@ var horde = strings.Fields("Slime Bat Goblin Ghost Golem Imp Kobold Lich Mimic O
 
 func demoList(c *ui.Context, log func(string)) {
 	s := dataState(c)
-	r := data.List(c, "Monsters", len(horde), &s.list, data.ListOptions{}, func(i int) {
+	r := data.List(c, "Monsters", len(horde), &s.list, data.ListOptions{}, func(i int) string { return horde[i] }, func(i int) {
 		pixel.Text(c, horde[i], pixel.TextOptions{})
 	})
 	r.Element.Width(pixel.K(c).D(140))

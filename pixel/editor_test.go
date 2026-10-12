@@ -145,6 +145,20 @@ func TestEditorMultiline(t *testing.T) {
 	}
 }
 
+func TestEditorEnterSends(t *testing.T) {
+	h := newEdit(t, "hi", 200, pixel.EditorOptions{Multiline: true, EnterSends: true})
+	h.focus()
+	h.tt.Key(ui.Shift, ui.KeyEnter)
+	h.tt.Type("yo")
+	h.want("hi\nyo")
+	h.tt.Key(0, ui.KeyEnter)
+	if h.submits != 1 {
+		t.Fatalf("Enter submitted %d times", h.submits)
+	}
+	h.want("hi\nyo")
+	mustPanic(t, "one line", func() { newEdit(t, "", 200, pixel.EditorOptions{EnterSends: true}).tt.Frame() })
+}
+
 func TestEditorLimitsAndMask(t *testing.T) {
 	h := newEdit(t, "", 200, pixel.EditorOptions{MaxLength: 5})
 	h.focus()

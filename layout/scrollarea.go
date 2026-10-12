@@ -44,21 +44,28 @@ func ScrollArea(c *ui.Context, s *ui.ScrollState, o ScrollAreaOptions, children 
 	row := ui.Row(c).AlignItems(ui.Stretch).Reverse()
 	last := ui.Local(row, scrollKey{}, func() float32 { return s.Y })
 	view := row.Bounds().H
-	// Disabled freezes the view: any move is undone before paint.
-	if o.Disabled {
+	// Off freezes the view: any move is undone before paint.
+	inert := pixel.Current(c).Inert
+	if o.Disabled || inert {
 		s.Y = *last
 	}
 	var v *ui.Element
 	row.Children(func() {
-		scrollBar(c, k, s, view, o.Disabled)
+		scrollBar(c, k, s, view, o.Disabled || inert, o.Disabled)
 		// A disabled view is a new element; the focus leaves.
 		v = ui.Scroll(c).Key(o.Disabled).TrackScroll(s).Grow(1).Label(o.Label).FocusRing(false)
-		if o.Disabled {
+		switch {
+		case o.Disabled:
 			v.Role(ui.RoleGroup).Description(k.Msg("disabled"))
-		} else {
+		case inert:
+			// Out of the Tab order, so Tab moves past it.
+			v.Role(ui.RoleScroll)
+		default:
 			v.Role(ui.RoleScroll).Focusable()
 		}
 		v.Children(children)
+		// Inert parks the focus and gives it back after.
+		pixel.Park(c, v, inert)
 	})
 	focus := v.FocusVisible()
 	row.Draw(func(p *ui.Painter, r ui.Rect) {
@@ -83,11 +90,11 @@ func ScrollArea(c *ui.Context, s *ui.ScrollState, o ScrollAreaOptions, children 
 	return res
 }
 
-// scrollBar draws arrows, track and thumb, and moves s.
-func scrollBar(c *ui.Context, k pixel.Kit, s *ui.ScrollState, view float32, disabled bool) {
+// scrollBar moves s unless off; dim draws it disabled.
+func scrollBar(c *ui.Context, k pixel.Kit, s *ui.ScrollState, view float32, disabled, dim bool) {
 	clamp := func(y float32) { s.Y = max(0, min(y, s.MaxY)) }
 	ui.Column(c).Width(k.D(barW)).DrawOver(func(p *ui.Painter, r ui.Rect) {
-		if disabled {
+		if dim {
 			g := k.Canvas(p, r)
 			g.Checker(0, 0, g.W, g.H, pixel.Face)
 		}
