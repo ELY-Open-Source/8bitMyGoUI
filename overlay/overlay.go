@@ -128,8 +128,5 @@ func arriving(c *ui.Context, home *ui.Element, open bool) int {
 	if open {
 		on = 1
 	}
-	if k.Reduce() {
-		return 0
-	}
-	return 4 - k.Since(c, k.Cue(home, on), 15, 4)
+	return 4 - k.Shot(c, home, on, 15, 4)
 }

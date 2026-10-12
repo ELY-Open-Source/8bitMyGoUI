@@ -18,23 +18,39 @@ func fill(w, h int, c color.Color) *image.RGBA {
 	return img
 }
 
+// dots are a sprite's slots, -1 where clear.
+func dots(sp *pixel.Sprite) []int {
+	var out []int
+	for y := range sp.H {
+		for x := range sp.W {
+			s, ok := sp.At(0, x, y, pixel.Ink)
+			if !ok {
+				out = append(out, -1)
+				continue
+			}
+			out = append(out, int(s))
+		}
+	}
+	return out
+}
+
 func TestReduce(t *testing.T) {
 	pal := pixel.SpringDay
 	a := pal.Colors[pixel.Accent]
-	for _, s := range reduce(fill(8, 8, color.RGBA{a.R, a.G, a.B, 255}), 4, 4, pal) {
-		if s != int8(pixel.Accent) {
+	for _, s := range dots(Reduce(fill(8, 8, color.RGBA{a.R, a.G, a.B, 255}), 4, 4, pal)) {
+		if s != int(pixel.Accent) {
 			t.Fatalf("a flat Accent image gave slot %d", s)
 		}
 	}
-	for _, s := range reduce(fill(4, 4, color.RGBA{}), 4, 4, pal) {
+	for _, s := range dots(Reduce(fill(4, 4, color.RGBA{}), 4, 4, pal)) {
 		if s != -1 {
 			t.Fatal("a clear image drew")
 		}
 	}
 	i, b := pal.Colors[pixel.Info], pal.Colors[pixel.Back]
 	mid := color.RGBA{uint8((int(i.R) + int(b.R)) / 2), uint8((int(i.G) + int(b.G)) / 2), uint8((int(i.B) + int(b.B)) / 2), 255}
-	seen := map[int8]int{}
-	for _, s := range reduce(fill(16, 16, mid), 16, 16, pal) {
+	seen := map[int]int{}
+	for _, s := range dots(Reduce(fill(16, 16, mid), 16, 16, pal)) {
 		seen[s]++
 	}
 	if len(seen) < 2 {

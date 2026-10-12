@@ -93,7 +93,8 @@ func TestInvariantsPages(t *testing.T) {
 				a.Go(path)
 			}
 			allowed := colors(pal)
-			if name == "entry" {
+			// Home shows every palette in its strip.
+			if name == "entry" || name == "home" {
 				allowed = colors(pixel.Palettes...)
 			}
 			img := render(a.View, 640, 400)

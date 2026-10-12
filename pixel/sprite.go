@@ -71,6 +71,42 @@ func cell(c byte) int8 {
 
 func (s *Sprite) Frames() int { return len(s.frames) }
 
+// At is frame's slot at x, y; false where clear.
+func (s *Sprite) At(frame, x, y int, ink Slot) (Slot, bool) {
+	if x < 0 || y < 0 || x >= s.W || y >= s.H {
+		panic(fmt.Sprintf("pixel: sprite dot %d,%d outside %d×%d", x, y, s.W, s.H))
+	}
+	n := len(s.frames)
+	switch v := s.frames[(frame%n+n)%n][y*s.W+x]; v {
+	case cellClear:
+		return 0, false
+	case cellInk:
+		return ink, true
+	default:
+		return Slot(v), true
+	}
+}
+
+// SpriteOf builds a one-frame sprite; at reports each dot.
+func SpriteOf(w, h int, at func(x, y int) (Slot, bool)) *Sprite {
+	if w < 1 || h < 1 {
+		panic(fmt.Sprintf("pixel: sprite of %d×%d", w, h))
+	}
+	px := make([]int8, w*h)
+	for y := range h {
+		for x := range w {
+			px[y*w+x] = cellClear
+			if s, ok := at(x, y); ok {
+				if s >= Slots {
+					panic(fmt.Sprintf("pixel: sprite slot %d at %d,%d", s, x, y))
+				}
+				px[y*w+x] = int8(s)
+			}
+		}
+	}
+	return &Sprite{W: w, H: h, frames: [][]int8{px}}
+}
+
 // Mirror returns s flipped left to right.
 func (s *Sprite) Mirror() *Sprite {
 	m := &Sprite{W: s.W, H: s.H}

@@ -74,6 +74,71 @@ func (k Kit) Since(c *ui.Context, t time.Time, fps, done int) int {
 	return min(n, done)
 }
 
+type towardKey struct{}
+
+// heading is a Toward's target, last turn and step then.
+type heading struct {
+	on   bool
+	at   time.Time
+	from int
+}
+
+// Toward steps 0–n toward on, turning from where it is.
+func (k Kit) Toward(c *ui.Context, e *ui.Element, on bool, fps, n int) int {
+	checkFPS(fps)
+	if n < 1 {
+		panic(fmt.Sprintf("pixel: Toward needs steps, got %d", n))
+	}
+	end := func(on bool) int {
+		if on {
+			return n
+		}
+		return 0
+	}
+	// First shown, it already sits where on puts it.
+	s := ui.Local(e, towardKey{}, func() heading { return heading{on: on, from: end(on)} })
+	// Reduce Motion settles at the end, so nothing resumes later.
+	if k.reduce {
+		*s = heading{on: on, from: end(on)}
+		return s.from
+	}
+	shown := func() int {
+		if s.on {
+			return s.from + k.Since(c, s.at, fps, n-s.from)
+		}
+		return s.from - k.Since(c, s.at, fps, s.from)
+	}
+	if on != s.on {
+		s.from, s.on, s.at = shown(), on, k.now
+	}
+	return shown()
+}
+
+type shotKey struct{}
+
+// shot is a one-shot's cue, start, and spent mark.
+type shot struct {
+	cue   int
+	at    time.Time
+	spent bool
+}
+
+// Shot steps a cued one-shot; Reduce Motion spends it whole.
+func (k Kit) Shot(c *ui.Context, e *ui.Element, cue, fps, done int) int {
+	// Before any change the zero start reads as done.
+	s := ui.Local(e, shotKey{}, func() shot { return shot{cue: cue} })
+	if cue != s.cue {
+		s.cue, s.at, s.spent = cue, k.now, false
+	}
+	if k.reduce {
+		s.spent = true
+	}
+	if s.spent {
+		return done
+	}
+	return k.Since(c, s.at, fps, done)
+}
+
 type cueKey struct{}
 
 // cued is a cue's last value and when it changed.

@@ -15,6 +15,8 @@ type Canvas struct {
 	k      Kit
 	gx, gy int
 	W, H   int
+	// remap swaps slots as they draw; nil keeps them.
+	remap *[Slots]Slot
 }
 
 // painter is what Canvas needs of *ui.Painter.
@@ -42,8 +44,33 @@ func (g Canvas) Rect(x, y, w, h int, s Slot) {
 	if w <= 0 || h <= 0 {
 		return
 	}
+	if g.remap != nil {
+		s = g.remap[s]
+	}
 	d := g.k.dot
 	g.p.Fill(ui.Rect{X: float32(g.gx+x) * d, Y: float32(g.gy+y) * d, W: float32(w) * d, H: float32(h) * d}, g.k.C(s), 0)
+}
+
+// Cycled draws band's slots where Cycle(band, step) moves them.
+func (g Canvas) Cycled(band []Slot, step int) Canvas {
+	var m [Slots]Slot
+	for i := range m {
+		m[i] = Slot(i)
+	}
+	to := Cycle(band, step)
+	for i, s := range band {
+		if s >= Slots || slices.Index(band, s) != i {
+			panic(fmt.Sprintf("pixel: Cycled band %v repeats or overflows", band))
+		}
+		m[s] = to[i]
+	}
+	if g.remap != nil {
+		for i := range m {
+			m[i] = g.remap[m[i]]
+		}
+	}
+	g.remap = &m
+	return g
 }
 
 // Clip limits fn's drawing to a dot rectangle.

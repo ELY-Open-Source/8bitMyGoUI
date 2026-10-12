@@ -8,6 +8,7 @@ import (
 
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/display"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/feedback"
+	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/fx"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/input"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/layout"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
@@ -49,13 +50,23 @@ func page(c *ui.Context, fn func()) {
 
 func (a *App) home(c *ui.Context) {
 	k := pixel.K(c)
-	text.ShadowText(c, logo, text.ShadowTextOptions{Slot: pixel.Accent, Scale: 3})
+	p := k.Palette()
+	// The banner lives in the palette's own season and hour.
+	layout.Layers(c, func() {
+		fx.SeasonScene(c, p.Season, hourOf(p), fx.SeasonSceneOptions{Height: 96, Label: p.Name + " scene"}).FillWidth()
+	}, func() {
+		ui.Column(c).Padding(k.D(10)).Children(func() {
+			text.OutlineText(c, logo, text.OutlineTextOptions{Slot: pixel.Accent, Scale: 3})
+		})
+	})
 	pixel.Text(c, "Pixel components for MyGo. Every dot sits on the grid; every color comes from sixteen.", pixel.TextOptions{Wrap: true})
 	pixel.Text(c, "为 MyGo 打造的像素组件。每个点落在点阵上，每种颜色来自十六格调色板。", pixel.TextOptions{Wrap: true, Slot: pixel.Faint})
 	comps := len(Entries()) - count("foundations")
 	stats := fmt.Sprintf("%d COMPONENTS  %d CATEGORIES  %d PALETTES", comps, len(Categories)-1, len(pixel.Palettes))
 	text.MicroText(c, stats, text.MicroTextOptions{Slot: pixel.Accent})
-	ui.Grid(c).Columns(3).Gap(k.D(4)).Children(func() {
+	a.palettes(c)
+	// Each grid is one Tab stop; arrows move inside it.
+	ui.Grid(c).Columns(3).Gap(k.D(4)).FocusGroup(ui.Horizontal | ui.Vertical).Children(func() {
 		for _, cat := range Categories {
 			n := count(cat.Key)
 			if press(c, 0, 40, cat.Name, func(g pixel.Canvas, st pixel.State) {
@@ -72,6 +83,39 @@ func (a *App) home(c *ui.Context) {
 			}) {
 				a.Go("/cat/" + cat.Key)
 			}
+		}
+	})
+}
+
+// palettes shows each palette in its colors; press to pick.
+func (a *App) palettes(c *ui.Context) {
+	k := pixel.K(c)
+	ui.Grid(c).Columns(4).Gap(k.D(4)).FocusGroup(ui.Horizontal | ui.Vertical).Children(func() {
+		for i, pal := range pixel.Palettes {
+			name := pal.Name
+			if i == a.palette {
+				name += ", in use"
+			}
+			set := pixel.Current(c)
+			set.Palette = pal
+			pixel.Scope(c, set, func() {
+				if press(c, 0, 30, name, func(g pixel.Canvas, st pixel.State) {
+					fill := pixel.Face
+					if i == a.palette || st.Hover {
+						fill = pixel.Lit
+					}
+					g.Frame(0, 0, g.W, g.H, pixel.Window, fill)
+					for s := range pixel.Slots {
+						g.Rect(5+3*s, 4, 3, 8, pixel.Slot(s))
+					}
+					g.Text(5, 14, pal.Name+" "+pal.Zh, pixel.Ink, 1)
+					if i == a.palette {
+						g.Rect(g.W-9, 5, 4, 4, pixel.Accent)
+					}
+				}) {
+					a.setPalette(i)
+				}
+			})
 		}
 	})
 }
@@ -93,7 +137,7 @@ func (a *App) category(c *ui.Context, key string) {
 		text.ShadowText(c, cat.Name, text.ShadowTextOptions{Scale: 2})
 		pixel.Text(c, cat.Zh, pixel.TextOptions{Slot: pixel.Faint})
 	})
-	ui.Grid(c).Columns(3).Gap(k.D(4)).Children(func() {
+	ui.Grid(c).Columns(3).Gap(k.D(4)).FocusGroup(ui.Horizontal | ui.Vertical).Children(func() {
 		for _, e := range Entries() {
 			if e.Category == key {
 				a.card(c, e)
@@ -180,7 +224,7 @@ func (a *App) results(c *ui.Context) {
 	found := matches(a.query)
 	pixel.Text(c, fmt.Sprintf("%d results for %q", len(found), strings.TrimSpace(a.query)), pixel.TextOptions{Slot: pixel.Faint})
 	k := pixel.K(c)
-	ui.Grid(c).Columns(3).Gap(k.D(4)).Children(func() {
+	ui.Grid(c).Columns(3).Gap(k.D(4)).FocusGroup(ui.Horizontal | ui.Vertical).Children(func() {
 		for _, e := range found {
 			a.card(c, e)
 		}

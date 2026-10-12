@@ -75,7 +75,7 @@ func (a *App) sidebar(c *ui.Context) {
 		g.VLine(g.W-2, 0, g.H, pixel.Shade)
 		g.VLine(g.W-1, 0, g.H, pixel.Edge)
 	}).Children(func() {
-		ui.Column(c).Padding(k.D(4)).Gap(k.D(1)).Children(func() {
+		ui.Column(c).Padding(k.D(4)).Gap(k.D(1)).FocusGroup(ui.Vertical).Children(func() {
 			for _, cat := range Categories {
 				n := count(cat.Key)
 				path := "/cat/" + cat.Key

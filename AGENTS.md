@@ -42,7 +42,7 @@ Imports point down only. Same-tier imports are forbidden. `internal/archtest` en
 - Name palette slots, never colors. Every pixel must be a palette color.
 - Only axis-aligned rectangles reach the screen: no radius, path, shadow, gradient, opacity, scaled bitmap.
 - Tone comes from Bayer dither between two slots.
-- Animation steps through `Canvas.Step`, `Canvas.Busy` or `Kit.Tick`. No easing.
+- Animation steps through `Canvas.Step`, `Canvas.Busy` or `Kit.Tick`. No easing. Color cycling turns a band of slots a place each step: `Canvas.Cycled` remaps a drawn picture's slots; procedural art indexes `pixel.Cycle(band, step)`, which may repeat a slot.
 - Text through the pixel font only.
 
 ## MyGo rules
@@ -55,7 +55,7 @@ Imports point down only. Same-tier imports are forbidden. `internal/archtest` en
 
 - Signatures and results: PRD §5.1. Zero options give the default look. Sizes in options are dots.
 - `k := pixel.K(c)` once per component; layout sizes through `k.D(n)`. Integer options default through `pixel.Or`.
-- Custom-drawn controls end their Draw with `g.Finish(st)`. Grids of cells moved by arrows use `pixel.Pad`; one-shot timing steps with `k.Since`; a view that changes at a known moment asks `k.At`.
+- Custom-drawn controls end their Draw with `g.Finish(st)`. Grids of cells moved by arrows use `pixel.Pad`; one-shot timing steps with `k.Since`; a decorative one-shot on a cue steps with `k.Shot`, which Reduce Motion spends whole; a view that changes at a known moment asks `k.At`; a two-way slide (bars, fades, wipes) steps with `k.Toward`, which turns from where it is.
 - A one-shot effect inside a lasting view starts when its cue changes (a `Cue` option read through `k.Cue`, or a value that rises), never on its first frame. A state screen (`ErrorState`, `SuccessState`) starts when it appears. Decorative motion jumps to its end under Reduce Motion; countdowns and loaders keep time.
 - Containers take content as a final `func()`; interactive results are `NameResult`.
 - A Clicked, Shortcut, Changed or drag during the build makes MyGo build the frame again, so what they change shows at once. State changed any other way after its element was built (`Pressed`, `Edit.Changed`, a drag's release) is read at paint time, or set on the element after its children.
@@ -84,7 +84,7 @@ Each component adds one `Entry` in `gallery/demos_<category>.go`: ID, Name, Zh, 
 
 - `go vet ./... && go test ./...` before reporting done.
 - Behavior tests drive `ui.Tester` and assert values. Timed components take `pixel.Settings.Now` from a test clock. `Tester.Focused(label)` is also true when an ancestor holds the focus.
-- `gallery` checks every entry under every palette: only palette colors, whole dots. `PIXEL_SHOTS=<dir> go test ./gallery -run TestInvariants` writes PNGs for visual review.
+- `gallery` checks every entry under every palette: only palette colors, whole dots. Demos that call `pixel.Scope`, and the home and entry pages, may show other palettes. `PIXEL_SHOTS=<dir> go test ./gallery -run TestInvariants` writes PNGs for visual review.
 - Web: `npm install && npm test` in `web/` builds `web/dist` and runs Playwright on a local server; `BASE_URL=<url> npx playwright test` checks a deployed site. Tests read `window.__8bit` (`ready`, `stats()`, `texts()`, `page()`, `find(label)`, `log`).
 
 ## Deploy

@@ -278,6 +278,24 @@ func TestReadyGoReportsDoneAfterAJump(t *testing.T) {
 	}
 }
 
+func TestShakeSpendsCuesUnderReduceMotion(t *testing.T) {
+	clk, cue := newClock(), 0
+	tt := view(300, 100, clk, false, func(c *ui.Context) {
+		feedback.Shake(c, feedback.ShakeOptions{Cue: cue}, func() {
+			ui.Box(c).Size(20, 20).Label("box")
+		})
+	})
+	x := find(t, tt, "box").X
+	tt.SetPreferences(ui.Preferences{ReduceMotion: true, TextScale: 1})
+	cue++
+	tt.Frame()
+	tt.SetPreferences(ui.Preferences{ReduceMotion: false, TextScale: 1})
+	tt.Frame()
+	if find(t, tt, "box").X != x {
+		t.Fatal("a cue spent under Reduce Motion shook later")
+	}
+}
+
 func TestShakeJoltsUnlessReduced(t *testing.T) {
 	for _, reduce := range []bool{false, true} {
 		clk := newClock()

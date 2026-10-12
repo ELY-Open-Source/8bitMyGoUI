@@ -85,7 +85,7 @@ func TestSearch(t *testing.T) {
 		t.Fatal("/ did not focus search")
 	}
 	tt.Type("dith")
-	if !tt.HasText("1 results") || !tt.HasText("Dither") {
+	if !tt.HasText("2 results") || !tt.HasText("Dither") || !tt.HasText("FadeDither") {
 		t.Fatalf("results: %q", tt.Texts())
 	}
 	tt.Key(0, ui.KeyP)

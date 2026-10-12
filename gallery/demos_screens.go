@@ -136,7 +136,7 @@ func demoLoadingTips(c *ui.Context, log func(string)) {
 func demoLetterbox(c *ui.Context, log func(string)) {
 	k := pixel.K(c)
 	s := screenState(c)
-	ui.Column(c).Gap(k.D(6)).Children(func() {
+	ui.Column(c).Gap(k.D(6)).AlignItems(ui.Start).Children(func() {
 		game.Letterbox(c, s.cutscene, game.LetterboxOptions{}, func() {
 			ui.Box(c).Size(k.D(200), k.D(80)).Draw(func(p *ui.Painter, r ui.Rect) {
 				g := k.Canvas(p, r)

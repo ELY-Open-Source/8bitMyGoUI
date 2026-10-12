@@ -54,6 +54,25 @@ func TestDrawerSlidesInInSteps(t *testing.T) {
 	}
 }
 
+func TestDrawerOpenedUnderReduceMotionNeverSlides(t *testing.T) {
+	clk, open := newClock(), false
+	tt := view(640, 400, clk, false, func(c *ui.Context) {
+		overlay.Drawer(c, "Menu", &open, overlay.DrawerOptions{Side: display.Right, Size: 100}, func() {
+			pixel.Text(c, "Items", pixel.TextOptions{})
+		})
+	})
+	tt.SetPreferences(ui.Preferences{ReduceMotion: true, TextScale: 1})
+	open = true
+	// At rest the panel's text sits at 640-200+16.
+	for _, reduce := range []bool{true, false} {
+		tt.SetPreferences(ui.Preferences{ReduceMotion: reduce, TextScale: 1})
+		tt.Frame()
+		if x := find(t, tt, "Items").X; x != 456 {
+			t.Fatalf("reduce %v: the drawer's text is at %v", reduce, x)
+		}
+	}
+}
+
 func TestSheetClosesOnALongPull(t *testing.T) {
 	open, closed := true, 0
 	tt := view(640, 400, newClock(), false, func(c *ui.Context) {
