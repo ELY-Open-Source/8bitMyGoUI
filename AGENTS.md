@@ -27,6 +27,7 @@ cmd/gallery/       native window
 cmd/web/           js/wasm host
 web/               shell, glue JS, build.sh, deploy.sh, wrangler.jsonc, _headers, Playwright tests; web/dist is build output
 tools/fontpack/    BDF to font12.bin
+docs/              README image; specs in docs/prd (not committed)
 internal/archtest/ import and API rules
 ```
 
@@ -88,7 +89,8 @@ Each component adds one `Entry` in `gallery/demos_<category>.go`: ID, Name, Zh, 
 - `go vet ./... && go test ./...` before reporting done.
 - Behavior tests drive `ui.Tester` and assert values. Timed components take `pixel.Settings.Now` from a test clock. `Tester.Focused(label)` is also true when an ancestor holds the focus.
 - `gallery` checks every entry under every palette: only palette colors, whole dots. Demos that call `pixel.Scope`, and the home and entry pages, may show other palettes. `PIXEL_SHOTS=<dir> go test ./gallery -run TestInvariants` writes PNGs for visual review.
-- Web: `npm install && npm test` in `web/` builds `web/dist` and runs Playwright on a local server; `BASE_URL=<url> npx playwright test` checks a deployed site. Tests read `window.__8bit` (`ready`, `stats()`, `texts()`, `page()`, `find(label)`, `log`).
+- `gallery` also sweeps all demos: keys, typing, clicks and the wheel as a veil falls log nothing; a clock stepping back crashes nothing and shows no new negative number; every Tab stop has a name; every gallery word has glyphs; the README's counts match the registry.
+- Web: `npm install && npm test` in `web/` builds `web/dist` and runs Playwright on a local server; `BASE_URL=<url> npx playwright test` checks a deployed site. Tests read `window.__8bit` (`ready`, `stats()`, `texts()`, `page()`, `find(label)`, `log`). Every page must end without console or page errors; a test that expects some says so in an annotation. The budget test logs first frame, p50 and p95 (Go's share plus the canvas blit) and the wasm's brotli bytes, and holds them to PRD §6.
 
 ## Deploy
 
@@ -98,7 +100,7 @@ Each component adds one `Entry` in `gallery/demos_<category>.go`: ID, Name, Zh, 
 
 ## Review
 
-Each TASKS.md item is reviewed in a Herdr pane split to the right, by `codex --yolo -m gpt-6.1-sol -c model_reasoning_effort=high -c service_tier=fast`. At most three rounds. The reviewer reports defects against PRD and this file, ends with `VERDICT: PASS` or `VERDICT: FAIL`, and does not reject work for missing enhancements.
+Each TASKS.md item is reviewed in a Herdr pane split to the right, by `codex --yolo -m gpt-6.1-sol -c model_reasoning_effort=high -c service_tier=fast`. At most three rounds. The reviewer reports defects against PRD and this file, ends with `VERDICT: PASS` or `VERDICT: FAIL`, and does not reject work for missing enhancements. After a third FAIL, the coordinator fixes each defect, proves the fix red then green, and records both in TASKS.md.
 
 ## Secrets
 
