@@ -36,7 +36,7 @@ func TestRegistry(t *testing.T) {
 	}
 }
 
-// Every exported component function appears in a demo.
+// Every exported component has a demo; Bases are not components.
 func TestEveryComponentHasADemo(t *testing.T) {
 	var demos strings.Builder
 	for _, e := range Entries() {
@@ -58,7 +58,7 @@ func TestEveryComponentHasADemo(t *testing.T) {
 			}
 			for _, d := range file.Decls {
 				fn, ok := d.(*ast.FuncDecl)
-				if !ok || fn.Recv != nil || !fn.Name.IsExported() || fn.Type.Params.NumFields() == 0 {
+				if !ok || fn.Recv != nil || !fn.Name.IsExported() || strings.HasSuffix(fn.Name.Name, "Base") || fn.Type.Params.NumFields() == 0 {
 					continue
 				}
 				if p, ok := fn.Type.Params.List[0].Type.(*ast.StarExpr); ok {

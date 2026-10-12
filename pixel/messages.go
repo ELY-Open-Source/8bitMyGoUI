@@ -34,6 +34,7 @@ var messages = map[Locale]map[string]string{
 		"from": "FROM", "subject": "SUBJECT", "date": "DATE", "faces": "FACES", "nature": "NATURE", "items": "ITEMS",
 		"mute": "MUTE", "camera": "CAMERA", "hang_up": "HANG UP", "new_count": "%d NEW", "votes": "%d VOTES", "unread": "%d UNREAD",
 		"day_date": "%[1]s %[2]d %[3]s", "category": "CATEGORY", "days": "SUN MON TUE WED THU FRI SAT",
+		"prev_track": "PREVIOUS", "next_track": "NEXT", "play": "PLAY", "volume": "VOLUME", "rec": "REC", "playing": "PLAYING", "seek": "SEEK",
 	},
 	Zh: {
 		"ok": "确定", "cancel": "取消", "yes": "是", "no": "否", "close": "关闭",
@@ -66,6 +67,7 @@ var messages = map[Locale]map[string]string{
 		"from": "发件人", "subject": "主题", "date": "日期", "faces": "表情", "nature": "万物", "items": "道具",
 		"mute": "静音", "camera": "摄像头", "hang_up": "挂断", "new_count": "%d 条新", "votes": "%d 票", "unread": "%d 未读",
 		"day_date": "%[4]d月%[2]d日 周%[1]s", "category": "类别", "days": "日 一 二 三 四 五 六",
+		"prev_track": "上一首", "next_track": "下一首", "play": "播放", "volume": "音量", "rec": "录制", "playing": "正在播放", "seek": "进度",
 	},
 }
 

@@ -9,6 +9,11 @@ func Pad(c *ui.Context, text string, cols, n, cw, ch int, cur *int, disabled boo
 		return ui.Box(c).Focusable().Role(ui.RoleGroup).Label(text).Disabled(disabled)
 	})
 	shell.Size(k.D(cols*cw), k.D((n+cols-1)/cols*ch))
+	picked = -1
+	// Disabled or inert, even a key already sent waits.
+	if base.IsDisabled() {
+		return shell, base, st, picked
+	}
 	for _, m := range []struct {
 		key ui.Key
 		to  func() int
@@ -21,7 +26,6 @@ func Pad(c *ui.Context, text string, cols, n, cw, ch int, cur *int, disabled boo
 			*cur = to
 		}
 	}
-	picked = -1
 	enter, space := base.Shortcut(0, ui.KeyEnter), base.Shortcut(0, ui.KeySpace)
 	if enter || space {
 		picked = *cur

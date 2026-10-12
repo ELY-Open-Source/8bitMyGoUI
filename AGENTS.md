@@ -55,12 +55,14 @@ Imports point down only. Same-tier imports are forbidden. `internal/archtest` en
 
 - Signatures and results: PRD §5.1. Zero options give the default look. Sizes in options are dots.
 - `k := pixel.K(c)` once per component; layout sizes through `k.D(n)`. Integer options default through `pixel.Or`.
-- Custom-drawn controls end their Draw with `g.Finish(st)`. Grids of cells moved by arrows use `pixel.Pad`; one-shot timing steps with `k.Since`; a decorative one-shot on a cue steps with `k.Shot`, which Reduce Motion spends whole; a view that changes at a known moment asks `k.At`; a two-way slide (bars, fades, wipes) steps with `k.Toward`, which turns from where it is.
+- Custom-drawn controls end their Draw with `g.Finish(st)`. Grids of cells moved by arrows use `pixel.Pad`; custom-drawn sliders use `input.SlideBase`; one-shot timing steps with `k.Since`; a decorative one-shot on a cue steps with `k.Shot`, which Reduce Motion spends whole; a view that changes at a known moment asks `k.At`; a two-way slide (bars, fades, wipes) steps with `k.Toward`, which turns from where it is.
 - A one-shot effect inside a lasting view starts when its cue changes (a `Cue` option read through `k.Cue`, or a value that rises), never on its first frame. A state screen (`ErrorState`, `SuccessState`) starts when it appears. Decorative motion jumps to its end under Reduce Motion; countdowns and loaders keep time.
 - Containers take content as a final `func()`; interactive results are `NameResult`.
 - A Clicked, Shortcut, Changed or drag during the build makes MyGo build the frame again, so what they change shows at once. State changed any other way after its element was built (`Pressed`, `Edit.Changed`, a drag's release) is read at paint time, or set on the element after its children.
 - Never call `Selected`. The pixel theme keeps MyGo's row highlights clear, since scrolled rows sit between dots: draw chosen rows yourself.
 - A disabled or inert scroll view must not move: cover it, so the wheel stops above it.
+- Read pointers and keys only while `base.IsDisabled()` is false, never by the `Disabled` option alone: `pixel.Shell` disables the base under Inert too, and a drag begun before stays pressed.
+- MyGo paints a disabled element and all inside it at half opacity, and only a disabled element reads as disabled to assistive technology. Disable only drawless bases, as `pixel.Shell` does. A container with drawn content stays enabled, parks its focus, ignores input and says `DISABLED` in its description.
 - A press focuses the nearest focusable element under it, or nothing, and a focusable element keeps the click: clicks never reach its ancestors. A control that acts on a press is that focusable element. A `DialogBase` moves the focus inside as it opens and keeps Tab there, but only onto something focusable: make its panel focusable, ring off, and build its children in `pixel.Harbor(c, panel, …)` so controls turning off park their focus there and get it back. A closing overlay hands the focus back to its opener. While a press is on, `Hovered` is false for every other element: ask `Pressed`.
 - Enter and Space click a focused clickable element unless a `Shortcut` takes them. Take them wherever a click reads the pointer's position.
 - Under `pixel.Settings.Inert` (a busy veil) `pixel.Shell` disables every base and gives the focus back after. A popup sits above any veil: a control closes its popup when disabled or inert.
@@ -78,7 +80,7 @@ Imports point down only. Same-tier imports are forbidden. `internal/archtest` en
 
 ## Gallery entry
 
-Each component adds one `Entry` in `gallery/demos_<category>.go`: ID, Name, Zh, Category, Summary, Demo. The demo reports every event through `log`. The code panel shows the demo function's own source.
+Each component adds one `Entry` in `gallery/demos_<category>.go`: ID, Name, Zh, Category, Summary, Demo. The demo reports every event through `log`. The code panel shows the demo function's own source. An exported `…Base` (like `input.SlideBase`) is an undrawn behavior other packages draw on; it needs no demo of its own.
 
 ## Tests
 

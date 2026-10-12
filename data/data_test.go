@@ -394,3 +394,27 @@ func TestListNamesRowsForReadersAndTyping(t *testing.T) {
 		t.Fatalf("typing ch chose row %d", sel)
 	}
 }
+
+// MyGo would halve a disabled list's colors off the palette.
+func TestOffListsKeepThePalette(t *testing.T) {
+	fruit := []string{"Apple", "Banana"}
+	for _, tc := range []struct {
+		name            string
+		disabled, inert bool
+	}{{"disabled", true, false}, {"inert", false, true}} {
+		sel := 0
+		tt := view(300, 200, newClock(), tc.inert, func(c *ui.Context) {
+			data.List(c, "Fruit", len(fruit), &sel, data.ListOptions{Disabled: tc.disabled}, func(i int) string { return fruit[i] }, func(i int) {
+				pixel.Text(c, fruit[i], pixel.TextOptions{})
+			})
+		})
+		r, img := find(t, tt, "Fruit"), tt.Image()
+		for y := int(r.Y); y < int(r.Y+r.H); y++ {
+			for x := int(r.X); x < int(r.X+r.W); x++ {
+				if c := img.RGBAAt(x, y); !slices.ContainsFunc(pixel.SpringDay.Colors[:], func(p ui.Color) bool { return p.R == c.R && p.G == c.G && p.B == c.B }) {
+					t.Fatalf("%s list shows %v at %d, %d, off the palette", tc.name, c, x, y)
+				}
+			}
+		}
+	}
+}

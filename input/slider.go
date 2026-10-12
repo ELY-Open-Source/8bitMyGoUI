@@ -39,6 +39,20 @@ func Slider(c *ui.Context, text string, value *float64, o SliderOptions) SliderR
 	return report(shell, changed, "slider", text, *value)
 }
 
+// RailOptions shape a SlideBase.
+type RailOptions struct {
+	// Zeros mean 0 to 1; a zero Step glides.
+	Min, Max, Step float64
+	Vertical       bool
+	Disabled       bool
+}
+
+// SlideBase is an undrawn slider: pointer and keys set *value.
+func SlideBase(c *ui.Context, text string, value *float64, o RailOptions) (shell *ui.Element, st pixel.State, changed bool) {
+	lo, hi := bounds(o.Min, o.Max)
+	return slide(c, value, rail{lo: lo, hi: hi, step: o.Step, vertical: o.Vertical, label: text, disabled: o.Disabled})
+}
+
 // rail maps a slide's pointer and keys to a value.
 type rail struct {
 	lo, hi, step float64
@@ -54,7 +68,8 @@ func slide(c *ui.Context, v *float64, r rail) (*ui.Element, pixel.State, bool) {
 	})
 	old := *v
 	set := r.snap(v)
-	if !r.disabled {
+	// The base, not the option: Inert disables it too.
+	if !base.IsDisabled() {
 		if _, _, held := base.Dragged(); held {
 			px, py, _ := base.PointerPosition()
 			b := base.Bounds()
