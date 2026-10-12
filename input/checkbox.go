@@ -33,7 +33,13 @@ type CheckboxResult struct {
 // Checkbox is a labeled 8×8 box with a hand-placed check.
 func Checkbox(c *ui.Context, text string, checked *bool, o CheckboxOptions) CheckboxResult {
 	k := pixel.K(c)
-	shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.CheckboxBase(c, checked).Label(text).Disabled(o.Disabled) })
+	// The base turns before it learns it is off.
+	on := *checked
+	shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.CheckboxBase(c, &on).Label(text).Disabled(o.Disabled) })
+	changed := on != *checked && !base.IsDisabled()
+	if changed {
+		*checked = on
+	}
 	mark := check
 	if !*checked {
 		mark = nil
@@ -41,7 +47,7 @@ func Checkbox(c *ui.Context, text string, checked *bool, o CheckboxOptions) Chec
 	shell.Size(k.D(12+pixel.Measure(text)), k.D(pixel.LineHeight)).Draw(func(p *ui.Painter, r ui.Rect) {
 		box(k.Canvas(p, r), text, mark, st)
 	})
-	res := CheckboxResult{Element: shell, Changed: base.Changed()}
+	res := CheckboxResult{Element: shell, Changed: changed}
 	if res.Changed {
 		slog.Debug("8bit: checkbox", "label", text, "checked", *checked)
 	}

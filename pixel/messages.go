@@ -50,6 +50,10 @@ var messages = map[Locale]map[string]string{
 		"in_bin": "IN THE BIN: %d", "empty_trash": "EMPTY", "no_preview": "NO PREVIEW", "kind": "KIND", "size": "SIZE", "created": "CREATED",
 		"modified": "MODIFIED", "packed": "PACKED", "archive_total": "%d FILES: %s → %s", "link": "LINK", "access": "ACCESS",
 		"access_levels": "VIEW COMMENT EDIT", "synced": "SYNCED", "syncing": "SYNCING", "sync_failed": "SYNC FAILED",
+		"todo": "TODO", "doing": "DOING", "low": "LOW", "medium": "MEDIUM", "high": "HIGH", "critical": "CRITICAL", "nobody": "NOBODY",
+		"filters": "FILTERS", "task_filters": "OPEN DONE URGENT", "quest_complete": "QUEST COMPLETE!", "focus": "FOCUS", "rest": "REST",
+		"ahead": "AHEAD", "behind": "BEHIND", "ideal": "IDEAL", "work_left": "LEFT", "total": "TOTAL", "days_left": "%d DAYS LEFT",
+		"last_day": "LAST DAY", "over": "OVER", "sprint_points": "%d/%d POINTS", "hours_of": "%s/%s H",
 	},
 	Zh: {
 		"ok": "确定", "cancel": "取消", "yes": "是", "no": "否", "close": "关闭",
@@ -98,6 +102,10 @@ var messages = map[Locale]map[string]string{
 		"in_bin": "回收站：%d 项", "empty_trash": "清空", "no_preview": "无法预览", "kind": "类型", "size": "大小", "created": "创建",
 		"modified": "修改", "packed": "压缩后", "archive_total": "%d 个文件：%s → %s", "link": "链接", "access": "权限",
 		"access_levels": "查看 评论 编辑", "synced": "已同步", "syncing": "同步中", "sync_failed": "同步出错",
+		"todo": "待办", "doing": "进行中", "low": "低", "medium": "中", "high": "高", "critical": "危急", "nobody": "无人",
+		"filters": "筛选", "task_filters": "未完成 已完成 火急", "quest_complete": "任务完成！", "focus": "专注", "rest": "休息",
+		"ahead": "超前", "behind": "落后", "ideal": "理想", "work_left": "剩余", "total": "合计", "days_left": "还剩 %d 天",
+		"last_day": "最后一天", "over": "已结束", "sprint_points": "%d/%d 点", "hours_of": "%s/%s 小时",
 	},
 }
 

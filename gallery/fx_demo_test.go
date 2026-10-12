@@ -76,10 +76,17 @@ func TestHomeSceneFollowsThePaletteStrip(t *testing.T) {
 	if !ok {
 		t.Fatalf("the scene kept its season: %q", tt.Texts())
 	}
-	// The banner's sky starts in Winter Night's darkest slot.
-	got, want := tt.Image().RGBAAt(int(r.X)+1, int(r.Y)+1), pixel.WinterNight.Colors[pixel.Well]
-	if got.R != want.R || got.G != want.G || got.B != want.B {
-		t.Fatalf("the banner's sky is %v, want %v", got, want)
+	// The sky's top row is Winter Night's Well, snow aside.
+	want, well, n := pixel.WinterNight.Colors[pixel.Well], 0, 0
+	for x := int(r.X); x < int(r.X+r.W); x += 2 {
+		got := tt.Image().RGBAAt(x, int(r.Y)+1)
+		if got.R == want.R && got.G == want.G && got.B == want.B {
+			well++
+		}
+		n++
+	}
+	if well*4 < n*3 {
+		t.Fatalf("only %d of %d sky dots are Winter Night's Well", well, n)
 	}
 	if _, ok := tt.Find("Winter Night, in use"); !ok {
 		t.Fatal("the strip does not mark the palette in use")
