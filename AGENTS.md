@@ -84,7 +84,7 @@ Each component adds one `Entry` in `gallery/demos_<category>.go`: ID, Name, Zh, 
 
 ## Deploy
 
-- `npm run deploy` in `web/` (clean tree only): builds, uploads a Worker version, runs Playwright on its preview URL, promotes it to 100%, runs Playwright on https://8bitmygoui.zhangyanghaha0407.workers.dev.
+- `npm run deploy` in `web/` (clean tree only) ships in two steps, because a rollout serves old and new versions side by side for a while. Step one promotes the live `index.html` with the new files beside the live ones; step two uploads the new page with both file sets, runs Playwright on its preview URL, promotes it, and runs Playwright on https://8bitmygoui.zhangyanghaha0407.workers.dev. A page from either build then finds its files on either version.
 - Rollback: `npx wrangler rollback <version-id>` in `web/`; `npx wrangler deployments list` shows versions.
 - Scripts and wasm sit under `a/`, named by content hash, and `_headers` makes them immutable; `index.html` revalidates. Never cache a path whose content can change.
 
