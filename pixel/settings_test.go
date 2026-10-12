@@ -189,3 +189,15 @@ func TestReduceMotionFollowsPreferences(t *testing.T) {
 		t.Fatal("Reduce off after ReduceMotion preference")
 	}
 }
+
+func TestReduceSettingStillsMotionInItsScope(t *testing.T) {
+	var outer, inner pixel.Kit
+	ui.NewTester(func(c *ui.Context) {
+		pixel.Use(c, pixel.Settings{Palette: pixel.SpringDay})
+		outer = pixel.K(c)
+		pixel.Scope(c, pixel.Settings{Palette: pixel.SpringDay, Reduce: true}, func() { inner = pixel.K(c) })
+	}, 10, 10)
+	if outer.Reduce() || !inner.Reduce() {
+		t.Fatalf("Reduce: outside %v, inside %v", outer.Reduce(), inner.Reduce())
+	}
+}

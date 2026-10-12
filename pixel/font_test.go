@@ -193,7 +193,7 @@ func hanging(punct func(rune) bool) func(rune) bool {
 }
 
 func TestMicroFont(t *testing.T) {
-	set := "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ+-#.:/%! "
+	set := "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ+-#.:/%!? "
 	seen := map[[MicroHeight]uint8]rune{}
 	for _, r := range set {
 		g := microGlyph(r)

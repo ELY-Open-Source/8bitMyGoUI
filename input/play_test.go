@@ -126,6 +126,14 @@ func TestPinInputTypesBacksAndPastes(t *testing.T) {
 	if pin != "1298" || complete != 1 {
 		t.Fatalf("paste left %q, complete %d times", pin, complete)
 	}
+	// Native hosts paste on Cmd+V, as a key.
+	tt.Key(0, ui.KeyBackspace)
+	tt.Key(0, ui.KeyBackspace)
+	tt.SetClipboard("55")
+	tt.Key(ui.Cmd, ui.KeyV)
+	if pin != "1255" || complete != 2 {
+		t.Fatalf("Cmd+V left %q, complete %d times", pin, complete)
+	}
 	if _, ok := tt.TextCaret(); !ok {
 		t.Fatal("the boxes take no text from input methods")
 	}

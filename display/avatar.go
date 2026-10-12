@@ -95,20 +95,20 @@ func Avatar(c *ui.Context, name string, o AvatarOptions) *ui.Element {
 	if o.Picture != nil {
 		return Picture(c, o.Picture, PictureOptions{W: 16 * sc, H: 16 * sc, Label: name})
 	}
-	return art(c, k, name, 16*sc, 16*sc, func(g pixel.Canvas) { drawFace(g, 0, name, sc) })
+	return art(c, k, name, 16*sc, 16*sc, func(g pixel.Canvas) { Face(g, 0, 0, name, sc) })
 }
 
-// drawFace paints the face of name at x, scaled.
-func drawFace(g pixel.Canvas, x int, name string, sc int) {
+// Face paints the face of name at x, y, scaled.
+func Face(g pixel.Canvas, x, y int, name string, sc int) {
 	h := fnv.New32a()
 	h.Write([]byte(strings.ToLower(name)))
 	n := h.Sum32()
 	pick := func(k int) int { v := int(n % uint32(k)); n /= uint32(k); return v }
-	g.Rect(x, 0, 16*sc, 16*sc, backs[pick(len(backs))])
-	g.Sprite(x, 0, head, 0, skins[pick(len(skins))], sc)
-	g.Sprite(x, 0, hair[pick(len(hair))], 0, colors[pick(len(colors))], sc)
-	g.Sprite(x, 8*sc, eyes[pick(len(eyes))], 0, pixel.Ink, sc)
-	g.Sprite(x, 11*sc, mouths[pick(len(mouths))], 0, pixel.Ink, sc)
+	g.Rect(x, y, 16*sc, 16*sc, backs[pick(len(backs))])
+	g.Sprite(x, y, head, 0, skins[pick(len(skins))], sc)
+	g.Sprite(x, y, hair[pick(len(hair))], 0, colors[pick(len(colors))], sc)
+	g.Sprite(x, y+8*sc, eyes[pick(len(eyes))], 0, pixel.Ink, sc)
+	g.Sprite(x, y+11*sc, mouths[pick(len(mouths))], 0, pixel.Ink, sc)
 }
 
 type AvatarGroupOptions struct {
@@ -134,7 +134,7 @@ func AvatarGroup(c *ui.Context, names []string, o AvatarGroupOptions) *ui.Elemen
 	return art(c, k, strings.Join(names, ", "), w, 16*sc, func(g pixel.Canvas) {
 		for i, name := range shown {
 			x := i * step
-			drawFace(g, x, name, sc)
+			Face(g, x, 0, name, sc)
 			if i > 0 {
 				g.VLine(x, 0, 16*sc, pixel.Back)
 			}

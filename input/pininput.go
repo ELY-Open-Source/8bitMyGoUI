@@ -44,7 +44,8 @@ func PinInput(c *ui.Context, text string, value *string, o PinInputOptions) PinI
 		switch {
 		case ev.Kind == ui.InputText:
 			put(ev.Text)
-		case ev.Kind == ui.InputCommand && ev.Text == "paste":
+		// Browsers paste by command, native hosts by Cmd+V.
+		case ev.Kind == ui.InputCommand && ev.Text == "paste", ev.Kind == ui.InputKeyDown && ev.Key == ui.KeyV && ev.Mods == ui.Cmd:
 			put(c.ReadClipboard())
 		case ev.Kind == ui.InputKeyDown && ev.Key == ui.KeyBackspace && ev.Mods == 0:
 			if len(*value) > 0 {

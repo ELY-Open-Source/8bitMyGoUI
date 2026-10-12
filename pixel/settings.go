@@ -24,6 +24,8 @@ type Settings struct {
 	Now func() time.Time
 	// Inert controls take no input, as under a busy veil.
 	Inert bool
+	// Reduce stills motion, as the system preference does.
+	Reduce bool
 }
 
 // Kit is one frame's settings, captured by components.
@@ -92,7 +94,7 @@ func K(c *ui.Context) Kit {
 	if s.Now != nil {
 		now = s.Now()
 	}
-	return Kit{pal: s.Palette, dot: float32(s.Dot), locale: s.Locale, now: now, clock: s.Now, reduce: c.Preferences().ReduceMotion}
+	return Kit{pal: s.Palette, dot: float32(s.Dot), locale: s.Locale, now: now, clock: s.Now, reduce: c.Preferences().ReduceMotion || s.Reduce}
 }
 
 func frameOf(c *ui.Context) *frame {

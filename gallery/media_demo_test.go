@@ -71,3 +71,38 @@ func TestCodeDemosLogTheirActions(t *testing.T) {
 		}
 	}
 }
+
+func TestAccountDemosLogTheirActions(t *testing.T) {
+	quiet := map[string]bool{"NAME": true, "PASSWORD": true, "Login code": true, "Controls": true, "4/5": true, "type:player1": true, "type:hunter2": true}
+	for _, tc := range []struct {
+		path  string
+		steps []string
+	}{
+		{"/c/386-settingslist", []string{"Music"}}, {"/c/387-optioncycler", []string{"Text speed"}},
+		{"/c/388-keybindings", []string{"Controls", "key:A"}}, {"/c/391-charactercreator", []string{"HAIR"}},
+		{"/c/392-loginform", []string{"NAME", "type:player1", "PASSWORD", "type:hunter2", "key:Enter"}},
+		{"/c/393-passwordgrid", []string{"SYMBOLS"}}, {"/c/394-sessionlist", []string{"SIGN OUT Old phone"}},
+		{"/c/395-languagepicker", []string{"Deutsch"}}, {"/c/396-palettepicker", []string{"Palette"}},
+		{"/c/397-volumemixer", []string{"BGM"}}, {"/c/398-difficultyselect", []string{"Difficulty"}},
+		{"/c/399-accessibilityoptions", []string{"REDUCE MOTION"}}, {"/c/400-accountswitcher", []string{"P2, Brom"}},
+		{"/c/401-playerselect", []string{"Players"}}, {"/c/402-twofactor", []string{"Login code", "type:1"}},
+		{"/c/405-feedbackform", []string{"4/5", "SEND ▶"}},
+	} {
+		a, tt := open(tc.path)
+		slug := tc.path[3:]
+		for _, step := range tc.steps {
+			before := len(a.logs[slug])
+			switch {
+			case strings.HasPrefix(step, "key:"):
+				tt.Key(0, letters[step[4:]])
+			case strings.HasPrefix(step, "type:"):
+				tt.Type(step[5:])
+			default:
+				click(t, tt, step)
+			}
+			if len(a.logs[slug]) <= before && !quiet[step] {
+				t.Errorf("%s: %s logged nothing: %q", slug, step, a.logs[slug])
+			}
+		}
+	}
+}
