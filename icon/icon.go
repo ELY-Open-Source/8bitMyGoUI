@@ -36,4 +36,6 @@ var All = []Named{
 	{"skull", Skull}, {"scroll", Scroll}, {"flame", Flame}, {"drop", Drop},
 	{"leaf", Leaf}, {"flower", Flower}, {"sun", Sun}, {"moon", Moon},
 	{"cloud", Cloud}, {"snowflake", Snowflake}, {"bolt", Bolt}, {"palette", Palette},
+	{"spade", Spade}, {"club", Club}, {"diamond", Diamond}, {"meeple", Meeple},
+	{"king", King}, {"queen", Queen}, {"rook", Rook}, {"bishop", Bishop}, {"knight", Knight}, {"pawn", Pawn},
 }
