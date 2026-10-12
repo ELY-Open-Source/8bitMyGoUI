@@ -1,13 +1,27 @@
+import { brotliCompressSync, constants } from 'node:zlib'
 import { test, expect } from '@playwright/test'
 
-// open loads the page and collects console errors.
+// pageErrors keeps each page's console and page errors.
+const pageErrors = new WeakMap()
+
+test.beforeEach(async ({ page }) => {
+  const seen = []
+  pageErrors.set(page, seen)
+  page.on('console', m => { if (m.type() === 'error') seen.push(m.text()) })
+  page.on('pageerror', e => seen.push(e.message))
+})
+
+// Every page must end free of console errors.
+test.afterEach(async ({ page }) => {
+  if (test.info().annotations.some(a => a.type === 'console errors')) return
+  expect(pageErrors.get(page)).toEqual([])
+})
+
+// open loads the page and returns errors seen so far.
 async function open (page, hash = '') {
-  const errors = []
-  page.on('console', m => { if (m.type() === 'error') errors.push(m.text()) })
-  page.on('pageerror', e => errors.push(e.message))
   await page.goto('/' + hash)
   await page.waitForFunction(() => window.__8bit?.ready)
-  return errors
+  return pageErrors.get(page)
 }
 
 const texts = page => page.evaluate(() => window.__8bit.texts())
@@ -225,6 +239,7 @@ test('resize keeps whole pixels per dot', async ({ page }) => {
 })
 
 test('a Go panic shows GAME OVER in pixels; RETRY reloads', async ({ page }) => {
+  test.info().annotations.push({ type: 'console errors', description: 'the panic is on purpose' })
   await open(page, '#/f/icons')
   await page.evaluate(() => window.__8bitGo.pointer('bogus', 0, 0))
   expect(await texts(page)).toContain('web: unknown pointer kind bogus')
@@ -262,8 +277,60 @@ test('scripts and wasm have content-addressed, immutable URLs', async ({ page, r
 })
 
 test('a load failure shows the page GAME OVER', async ({ page }) => {
+  test.info().annotations.push({ type: 'console errors', description: 'the 404 is on purpose' })
   await page.route('**/a/app.*.wasm', route => route.fulfill({ status: 404 }))
   await page.goto('/')
   await expect(page.locator('#over')).toBeVisible()
   await expect(page.locator('#why')).toContainText(/a\/app\.[0-9a-f]{12}\.wasm: HTTP 404/)
+})
+
+test('components take clicks and typing on their pages', async ({ page }) => {
+  const errors = await open(page, '#/c/066-button')
+  // The demo's log panel shows each event as "> event".
+  const logged = s => page.waitForFunction(l => window.__8bit.texts().includes(l), '> ' + s)
+  await click(page, 'PRIMARY')
+  await logged('PRIMARY')
+  await page.goto('/#/c/082-textinput')
+  await page.waitForFunction(() => window.__8bit.page() === '/c/082-textinput')
+  await click(page, 'Hero name')
+  await page.keyboard.type('Zed')
+  await logged('name Zed')
+  await page.keyboard.press('Enter')
+  await logged('submitted Zed')
+  expect(errors).toEqual([])
+})
+
+test('the budget: first frame, p95 frame, wasm with brotli', async ({ page, request }) => {
+  const errors = await open(page, '#/c/295-starfield')
+  // Stars rush at 12 fps; sixty frames fill the window.
+  await page.waitForFunction(() => window.__8bit.stats().frames >= 60)
+  const s = await page.evaluate(() => window.__8bit.stats())
+  const [wasm] = await page.evaluate(() => performance.getEntriesByType('resource')
+    .filter(e => e.name.endsWith('.wasm')).map(e => ({ url: e.name, sent: e.encodedBodySize, size: e.decodedBodySize })))
+  let br = wasm.sent
+  if (br >= wasm.size) {
+    // Served plain: compress as Cloudflare's brotli does.
+    const body = await (await request.get(wasm.url)).body()
+    br = brotliCompressSync(body, { params: { [constants.BROTLI_PARAM_QUALITY]: 4 } }).length
+  }
+  console.log(`budget: first frame ${s.first.toFixed(0)} ms, p50 ${s.p50.toFixed(1)} ms, p95 ${s.p95.toFixed(1)} ms, wasm ${(br / 1e6).toFixed(2)} MB brotli`)
+  expect(s.first).toBeLessThanOrEqual(300)
+  expect(s.p95).toBeLessThanOrEqual(16)
+  expect(br).toBeLessThanOrEqual(8e6)
+  expect(errors).toEqual([])
+})
+
+test('frame times count the drawing', async ({ page }) => {
+  // A slow canvas must show in p95, not hide.
+  await page.addInitScript(() => {
+    const put = CanvasRenderingContext2D.prototype.putImageData
+    CanvasRenderingContext2D.prototype.putImageData = function (...a) {
+      const until = performance.now() + 25
+      while (performance.now() < until) {}
+      return put.apply(this, a)
+    }
+  })
+  await open(page, '#/c/295-starfield')
+  await page.waitForFunction(() => window.__8bit.stats().frames >= 20)
+  expect((await page.evaluate(() => window.__8bit.stats())).p95).toBeGreaterThanOrEqual(25)
 })

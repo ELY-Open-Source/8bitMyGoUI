@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"log/slog"
 	"runtime/debug"
-	"slices"
 	"syscall/js"
 	"time"
 
@@ -26,7 +25,6 @@ type host struct {
 	tt     *ui.Tester
 	w, h   int
 	frames int
-	times  []float64
 	opened int
 	over   bool
 	dead   bool
@@ -165,13 +163,11 @@ func (h *host) key(a []js.Value) any {
 func (h *host) out() any {
 	img := h.tt.Image()
 	h.frames++
-	h.times = append(h.times, float64(time.Since(h.began).Microseconds())/1000)
-	if len(h.times) > 240 {
-		h.times = h.times[1:]
-	}
 	pix := js.Global().Get("Uint8ClampedArray").New(len(img.Pix))
 	js.CopyBytesToJS(pix, img.Pix)
-	res := map[string]any{"w": img.Rect.Dx(), "h": img.Rect.Dy(), "pix": pix, "path": h.app.Path(), "cursor": int(h.tt.Cursor())}
+	// took is Go's share; the page adds its blit.
+	took := float64(time.Since(h.began).Microseconds()) / 1000
+	res := map[string]any{"w": img.Rect.Dx(), "h": img.Rect.Dy(), "pix": pix, "path": h.app.Path(), "cursor": int(h.tt.Cursor()), "took": took}
 	if due := pixel.Due(); !due.IsZero() {
 		res["due"] = float64(time.Until(due).Milliseconds())
 	}
@@ -189,15 +185,7 @@ func (h *host) out() any {
 }
 
 func (h *host) stats([]js.Value) any {
-	s := slices.Clone(h.times)
-	slices.Sort(s)
-	pct := func(p float64) float64 {
-		if len(s) == 0 {
-			return 0
-		}
-		return s[int(p*float64(len(s)-1))]
-	}
-	return map[string]any{"frames": h.frames, "p50": pct(0.5), "p95": pct(0.95), "w": h.w, "h": h.h, "path": h.app.Path()}
+	return map[string]any{"frames": h.frames, "w": h.w, "h": h.h, "path": h.app.Path()}
 }
 
 func dip(v js.Value) float32 { return float32(v.Float() * dot) }

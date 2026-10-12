@@ -12,6 +12,8 @@ const cursors = ['default', 'pointer', 'text', 'move', 'ew-resize', 'ns-resize',
   'row-resize', 'vertical-text', 'copy', 'alias', 'context-menu', 'none']
 const SHIFT = 1, CTRL = 2, ALT = 4, SUPER = 8
 const log = []
+// times are recent frames' ms: Go's share plus the blit.
+const times = []
 const asked = params.get('zoom')
 const fixed = /^[1-9]$/.test(asked) ? Number(asked) : 0
 let api, zoom, scale, timer, first, active = false, skipText = ''
@@ -37,11 +39,19 @@ function size () {
   return [Math.max(1, Math.floor(innerWidth / scale)), Math.max(1, Math.floor(innerHeight / scale))]
 }
 
+// percentiles are the median and 95th of the frame times.
+function percentiles (ms) {
+  const s = [...ms].sort((a, b) => a - b)
+  const at = p => s.length ? s[Math.floor(p * (s.length - 1))] : 0
+  return { p50: at(0.5), p95: at(0.95) }
+}
+
 function hashPath () { return decodeURIComponent(location.hash.slice(1)) }
 
 // show blits a frame and acts on Go's requests.
 function show (r) {
   if (!r) return
+  const t = performance.now()
   if (screen.width !== r.w || screen.height !== r.h) {
     screen.width = r.w
     screen.height = r.h
@@ -49,6 +59,8 @@ function show (r) {
   screen.style.width = r.w * scale + 'px'
   screen.style.height = r.h * scale + 'px'
   ctx.putImageData(new ImageData(r.pix, r.w, r.h), 0, 0)
+  times.push(r.took + performance.now() - t)
+  if (times.length > 240) times.shift()
   if (r.path && '#' + r.path !== location.hash && !(r.path === '/' && location.hash === '')) {
     history.pushState(null, '', '#' + r.path)
   }
@@ -219,7 +231,7 @@ async function load () {
   ime.focus({ preventScroll: true })
   window.__8bit = {
     ready: true,
-    stats: () => ({ ...api.stats(), zoom, first }),
+    stats: () => ({ ...api.stats(), ...percentiles(times), zoom, first }),
     texts: () => api.texts(),
     page: () => api.stats().path,
     find: (label) => api.find(label)?.map(v => v * scale),
