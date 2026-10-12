@@ -40,3 +40,21 @@ func checkLevel(level int) {
 		panic(fmt.Sprintf("pixel: dither level %d outside 0–16", level))
 	}
 }
+
+// TextVeil draws s, keeping glyph dots below the dither level.
+func (g Canvas) TextVeil(x, y int, s string, ink Slot, level, scale int) {
+	checkLevel(level)
+	checkScale(scale)
+	for _, r := range s {
+		gl := glyphOf(r)
+		gx := x + gl.x*scale
+		for j := range gl.h * scale {
+			yy := y + gl.top()*scale + j
+			row := bayer[(g.gy+yy)&3]
+			runs(gl.w*scale, func(i int) bool {
+				return gl.on(i/scale, j/scale) && row[(g.gx+gx+i)&3] < level
+			}, func(a, b int) { g.Rect(gx+a, yy, b-a, 1, ink) })
+		}
+		x += gl.adv * scale
+	}
+}

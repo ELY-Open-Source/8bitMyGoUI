@@ -69,7 +69,8 @@ Imports point down only. Same-tier imports are forbidden. `internal/archtest` en
 - Clip only boxes that sit on whole dots; split widths with whole-dot shares, not equal `Grow`. `Grow` starts from zero size, so never use it on a content-sized child.
 - `List` row builders run during layout: wrap them in `pixel.Lazy(c, row)`. A click met there lands after the build; keep it in `Local` state, invalidate, and report it next frame.
 - Single-key shortcuts only while `pixel.Typing(c)` is false; MyGo routes shortcuts before a focused field.
-- Copy shown by a component comes from `k.Msg`; business copy comes from the caller.
+- Copy shown by a component comes from `k.Msg`; business copy comes from the caller. Ark Pixel 12px lacks some hanzi: `TestMessagesHaveGlyphs` holds every message to the font.
+- Item slots look alike everywhere: draw them with `data.DrawSlot` or `data.ItemSlot`.
 - Fail fast: panic on programmer errors such as bad options. Never swallow an error.
 - Composites log state changes: `slog.Debug("8bit: <component> <event>", …)`. Never log secrets.
 - No cross-frame `*ui.Element` caching. No goroutines touching elements.

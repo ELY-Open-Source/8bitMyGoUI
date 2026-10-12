@@ -26,3 +26,15 @@ func TestMessagesCoverBothLocales(t *testing.T) {
 	}()
 	Kit{locale: En}.Msg("no_such_key")
 }
+
+func TestMessagesHaveGlyphs(t *testing.T) {
+	for loc, m := range messages {
+		for key, s := range m {
+			for _, r := range s {
+				if _, ok := font12.find(r); !ok && r != ' ' {
+					t.Errorf("locale %d message %q: the font has no %q", loc, key, r)
+				}
+			}
+		}
+	}
+}

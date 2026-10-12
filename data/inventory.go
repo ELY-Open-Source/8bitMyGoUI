@@ -38,12 +38,12 @@ func Inventory(c *ui.Context, text string, items []Item, selected *int, o Invent
 		panic(fmt.Sprintf("data: Inventory slot %d of %d", *selected, len(items)))
 	}
 	old := *selected
-	shell, base, st, _ := pixel.Pad(c, text, cols, len(items), slotSize, slotSize, selected, o.Disabled)
+	shell, base, st, _ := pixel.Pad(c, text, cols, len(items), SlotSize, SlotSize, selected, o.Disabled)
 	b := ui.Local(base, bagKey{}, func() bag { return bag{} })
 	res := InventoryResult{Element: shell, Changed: *selected != old}
 	px, py, _ := base.PointerPosition()
 	at := func() int {
-		col, row := int(px/k.Dot())/slotSize, int(py/k.Dot())/slotSize
+		col, row := int(px/k.Dot())/SlotSize, int(py/k.Dot())/SlotSize
 		if px < 0 || py < 0 || col >= cols || row*cols+col >= len(items) {
 			return -1
 		}
@@ -67,7 +67,7 @@ func Inventory(c *ui.Context, text string, items []Item, selected *int, o Invent
 	default:
 		b.dead = false
 	}
-	base.Description(itemName(items[*selected]))
+	base.Description(items[*selected].String())
 	drag := -1
 	if b.held && b.over != b.from {
 		drag = b.from
@@ -79,7 +79,7 @@ func Inventory(c *ui.Context, text string, items []Item, selected *int, o Invent
 			if i == drag {
 				it = Item{}
 			}
-			slot(g, i%cols*slotSize, i/cols*slotSize, it, 0, i == *selected)
+			DrawSlot(g, i%cols*SlotSize, i/cols*SlotSize, it, ItemSlotOptions{Selected: i == *selected})
 		}
 		// The dragged item rides with the pointer.
 		if drag >= 0 && shown[drag].Sprite != nil {

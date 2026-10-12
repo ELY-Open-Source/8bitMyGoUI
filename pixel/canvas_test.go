@@ -268,3 +268,26 @@ func boolInt(b bool) int {
 	}
 	return 0
 }
+
+func TestTextVeilKeepsDotsBelowTheLevel(t *testing.T) {
+	plain := canvas(t, 40, 40, func(g pixel.Canvas) { g.Text(2, 2, "HM", pixel.Ink, 2) })
+	for _, level := range []int{0, 8, 16} {
+		veil := canvas(t, 40, 40, func(g pixel.Canvas) { g.TextVeil(2, 2, "HM", pixel.Ink, level, 2) })
+		kept, all := 0, 0
+		for y := range 40 {
+			for x := range 40 {
+				ink, got := plain.at(x, y) == pixel.Ink, veil.at(x, y) == pixel.Ink
+				if got && (!ink || pixel.Bayer(x, y) >= level) {
+					t.Fatalf("level %d: dot %d,%d drawn", level, x, y)
+				}
+				if ink && pixel.Bayer(x, y) < level && !got {
+					t.Fatalf("level %d: dot %d,%d missing", level, x, y)
+				}
+				kept, all = kept+boolInt(got), all+boolInt(ink)
+			}
+		}
+		if want := all * level / 16; kept < want-all/8 || kept > want+all/8 {
+			t.Fatalf("level %d kept %d of %d dots", level, kept, all)
+		}
+	}
+}
