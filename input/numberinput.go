@@ -86,8 +86,9 @@ func NumberInput(c *ui.Context, label string, value *float64, o NumberInputOptio
 
 // arrowBox is a half-height step button the pointer presses.
 func arrowBox(c *ui.Context, k pixel.Kit, sp *pixel.Sprite, disabled bool) bool {
+	disabled = disabled || pixel.Current(c).Inert
 	b := ui.Box(c).Size(k.D(10), k.D(pixel.LineHeight/2)).Role(ui.RoleNone)
-	down := b.Pressed()
+	down := b.Pressed() && !disabled
 	b.Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)
 		dy := 0

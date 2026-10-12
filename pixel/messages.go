@@ -19,6 +19,11 @@ var messages = map[Locale]map[string]string{
 		"on": "ON", "off": "OFF", "clear": "CLEAR", "per_page": "PER PAGE", "range": "%d–%d OF %d", "found": "FOUND: %d",
 		"unknown": "???", "sure": "ARE YOU SURE?", "paused": "PAUSED", "resume": "RESUME", "options": "OPTIONS", "quit": "QUIT",
 		"next_step": "NEXT ▶",
+		"months":    "JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC", "weekdays": "SU MO TU WE TH FR SA",
+		"start": "START", "stop": "STOP", "lap": "LAP", "reset": "RESET", "pause": "PAUSE",
+		"just_now": "JUST NOW", "min_ago": "%d MIN AGO", "hours_ago": "%d H AGO", "yesterday": "YESTERDAY", "days_ago": "%d DAYS AGO",
+		"in_min": "IN %d MIN", "in_hours": "IN %d H", "tomorrow": "TOMORROW", "in_days": "IN %d DAYS",
+		"spring": "SPRING", "summer": "SUMMER", "autumn": "AUTUMN", "winter": "WINTER", "minutes": "MIN", "seconds": "SEC",
 	},
 	Zh: {
 		"ok": "确定", "cancel": "取消", "yes": "是", "no": "否", "close": "关闭",
@@ -36,6 +41,11 @@ var messages = map[Locale]map[string]string{
 		"on": "开", "off": "关", "clear": "清除", "per_page": "每页", "range": "%d–%d / 共 %d", "found": "找到：%d",
 		"unknown": "？？？", "sure": "确定吗？", "paused": "暂停", "resume": "继续游戏", "options": "设置", "quit": "退出",
 		"next_step": "下一步 ▶",
+		"months":    "一月 二月 三月 四月 五月 六月 七月 八月 九月 十月 十一月 十二月", "weekdays": "日 一 二 三 四 五 六",
+		"start": "开始", "stop": "停止", "lap": "计次", "reset": "复位", "pause": "暂停",
+		"just_now": "刚刚", "min_ago": "%d 分钟前", "hours_ago": "%d 小时前", "yesterday": "昨天", "days_ago": "%d 天前",
+		"in_min": "%d 分钟后", "in_hours": "%d 小时后", "tomorrow": "明天", "in_days": "%d 天后",
+		"spring": "春", "summer": "夏", "autumn": "秋", "winter": "冬", "minutes": "分", "seconds": "秒",
 	},
 }
 

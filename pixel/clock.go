@@ -55,6 +55,13 @@ func (k Kit) Tick(c *ui.Context, fps int) int {
 	return n
 }
 
+// At builds the view again at t.
+func (k Kit) At(c *ui.Context, t time.Time) {
+	d := max(0, t.Sub(k.now))
+	c.After(d)
+	ask(c.Now().Add(d).UnixNano())
+}
+
 // Since counts steps from t at fps, up to done.
 func (k Kit) Since(c *ui.Context, t time.Time, fps, done int) int {
 	if t.IsZero() {

@@ -194,3 +194,20 @@ func TestPopoverRefusesNegativeWidth(t *testing.T) {
 		overlay.Popover(c, "X", b.Element, &open, overlay.PopoverOptions{Width: -1}, func() {})
 	})
 }
+
+func TestPopconfirmParksFocusAsItTurnsOff(t *testing.T) {
+	disabled := false
+	tt := view(640, 400, newClock(), false, func(c *ui.Context) {
+		ui.Column(c).Padding(40).Children(func() {
+			overlay.Popconfirm(c, "SELL", "Sell?", overlay.PopconfirmOptions{Disabled: disabled})
+			pixel.Text(c, "elsewhere", pixel.TextOptions{})
+		})
+	})
+	click(t, tt, "SELL")
+	tt.Key(0, ui.KeyTab)
+	disabled = true
+	tt.Frame()
+	if tt.Focused("SELL") && !tt.Focused("elsewhere") {
+		t.Fatal("the focus came back to the button as it turned off")
+	}
+}

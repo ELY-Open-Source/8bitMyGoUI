@@ -73,7 +73,7 @@ type hold struct {
 // held counts an arrow's steps: one, then ten a second.
 func held(c *ui.Context, k pixel.Kit, sp *pixel.Sprite, disabled bool) int {
 	b := ui.Box(c).Size(k.D(12), k.D(pixel.LineHeight+4)).Role(ui.RoleNone)
-	down := b.Pressed() && !disabled
+	down := b.Pressed() && !disabled && !pixel.Current(c).Inert
 	h := ui.Local(b, holdKey{}, func() hold { return hold{} })
 	b.Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)

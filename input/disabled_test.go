@@ -169,3 +169,22 @@ func TestDisabledWhileFocusedTakesNoInput(t *testing.T) {
 		})
 	}
 }
+
+func TestInertSteppersTakeNoPress(t *testing.T) {
+	n, v := 5, 5.0
+	tt := ui.NewTester(func(c *ui.Context) {
+		pixel.Use(c, pixel.Settings{Palette: pixel.SpringDay, Inert: true})
+		ui.Row(c).Children(func() {
+			input.Stepper(c, "Lives", &n, input.StepperOptions{Max: 9})
+			input.NumberInput(c, "Speed", &v, input.NumberInputOptions{Max: 10})
+		})
+	}, 600, 100)
+	s, f := find(t, tt, "Lives"), find(t, tt, "Speed")
+	// Arrows sit left of a stepper, right of a field.
+	tt.Press(s.X-12, s.Y+8)
+	tt.Release(s.X-12, s.Y+8)
+	tt.ClickAt(f.X+f.W+10, f.Y+4)
+	if n != 5 || v != 5 {
+		t.Fatalf("inert arrows set %d and %v", n, v)
+	}
+}

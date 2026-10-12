@@ -31,8 +31,11 @@ func Popconfirm(c *ui.Context, text, question string, o PopconfirmOptions) Popco
 	if b.Clicked {
 		*open = true
 	}
-	// A popup above a veil closes with its control.
+	// A popup above a veil closes with it, focus parked.
 	if o.Disabled || pixel.Current(c).Inert {
+		if *open {
+			c.Root().Focus()
+		}
 		*open = false
 	}
 	was := *open
