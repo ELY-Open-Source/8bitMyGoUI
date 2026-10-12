@@ -20,7 +20,7 @@ func Achievement(c *ui.Context, title string, o AchievementOptions) *ui.Element 
 	w := pixel.Or("Achievement Width", o.Width, 200)
 	e := ui.Box(c)
 	// Ten steps a second; in by 5, gone by 40.
-	step := k.Since(c, cue(e, k, o.Cue), 10, 40)
+	step := k.Since(c, k.Cue(e, o.Cue), 10, 40)
 	if step >= 40 {
 		return e
 	}

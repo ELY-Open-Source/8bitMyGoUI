@@ -19,7 +19,7 @@ func Shake(c *ui.Context, o ShakeOptions, content func()) *ui.Element {
 	k := pixel.K(c)
 	e := ui.Box(c)
 	dx := 0
-	if step := k.Since(c, cue(e, k, o.Cue), 20, len(shakes)-1); !k.Reduce() {
+	if step := k.Since(c, k.Cue(e, o.Cue), 20, len(shakes)-1); !k.Reduce() {
 		dx = shakes[step]
 	}
 	return e.Padding(0, k.D(2-dx), 0, k.D(2+dx)).Children(content)

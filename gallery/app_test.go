@@ -292,3 +292,35 @@ func TestDataDemosLogTheirEvents(t *testing.T) {
 		}
 	}
 }
+
+func TestOverlayDemosOpenClean(t *testing.T) {
+	for slug, act := range map[string]func(tt *ui.Tester){
+		"176-dialog":         func(tt *ui.Tester) { click(t, tt, "OPEN QUEST") },
+		"177-alertdialog":    func(tt *ui.Tester) { click(t, tt, "FIGHT BOSS") },
+		"178-confirmdialog":  func(tt *ui.Tester) { click(t, tt, "DROP SWORD") },
+		"179-popover":        func(tt *ui.Tester) { click(t, tt, "MAP") },
+		"181-drawer":         func(tt *ui.Tester) { click(t, tt, "RIGHT ▶") },
+		"182-sheet":          func(tt *ui.Tester) { click(t, tt, "OPTIONS") },
+		"184-lightbox":       func(tt *ui.Tester) { click(t, tt, "Cave") },
+		"186-choiceprompt":   func(tt *ui.Tester) { click(t, tt, "A SLIME APPEARS") },
+		"188-spotlight":      func(tt *ui.Tester) { click(t, tt, "SPOTLIGHT") },
+		"189-notification":   func(tt *ui.Tester) { click(t, tt, "NEW MAIL") },
+		"191-pausemenu":      func(tt *ui.Tester) { click(t, tt, "PAUSE") },
+		"192-promptdialog":   func(tt *ui.Tester) { click(t, tt, "NEW GAME") },
+		"193-progressdialog": func(tt *ui.Tester) { click(t, tt, "SAVE") },
+	} {
+		a, tt := open("/c/" + slug)
+		act(tt)
+		tt.Frame()
+		if len(a.logs[slug]) == 0 {
+			t.Errorf("%s logged nothing", slug)
+		}
+		keepsStyle(t, slug+" open", tt.Image(), colors(pixel.Palettes...))
+	}
+	_, tt := open("/c/190-popconfirm")
+	click(t, tt, "SELL CROWN")
+	if !tt.HasText("Sell it for 5 gold?") {
+		t.Fatal("the popconfirm did not open")
+	}
+	keepsStyle(t, "popconfirm open", tt.Image(), colors(pixel.Palettes...))
+}

@@ -3,9 +3,6 @@ package feedback
 
 import (
 	"strconv"
-	"time"
-
-	"github.com/egoist/mygo/ui"
 
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
 )
@@ -35,20 +32,3 @@ func level(v, warn, bad float64) pixel.Slot {
 
 // fmtNum prints a number without trailing zeros.
 func fmtNum(v float64) string { return strconv.FormatFloat(v, 'g', 4, 64) }
-
-type cueKey struct{}
-
-// cued is a cue's last value and when it changed.
-type cued struct {
-	n  int
-	at time.Time
-}
-
-// cue is when n last changed; zero until it does.
-func cue(e *ui.Element, k pixel.Kit, n int) time.Time {
-	s := ui.Local(e, cueKey{}, func() cued { return cued{n: n} })
-	if s.n != n {
-		s.n, s.at = n, k.Now()
-	}
-	return s.at
-}

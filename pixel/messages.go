@@ -17,7 +17,8 @@ var messages = map[Locale]map[string]string{
 		"combo": "COMBO!", "saving": "SAVING", "saved": "SAVED", "go": "GO!", "wait": "PLEASE WAIT",
 		"prev": "PREVIOUS", "next": "NEXT", "back": "BACK", "forward": "FORWARD", "history": "HISTORY",
 		"on": "ON", "off": "OFF", "clear": "CLEAR", "per_page": "PER PAGE", "range": "%d–%d OF %d", "found": "FOUND: %d",
-		"unknown": "???",
+		"unknown": "???", "sure": "ARE YOU SURE?", "paused": "PAUSED", "resume": "RESUME", "options": "OPTIONS", "quit": "QUIT",
+		"next_step": "NEXT ▶",
 	},
 	Zh: {
 		"ok": "确定", "cancel": "取消", "yes": "是", "no": "否", "close": "关闭",
@@ -33,7 +34,8 @@ var messages = map[Locale]map[string]string{
 		"combo": "连击！", "saving": "存档中", "saved": "已存档", "go": "开始！", "wait": "请稍候",
 		"prev": "上一页", "next": "下一页", "back": "后退", "forward": "前进", "history": "历史",
 		"on": "开", "off": "关", "clear": "清除", "per_page": "每页", "range": "%d–%d / 共 %d", "found": "找到：%d",
-		"unknown": "？？？",
+		"unknown": "？？？", "sure": "确定吗？", "paused": "暂停", "resume": "继续游戏", "options": "设置", "quit": "退出",
+		"next_step": "下一步 ▶",
 	},
 }
 

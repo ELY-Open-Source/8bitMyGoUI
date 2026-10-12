@@ -67,6 +67,23 @@ func (k Kit) Since(c *ui.Context, t time.Time, fps, done int) int {
 	return min(n, done)
 }
 
+type cueKey struct{}
+
+// cued is a cue's last value and when it changed.
+type cued struct {
+	n  int
+	at time.Time
+}
+
+// Cue is when n last changed on e, zero before.
+func (k Kit) Cue(e *ui.Element, n int) time.Time {
+	s := ui.Local(e, cueKey{}, func() cued { return cued{n: n} })
+	if s.n != n {
+		s.n, s.at = n, k.now
+	}
+	return s.at
+}
+
 // frameAt is the frame at t and the next wait.
 func frameAt(t time.Time, fps int) (int, time.Duration) {
 	checkFPS(fps)

@@ -107,17 +107,30 @@ type parkKey struct{}
 // Park moves focus off e while off, back once on.
 func Park(c *ui.Context, e *ui.Element, off bool) {
 	parked := ui.Local(e, parkKey{}, func() bool { return false })
+	spot := c.Root()
+	if h := current(c).harbor; h != nil {
+		spot = h
+	}
 	switch {
 	case off && e.Focused():
-		c.Root().Focus()
+		spot.Focus()
 		*parked = true
 	case !off && *parked:
 		// Focus comes back unless something else took it.
-		if root := c.Root(); root.Focused() || !root.FocusWithin() {
+		if spot.Focused() || !c.Root().FocusWithin() {
 			e.Focus()
 		}
 		*parked = false
 	}
+}
+
+// Harbor keeps focus in e while controls in fn rest.
+func Harbor(c *ui.Context, e *ui.Element, fn func()) {
+	f := current(c)
+	prev := f.harbor
+	f.harbor = e
+	fn()
+	f.harbor = prev
 }
 
 // Hand is the pointing cursor of focus and menus.

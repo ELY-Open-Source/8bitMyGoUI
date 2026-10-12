@@ -48,6 +48,8 @@ type frame struct {
 	cur    Settings
 	at     time.Time
 	typing bool
+	// harbor holds the focus of controls turning off.
+	harbor *ui.Element
 }
 
 type frameKey struct{}
@@ -59,7 +61,7 @@ func Use(c *ui.Context, s Settings) {
 	if f.cur.Palette != s.Palette {
 		slog.Debug("8bit: palette", "name", s.Palette.Name)
 	}
-	f.cur, f.at, f.typing = s, c.Now(), false
+	f.cur, f.at, f.typing, f.harbor = s, c.Now(), false, nil
 	c.SetTheme(theme(s.Palette))
 }
 
