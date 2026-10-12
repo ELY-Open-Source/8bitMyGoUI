@@ -21,7 +21,7 @@ func Panel(c *ui.Context, o PanelOptions, children func()) *ui.Element {
 	if fill == pixel.Ink {
 		fill = pixel.Face
 	}
-	pad := border(o.Style) + orDef("Panel Padding", o.Padding, 4)
+	pad := border(o.Style) + pixel.Or("Panel Padding", o.Padding, 4)
 	return ui.Column(c).Padding(k.D(pad)).Draw(func(p *ui.Painter, r ui.Rect) {
 		box(k.Canvas(p, r), o.Style, fill)
 	}).Children(children)

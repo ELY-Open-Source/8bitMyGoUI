@@ -18,10 +18,10 @@ func panics(t *testing.T, name string, fn func()) {
 }
 
 func TestOrDef(t *testing.T) {
-	if orDef("x", 0, 7) != 7 || orDef("x", 3, 7) != 3 {
+	if pixel.Or("x", 0, 7) != 7 || pixel.Or("x", 3, 7) != 3 {
 		t.Fatal("orDef did not default zero or keep a value")
 	}
-	panics(t, "negative option", func() { orDef("x", -1, 7) })
+	panics(t, "negative option", func() { pixel.Or("x", -1, 7) })
 	panics(t, "unknown frame style", func() { border(pixel.FrameStyle(99)) })
 }
 

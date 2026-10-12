@@ -13,6 +13,8 @@ var messages = map[Locale]map[string]string{
 		"gold": "GOLD", "silver": "SILVER", "bronze": "BRONZE",
 		"common": "COMMON", "uncommon": "UNCOMMON", "rare": "RARE", "epic": "EPIC", "legendary": "LEGENDARY",
 		"hold": "HOLD TO CONFIRM", "del": "DEL", "end": "END", "lives": "+30 LIVES!",
+		"retry": "RETRY", "stage_clear": "STAGE CLEAR!", "level_up": "LEVEL UP!", "achievement": "ACHIEVEMENT UNLOCKED",
+		"combo": "COMBO!", "saving": "SAVING", "saved": "SAVED", "go": "GO!", "wait": "PLEASE WAIT",
 	},
 	Zh: {
 		"ok": "确定", "cancel": "取消", "yes": "是", "no": "否", "close": "关闭",
@@ -24,6 +26,8 @@ var messages = map[Locale]map[string]string{
 		"gold": "金", "silver": "银", "bronze": "铜",
 		"common": "普通", "uncommon": "优秀", "rare": "稀有", "epic": "史诗", "legendary": "传说",
 		"hold": "长按确认", "del": "删", "end": "完", "lives": "命数 +30！",
+		"retry": "重试", "stage_clear": "过关！", "level_up": "升级！", "achievement": "成就解锁",
+		"combo": "连击！", "saving": "存档中", "saved": "已存档", "go": "开始！", "wait": "请稍候",
 	},
 }
 

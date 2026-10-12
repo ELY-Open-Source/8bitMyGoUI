@@ -16,10 +16,10 @@ type TilesOptions struct {
 // Tiles wraps n equal tiles into rows.
 func Tiles(c *ui.Context, n int, o TilesOptions, tile func(i int)) *ui.Element {
 	k := pixel.K(c)
-	w := orDef("Tiles W", o.W, 48)
-	h := orDef("Tiles H", o.H, w)
-	orDef("Tiles n", n, 0)
-	return ui.Row(c).Wrap().Gap(k.D(orDef("Tiles Gap", o.Gap, 4))).Children(func() {
+	w := pixel.Or("Tiles W", o.W, 48)
+	h := pixel.Or("Tiles H", o.H, w)
+	pixel.Or("Tiles n", n, 0)
+	return ui.Row(c).Wrap().Gap(k.D(pixel.Or("Tiles Gap", o.Gap, 4))).Children(func() {
 		for i := range n {
 			ui.Box(c).Size(k.D(w), k.D(h)).Clip().Children(func() { tile(i) })
 		}

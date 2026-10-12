@@ -19,7 +19,7 @@ type FaderResult = SliderResult
 func Fader(c *ui.Context, text string, value *float64, o FaderOptions) FaderResult {
 	k := pixel.K(c)
 	lo, hi := bounds(o.Min, o.Max)
-	h := orDef("Fader Height", o.Height, 64)
+	h := pixel.Or("Fader Height", o.Height, 64)
 	shell, st, changed := slide(c, value, rail{lo: lo, hi: hi, vertical: true, label: text, disabled: o.Disabled})
 	shell.Size(k.D(16), k.D(h)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)

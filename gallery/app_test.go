@@ -123,10 +123,10 @@ func TestLostPageAndLocale(t *testing.T) {
 		t.Fatalf("lost page texts %q", tt.Texts())
 	}
 	click(t, tt, "language")
-	if a.locale != pixel.Zh || !tt.HasText("继续？") {
+	if a.locale != pixel.Zh || !tt.HasText("重试") {
 		t.Fatal("language toggle did not switch built-in copy")
 	}
-	click(t, tt, "继续？")
+	click(t, tt, "重试")
 	if a.Path() != "/" {
 		t.Fatalf("continue went to %q", a.Path())
 	}

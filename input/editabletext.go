@@ -30,7 +30,7 @@ type editable struct {
 // EditableText edits on double click or Enter; Escape reverts.
 func EditableText(c *ui.Context, text string, value *string, o EditableTextOptions) EditableTextResult {
 	k := pixel.K(c)
-	w := orDef("EditableText Width", o.Width, 120)
+	w := pixel.Or("EditableText Width", o.Width, 120)
 	box := ui.Box(c)
 	s := ui.Local(box, editableKey{}, func() editable { return editable{} })
 	res := EditableTextResult{Element: box}

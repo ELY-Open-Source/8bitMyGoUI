@@ -24,7 +24,7 @@ func StepSlider(c *ui.Context, text string, value *float64, o StepSliderOptions)
 	if step <= 0 {
 		step = (hi - lo) / 10
 	}
-	w := orDef("StepSlider Width", o.Width, 96)
+	w := pixel.Or("StepSlider Width", o.Width, 96)
 	var res SliderResult
 	row := ui.Row(c).Gap(k.D(6)).AlignItems(ui.Center).Children(func() {
 		shell, st, changed := slide(c, value, rail{lo: lo, hi: hi, step: step, label: text, disabled: o.Disabled})

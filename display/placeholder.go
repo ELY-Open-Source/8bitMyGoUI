@@ -16,7 +16,7 @@ type PlaceholderOptions struct {
 // Placeholder is a dithered box with a cross and size.
 func Placeholder(c *ui.Context, o PlaceholderOptions) *ui.Element {
 	k := pixel.K(c)
-	w, h := orDef("Placeholder W", o.W, 64), orDef("Placeholder H", o.H, 48)
+	w, h := pixel.Or("Placeholder W", o.W, 64), pixel.Or("Placeholder H", o.H, 48)
 	size := fmt.Sprintf("%d×%d", w, h)
 	return art(c, k, size, w, h, func(g pixel.Canvas) {
 		if w < 3 || h < 3 {

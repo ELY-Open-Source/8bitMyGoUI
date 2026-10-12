@@ -14,7 +14,7 @@ type PortraitOptions struct {
 // Portrait frames a character's picture over a nameplate.
 func Portrait(c *ui.Context, name string, o PortraitOptions, picture func()) *ui.Element {
 	k := pixel.K(c)
-	size := orDef("Portrait Size", o.Size, 48)
+	size := pixel.Or("Portrait Size", o.Size, 48)
 	return ui.Column(c).Width(k.D(size + 6)).Role(ui.RoleGroup).Label(name).Children(func() {
 		ui.Box(c).Size(k.D(size+6), k.D(size+6)).Padding(k.D(3)).Draw(func(p *ui.Painter, r ui.Rect) {
 			g := k.Canvas(p, r)

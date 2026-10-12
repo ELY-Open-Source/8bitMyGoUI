@@ -27,7 +27,7 @@ const pinBox, pinGap = 12, 4
 // PinInput types digits into boxes; Backspace goes back, paste fills.
 func PinInput(c *ui.Context, text string, value *string, o PinInputOptions) PinInputResult {
 	k := pixel.K(c)
-	n := orDef("PinInput Length", o.Length, 4)
+	n := pixel.Or("PinInput Length", o.Length, 4)
 	shell, base, st := pixel.Shell(c, func() *ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleTextField).Label(text).Description(*value).Disabled(o.Disabled)
 	})

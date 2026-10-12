@@ -16,8 +16,8 @@ type AppFrameOptions struct {
 // AppFrame arranges header, sidebar, main and footer; nil ones vanish.
 func AppFrame(c *ui.Context, o AppFrameOptions, header, sidebar, main, footer func()) *ui.Element {
 	k := pixel.K(c)
-	sw := orDef("AppFrame SidebarWidth", o.SidebarWidth, 96)
-	fold := orDef("AppFrame FoldBelow", o.FoldBelow, 320)
+	sw := pixel.Or("AppFrame SidebarWidth", o.SidebarWidth, 96)
+	fold := pixel.Or("AppFrame FoldBelow", o.FoldBelow, 320)
 	if main == nil {
 		panic("layout: AppFrame needs main")
 	}

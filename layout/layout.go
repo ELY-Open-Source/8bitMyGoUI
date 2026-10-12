@@ -2,23 +2,10 @@
 package layout
 
 import (
-	"fmt"
-
 	"github.com/egoist/mygo/ui"
 
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
 )
-
-// orDef is v, or def for zero; negative panics.
-func orDef(name string, v, def int) int {
-	if v < 0 {
-		panic(fmt.Sprintf("layout: %s %d is negative", name, v))
-	}
-	if v == 0 {
-		return def
-	}
-	return v
-}
 
 // box frames the canvas unless it is too small.
 func box(g pixel.Canvas, style pixel.FrameStyle, fill pixel.Slot) {

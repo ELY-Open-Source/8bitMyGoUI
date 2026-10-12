@@ -17,7 +17,7 @@ type SectionOptions struct {
 func Section(c *ui.Context, title string, o SectionOptions, children func()) *ui.Element {
 	k := pixel.K(c)
 	up := strings.ToUpper(title)
-	return ui.Column(c).Gap(k.D(orDef("Section Gap", o.Gap, 4))).Role(ui.RoleGroup).Label(title).Children(func() {
+	return ui.Column(c).Gap(k.D(pixel.Or("Section Gap", o.Gap, 4))).Role(ui.RoleGroup).Label(title).Children(func() {
 		ui.Box(c).FillWidth().Height(k.D(pixel.LineHeight)).Draw(func(p *ui.Painter, r ui.Rect) {
 			g := k.Canvas(p, r)
 			mid, tw := pixel.LineHeight/2, pixel.Measure(up)

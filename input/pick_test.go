@@ -132,6 +132,38 @@ func TestBadOptionsPanic(t *testing.T) {
 	}
 }
 
+func TestInertClosesPopups(t *testing.T) {
+	for name, build := range map[string]func(c *ui.Context){
+		"Class": func(c *ui.Context) {
+			class := "A"
+			input.Select(c, "Class", &class, []string{"A", "B"}, input.SelectOptions{})
+		},
+		"Gear": func(c *ui.Context) {
+			var gear []string
+			input.MultiSelect(c, "Gear", &gear, []string{"B", "C"}, input.MultiSelectOptions{})
+		},
+	} {
+		inert := false
+		tt := view(400, 300, nil, func(c *ui.Context) {
+			s := pixel.Current(c)
+			s.Inert = inert
+			pixel.Scope(c, s, func() { build(c) })
+		})
+		click(t, tt, name)
+		find(t, tt, "B")
+		inert = true
+		tt.Frame()
+		if _, ok := tt.Find("B"); ok {
+			t.Fatalf("%s stayed open under Inert", name)
+		}
+		inert = false
+		tt.Frame()
+		if _, ok := tt.Find("B"); ok {
+			t.Fatalf("%s opened again after Inert", name)
+		}
+	}
+}
+
 func TestMultiSelectChecksAndShowsTags(t *testing.T) {
 	var gear []string
 	changes := 0

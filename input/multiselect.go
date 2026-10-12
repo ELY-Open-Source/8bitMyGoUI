@@ -31,7 +31,7 @@ func MultiSelect(c *ui.Context, text string, chosen *[]string, options []string,
 		return ui.ButtonBase(c).Role(ui.RolePopUpButton).Label(text).Description(strings.Join(*chosen, ", ")).Disabled(o.Disabled)
 	})
 	open := ui.Local(base, multiKey{}, func() bool { return false })
-	if o.Disabled {
+	if o.Disabled || pixel.Current(c).Inert {
 		// Closing on disable must not return focus to it.
 		if *open {
 			c.Root().Focus()
@@ -41,7 +41,7 @@ func MultiSelect(c *ui.Context, text string, chosen *[]string, options []string,
 	if base.Clicked() || !*open && base.Shortcut(0, ui.KeyDown) {
 		*open = !*open
 	}
-	shell.Size(k.D(orDef("MultiSelect Width", o.Width, 160)), k.D(pixel.LineHeight+4)).Draw(func(p *ui.Painter, r ui.Rect) {
+	shell.Size(k.D(pixel.Or("MultiSelect Width", o.Width, 160)), k.D(pixel.LineHeight+4)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)
 		ink, dy := face(g, Normal, st, *open)
 		if len(*chosen) == 0 {

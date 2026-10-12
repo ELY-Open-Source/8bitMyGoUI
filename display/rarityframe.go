@@ -15,7 +15,7 @@ type RarityFrameOptions struct {
 func RarityFrame(c *ui.Context, r Rarity, o RarityFrameOptions, children func()) *ui.Element {
 	k := pixel.K(c)
 	ink := r.slot()
-	pad := 3 + orDef("RarityFrame Padding", o.Padding, 4)
+	pad := 3 + pixel.Or("RarityFrame Padding", o.Padding, 4)
 	return ui.Column(c).Padding(k.D(pad)).Role(ui.RoleGroup).Label(r.name(k)).Draw(func(p *ui.Painter, r2 ui.Rect) {
 		g := k.Canvas(p, r2)
 		if g.W < 6 || g.H < 6 {

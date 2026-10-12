@@ -29,7 +29,7 @@ func Stepper(c *ui.Context, text string, value *int, o StepperOptions) StepperRe
 		panic(fmt.Sprintf("input: Stepper range %d to %d is empty", o.Min, o.Max))
 	}
 	k := pixel.K(c)
-	step := orDef("Stepper Step", o.Step, 1)
+	step := pixel.Or("Stepper Step", o.Step, 1)
 	old := *value
 	set := func(v int) { *value = max(o.Min, min(o.Max, v)) }
 	w := max(pixel.Measure(strconv.Itoa(o.Min)), pixel.Measure(strconv.Itoa(o.Max))) + 8

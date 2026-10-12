@@ -1,5 +1,5 @@
 #!/bin/sh
-# Ships files first, then the page: no build misses a file.
+# Ships files first, then the page, so none goes missing.
 set -eu
 cd "$(dirname "$0")"
 site=https://8bitmygoui.zhangyanghaha0407.workers.dev
@@ -47,7 +47,7 @@ old=$(sed -n 's#.*src="\(a/main\.[0-9a-f]*\.js\)".*#\1#p' "$stage/index.html")
 wasm=$(sed -n "s#.*fetch('\\(a/app\\.[0-9a-f]*\\.wasm\\)').*#\\1#p" "dist/$old")
 curl -fs --max-time 300 "$site/$wasm" -o "dist/$wasm"
 cp -R dist/a dist/_headers "$stage/"
-# Step one: the live page, with the new files beside it.
+# Step one: the live page beside the new files.
 upload "$stage" "$rev files"
 npx wrangler versions deploy "$id@100%" --yes --message "$rev files"
 patient curl -fs -o /dev/null "$site/$main"

@@ -92,14 +92,29 @@ type State struct{ Hover, Press, Focus, Disabled bool }
 func Shell(c *ui.Context, base func() *ui.Element) (shell, b *ui.Element, st State) {
 	shell = ui.Box(c)
 	shell.Children(func() { b = base().Fill().FocusRing(false) })
-	off := b.IsDisabled()
-	// MyGo keeps focus and keys on a newly disabled element.
-	if off && b.Focused() {
-		c.Root().Focus()
+	own, inert := b.IsDisabled(), current(c).cur.Inert
+	if inert {
+		b.Disabled(true)
 	}
-	st = State{Hover: b.Hovered(), Press: b.Pressed() && !off, Focus: b.FocusVisible(), Disabled: off}
+	off := own || inert
+	// MyGo keeps focus and keys on a newly disabled element.
+	parked := ui.Local(b, parkKey{}, func() bool { return false })
+	switch {
+	case off && b.Focused():
+		c.Root().Focus()
+		*parked = true
+	case !off && *parked:
+		// Focus comes back unless something else took it.
+		if root := c.Root(); root.Focused() || !root.FocusWithin() {
+			b.Focus()
+		}
+		*parked = false
+	}
+	st = State{Hover: b.Hovered(), Press: b.Pressed() && !off, Focus: b.FocusVisible(), Disabled: own}
 	return shell, b, st
 }
+
+type parkKey struct{}
 
 // Hand is the pointing cursor of focus and menus.
 var Hand = MustSprite(`

@@ -18,8 +18,8 @@ type MasonryOptions struct {
 // Masonry puts each item into the shortest column.
 func Masonry(c *ui.Context, heights []int, o MasonryOptions, item func(i int)) *ui.Element {
 	k := pixel.K(c)
-	gap := orDef("Masonry Gap", o.Gap, 4)
-	n := orDef("Masonry Columns", o.Columns, 3)
+	gap := pixel.Or("Masonry Gap", o.Gap, 4)
+	n := pixel.Or("Masonry Columns", o.Columns, 3)
 	cols := lanes(heights, n, gap)
 	row := ui.Row(c).FillWidth().Gap(k.D(gap)).AlignItems(ui.Start)
 	w, check := pixel.WrapWidth(c, row)

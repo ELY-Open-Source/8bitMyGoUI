@@ -38,7 +38,7 @@ type typeState struct {
 // Typewriter reveals s; a click or Enter shows the rest.
 func Typewriter(c *ui.Context, s string, o TypewriterOptions) TypewriterResult {
 	k := pixel.K(c)
-	cps := orDef("Typewriter CPS", o.CPS, 20)
+	cps := pixel.Or("Typewriter CPS", o.CPS, 20)
 	shell, base, st := pixel.Shell(c, func() *ui.Element {
 		e := ui.Box(c).Role(ui.RoleText).Label(s).Disabled(o.Disabled)
 		if !o.Disabled {

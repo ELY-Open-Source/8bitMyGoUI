@@ -21,7 +21,7 @@ type RangeSliderResult = SliderResult
 func RangeSlider(c *ui.Context, text string, low, high *float64, o RangeSliderOptions) RangeSliderResult {
 	k := pixel.K(c)
 	lo, hi := bounds(o.Min, o.Max)
-	w := orDef("RangeSlider Width", o.Width, 96)
+	w := pixel.Or("RangeSlider Width", o.Width, 96)
 	was := [2]float64{*low, *high}
 	e := ui.Box(c).Size(k.D(w), k.D(12)).Role(ui.RoleGroup).Label(text)
 	e.Draw(func(p *ui.Painter, r ui.Rect) {

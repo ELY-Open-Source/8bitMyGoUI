@@ -27,7 +27,7 @@ const bezel = 8
 // Handheld is a pocket console around screen; buttons report presses.
 func Handheld(c *ui.Context, o HandheldOptions, screen func()) HandheldResult {
 	k := pixel.K(c)
-	sw, sh := orDef("Handheld ScreenW", o.ScreenW, 160), orDef("Handheld ScreenH", o.ScreenH, 144)
+	sw, sh := pixel.Or("Handheld ScreenW", o.ScreenW, 160), pixel.Or("Handheld ScreenH", o.ScreenH, 144)
 	res := HandheldResult{}
 	res.Element = ui.Column(c).Width(k.D(sw + 2*bezel + 40)).Padding(k.D(10)).Gap(k.D(6)).AlignItems(ui.Center).Role(ui.RoleGroup).Label(o.Label).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)

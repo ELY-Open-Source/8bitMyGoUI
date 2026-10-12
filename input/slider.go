@@ -27,7 +27,7 @@ type SliderResult struct {
 func Slider(c *ui.Context, text string, value *float64, o SliderOptions) SliderResult {
 	k := pixel.K(c)
 	lo, hi := bounds(o.Min, o.Max)
-	w := orDef("Slider Width", o.Width, 96)
+	w := pixel.Or("Slider Width", o.Width, 96)
 	shell, st, changed := slide(c, value, rail{lo: lo, hi: hi, label: text, disabled: o.Disabled})
 	shell.Size(k.D(w), k.D(12)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)

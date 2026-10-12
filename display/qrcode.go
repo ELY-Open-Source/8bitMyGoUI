@@ -24,7 +24,7 @@ type qrCache struct {
 // QRCode encodes s at level M, with a quiet zone.
 func QRCode(c *ui.Context, s string, o QRCodeOptions) *ui.Element {
 	k := pixel.K(c)
-	sc := orDef("QRCode Scale", o.Scale, 2)
+	sc := pixel.Or("QRCode Scale", o.Scale, 2)
 	e := ui.Box(c)
 	qc := ui.Local(e, qrKey{}, func() qrCache { return qrCache{} })
 	if qc.code == nil || qc.text != s {

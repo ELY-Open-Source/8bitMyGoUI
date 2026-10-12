@@ -18,7 +18,7 @@ type WaveTextOptions struct {
 // WaveText bobs characters on a sine wave at 10 fps.
 func WaveText(c *ui.Context, s string, o WaveTextOptions) *ui.Element {
 	k, sc := pixel.K(c), scale(o.Scale)
-	amp := orDef("WaveText Amp", o.Amp, 2)
+	amp := pixel.Or("WaveText Amp", o.Amp, 2)
 	return block(c, k, s, pixel.Measure(s)*sc, pixel.LineHeight*sc+2*amp, func(g pixel.Canvas) {
 		step := g.Step(10)
 		each(s, sc, func(i int, r rune, x int) {

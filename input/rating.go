@@ -28,7 +28,7 @@ type ratingKey struct{}
 // Rating sets *value by click or arrows; reclicking clears.
 func Rating(c *ui.Context, text string, value *int, o RatingOptions) RatingResult {
 	k := pixel.K(c)
-	n := orDef("Rating Max", o.Max, 5)
+	n := pixel.Or("Rating Max", o.Max, 5)
 	full, empty := icon.Star, icon.StarEmpty
 	if o.Hearts {
 		full, empty = icon.Heart, icon.HeartEmpty

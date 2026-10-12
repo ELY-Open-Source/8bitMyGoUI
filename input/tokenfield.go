@@ -31,7 +31,7 @@ type editorSlot struct{}
 // TokenField shows tokens as tags; Enter or comma adds.
 func TokenField(c *ui.Context, text string, tokens *[]string, o TokenFieldOptions) TokenFieldResult {
 	k := pixel.K(c)
-	e := ui.Row(c).Wrap().Width(k.D(orDef("TokenField Width", o.Width, 200))).Padding(k.D(3), k.D(4)).Gap(k.D(3)).AlignItems(ui.Center)
+	e := ui.Row(c).Wrap().Width(k.D(pixel.Or("TokenField Width", o.Width, 200))).Padding(k.D(3), k.D(4)).Gap(k.D(3)).AlignItems(ui.Center)
 	e.Role(ui.RoleGroup).Label(text).Description(strings.Join(*tokens, ", "))
 	draft := ui.Local(e, tokenKey{}, func() string { return "" })
 	res := TokenFieldResult{Element: e}

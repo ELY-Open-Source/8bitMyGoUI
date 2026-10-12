@@ -33,8 +33,8 @@ type TextAreaResult = TextInputResult
 // TextArea wraps lines in its own scroll, following the caret.
 func TextArea(c *ui.Context, text string, value *string, o TextAreaOptions) TextAreaResult {
 	k := pixel.K(c)
-	lines := orDef("TextArea Lines", o.Lines, 4)
-	col := ui.Column(c).Width(k.D(orDef("TextArea Width", o.Width, 160))).Gap(k.D(2))
+	lines := pixel.Or("TextArea Lines", o.Lines, 4)
+	col := ui.Column(c).Width(k.D(pixel.Or("TextArea Width", o.Width, 160))).Gap(k.D(2))
 	st := ui.Local(col, areaKey{}, func() areaState { return areaState{line: -1} })
 	if o.Disabled {
 		st.scroll.Y = st.held

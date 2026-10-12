@@ -22,19 +22,25 @@ type SelectResult struct {
 // Select picks one option from a popup list.
 func Select(c *ui.Context, text string, value *string, options []string, o SelectOptions) SelectResult {
 	k := pixel.K(c)
+	off := o.Disabled || pixel.Current(c).Inert
 	var sel *ui.SelectParts[string]
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
-		sel = ui.SelectBase(c, value)
-		return sel.Trigger.Label(text).Disabled(o.Disabled)
+	var shell, base *ui.Element
+	var st pixel.State
+	// Re-keying on each off state forgets an open popup.
+	ui.Box(c).Key(off).Children(func() {
+		shell, base, st = pixel.Shell(c, func() *ui.Element {
+			sel = ui.SelectBase(c, value)
+			return sel.Trigger.Label(text).Disabled(o.Disabled)
+		})
 	})
-	shell.Size(k.D(orDef("Select Width", o.Width, widest(options)+22)), k.D(pixel.LineHeight+4)).Draw(func(p *ui.Painter, r ui.Rect) {
+	shell.Size(k.D(pixel.Or("Select Width", o.Width, widest(options)+22)), k.D(pixel.LineHeight+4)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)
-		ink, dy := face(g, Normal, st, sel.Open() && !o.Disabled)
+		ink, dy := face(g, Normal, st, sel.Open() && !off)
 		g.Text(6, 2+dy, *value, ink, 1)
 		g.Sprite(g.W-10, (g.H-tinyDown.H)/2+dy, tinyDown, 0, ink, 1)
 		finish(g, st)
 	})
-	if !o.Disabled {
+	if !off {
 		sel.Popup(func(panel *ui.Element) {
 			menu(c, panel, func() {
 				for _, opt := range options {

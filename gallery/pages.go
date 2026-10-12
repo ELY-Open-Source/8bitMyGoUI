@@ -7,7 +7,7 @@ import (
 	"github.com/egoist/mygo/ui"
 
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/display"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/icon"
+	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/feedback"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/input"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/layout"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
@@ -187,24 +187,9 @@ func (a *App) results(c *ui.Context) {
 	})
 }
 
-// lost answers unknown paths with GAME OVER and CONTINUE.
+// lost answers unknown paths with GAME OVER.
 func (a *App) lost(c *ui.Context, path string) {
-	if GameOver(c, "No page at "+path) {
+	if feedback.ErrorState(c, "No page at "+path, feedback.ErrorStateOptions{}).Continue {
 		a.Go("/")
 	}
-}
-
-// GameOver shows why the game ended; true on CONTINUE.
-func GameOver(c *ui.Context, why string) bool {
-	k := pixel.K(c)
-	cont := false
-	ui.Column(c).Gap(k.D(8)).AlignItems(ui.Center).Padding(k.D(24)).Children(func() {
-		ui.Box(c).Size(k.D(pixel.Measure(k.Msg("game_over"))*3), k.D(48)).Draw(func(p *ui.Painter, r ui.Rect) {
-			shadow(k.Canvas(p, r), 0, 0, k.Msg("game_over"), pixel.Bad, 3)
-		})
-		pixel.Text(c, why, pixel.TextOptions{Slot: pixel.Faint, Wrap: true, MaxLines: 6}).Width(k.D(min(pixel.Measure(why), 280)))
-		display.Icon(c, icon.Skull, display.IconOptions{Scale: 3})
-		cont = input.Button(c, k.Msg("continue"), input.ButtonOptions{}).Clicked
-	})
-	return cont
 }

@@ -31,7 +31,7 @@ func Odometer(c *ui.Context, value int, o OdometerOptions) *ui.Element {
 		panic(fmt.Sprintf("text: Odometer value %d is negative", value))
 	}
 	k := pixel.K(c)
-	digits := orDef("Odometer Digits", o.Digits, len(strconv.Itoa(value)))
+	digits := pixel.Or("Odometer Digits", o.Digits, len(strconv.Itoa(value)))
 	if value >= int(math.Pow10(digits)) {
 		panic(fmt.Sprintf("text: Odometer value %d needs more than %d digits", value, digits))
 	}

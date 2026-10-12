@@ -32,7 +32,7 @@ func TextInput(c *ui.Context, label string, value *string, o TextInputOptions) T
 func field(c *ui.Context, value *string, eo pixel.EditorOptions, width int, bad func() bool, icon *pixel.Sprite, after func()) (pixel.Edit, *ui.Element) {
 	k := pixel.K(c)
 	var ed pixel.Edit
-	e := ui.Row(c).Width(k.D(orDef("Width", width, 120))).Height(k.D(pixel.LineHeight+6)).Padding(0, k.D(4)).Gap(k.D(3)).AlignItems(ui.Center)
+	e := ui.Row(c).Width(k.D(pixel.Or("Width", width, 120))).Height(k.D(pixel.LineHeight+6)).Padding(0, k.D(4)).Gap(k.D(3)).AlignItems(ui.Center)
 	e.Children(func() {
 		if icon != nil {
 			ui.Box(c).Size(k.D(icon.W), k.D(icon.H)).Draw(func(p *ui.Painter, r ui.Rect) {

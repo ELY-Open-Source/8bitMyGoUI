@@ -88,17 +88,6 @@ func finish(g pixel.Canvas, st pixel.State) {
 	}
 }
 
-// orDef is v, or def for zero; negative panics.
-func orDef(name string, v, def int) int {
-	if v < 0 {
-		panic(fmt.Sprintf("input: %s %d is negative", name, v))
-	}
-	if v == 0 {
-		return def
-	}
-	return v
-}
-
 // label is s, or the fallback when s is empty.
 func label(s, fallback string) string {
 	if s != "" {

@@ -14,7 +14,7 @@ type ViewportOptions struct {
 // Viewport fills its parent and draws children at W×H dots.
 func Viewport(c *ui.Context, o ViewportOptions, children func()) *ui.Element {
 	k := pixel.K(c)
-	vw, vh := orDef("Viewport W", o.W, 160), orDef("Viewport H", o.H, 144)
+	vw, vh := pixel.Or("Viewport W", o.W, 160), pixel.Or("Viewport H", o.H, 144)
 	base := int(k.Dot())
 	outer := ui.Box(c).Fill()
 	was := outer.Bounds()

@@ -120,7 +120,7 @@ type AvatarGroupOptions struct {
 // AvatarGroup overlaps faces and counts the rest in a chip.
 func AvatarGroup(c *ui.Context, names []string, o AvatarGroupOptions) *ui.Element {
 	k, sc := pixel.K(c), scale(o.Scale)
-	shown := names[:min(len(names), orDef("AvatarGroup Max", o.Max, 4))]
+	shown := names[:min(len(names), pixel.Or("AvatarGroup Max", o.Max, 4))]
 	rest := len(names) - len(shown)
 	more := ""
 	if rest > 0 {

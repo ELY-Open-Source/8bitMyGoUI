@@ -20,11 +20,11 @@ const module = "git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/"
 var tiers = map[string]int{
 	"pixel": 0, "icon": 1,
 	"layout": 2, "text": 2, "display": 2,
-	"input": 3, "feedback": 3,
-	"navigation": 4, "data": 4, "overlay": 4, "datetime": 4, "chart": 4, "fx": 4,
-	"game": 5, "chat": 5, "media": 5, "code": 5, "account": 5, "files": 5,
-	"project": 5, "shop": 5, "agent": 5, "desk": 5, "tabletop": 5,
-	"gallery": 6, "cmd/gallery": 7, "cmd/web": 7,
+	"input": 3, "feedback": 4,
+	"navigation": 5, "data": 5, "overlay": 5, "datetime": 5, "chart": 5, "fx": 5,
+	"game": 6, "chat": 6, "media": 6, "code": 6, "account": 6, "files": 6,
+	"project": 6, "shop": 6, "agent": 6, "desk": 6, "tabletop": 6,
+	"gallery": 7, "cmd/gallery": 8, "cmd/web": 8,
 }
 
 // Styled ui widgets drawing outside the pixel style.

@@ -13,6 +13,7 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
+	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/feedback"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/gallery"
 	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
 )
@@ -107,7 +108,7 @@ func (h *host) crash(why string) (res any) {
 	h.tt = ui.NewTester(func(c *ui.Context) {
 		pixel.Use(c, pixel.Settings{Palette: pixel.WinterNight, Dot: dot})
 		ui.Column(c).Fill().Center().Children(func() {
-			if gallery.GameOver(c, why) {
+			if feedback.ErrorState(c, why, feedback.ErrorStateOptions{}).Continue {
 				js.Global().Get("location").Call("reload")
 			}
 		})

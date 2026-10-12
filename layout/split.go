@@ -27,7 +27,7 @@ type SplitResult struct {
 // Split shows two panes and a grip moving *size dots.
 func Split(c *ui.Context, size *int, o SplitOptions, first, second func()) SplitResult {
 	k := pixel.K(c)
-	least := orDef("Split Min", o.Min, 24)
+	least := pixel.Or("Split Min", o.Min, 24)
 	var e *ui.Element
 	var total float32
 	back, fwd := ui.KeyLeft, ui.KeyRight

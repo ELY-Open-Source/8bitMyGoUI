@@ -19,7 +19,7 @@ type marqueeState struct{ offset, last int }
 // Marquee scrolls s a dot a step; hover pauses it.
 func Marquee(c *ui.Context, s string, o MarqueeOptions) *ui.Element {
 	k := pixel.K(c)
-	w := orDef("Marquee Width", o.Width, 120)
+	w := pixel.Or("Marquee Width", o.Width, 120)
 	e := ui.Box(c).Size(k.D(w), k.D(pixel.LineHeight)).Clip().Label(s).Role(ui.RoleText)
 	ms := ui.Local(e, marqueeKey{}, func() marqueeState { return marqueeState{last: -1} })
 	if k.Reduce() || e.Hovered() {

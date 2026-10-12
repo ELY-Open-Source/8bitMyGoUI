@@ -22,6 +22,8 @@ type Settings struct {
 	Locale Locale
 	// Now replaces the frame clock, for tests.
 	Now func() time.Time
+	// Inert controls take no input, as under a busy veil.
+	Inert bool
 }
 
 // Kit is one frame's settings, captured by components.
@@ -130,4 +132,15 @@ func theme(p *Palette) *ui.Theme {
 	t.Danger, t.Warning, t.Success = c[Bad], c[Warn], c[Good]
 	t.Selection, t.Focus, t.Scrollbar, t.Radius = c[AccentLit], c[Accent], ui.Transparent, 0
 	return t
+}
+
+// Or is v, or def for zero; negatives panic.
+func Or(name string, v, def int) int {
+	if v < 0 {
+		panic(fmt.Sprintf("pixel: %s %d is negative", name, v))
+	}
+	if v == 0 {
+		return def
+	}
+	return v
 }

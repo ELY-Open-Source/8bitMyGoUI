@@ -15,7 +15,7 @@ type ScreenOptions struct {
 // Screen fills the window with Back; children form a column.
 func Screen(c *ui.Context, o ScreenOptions, children func()) *ui.Element {
 	k := pixel.K(c)
-	pad := orDef("Screen Padding", o.Padding, 0)
+	pad := pixel.Or("Screen Padding", o.Padding, 0)
 	return ui.Column(c).Fill().Padding(k.D(pad)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)
 		g.Rect(0, 0, g.W, g.H, pixel.Back)

@@ -26,8 +26,8 @@ type ResizableResult struct {
 // Resizable is a *w×*h dot box with a ◢ grip.
 func Resizable(c *ui.Context, w, h *int, o ResizableOptions, children func()) ResizableResult {
 	k := pixel.K(c)
-	minW, minH := orDef("Resizable MinW", o.MinW, 24), orDef("Resizable MinH", o.MinH, 24)
-	maxW, maxH := orDef("Resizable MaxW", o.MaxW, 0), orDef("Resizable MaxH", o.MaxH, 0)
+	minW, minH := pixel.Or("Resizable MinW", o.MinW, 24), pixel.Or("Resizable MinH", o.MinH, 24)
+	maxW, maxH := pixel.Or("Resizable MaxW", o.MaxW, 0), pixel.Or("Resizable MaxH", o.MaxH, 0)
 	if maxW > 0 && maxW < minW || maxH > 0 && maxH < minH {
 		panic(fmt.Sprintf("layout: Resizable max %d×%d under min %d×%d", maxW, maxH, minW, minH))
 	}

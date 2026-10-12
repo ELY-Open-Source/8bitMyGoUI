@@ -23,20 +23,9 @@ func art(c *ui.Context, k pixel.Kit, label string, w, h int, fn func(g pixel.Can
 	return e
 }
 
-// orDef is v, or def for zero; negative panics.
-func orDef(name string, v, def int) int {
-	if v < 0 {
-		panic(fmt.Sprintf("display: %s %d is negative", name, v))
-	}
-	if v == 0 {
-		return def
-	}
-	return v
-}
-
 // scale is s, or 1 for zero; outside 1–4 panics.
 func scale(s int) int {
-	s = orDef("Scale", s, 1)
+	s = pixel.Or("Scale", s, 1)
 	if s > 4 {
 		panic(fmt.Sprintf("display: Scale %d outside 1–4", s))
 	}

@@ -32,7 +32,7 @@ func Bubble(c *ui.Context, o BubbleOptions, children func()) *ui.Element {
 		panic(fmt.Sprintf("display: unknown Side %d", o.Tail))
 	}
 	k := pixel.K(c)
-	at := orDef("Bubble At", o.At, 8)
+	at := pixel.Or("Bubble At", o.At, 8)
 	pad := [4]int{6, 8, 6, 8}
 	pad[[...]int{Bottom: 2, Top: 0, Left: 3, Right: 1}[o.Tail]] += tailLen
 	return ui.Column(c).Padding(k.D(pad[0]), k.D(pad[1]), k.D(pad[2]), k.D(pad[3])).Draw(func(p *ui.Painter, r ui.Rect) {

@@ -34,7 +34,7 @@ internal/archtest/ import and API rules
 
 Imports point down only. Same-tier imports are forbidden. `internal/archtest` enforces it.
 
-0 pixel · 1 icon · 2 layout, text, display · 3 input, feedback · 4 navigation, data, overlay, datetime, chart, fx · 5 game, chat, media, code, account, files, project, shop, agent, desk, tabletop · 6 gallery · 7 cmd
+0 pixel · 1 icon · 2 layout, text, display · 3 input · 4 feedback · 5 navigation, data, overlay, datetime, chart, fx · 6 game, chat, media, code, account, files, project, shop, agent, desk, tabletop · 7 gallery · 8 cmd
 
 ## Style rules
 
@@ -54,12 +54,14 @@ Imports point down only. Same-tier imports are forbidden. `internal/archtest` en
 ## Component rules
 
 - Signatures and results: PRD §5.1. Zero options give the default look. Sizes in options are dots.
-- `k := pixel.K(c)` once per component; layout sizes through `k.D(n)`.
+- `k := pixel.K(c)` once per component; layout sizes through `k.D(n)`. Integer options default through `pixel.Or`.
+- A one-shot effect inside a lasting view starts when its cue changes (a `Cue` option, or a value that rises), never on its first frame. A state screen (`ErrorState`, `SuccessState`) starts when it appears. Decorative motion jumps to its end under Reduce Motion; countdowns and loaders keep time.
 - Containers take content as a final `func()`; interactive results are `NameResult`.
 - A Clicked, Shortcut, Changed or drag during the build makes MyGo build the frame again, so what they change shows at once. State changed any other way after its element was built (`Pressed`, `Edit.Changed`) is read at paint time.
 - Never call `Selected`: MyGo paints it in the accent color.
 - A press focuses the nearest focusable element under it, or nothing; a closing overlay hands the focus back to its opener. While a press is on, `Hovered` is false for every other element: ask `Pressed`.
 - Enter and Space click a focused clickable element unless a `Shortcut` takes them. Take them wherever a click reads the pointer's position.
+- Under `pixel.Settings.Inert` (a busy veil) `pixel.Shell` disables every base and gives the focus back after. A popup sits above any veil: a control closes its popup when disabled or inert.
 - Elements are known by their place among siblings. Wrap one whose earlier siblings come and go in `ui.Box(c).Key(k)`, or it loses focus and state.
 - Hosts send a key's release with its press, so tell a held key by its repeats.
 - Clip only boxes that sit on whole dots; split widths with whole-dot shares, not equal `Grow`. `Grow` starts from zero size, so never use it on a content-sized child.
@@ -78,7 +80,7 @@ Each component adds one `Entry` in `gallery/demos_<category>.go`: ID, Name, Zh, 
 ## Tests
 
 - `go vet ./... && go test ./...` before reporting done.
-- Behavior tests drive `ui.Tester` and assert values.
+- Behavior tests drive `ui.Tester` and assert values. Timed components take `pixel.Settings.Now` from a test clock. `Tester.Focused(label)` is also true when an ancestor holds the focus.
 - `gallery` checks every entry under every palette: only palette colors, whole dots. `PIXEL_SHOTS=<dir> go test ./gallery -run TestInvariants` writes PNGs for visual review.
 - Web: `npm install && npm test` in `web/` builds `web/dist` and runs Playwright on a local server; `BASE_URL=<url> npx playwright test` checks a deployed site. Tests read `window.__8bit` (`ready`, `stats()`, `texts()`, `page()`, `find(label)`, `log`).
 

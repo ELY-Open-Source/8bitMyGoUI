@@ -14,7 +14,7 @@ type SwatchOptions struct {
 // Swatch shows the active palette's sixteen slots with names.
 func Swatch(c *ui.Context, o SwatchOptions) *ui.Element {
 	k := pixel.K(c)
-	cols := orDef("Swatch Columns", o.Columns, 4)
+	cols := pixel.Or("Swatch Columns", o.Columns, 4)
 	cell := 14 + pixel.Measure("AccentLit")
 	return ui.Row(c).Wrap().Width(k.D(cols * (cell + 4))).Gap(k.D(4)).Role(ui.RoleList).Label(k.Palette().Name).Children(func() {
 		for s := range pixel.Slot(pixel.Slots) {

@@ -27,7 +27,7 @@ type pictureCache struct {
 func Picture(c *ui.Context, img image.Image, o PictureOptions) *ui.Element {
 	k := pixel.K(c)
 	b := img.Bounds()
-	w, h := orDef("Picture W", o.W, b.Dx()), orDef("Picture H", o.H, b.Dy())
+	w, h := pixel.Or("Picture W", o.W, b.Dx()), pixel.Or("Picture H", o.H, b.Dy())
 	e := art(c, k, o.Label, w, h, nil)
 	pc := ui.Local(e, pictureKey{}, func() pictureCache { return pictureCache{} })
 	if sum := fingerprint(img); pc.dots == nil || pc.sum != sum || pc.pal != k.Palette() || pc.w != w || pc.h != h {
