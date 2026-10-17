@@ -21,7 +21,7 @@ type TargetSelectorOptions struct {
 }
 
 type TargetSelectorResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 	// Chosen is the target confirmed this frame, or -1.
 	Chosen int

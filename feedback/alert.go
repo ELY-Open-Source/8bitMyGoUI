@@ -46,7 +46,7 @@ type AlertOptions struct {
 }
 
 type AlertResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Closed  bool
 }
 

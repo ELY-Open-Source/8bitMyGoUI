@@ -18,7 +18,7 @@ type MultiSelectOptions struct {
 }
 
 type MultiSelectResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -30,7 +30,7 @@ type popup struct{ open, held bool }
 // MultiSelect checks many options in a popup; tags show them.
 func MultiSelect(c *ui.Context, text string, chosen *[]string, options []string, o MultiSelectOptions) MultiSelectResult {
 	k := pixel.K(c)
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.ButtonBase(c).Role(ui.RolePopUpButton).Label(text).Description(strings.Join(*chosen, ", ")).Disabled(o.Disabled)
 	})
 	pop := ui.Local(base, multiKey{}, func() popup { return popup{} })
@@ -58,15 +58,15 @@ func MultiSelect(c *ui.Context, text string, chosen *[]string, options []string,
 	})
 	res := MultiSelectResult{Element: shell}
 	pop.held = false
-	ui.PopoverBase(c, base, open, func(panel *ui.Element) {
+	ui.PopoverBase(c, base, open, func(panel ui.Element) {
 		menu(c, panel, func() {
 			col := ui.Column(c).Gap(k.D(1)).FocusGroup(ui.Vertical)
 			col.Children(func() {
 				for i, opt := range options {
 					on := slices.Contains(*chosen, opt)
-					item, cb, cst := pixel.Shell(c, func() *ui.Element { return ui.CheckboxBase(c, &on).Label(opt) })
+					item, cb, cst := pixel.Shell(c, func() ui.Element { return ui.CheckboxBase(c, &on).Label(opt) })
 					if i == 0 {
-						cb.AutoFocus()
+						pixel.AutoFocus(c, cb)
 					}
 					// Focused, not FocusWithin: MyGo links parents after frames.
 					pop.held = pop.held || cb.Focused()

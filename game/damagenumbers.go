@@ -28,7 +28,7 @@ type DamageNumbersOptions struct {
 const life = 800 * time.Millisecond
 
 // DamageNumbers floats hits up, dissolves, then drops them.
-func DamageNumbers(c *ui.Context, text string, hits *[]Hit, o DamageNumbersOptions) *ui.Element {
+func DamageNumbers(c *ui.Context, text string, hits *[]Hit, o DamageNumbersOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := pixel.Or("DamageNumbers Width", o.Width, 160), pixel.Or("DamageNumbers Height", o.Height, 80)
 	// S5: hits rise in whole frames, fifteen a second.

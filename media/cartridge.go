@@ -17,7 +17,7 @@ type CartridgeOptions struct {
 }
 
 // Cartridge is a game cart with a sticker: art, title.
-func Cartridge(c *ui.Context, text string, o CartridgeOptions) *ui.Element {
+func Cartridge(c *ui.Context, text string, o CartridgeOptions) ui.Element {
 	k := pixel.K(c)
 	if o.Art != nil && (o.Art.W > 38 || o.Art.H > 22) {
 		panic("media: Cartridge Art is larger than 38 by 22")

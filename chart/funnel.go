@@ -14,7 +14,7 @@ type FunnelOptions struct {
 }
 
 // Funnel narrows stage by stage, each bar with its count.
-func Funnel(c *ui.Context, text string, stages []Slice, o FunnelOptions) *ui.Element {
+func Funnel(c *ui.Context, text string, stages []Slice, o FunnelOptions) ui.Element {
 	k := pixel.K(c)
 	if len(stages) == 0 {
 		panic("chart: Funnel has no stages")

@@ -16,7 +16,7 @@ type FPSMeterOptions struct {
 }
 
 // FPSMeter draws frame times as bars, newest right, with percentiles.
-func FPSMeter(c *ui.Context, text string, frames []time.Duration, o FPSMeterOptions) *ui.Element {
+func FPSMeter(c *ui.Context, text string, frames []time.Duration, o FPSMeterOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := pixel.Or("FPSMeter Width", o.Width, 120), pixel.Or("FPSMeter Height", o.Height, 40)
 	for _, f := range frames {

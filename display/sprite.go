@@ -16,7 +16,7 @@ type SpriteOptions struct {
 }
 
 // Sprite plays a multi-slot sprite, mirrored when asked.
-func Sprite(c *ui.Context, sp *pixel.Sprite, o SpriteOptions) *ui.Element {
+func Sprite(c *ui.Context, sp *pixel.Sprite, o SpriteOptions) ui.Element {
 	k, sc := pixel.K(c), scale(o.Scale)
 	fps := pixel.Or("Sprite FPS", o.FPS, 0)
 	if o.Mirror {

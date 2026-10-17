@@ -10,7 +10,7 @@ import (
 )
 
 // art is a labeled w×h dot image that fn draws.
-func art(c *ui.Context, k pixel.Kit, label string, w, h int, fn func(g pixel.Canvas)) *ui.Element {
+func art(c *ui.Context, k pixel.Kit, label string, w, h int, fn func(g pixel.Canvas)) ui.Element {
 	e := ui.Box(c).Size(k.D(w), k.D(h))
 	if label != "" {
 		e.Label(label).Role(ui.RoleImage)

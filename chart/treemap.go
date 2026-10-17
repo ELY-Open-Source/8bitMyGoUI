@@ -17,7 +17,7 @@ type TreemapOptions struct {
 type box struct{ x, y, w, h int }
 
 // Treemap tiles slices by value in squarified rectangles.
-func Treemap(c *ui.Context, text string, slices []Slice, o TreemapOptions) *ui.Element {
+func Treemap(c *ui.Context, text string, slices []Slice, o TreemapOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := size("Treemap", o.Width, o.Height, 160, 80)
 	total, _ := shares(slices)

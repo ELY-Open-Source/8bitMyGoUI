@@ -34,7 +34,7 @@ type LevelSelectOptions struct {
 }
 
 type LevelSelectResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Chosen is Enter or a click on an open stage.
 	Changed, Chosen bool
 }

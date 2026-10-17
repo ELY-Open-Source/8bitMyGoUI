@@ -13,7 +13,7 @@ type SegmentedOptions struct {
 }
 
 type SegmentedResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -32,7 +32,7 @@ func Segmented(c *ui.Context, text string, labels []string, selected *int, o Seg
 		g.Frame(0, 0, g.W, g.H, pixel.Notched, pixel.Face)
 	}).Children(func() {
 		for i, l := range labels {
-			shell, _, st := pixel.Shell(c, func() *ui.Element { return p.Segment(i).Label(l).Disabled(o.Disabled) })
+			shell, _, st := pixel.Shell(c, func() ui.Element { return p.Segment(i).Label(l).Disabled(o.Disabled) })
 			shell.Size(k.D(pixel.Measure(l)+12), k.D(pixel.LineHeight+4)).Draw(func(pt *ui.Painter, r ui.Rect) {
 				g := k.Canvas(pt, r)
 				ink := pixel.Ink

@@ -18,7 +18,7 @@ type MeepleOptions struct {
 }
 
 // Meeple is a player's token, standing in its slot.
-func Meeple(c *ui.Context, text string, o MeepleOptions) *ui.Element {
+func Meeple(c *ui.Context, text string, o MeepleOptions) ui.Element {
 	k := pixel.K(c)
 	if o.Player < 0 || o.Player >= len(players) {
 		panic(fmt.Sprintf("tabletop: Meeple player %d", o.Player))

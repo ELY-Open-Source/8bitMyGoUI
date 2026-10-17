@@ -17,7 +17,7 @@ type GaugeOptions struct {
 }
 
 // Gauge needles a half dial and prints the value.
-func Gauge(c *ui.Context, text string, value float64, o GaugeOptions) *ui.Element {
+func Gauge(c *ui.Context, text string, value float64, o GaugeOptions) ui.Element {
 	k := pixel.K(c)
 	span([]float64{o.Min, o.Max, value})
 	lo, hi := o.Min, o.Max

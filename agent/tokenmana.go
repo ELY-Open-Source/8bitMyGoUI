@@ -14,7 +14,7 @@ type TokenManaOptions struct {
 }
 
 // TokenMana shows a token budget's remainder as MP.
-func TokenMana(c *ui.Context, text string, used, budget int, o TokenManaOptions) *ui.Element {
+func TokenMana(c *ui.Context, text string, used, budget int, o TokenManaOptions) ui.Element {
 	k := pixel.K(c)
 	if used < 0 || budget < 1 {
 		panic(fmt.Sprintf("agent: TokenMana %d of %d", used, budget))

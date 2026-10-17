@@ -9,11 +9,11 @@ import (
 type SpotlightOptions struct{}
 
 // Spotlight dithers all but target and captions it.
-func Spotlight(c *ui.Context, target *ui.Element, caption string, o SpotlightOptions) *ui.Element {
+func Spotlight(c *ui.Context, target ui.Element, caption string, o SpotlightOptions) ui.Element {
 	k := pixel.K(c)
 	b := target.Bounds()
 	deep, _ := dark(k)
-	var veil *ui.Element
+	var veil ui.Element
 	ui.Overlay(c, func() {
 		veil = ui.Box(c).Absolute().Left(0).Top(0).Right(0).Bottom(0).PassThrough().Role(ui.RoleStatus).Label(caption)
 		veil.Draw(func(p *ui.Painter, r ui.Rect) {

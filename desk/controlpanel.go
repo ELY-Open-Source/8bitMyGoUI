@@ -20,7 +20,7 @@ type ControlPanelOptions struct {
 }
 
 type ControlPanelResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Opened is the applet opened this frame, else -1.
 	Opened int
 }

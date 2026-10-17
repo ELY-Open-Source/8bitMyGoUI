@@ -30,7 +30,7 @@ type partyRow struct {
 }
 
 // SubAgentParty draws the summoning tree, each agent with its status.
-func SubAgentParty(c *ui.Context, text string, party []Member, o SubAgentPartyOptions) *ui.Element {
+func SubAgentParty(c *ui.Context, text string, party []Member, o SubAgentPartyOptions) ui.Element {
 	k := pixel.K(c)
 	w := pixel.Or("SubAgentParty Width", o.Width, 200)
 	var rows []partyRow

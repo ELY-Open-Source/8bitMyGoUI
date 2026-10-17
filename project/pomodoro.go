@@ -18,7 +18,7 @@ type PomodoroOptions struct {
 }
 
 type PomodoroResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Changed is START, PAUSE or RESET; Rang ends a phase.
 	Changed, Rang bool
 }

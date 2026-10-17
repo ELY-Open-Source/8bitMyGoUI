@@ -14,7 +14,7 @@ type DominoOptions struct {
 }
 
 // Domino is a tile of two halves of 0–6 pips.
-func Domino(c *ui.Context, a, b int, o DominoOptions) *ui.Element {
+func Domino(c *ui.Context, a, b int, o DominoOptions) ui.Element {
 	k := pixel.K(c)
 	if a < 0 || a > 6 || b < 0 || b > 6 {
 		panic(fmt.Sprintf("tabletop: Domino %d|%d", a, b))

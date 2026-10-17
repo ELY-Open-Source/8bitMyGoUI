@@ -25,7 +25,7 @@ type DiskUsageOptions struct {
 var useSlots = []pixel.Slot{pixel.Info, pixel.Good, pixel.Warn, pixel.Magic, pixel.Bad, pixel.Accent}
 
 // DiskUsage stacks each use in one bar over a legend.
-func DiskUsage(c *ui.Context, text string, uses []Use, capacity int64, o DiskUsageOptions) *ui.Element {
+func DiskUsage(c *ui.Context, text string, uses []Use, capacity int64, o DiskUsageOptions) ui.Element {
 	k := pixel.K(c)
 	if capacity <= 0 {
 		panic(fmt.Sprintf("files: DiskUsage capacity %d", capacity))

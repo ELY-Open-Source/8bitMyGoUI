@@ -17,7 +17,7 @@ type PlaylistOptions struct {
 }
 
 type PlaylistResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Submitted is Enter or a double click on a row.
 	Changed, Submitted bool
 }

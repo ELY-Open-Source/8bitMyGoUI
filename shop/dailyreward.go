@@ -17,7 +17,7 @@ type DailyRewardOptions struct {
 }
 
 type DailyRewardResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Claimed bool
 }
 

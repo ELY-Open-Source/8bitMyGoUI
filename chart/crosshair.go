@@ -12,7 +12,7 @@ type CrosshairOptions struct {
 }
 
 // Crosshair is a line chart; hover crosses the nearest point.
-func Crosshair(c *ui.Context, text string, labels []string, series []Series, o CrosshairOptions) *ui.Element {
+func Crosshair(c *ui.Context, text string, labels []string, series []Series, o CrosshairOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := size("Crosshair", o.Width, o.Height, 160, 80)
 	p := fitSeries(labels, series, w, h)

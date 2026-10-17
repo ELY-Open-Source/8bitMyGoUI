@@ -23,7 +23,7 @@ var (
 const coinUp = 18
 
 // CoinFlip tosses a coin on a new Cue.
-func CoinFlip(c *ui.Context, text string, heads bool, o CoinFlipOptions) *ui.Element {
+func CoinFlip(c *ui.Context, text string, heads bool, o CoinFlipOptions) ui.Element {
 	k := pixel.K(c)
 	word := k.Msg("tails")
 	if heads {

@@ -16,7 +16,7 @@ type CalculatorOptions struct {
 }
 
 type CalculatorResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Changed is a key pressed this frame.
 	Changed bool
 }

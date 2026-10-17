@@ -18,7 +18,7 @@ type QuantityOptions struct {
 }
 
 type QuantityResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -29,7 +29,7 @@ func Quantity(c *ui.Context, text string, value *int, o QuantityOptions) Quantit
 	if lo < 0 || hi < lo || *value < lo || *value > hi {
 		panic(fmt.Sprintf("shop: Quantity %d outside %d to %d", *value, lo, hi))
 	}
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleStepper).Label(text).Disabled(o.Disabled)
 	})
 	old, nw := *value, pixel.Measure(strconv.Itoa(hi))+6

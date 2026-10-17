@@ -16,7 +16,7 @@ type Activity struct {
 type FeedOptions struct{}
 
 // Feed lists activity: icon, text and time, dotted apart.
-func Feed(c *ui.Context, entries []Activity, o FeedOptions) *ui.Element {
+func Feed(c *ui.Context, entries []Activity, o FeedOptions) ui.Element {
 	k := pixel.K(c)
 	return ui.Column(c).FillWidth().Children(func() {
 		for i, a := range entries {

@@ -64,7 +64,7 @@ var (
 )
 
 // Milestones plants flags on a path; a hero marks today.
-func Milestones(c *ui.Context, text string, ms []Milestone, o MilestonesOptions) *ui.Element {
+func Milestones(c *ui.Context, text string, ms []Milestone, o MilestonesOptions) ui.Element {
 	k := pixel.K(c)
 	if len(ms) == 0 {
 		panic("project: Milestones has none")

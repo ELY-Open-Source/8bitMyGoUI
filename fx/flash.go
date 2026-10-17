@@ -14,7 +14,7 @@ type FlashOptions struct {
 }
 
 // Flash fills content with a slot one step, then half.
-func Flash(c *ui.Context, o FlashOptions, content func()) *ui.Element {
+func Flash(c *ui.Context, o FlashOptions, content func()) ui.Element {
 	k := pixel.K(c)
 	s := slotOr(o.Slot, pixel.Lit)
 	e := ui.Column(c)

@@ -27,7 +27,7 @@ func addMonths(t time.Time, n int) time.Time {
 }
 
 // month moves *cur by keys; clicks, Enter and Space pick.
-func month(c *ui.Context, text string, cur *time.Time, disabled, focus bool, mark func(time.Time) look) (e, grid *ui.Element, picked bool) {
+func month(c *ui.Context, text string, cur *time.Time, disabled, focus bool, mark func(time.Time) look) (e, grid ui.Element, picked bool) {
 	k := pixel.K(c)
 	e = ui.Column(c).Gap(k.D(2)).Role(ui.RoleGroup).Label(text)
 	e.Children(func() {
@@ -54,12 +54,12 @@ func month(c *ui.Context, text string, cur *time.Time, disabled, focus bool, mar
 				}
 			}
 		})
-		shell, base, st := pixel.Shell(c, func() *ui.Element {
+		shell, base, st := pixel.Shell(c, func() ui.Element {
 			return ui.Box(c).Focusable().Role(ui.RoleTable).Label(text).Disabled(disabled)
 		})
 		grid = base
 		if focus {
-			base.AutoFocus()
+			pixel.AutoFocus(c, base)
 		}
 		y, m, d := cur.Date()
 		for _, mv := range []struct {

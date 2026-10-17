@@ -18,7 +18,7 @@ type ChecklistOptions struct {
 }
 
 type ChecklistResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

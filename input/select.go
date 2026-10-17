@@ -15,7 +15,7 @@ type SelectOptions struct {
 }
 
 type SelectResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -23,12 +23,12 @@ type SelectResult struct {
 func Select(c *ui.Context, text string, value *string, options []string, o SelectOptions) SelectResult {
 	k := pixel.K(c)
 	off := o.Disabled || pixel.Current(c).Inert
-	var sel *ui.SelectParts[string]
-	var shell, base *ui.Element
+	var sel ui.SelectParts[string]
+	var shell, base ui.Element
 	var st pixel.State
 	// Re-keying on each off state forgets an open popup.
 	ui.Box(c).Key(off).Children(func() {
-		shell, base, st = pixel.Shell(c, func() *ui.Element {
+		shell, base, st = pixel.Shell(c, func() ui.Element {
 			sel = ui.SelectBase(c, value)
 			return sel.Trigger.Label(text).Disabled(o.Disabled)
 		})
@@ -41,7 +41,7 @@ func Select(c *ui.Context, text string, value *string, options []string, o Selec
 		g.Finish(st)
 	})
 	if !off {
-		sel.Popup(func(panel *ui.Element) {
+		sel.Popup(func(panel ui.Element) {
 			menu(c, panel, func() {
 				for _, opt := range options {
 					item := sel.Item(opt).Label(opt)
@@ -67,7 +67,7 @@ func widest(options []string) int {
 }
 
 // menu frames a popup panel as a game window.
-func menu(c *ui.Context, panel *ui.Element, fn func()) {
+func menu(c *ui.Context, panel ui.Element, fn func()) {
 	k := pixel.K(c)
 	panel.Padding(k.D(3)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)
@@ -78,7 +78,7 @@ func menu(c *ui.Context, panel *ui.Element, fn func()) {
 }
 
 // row draws an option; a hand marks the lit one.
-func row(k pixel.Kit, item *ui.Element, text string, lit, chosen bool) {
+func row(k pixel.Kit, item ui.Element, text string, lit, chosen bool) {
 	item.Height(k.D(pixel.LineHeight)).MinWidth(k.D(pixel.Measure(text) + 16)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)
 		ink := pixel.Ink

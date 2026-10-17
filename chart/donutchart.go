@@ -12,7 +12,7 @@ type DonutChartOptions struct {
 }
 
 // DonutChart is a pie with a hole holding the total.
-func DonutChart(c *ui.Context, text string, slices []Slice, o DonutChartOptions) *ui.Element {
+func DonutChart(c *ui.Context, text string, slices []Slice, o DonutChartOptions) ui.Element {
 	k := pixel.K(c)
 	n := pixel.Or("DonutChart Size", o.Size, 64)
 	total, cuts := shares(slices)

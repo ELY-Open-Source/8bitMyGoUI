@@ -88,7 +88,7 @@ var syncs = [...]struct {
 }
 
 // SyncStatus is a cloud: synced, syncing (arrows turning) or failed.
-func SyncStatus(c *ui.Context, state SyncState, o SyncStatusOptions) *ui.Element {
+func SyncStatus(c *ui.Context, state SyncState, o SyncStatusOptions) ui.Element {
 	k := pixel.K(c)
 	if state < Synced || state > SyncFailed {
 		panic(fmt.Sprintf("files: SyncStatus state %d", state))

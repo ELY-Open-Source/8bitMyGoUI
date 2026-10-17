@@ -27,7 +27,7 @@ type seen struct {
 const flags = "NV-BDIZC"
 
 // RegisterView shows registers and flags; the last change lights.
-func RegisterView(c *ui.Context, text string, cpu CPU, o RegisterViewOptions) *ui.Element {
+func RegisterView(c *ui.Context, text string, cpu CPU, o RegisterViewOptions) ui.Element {
 	k := pixel.K(c)
 	col := ui.Column(c).Gap(k.D(1)).Role(ui.RoleGroup).Label(text)
 	sn := ui.Local(col, regKey{}, func() seen { return seen{cpu: cpu} })

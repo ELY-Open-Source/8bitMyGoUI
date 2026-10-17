@@ -14,7 +14,7 @@ type DiceTrayOptions struct {
 }
 
 // DiceTray holds several dice on felt, and their total.
-func DiceTray(c *ui.Context, text string, values []int, o DiceTrayOptions) *ui.Element {
+func DiceTray(c *ui.Context, text string, values []int, o DiceTrayOptions) ui.Element {
 	k := pixel.K(c)
 	if len(values) == 0 {
 		panic("tabletop: DiceTray has no dice")

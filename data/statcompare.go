@@ -18,7 +18,7 @@ type Change struct {
 type StatCompareOptions struct{}
 
 // StatCompare lists stats old → new with ▲▼ deltas.
-func StatCompare(c *ui.Context, changes []Change, o StatCompareOptions) *ui.Element {
+func StatCompare(c *ui.Context, changes []Change, o StatCompareOptions) ui.Element {
 	k := pixel.K(c)
 	lw, ow, nw, dw := 0, 0, 0, 0
 	deltas := make([]string, len(changes))

@@ -16,7 +16,7 @@ type ProgressRingOptions struct {
 }
 
 // ProgressRing fills a ring clockwise from twelve, in pixel arcs.
-func ProgressRing(c *ui.Context, text string, value float64, o ProgressRingOptions) *ui.Element {
+func ProgressRing(c *ui.Context, text string, value float64, o ProgressRingOptions) ui.Element {
 	k := pixel.K(c)
 	if !(value >= 0 && value <= 1) {
 		panic(fmt.Sprintf("chart: ProgressRing value %v outside 0–1", value))

@@ -23,7 +23,7 @@ type PricingTiersOptions struct {
 }
 
 type PricingTiersResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -57,7 +57,7 @@ func PricingTiers(c *ui.Context, text string, tiers [3]Tier, chosen *int, o Pric
 			name, price := k.Msg(metals[i]), strconv.Itoa(t.Price)
 			sel := *chosen
 			// The shell draws the card; the radio stays bare.
-			shell, base, st := pixel.Shell(c, func() *ui.Element {
+			shell, base, st := pixel.Shell(c, func() ui.Element {
 				return ui.RadioBase(c, &sel, i).Label(name + ", " + price + " " + word).Disabled(o.Disabled)
 			})
 			// The radio picks before it is told it is off.

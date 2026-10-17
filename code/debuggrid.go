@@ -14,7 +14,7 @@ type DebugGridOptions struct {
 }
 
 // DebugGrid rules content with the dot grid and rulers.
-func DebugGrid(c *ui.Context, o DebugGridOptions, content func()) *ui.Element {
+func DebugGrid(c *ui.Context, o DebugGridOptions, content func()) ui.Element {
 	k := pixel.K(c)
 	step := pixel.Or("DebugGrid Step", o.Step, 8)
 	if step < 2 || step > 32 {

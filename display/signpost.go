@@ -14,7 +14,7 @@ type SignpostOptions struct {
 }
 
 type SignpostResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Clicked is the board clicked this frame, or -1.
 	Clicked int
 }
@@ -51,7 +51,7 @@ func Signpost(c *ui.Context, boards []string, o SignpostOptions) SignpostResult 
 
 // board is one wooden arrow, pointing left if asked.
 func board(c *ui.Context, k pixel.Kit, label string, w int, left, disabled bool) bool {
-	shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.ButtonBase(c).Label(label).Disabled(disabled) })
+	shell, base, st := pixel.Shell(c, func() ui.Element { return ui.ButtonBase(c).Label(label).Disabled(disabled) })
 	h := pixel.LineHeight + 2
 	shell.Size(k.D(w), k.D(h)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)

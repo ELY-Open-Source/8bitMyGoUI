@@ -10,7 +10,7 @@ import (
 )
 
 // block is a w×h dot text box that fn draws.
-func block(c *ui.Context, k pixel.Kit, s string, w, h int, fn func(g pixel.Canvas)) *ui.Element {
+func block(c *ui.Context, k pixel.Kit, s string, w, h int, fn func(g pixel.Canvas)) ui.Element {
 	return ui.Box(c).Size(k.D(w), k.D(h)).Label(s).Role(ui.RoleText).Draw(func(p *ui.Painter, r ui.Rect) {
 		fn(k.Canvas(p, r))
 	})

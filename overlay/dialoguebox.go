@@ -29,7 +29,7 @@ type DialogueBoxOptions struct {
 }
 
 type DialogueBoxResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Changed turns a page; Done passes the last one.
 	Changed, Done bool
 }

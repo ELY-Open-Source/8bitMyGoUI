@@ -97,7 +97,7 @@ type heading struct {
 }
 
 // Toward steps 0–n toward on, turning from where it is.
-func (k Kit) Toward(c *ui.Context, e *ui.Element, on bool, fps, n int) int {
+func (k Kit) Toward(c *ui.Context, e ui.Element, on bool, fps, n int) int {
 	checkFPS(fps)
 	if n < 1 {
 		panic(fmt.Sprintf("pixel: Toward needs steps, got %d", n))
@@ -137,7 +137,7 @@ type shot struct {
 }
 
 // Shot steps a cued one-shot; Reduce Motion spends it whole.
-func (k Kit) Shot(c *ui.Context, e *ui.Element, cue, fps, done int) int {
+func (k Kit) Shot(c *ui.Context, e ui.Element, cue, fps, done int) int {
 	checkFPS(fps)
 	// Before any change the zero start reads as done.
 	s := ui.Local(e, shotKey{}, func() shot { return shot{cue: cue} })
@@ -162,7 +162,7 @@ type cued struct {
 }
 
 // Cue is when n last changed on e, zero before.
-func (k Kit) Cue(e *ui.Element, n int) time.Time {
+func (k Kit) Cue(e ui.Element, n int) time.Time {
 	s := ui.Local(e, cueKey{}, func() cued { return cued{n: n} })
 	if s.n != n {
 		s.n, s.at = n, k.now

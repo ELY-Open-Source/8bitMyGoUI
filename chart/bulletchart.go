@@ -14,7 +14,7 @@ type BulletChartOptions struct {
 }
 
 // BulletChart lays a bar on rising ranges and a target.
-func BulletChart(c *ui.Context, text string, value, target float64, ranges []float64, o BulletChartOptions) *ui.Element {
+func BulletChart(c *ui.Context, text string, value, target float64, ranges []float64, o BulletChartOptions) ui.Element {
 	k := pixel.K(c)
 	if len(ranges) == 0 {
 		panic("chart: BulletChart needs ranges")

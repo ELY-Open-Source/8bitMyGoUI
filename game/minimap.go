@@ -27,7 +27,7 @@ type MinimapOptions struct {
 var tiles = map[rune]pixel.Slot{'#': pixel.Edge, '.': pixel.Well, '~': pixel.Info, '"': pixel.Good, '^': pixel.Faint, ' ': pixel.Back}
 
 // Minimap draws tiles, fog where unseen, player and marks.
-func Minimap(c *ui.Context, text string, rows []string, seen [][]bool, player Spot, marks []Marker, o MinimapOptions) *ui.Element {
+func Minimap(c *ui.Context, text string, rows []string, seen [][]bool, player Spot, marks []Marker, o MinimapOptions) ui.Element {
 	k := pixel.K(c)
 	cell := pixel.Or("Minimap Cell", o.Cell, 3)
 	if len(rows) == 0 {

@@ -18,7 +18,7 @@ type MemoryCrystalsOptions struct {
 }
 
 type MemoryCrystalsResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Picked is the crystal chosen this frame, else -1.
 	Picked int
 }

@@ -18,7 +18,7 @@ type ClipboardPanelOptions struct {
 }
 
 type ClipboardPanelResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Copied is the clip copied this frame, else -1.
 	Copied int
 }
@@ -58,7 +58,7 @@ func ClipboardPanel(c *ui.Context, text string, clips []string, o ClipboardPanel
 		for i, clip := range clips {
 			// Keyed by the clip: new ones come in on top.
 			ui.Box(c).Key(clip).FillWidth().Children(func() {
-				shell, base, st := pixel.Shell(c, func() *ui.Element {
+				shell, base, st := pixel.Shell(c, func() ui.Element {
 					return ui.Box(c).Focusable().Role(ui.RoleButton).Label(clip).Description(k.Msg("copy")).Disabled(o.Disabled)
 				})
 				if !base.IsDisabled() && base.Clicked() {

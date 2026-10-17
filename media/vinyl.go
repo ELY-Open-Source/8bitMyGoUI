@@ -13,7 +13,7 @@ type VinylOptions struct {
 }
 
 // Vinyl turns a record while playing; the arm swings on.
-func Vinyl(c *ui.Context, text string, o VinylOptions) *ui.Element {
+func Vinyl(c *ui.Context, text string, o VinylOptions) ui.Element {
 	k := pixel.K(c)
 	e := art(c, k, text, 72, 64)
 	swing := float64(k.Toward(c, e, o.Playing, 12, 6)) / 6

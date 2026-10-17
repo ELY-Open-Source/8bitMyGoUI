@@ -13,7 +13,7 @@ type BreadcrumbsOptions struct {
 }
 
 type BreadcrumbsResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Clicked is the part clicked, or -1.
 	Clicked int
 }
@@ -28,7 +28,7 @@ func Breadcrumbs(c *ui.Context, text string, parts []string, o BreadcrumbsOption
 				pixel.Text(c, part, pixel.TextOptions{})
 				break
 			}
-			shell, base, st := pixel.Shell(c, func() *ui.Element {
+			shell, base, st := pixel.Shell(c, func() ui.Element {
 				return ui.ButtonBase(c).Role(ui.RoleLink).Label(part).Disabled(o.Disabled)
 			})
 			if base.Clicked() {

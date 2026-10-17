@@ -14,7 +14,7 @@ type FileIconOptions struct {
 }
 
 // FileIcon draws a kind: a folder or a dog-eared page.
-func FileIcon(c *ui.Context, kind Kind, o FileIconOptions) *ui.Element {
+func FileIcon(c *ui.Context, kind Kind, o FileIconOptions) ui.Element {
 	k := pixel.K(c)
 	ka := look(kind)
 	s := pixel.Or("FileIcon Scale", o.Scale, 1)

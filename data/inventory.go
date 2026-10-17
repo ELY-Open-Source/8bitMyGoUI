@@ -16,7 +16,7 @@ type InventoryOptions struct {
 }
 
 type InventoryResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Swapped reports two slots traded by a drag.
 	Changed, Swapped bool
 }

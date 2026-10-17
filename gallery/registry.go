@@ -106,7 +106,9 @@ func sources() map[string]string {
 		if err != nil {
 			panic(err)
 		}
-		for _, part := range strings.Split(string(b), "\nfunc ")[1:] {
+		// A Windows checkout may bring CRLF.
+		src := strings.ReplaceAll(string(b), "\r\n", "\n")
+		for _, part := range strings.Split(src, "\nfunc ")[1:] {
 			end := strings.Index(part, "\n}\n")
 			if end < 0 {
 				panic("gallery: unterminated func in " + f.Name())

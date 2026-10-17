@@ -26,7 +26,7 @@ type BestiaryOptions struct {
 }
 
 // Bestiary is a monster card; unseen ones are silhouettes.
-func Bestiary(c *ui.Context, m Monster, o BestiaryOptions) *ui.Element {
+func Bestiary(c *ui.Context, m Monster, o BestiaryOptions) ui.Element {
 	k := pixel.K(c)
 	sc := pixel.Or("Bestiary Scale", o.Scale, 2)
 	if m.Sprite == nil || sc > 4 {

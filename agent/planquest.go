@@ -22,7 +22,7 @@ type PlanQuestOptions struct {
 }
 
 // PlanQuest shows a plan's steps as quest objectives.
-func PlanQuest(c *ui.Context, title string, steps []PlanStep, o PlanQuestOptions) *ui.Element {
+func PlanQuest(c *ui.Context, title string, steps []PlanStep, o PlanQuestOptions) ui.Element {
 	k := pixel.K(c)
 	if title == "" || len(steps) == 0 {
 		panic(fmt.Sprintf("agent: PlanQuest %q has %d steps", title, len(steps)))

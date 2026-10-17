@@ -15,7 +15,7 @@ type OutlineOptions struct {
 }
 
 type OutlineResult struct {
-	Element            *ui.Element
+	Element            ui.Element
 	Changed, Submitted bool
 }
 
@@ -47,7 +47,7 @@ func Outline[K comparable](c *ui.Context, text string, roots []K, children func(
 	if off {
 		st.list.Selected = nil
 	}
-	var e *ui.Element
+	var e ui.Element
 	box.Children(func() {
 		e = ui.List(c, &st.list, len(rows), pixel.Lazy(c, func(i int) {
 			r, on, ink := rows[i], i == st.at, pixel.Ink

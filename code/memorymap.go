@@ -21,7 +21,7 @@ type MemoryMapOptions struct {
 }
 
 // MemoryMap draws each bank as a block filled by use.
-func MemoryMap(c *ui.Context, text string, banks []Bank, o MemoryMapOptions) *ui.Element {
+func MemoryMap(c *ui.Context, text string, banks []Bank, o MemoryMapOptions) ui.Element {
 	k := pixel.K(c)
 	cols := pixel.Or("MemoryMap Columns", o.Columns, 4)
 	for _, b := range banks {

@@ -29,7 +29,7 @@ type StatusDotOptions struct {
 }
 
 // StatusDot is a 7-dot status light.
-func StatusDot(c *ui.Context, s Status, o StatusDotOptions) *ui.Element {
+func StatusDot(c *ui.Context, s Status, o StatusDotOptions) ui.Element {
 	if int(s) >= len(statusSlots) {
 		panic(fmt.Sprintf("display: unknown Status %d", s))
 	}

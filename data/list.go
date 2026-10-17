@@ -15,7 +15,7 @@ type ListOptions struct {
 }
 
 type ListResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Submitted is Enter or a double click on a row.
 	Changed, Submitted bool
 }
@@ -33,7 +33,7 @@ func List(c *ui.Context, text string, n int, selected *int, o ListOptions, name 
 	if off {
 		st.Selected = nil
 	}
-	var e *ui.Element
+	var e ui.Element
 	box.Children(func() {
 		e = ui.List(c, st, n, pixel.Lazy(c, func(i int) {
 			on := i == *selected

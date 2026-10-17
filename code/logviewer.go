@@ -40,7 +40,7 @@ type LogViewerOptions struct {
 }
 
 type LogViewerResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Changed is the level filter.
 	Changed bool
 }

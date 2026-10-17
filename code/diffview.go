@@ -20,7 +20,7 @@ type change struct {
 }
 
 // DiffView marks lines removed with -, added with +.
-func DiffView(c *ui.Context, text, before, after string, o DiffViewOptions) *ui.Element {
+func DiffView(c *ui.Context, text, before, after string, o DiffViewOptions) ui.Element {
 	k := pixel.K(c)
 	changes := diff(strings.Split(tidy(before), "\n"), strings.Split(tidy(after), "\n"))
 	// Rows share the longest width, so tints line up.

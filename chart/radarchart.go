@@ -18,7 +18,7 @@ type RadarChartOptions struct {
 }
 
 // RadarChart draws a stat polygon on a web of axes.
-func RadarChart(c *ui.Context, text string, axes []string, values []float64, o RadarChartOptions) *ui.Element {
+func RadarChart(c *ui.Context, text string, axes []string, values []float64, o RadarChartOptions) ui.Element {
 	k := pixel.K(c)
 	if len(axes) != len(values) || len(axes) < 3 {
 		panic(fmt.Sprintf("chart: RadarChart has %d axes for %d values", len(axes), len(values)))

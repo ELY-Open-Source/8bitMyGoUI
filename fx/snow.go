@@ -13,7 +13,7 @@ type SnowOptions struct {
 }
 
 // Snow drifts flakes down, swaying; near ones are big, quick.
-func Snow(c *ui.Context, o SnowOptions) *ui.Element {
+func Snow(c *ui.Context, o SnowOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := size("Snow", o.Width, o.Height, 160, 96)
 	return box(c, k, o.Label, w, h).Draw(func(p *ui.Painter, r ui.Rect) {

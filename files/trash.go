@@ -15,7 +15,7 @@ type TrashOptions struct {
 }
 
 type TrashResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Emptied bool
 }
 

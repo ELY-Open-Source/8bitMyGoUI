@@ -44,8 +44,8 @@ func RangeSlider(c *ui.Context, text string, low, high *float64, o RangeSliderOp
 }
 
 // knob is one draggable end, fenced by r.lo and r.hi.
-func knob(c *ui.Context, k pixel.Kit, track *ui.Element, v *float64, r rail, lo, hi float64, w int) {
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+func knob(c *ui.Context, k pixel.Kit, track ui.Element, v *float64, r rail, lo, hi float64, w int) {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleSlider).Label(r.label).Description(fmtValue(*v)).Disabled(r.disabled)
 	})
 	set := func(x float64) { *v = max(r.lo, min(r.hi, x)) }

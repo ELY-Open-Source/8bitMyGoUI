@@ -19,7 +19,7 @@ type Fighter struct {
 type TurnOrderOptions struct{}
 
 // TurnOrder rows portraits in order, the active raised.
-func TurnOrder(c *ui.Context, text string, order []Fighter, active int, o TurnOrderOptions) *ui.Element {
+func TurnOrder(c *ui.Context, text string, order []Fighter, active int, o TurnOrderOptions) ui.Element {
 	k := pixel.K(c)
 	if active < 0 || active >= len(order) {
 		panic(fmt.Sprintf("game: TurnOrder active %d of %d", active, len(order)))

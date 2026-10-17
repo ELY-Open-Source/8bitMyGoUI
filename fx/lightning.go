@@ -18,7 +18,7 @@ type LightningOptions struct {
 const strikeSteps = 5
 
 // Lightning flashes, then forks a bolt to the ground.
-func Lightning(c *ui.Context, o LightningOptions) *ui.Element {
+func Lightning(c *ui.Context, o LightningOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := size("Lightning", o.Width, o.Height, 96, 96)
 	e := box(c, k, o.Label, w, h)

@@ -13,7 +13,7 @@ import (
 type AgendaOptions struct{}
 
 // Agenda groups events by day, earliest first.
-func Agenda(c *ui.Context, events []Event, o AgendaOptions) *ui.Element {
+func Agenda(c *ui.Context, events []Event, o AgendaOptions) ui.Element {
 	k := pixel.K(c)
 	sorted := slices.Clone(events)
 	slices.SortStableFunc(sorted, func(a, b Event) int { return a.Start.Compare(b.Start) })

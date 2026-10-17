@@ -14,7 +14,7 @@ type PyramidOptions struct {
 }
 
 // Pyramid sets two series back to back by group.
-func Pyramid(c *ui.Context, text string, groups []string, left, right Series, o PyramidOptions) *ui.Element {
+func Pyramid(c *ui.Context, text string, groups []string, left, right Series, o PyramidOptions) ui.Element {
 	k := pixel.K(c)
 	if len(left.Values) != len(groups) || len(right.Values) != len(groups) {
 		panic(fmt.Sprintf("chart: Pyramid has %d groups for %d and %d values", len(groups), len(left.Values), len(right.Values)))

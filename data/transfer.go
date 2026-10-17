@@ -18,7 +18,7 @@ type TransferOptions struct {
 }
 
 type TransferResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

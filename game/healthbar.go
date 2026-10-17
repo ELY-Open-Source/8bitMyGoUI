@@ -26,7 +26,7 @@ type trail struct {
 const hold = 300 * time.Millisecond
 
 // HealthBar shows hp with a lagging trail; low HP blinks.
-func HealthBar(c *ui.Context, text string, hp, full int, o HealthBarOptions) *ui.Element {
+func HealthBar(c *ui.Context, text string, hp, full int, o HealthBarOptions) ui.Element {
 	k := pixel.K(c)
 	amount("HealthBar hp", hp, full)
 	w := pixel.Or("HealthBar Width", o.Width, 96)

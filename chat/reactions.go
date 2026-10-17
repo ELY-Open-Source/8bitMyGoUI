@@ -22,7 +22,7 @@ type ReactionsOptions struct {
 }
 
 type ReactionsResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Toggled is the chip clicked this frame, else -1.
 	Toggled int
 }
@@ -40,7 +40,7 @@ func Reactions(c *ui.Context, text string, rs []Reaction, o ReactionsOptions) Re
 			art := emoji(r.Emoji)
 			// The base turns before it learns it is off.
 			v := r.Mine
-			shell, base, st := pixel.Shell(c, func() *ui.Element {
+			shell, base, st := pixel.Shell(c, func() ui.Element {
 				return ui.ToggleBase(c, &v).Label(fmt.Sprintf("%s %d", r.Emoji, r.Count)).Disabled(o.Disabled).FocusRing(false)
 			})
 			if v != r.Mine && !base.IsDisabled() {

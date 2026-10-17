@@ -14,7 +14,7 @@ type LineChartOptions struct {
 }
 
 // LineChart draws series as Bresenham lines with square markers.
-func LineChart(c *ui.Context, text string, labels []string, series []Series, o LineChartOptions) *ui.Element {
+func LineChart(c *ui.Context, text string, labels []string, series []Series, o LineChartOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := size("LineChart", o.Width, o.Height, 160, 80)
 	p := fitSeries(labels, series, w, h)

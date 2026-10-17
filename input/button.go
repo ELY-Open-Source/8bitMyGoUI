@@ -20,9 +20,9 @@ type ButtonOptions struct {
 }
 
 type ButtonResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Base is the focusable inside Element.
-	Base    *ui.Element
+	Base    ui.Element
 	Clicked bool
 }
 
@@ -31,7 +31,7 @@ func Button(c *ui.Context, text string, o ButtonOptions) ButtonResult {
 	k := pixel.K(c)
 	h, pad, top, sc := o.Size.metrics()
 	name := label(o.Label, text)
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.ButtonBase(c).Label(name).Disabled(o.Disabled || o.Loading)
 	})
 	w := pixel.Measure(text) * sc

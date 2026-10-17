@@ -46,7 +46,7 @@ func demoCoachmark(c *ui.Context, log func(string)) {
 	k := pixel.K(c)
 	s := overlayState(c)
 	tips := []string{"Your bag. Potions live here.", "The map. You are the red dot.", "Save often. Slimes are tricky."}
-	var targets [3]*ui.Element
+	var targets [3]ui.Element
 	ui.Row(c).Gap(k.D(6)).Children(func() {
 		for i, b := range []struct {
 			art  *pixel.Sprite
@@ -71,7 +71,7 @@ func demoCoachmark(c *ui.Context, log func(string)) {
 func demoSpotlight(c *ui.Context, log func(string)) {
 	k := pixel.K(c)
 	s := overlayState(c)
-	var shop *ui.Element
+	var shop ui.Element
 	ui.Row(c).Gap(k.D(6)).Children(func() {
 		input.Button(c, "INN", input.ButtonOptions{})
 		shop = input.Button(c, "SHOP", input.ButtonOptions{Icon: icon.Cart}).Element

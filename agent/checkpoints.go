@@ -26,7 +26,7 @@ type CheckpointsOptions struct {
 }
 
 type CheckpointsResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Restored is the checkpoint chosen this frame, else -1.
 	Restored int
 }

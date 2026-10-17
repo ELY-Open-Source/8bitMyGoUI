@@ -62,10 +62,10 @@ func (m *menu) keys(short func(ui.Modifiers, ui.Key) bool, items []MenuItem) int
 }
 
 // list shows the menu under anchor and returns clicks.
-func (m *menu) list(c *ui.Context, anchor *ui.Element, items []MenuItem) (panel *ui.Element, clicked int) {
+func (m *menu) list(c *ui.Context, anchor ui.Element, items []MenuItem) (panel ui.Element, clicked int) {
 	k := pixel.K(c)
 	clicked = -1
-	panel = ui.PopoverBase(c, anchor, &m.open, func(panel *ui.Element) {
+	panel = ui.PopoverBase(c, anchor, &m.open, func(panel ui.Element) {
 		// Only a pointer that moves lights the item under it.
 		px, py, over := panel.PointerPosition()
 		moved := over && [2]float32{px, py} != m.ptr
@@ -104,7 +104,7 @@ func (m *menu) list(c *ui.Context, anchor *ui.Element, items []MenuItem) (panel 
 		})
 	})
 	// Clicks on a rule or the edge close it too.
-	if panel != nil && panel.Clicked() {
+	if panel.Valid() && panel.Clicked() {
 		m.open = false
 	}
 	return panel, clicked

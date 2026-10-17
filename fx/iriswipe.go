@@ -14,7 +14,7 @@ type IrisWipeOptions struct {
 }
 
 // IrisWipe closes a circle on content's middle, or opens it.
-func IrisWipe(c *ui.Context, closed bool, o IrisWipeOptions, content func()) *ui.Element {
+func IrisWipe(c *ui.Context, closed bool, o IrisWipeOptions, content func()) ui.Element {
 	k := pixel.K(c)
 	s := slotOr(o.Slot, dark(k))
 	e := ui.Column(c)

@@ -11,7 +11,7 @@ type KbdOptions struct {
 }
 
 // Kbd is a keycap with depth; Pressed sinks it.
-func Kbd(c *ui.Context, label string, o KbdOptions) *ui.Element {
+func Kbd(c *ui.Context, label string, o KbdOptions) ui.Element {
 	k := pixel.K(c)
 	face := pixel.LineHeight + 2
 	return block(c, k, label, pixel.Measure(label)+10, face+3, func(g pixel.Canvas) {

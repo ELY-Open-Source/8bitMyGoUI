@@ -15,7 +15,7 @@ type TimeInputOptions struct {
 }
 
 type TimeInputResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -30,7 +30,7 @@ type timing struct {
 func TimeInput(c *ui.Context, text string, tm *time.Time, o TimeInputOptions) TimeInputResult {
 	k := pixel.K(c)
 	old := *tm
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleTextField).Label(text).Disabled(o.Disabled)
 	})
 	s := ui.Local(base, timeKey{}, func() timing { return timing{first: -1} })

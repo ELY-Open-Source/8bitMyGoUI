@@ -18,7 +18,7 @@ type GridViewOptions struct {
 }
 
 type GridViewResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Submitted is Enter or a double click on an item.
 	Changed, Submitted bool
 }

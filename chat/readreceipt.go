@@ -22,7 +22,7 @@ var check = pixel.MustSprite(`
 `)
 
 // ReadReceipt shows one check once sent, two once read.
-func ReadReceipt(c *ui.Context, read bool, o ReadReceiptOptions) *ui.Element {
+func ReadReceipt(c *ui.Context, read bool, o ReadReceiptOptions) ui.Element {
 	k := pixel.K(c)
 	sc := pixel.Or("ReadReceipt Scale", o.Scale, 1)
 	if sc > 4 {

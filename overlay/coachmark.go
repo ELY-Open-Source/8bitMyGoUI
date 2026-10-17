@@ -16,7 +16,7 @@ type CoachmarkOptions struct {
 }
 
 type CoachmarkResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Next    bool
 }
 
@@ -24,7 +24,7 @@ type CoachmarkResult struct {
 const coachWidth = 140
 
 // Coachmark points a bubble at target: step count, NEXT ▶.
-func Coachmark(c *ui.Context, target *ui.Element, message string, step, steps int, o CoachmarkOptions) CoachmarkResult {
+func Coachmark(c *ui.Context, target ui.Element, message string, step, steps int, o CoachmarkOptions) CoachmarkResult {
 	k := pixel.K(c)
 	if step < 1 || step > steps {
 		panic(fmt.Sprintf("overlay: Coachmark step %d of %d", step, steps))

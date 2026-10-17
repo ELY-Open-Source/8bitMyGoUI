@@ -22,7 +22,7 @@ type DocumentTabsOptions struct {
 }
 
 type DocumentTabsResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 	// Closed is the tab × or Delete closed, or -1.
 	Closed int
@@ -46,8 +46,8 @@ func DocumentTabs(c *ui.Context, text string, titles []string, selected *int, o 
 		for i, t := range titles {
 			// Keyed by title, so focus follows its tab.
 			ui.Box(c).Key(t).Children(func() {
-				var x *ui.Element
-				shell, base, st := pixel.Shell(c, func() *ui.Element {
+				var x ui.Element
+				shell, base, st := pixel.Shell(c, func() ui.Element {
 					tab := p.Tab(i).Label(t).Disabled(o.Disabled)
 					// The × is no Tab stop; Delete closes by keyboard.
 					tab.Children(func() {

@@ -110,7 +110,7 @@ func (a *App) statusBar(c *ui.Context) {
 // press is a custom-drawn chrome tile; true when clicked.
 func press(c *ui.Context, w, h int, name string, draw func(g pixel.Canvas, st pixel.State)) bool {
 	k := pixel.K(c)
-	shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.ButtonBase(c).Label(name) })
+	shell, base, st := pixel.Shell(c, func() ui.Element { return ui.ButtonBase(c).Label(name) })
 	if w > 0 {
 		shell.Width(k.D(w))
 	}

@@ -15,7 +15,7 @@ type YearPickerOptions struct {
 }
 
 type YearPickerResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

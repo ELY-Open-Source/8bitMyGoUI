@@ -17,7 +17,7 @@ type MonthPickerOptions struct {
 }
 
 type MonthPickerResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

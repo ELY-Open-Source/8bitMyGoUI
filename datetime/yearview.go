@@ -15,7 +15,7 @@ type YearViewOptions struct{}
 const miniW, miniH, monthW, monthH = 10, 7, 7*miniW + 4, 6*miniH + pixel.LineHeight + 2
 
 // YearView sets a year's twelve months small; today is marked.
-func YearView(c *ui.Context, year int, o YearViewOptions) *ui.Element {
+func YearView(c *ui.Context, year int, o YearViewOptions) ui.Element {
 	k := pixel.K(c)
 	now := today(c, k)
 	return ui.Box(c).Size(k.D(4*monthW), k.D(3*monthH)).Role(ui.RoleImage).Label(strconv.Itoa(year)).Draw(func(p *ui.Painter, r ui.Rect) {

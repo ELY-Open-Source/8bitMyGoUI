@@ -17,7 +17,7 @@ type CheckoutOptions struct {
 }
 
 type CheckoutResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Done reports the order placed this frame.
 	Changed, Done bool
 }

@@ -16,7 +16,7 @@ type LoadingScreenOptions struct {
 }
 
 // LoadingScreen shows NOW LOADING, stepping dots and a tip.
-func LoadingScreen(c *ui.Context, o LoadingScreenOptions) *ui.Element {
+func LoadingScreen(c *ui.Context, o LoadingScreenOptions) ui.Element {
 	k := pixel.K(c)
 	w := pixel.Or("LoadingScreen Width", o.Width, 240)
 	title := k.Msg("loading")

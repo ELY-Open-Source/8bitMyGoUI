@@ -28,7 +28,7 @@ type ToolCallOptions struct {
 var glow = []pixel.Slot{pixel.Magic, pixel.Info, pixel.Accent}
 
 // ToolCall is a spell card: CAST, then OK or FAILED.
-func ToolCall(c *ui.Context, tool string, out Outcome, o ToolCallOptions) *ui.Element {
+func ToolCall(c *ui.Context, tool string, out Outcome, o ToolCallOptions) ui.Element {
 	k := pixel.K(c)
 	if tool == "" || out < Casting || out > Failed {
 		panic(fmt.Sprintf("agent: ToolCall %q with outcome %d", tool, out))

@@ -13,14 +13,14 @@ type LinkOptions struct {
 }
 
 type LinkResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Clicked bool
 }
 
 // Link is underlined text opening url on click or Enter.
 func Link(c *ui.Context, label, url string, o LinkOptions) LinkResult {
 	k := pixel.K(c)
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleLink).Label(label).Description(url).Disabled(o.Disabled).Cursor(ui.CursorPointer)
 	})
 	w := pixel.Measure(label)

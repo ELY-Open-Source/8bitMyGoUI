@@ -22,7 +22,7 @@ type CreditsOptions struct {
 }
 
 type CreditsResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Done is true in the frame the roll ends.
 	Done bool
 }

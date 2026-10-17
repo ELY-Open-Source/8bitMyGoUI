@@ -13,7 +13,7 @@ type StepChartOptions struct {
 }
 
 // StepChart holds each value flat, then steps to the next.
-func StepChart(c *ui.Context, text string, labels []string, values []float64, o StepChartOptions) *ui.Element {
+func StepChart(c *ui.Context, text string, labels []string, values []float64, o StepChartOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := size("StepChart", o.Width, o.Height, 160, 80)
 	p := fitSeries(labels, []Series{{Name: text, Values: values}}, w, h)

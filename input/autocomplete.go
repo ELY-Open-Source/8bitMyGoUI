@@ -18,7 +18,7 @@ type AutocompleteOptions struct {
 }
 
 type AutocompleteResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Accepted reports a completion taken by Tab or Enter.
 	Changed, Accepted, Submitted bool
 }

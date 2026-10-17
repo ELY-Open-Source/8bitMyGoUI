@@ -27,7 +27,7 @@ type SessionListOptions struct {
 }
 
 type SessionListResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// SignedOut is the session signed out this frame, else -1.
 	SignedOut int
 }

@@ -12,7 +12,7 @@ type CalendarOptions struct {
 }
 
 type CalendarResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Picked is a click, Enter or Space on a day.
 	Changed, Picked bool
 }

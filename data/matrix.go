@@ -14,7 +14,7 @@ type MatrixOptions struct {
 }
 
 type MatrixResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

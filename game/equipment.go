@@ -38,7 +38,7 @@ type EquipmentOptions struct {
 }
 
 type EquipmentResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 	// Picked is the slot opened this frame, or -1.
 	Picked int
@@ -61,7 +61,7 @@ func Equipment(c *ui.Context, text string, gear []data.Item, selected *int, o Eq
 		}
 		w = max(w, pixel.Measure(captions[i]))
 	}
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleGroup).Label(text).Disabled(o.Disabled)
 	})
 	arrows(base, spots, selected)

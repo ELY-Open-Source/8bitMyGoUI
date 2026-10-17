@@ -17,7 +17,7 @@ type CommandHistoryOptions struct {
 }
 
 type CommandHistoryResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Rerun is Enter or a double click on a command.
 	Changed, Rerun bool
 }

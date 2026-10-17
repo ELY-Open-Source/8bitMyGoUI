@@ -15,7 +15,7 @@ type TransportOptions struct {
 }
 
 type TransportResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Changed is play or pause; the rest are presses.
 	Changed, Stopped, Previous, Next bool
 }

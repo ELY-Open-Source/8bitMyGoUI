@@ -25,7 +25,7 @@ type TreeOptions struct {
 }
 
 type TreeResult struct {
-	Element          *ui.Element
+	Element          ui.Element
 	Changed, Toggled bool
 }
 
@@ -55,7 +55,7 @@ func Tree(c *ui.Context, text string, roots []TreeNode, selected *string, o Tree
 	for i := range roots {
 		tops = append(tops, strconv.Itoa(i))
 	}
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleTree).Label(text).Disabled(o.Disabled)
 	})
 	opened := ui.Local(base, treeKey{}, func() map[string]bool { return map[string]bool{} })

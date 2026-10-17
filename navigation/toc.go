@@ -29,7 +29,7 @@ type TableOfContentsOptions struct {
 }
 
 type TableOfContentsResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -42,7 +42,7 @@ func TableOfContents(c *ui.Context, text string, items []TocItem, current *int, 
 	v := *current
 	res.Element = ui.RadioGroup(c, func() {
 		for i, it := range items {
-			shell, _, st := pixel.Shell(c, func() *ui.Element {
+			shell, _, st := pixel.Shell(c, func() ui.Element {
 				return ui.RadioBase(c, &v, i).Label(it.Title).Disabled(o.Disabled)
 			})
 			shell.Size(k.D(w), k.D(pixel.LineHeight)).Draw(func(p *ui.Painter, r ui.Rect) {

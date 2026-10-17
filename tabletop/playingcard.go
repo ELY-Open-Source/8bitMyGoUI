@@ -12,7 +12,7 @@ type PlayingCardOptions struct {
 }
 
 // PlayingCard is a card: rank and suit, or its back.
-func PlayingCard(c *ui.Context, cd Card, o PlayingCardOptions) *ui.Element {
+func PlayingCard(c *ui.Context, cd Card, o PlayingCardOptions) ui.Element {
 	k := pixel.K(c)
 	cd.check("PlayingCard")
 	name := cd.name(k)

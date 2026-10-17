@@ -17,7 +17,7 @@ type HistogramOptions struct {
 }
 
 // Histogram counts values into bins, side by side.
-func Histogram(c *ui.Context, text string, values []float64, o HistogramOptions) *ui.Element {
+func Histogram(c *ui.Context, text string, values []float64, o HistogramOptions) ui.Element {
 	k := pixel.K(c)
 	n := pixel.Or("Histogram Bins", o.Bins, 8)
 	w, h := size("Histogram", o.Width, o.Height, 160, 80)

@@ -19,7 +19,7 @@ type StepperOptions struct {
 }
 
 type StepperResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -35,7 +35,7 @@ func Stepper(c *ui.Context, text string, value *int, o StepperOptions) StepperRe
 	w := max(pixel.Measure(strconv.Itoa(o.Min)), pixel.Measure(strconv.Itoa(o.Max))) + 8
 	e := ui.Row(c).Gap(k.D(2)).AlignItems(ui.Center).Children(func() {
 		set(*value - step*held(c, k, tinyLeft, o.Disabled))
-		shell, base, st := pixel.Shell(c, func() *ui.Element {
+		shell, base, st := pixel.Shell(c, func() ui.Element {
 			return ui.Box(c).Focusable().Role(ui.RoleStepper).Label(text).Description(strconv.Itoa(*value)).Disabled(o.Disabled)
 		})
 		if !o.Disabled {

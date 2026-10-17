@@ -12,7 +12,7 @@ type BarsLoaderOptions struct{}
 var heights = [8]int{3, 6, 9, 12, 9, 6, 3, 3}
 
 // BarsLoader raises and drops five bars.
-func BarsLoader(c *ui.Context, text string, o BarsLoaderOptions) *ui.Element {
+func BarsLoader(c *ui.Context, text string, o BarsLoaderOptions) ui.Element {
 	k := pixel.K(c)
 	return ui.Box(c).Role(ui.RoleProgress).Label(text).Size(k.D(23), k.D(12)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)

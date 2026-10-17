@@ -16,7 +16,7 @@ type SuccessStateOptions struct {
 }
 
 // SuccessState is STAGE CLEAR! with stars popping in steps.
-func SuccessState(c *ui.Context, message string, o SuccessStateOptions) *ui.Element {
+func SuccessState(c *ui.Context, message string, o SuccessStateOptions) ui.Element {
 	k := pixel.K(c)
 	n := pixel.Or("SuccessState Stars", o.Stars, 3)
 	col := ui.Column(c).Gap(k.D(8)).Padding(k.D(16)).AlignItems(ui.Center).Role(ui.RoleStatus).Label(k.Msg("stage_clear"))

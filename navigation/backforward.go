@@ -15,7 +15,7 @@ type BackForwardOptions struct {
 }
 
 type BackForwardResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Moved reports a step through the history.
 	Moved bool
 }

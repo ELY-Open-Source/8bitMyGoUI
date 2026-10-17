@@ -16,7 +16,7 @@ type CouponOptions struct {
 }
 
 type CouponResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Copied  bool
 }
 

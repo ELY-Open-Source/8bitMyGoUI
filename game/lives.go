@@ -15,7 +15,7 @@ type LivesOptions struct {
 }
 
 // Lives shows a life icon and ×count.
-func Lives(c *ui.Context, text string, n int, o LivesOptions) *ui.Element {
+func Lives(c *ui.Context, text string, n int, o LivesOptions) ui.Element {
 	k := pixel.K(c)
 	if n < 0 {
 		panic(fmt.Sprintf("game: Lives %d", n))

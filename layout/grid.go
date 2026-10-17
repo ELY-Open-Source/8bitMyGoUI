@@ -25,7 +25,7 @@ type GridOptions struct {
 }
 
 // Grid lays n cells in equal columns, lines between them.
-func Grid(c *ui.Context, n int, o GridOptions, cell func(i int)) *ui.Element {
+func Grid(c *ui.Context, n int, o GridOptions, cell func(i int)) ui.Element {
 	k := pixel.K(c)
 	cols := pixel.Or("Grid Columns", o.Columns, 2)
 	pad := pixel.Or("Grid Pad", o.Pad, 4)

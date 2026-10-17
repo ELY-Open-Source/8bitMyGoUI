@@ -13,7 +13,7 @@ type BottomNavOptions struct {
 }
 
 type BottomNavResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -25,7 +25,7 @@ func BottomNav(c *ui.Context, text string, items []NavItem, selected *int, o Bot
 	v := *selected
 	res.Element = ui.RadioGroup(c, func() {
 		for i, it := range items {
-			shell, _, st := pixel.Shell(c, func() *ui.Element {
+			shell, _, st := pixel.Shell(c, func() ui.Element {
 				return ui.RadioBase(c, &v, i).Label(it.Label).Disabled(o.Disabled)
 			})
 			w := max(pixel.Measure(it.Label), 12) + 12

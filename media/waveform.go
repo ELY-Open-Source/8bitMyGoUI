@@ -15,7 +15,7 @@ type WaveformOptions struct {
 }
 
 // Waveform draws samples, ±1, as lines from the middle.
-func Waveform(c *ui.Context, text string, samples []float64, o WaveformOptions) *ui.Element {
+func Waveform(c *ui.Context, text string, samples []float64, o WaveformOptions) ui.Element {
 	k := pixel.K(c)
 	if len(samples) == 0 {
 		panic("media: Waveform has no samples")

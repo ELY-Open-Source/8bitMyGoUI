@@ -12,7 +12,7 @@ import (
 type ResultScreenOptions struct{}
 
 // ResultScreen counts time and score up, then shows the rank.
-func ResultScreen(c *ui.Context, text string, took time.Duration, score int, rank string, o ResultScreenOptions) *ui.Element {
+func ResultScreen(c *ui.Context, text string, took time.Duration, score int, rank string, o ResultScreenOptions) ui.Element {
 	k := pixel.K(c)
 	if took < 0 || score < 0 || rank == "" {
 		panic(fmt.Sprintf("game: ResultScreen %v, %d, rank %q", took, score, rank))

@@ -16,7 +16,7 @@ type LinkPreviewOptions struct {
 }
 
 type LinkPreviewResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Clicked bool
 }
 
@@ -31,7 +31,7 @@ func LinkPreview(c *ui.Context, url, title, site string, o LinkPreviewOptions) L
 	// The site sits under the title; the card fits both.
 	sy := 4 + len(lines)*pixel.LineHeight
 	h := max(40, sy+12)
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleLink).Label(title).Description(url).Disabled(o.Disabled).Cursor(ui.CursorPointer).FocusRing(false)
 	})
 	shell.Size(k.D(w), k.D(h)).Draw(func(p *ui.Painter, r ui.Rect) {

@@ -13,7 +13,7 @@ type StarfieldOptions struct {
 }
 
 // Starfield scrolls three layers of stars, near ones fastest.
-func Starfield(c *ui.Context, o StarfieldOptions) *ui.Element {
+func Starfield(c *ui.Context, o StarfieldOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := size("Starfield", o.Width, o.Height, 160, 96)
 	return box(c, k, o.Label, w, h).Draw(func(p *ui.Painter, r ui.Rect) {

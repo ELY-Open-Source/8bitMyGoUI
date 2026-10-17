@@ -15,7 +15,7 @@ type DateInputOptions struct {
 }
 
 type DateInputResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -28,7 +28,7 @@ type popping struct{ open, held bool }
 func DateInput(c *ui.Context, text string, date *time.Time, o DateInputOptions) DateInputResult {
 	k := pixel.K(c)
 	old := *date
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.ButtonBase(c).Role(ui.RolePopUpButton).Label(text).Disabled(o.Disabled)
 	})
 	pop := ui.Local(base, dateKey{}, func() popping { return popping{} })
@@ -53,7 +53,7 @@ func DateInput(c *ui.Context, text string, date *time.Time, o DateInputOptions) 
 		g.Sprite(g.W-icon.Calendar.W-4, (g.H-icon.Calendar.H)/2, icon.Calendar, 0, pixel.Faint, 1)
 		g.Finish(st)
 	})
-	ui.PopoverBase(c, base, open, func(panel *ui.Element) {
+	ui.PopoverBase(c, base, open, func(panel ui.Element) {
 		panel.Padding(k.D(5)).Draw(func(p *ui.Painter, r ui.Rect) {
 			g := k.Canvas(p, r)
 			g.Frame(0, 0, g.W, g.H, pixel.Window, pixel.Face)

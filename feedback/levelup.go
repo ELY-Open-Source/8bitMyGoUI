@@ -21,7 +21,7 @@ type rise struct {
 }
 
 // LevelUp slides in LEVEL UP! with sparkles when level rises.
-func LevelUp(c *ui.Context, level int, o LevelUpOptions) *ui.Element {
+func LevelUp(c *ui.Context, level int, o LevelUpOptions) ui.Element {
 	k := pixel.K(c)
 	e := ui.Box(c)
 	s := ui.Local(e, levelKey{}, func() rise { return rise{level: level} })

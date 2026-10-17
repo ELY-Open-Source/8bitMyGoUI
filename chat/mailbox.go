@@ -24,7 +24,7 @@ type MailboxOptions struct {
 }
 
 type MailboxResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 	// Opened is the mail opened this frame, else -1.
 	Opened int

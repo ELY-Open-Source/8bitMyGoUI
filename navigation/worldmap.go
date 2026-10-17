@@ -46,7 +46,7 @@ type WorldMapOptions struct {
 }
 
 type WorldMapResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Entered reports Enter, or a click, at the hero's node.
 	Changed, Entered bool
 }
@@ -66,7 +66,7 @@ func WorldMap(c *ui.Context, text string, nodes []MapNode, paths [][2]int, at *i
 		panic(fmt.Sprintf("navigation: node %d of %d", *at, len(nodes)))
 	}
 	w, h := pixel.Or("WorldMap Width", o.Width, 240), pixel.Or("WorldMap Height", o.Height, 140)
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleGroup).Label(text).Description(nodes[*at].Name).Disabled(o.Disabled)
 	})
 	wk := ui.Local(base, walkKey{}, func() walk { return walk{from: *at} })

@@ -20,7 +20,7 @@ type DialogOptions struct {
 
 type DialogResult struct {
 	// Element is the window, nil while closed.
-	Element *ui.Element
+	Element ui.Element
 	// Action is the button clicked this frame, or -1.
 	Action int
 	// Closed is Escape or a click outside.
@@ -33,7 +33,7 @@ func Dialog(c *ui.Context, title string, open *bool, o DialogOptions, content fu
 	w := pixel.Or("Dialog Width", o.Width, 220)
 	was := *open
 	res := DialogResult{Action: -1}
-	res.Element = ui.DialogBase(c, open, func(back, panel *ui.Element) {
+	res.Element = ui.DialogBase(c, open, func(back, panel ui.Element) {
 		dim(k, back, pixel.Back, 8)
 		// The panel holds the focus when nothing inside can.
 		panel.Width(k.D(w)).Label(title).Focusable().FocusRing(false).Children(func() {

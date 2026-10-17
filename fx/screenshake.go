@@ -17,7 +17,7 @@ type ScreenShakeOptions struct {
 var quakes = [...][2]int{{3, -2}, {-3, 2}, {2, 3}, {-3, -2}, {2, 1}, {-1, -2}, {1, 1}, {-1, 0}, {0, 0}}
 
 // ScreenShake jolts its content both ways, settling as it goes.
-func ScreenShake(c *ui.Context, o ScreenShakeOptions, content func()) *ui.Element {
+func ScreenShake(c *ui.Context, o ScreenShakeOptions, content func()) ui.Element {
 	k := pixel.K(c)
 	a := pixel.Or("ScreenShake Amount", o.Amount, 3)
 	e := ui.Box(c)

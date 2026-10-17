@@ -16,7 +16,7 @@ type StopwatchOptions struct {
 }
 
 type StopwatchResult struct {
-	Element                         *ui.Element
+	Element                         ui.Element
 	Started, Stopped, Lapped, Reset bool
 }
 

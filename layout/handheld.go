@@ -18,7 +18,7 @@ type HandheldOptions struct {
 }
 
 type HandheldResult struct {
-	Element                     *ui.Element
+	Element                     ui.Element
 	Up, Down, Left, Right, A, B bool
 }
 
@@ -69,7 +69,7 @@ func Handheld(c *ui.Context, o HandheldOptions, screen func()) HandheldResult {
 
 // key is a d-pad arm, or a round button.
 func key(c *ui.Context, k pixel.Kit, name string, x, y, w, h int, round, disabled bool) bool {
-	shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.ButtonBase(c).Label(name).Disabled(disabled) })
+	shell, base, st := pixel.Shell(c, func() ui.Element { return ui.ButtonBase(c).Label(name).Disabled(disabled) })
 	shell.Absolute().Left(k.D(x)).Top(k.D(y)).Size(k.D(w), k.D(h)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)
 		dy := 0

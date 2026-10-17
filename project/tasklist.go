@@ -17,7 +17,7 @@ type TaskListOptions struct {
 }
 
 type TaskListResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Changed reports a task checked or a filter turned.
 	Changed bool
 }

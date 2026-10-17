@@ -15,7 +15,7 @@ type SheetOptions struct {
 }
 
 type SheetResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Closed is a drag down, Escape or a click outside.
 	Closed bool
 }
@@ -32,7 +32,7 @@ func Sheet(c *ui.Context, text string, open *bool, o SheetOptions, content func(
 	rise := k.D(arriving(c, home, *open) * h / 4)
 	was := *open
 	var res SheetResult
-	res.Element = ui.DialogBase(c, open, func(back, panel *ui.Element) {
+	res.Element = ui.DialogBase(c, open, func(back, panel ui.Element) {
 		dim(k, back, pixel.Back, 8)
 		panel.Label(text).Focusable().FocusRing(false).Draw(func(p *ui.Painter, r ui.Rect) {
 			g := k.Canvas(p, r)

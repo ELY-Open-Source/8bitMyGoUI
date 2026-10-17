@@ -24,7 +24,7 @@ type MemoryCardOptions struct {
 }
 
 type MemoryCardResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 	// Deleted is the block whose DELETE was pressed, else -1.
 	Deleted int

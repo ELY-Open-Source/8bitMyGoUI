@@ -19,7 +19,7 @@ type ErrorStateOptions struct {
 }
 
 type ErrorStateResult struct {
-	Element  *ui.Element
+	Element  ui.Element
 	Continue bool
 }
 

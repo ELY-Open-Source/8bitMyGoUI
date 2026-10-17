@@ -13,7 +13,7 @@ type WallpaperPickerOptions struct {
 }
 
 type WallpaperPickerResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

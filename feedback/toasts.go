@@ -30,7 +30,7 @@ type ToastsOptions struct {
 
 type ToastsResult struct {
 	// Element holds the toasts on screen.
-	Element *ui.Element
+	Element ui.Element
 	// Acted is the toast whose action was clicked, else nil.
 	Acted *Toast
 }

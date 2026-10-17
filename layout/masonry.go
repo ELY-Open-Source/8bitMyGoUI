@@ -16,7 +16,7 @@ type MasonryOptions struct {
 }
 
 // Masonry puts each item into the shortest column.
-func Masonry(c *ui.Context, heights []int, o MasonryOptions, item func(i int)) *ui.Element {
+func Masonry(c *ui.Context, heights []int, o MasonryOptions, item func(i int)) ui.Element {
 	k := pixel.K(c)
 	gap := pixel.Or("Masonry Gap", o.Gap, 4)
 	n := pixel.Or("Masonry Columns", o.Columns, 3)

@@ -20,7 +20,7 @@ type VolumeMixerOptions struct {
 }
 
 type VolumeMixerResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

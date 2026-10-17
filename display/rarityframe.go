@@ -12,7 +12,7 @@ type RarityFrameOptions struct {
 }
 
 // RarityFrame borders children by rarity; legendary carries a glint.
-func RarityFrame(c *ui.Context, r Rarity, o RarityFrameOptions, children func()) *ui.Element {
+func RarityFrame(c *ui.Context, r Rarity, o RarityFrameOptions, children func()) ui.Element {
 	k := pixel.K(c)
 	ink := r.Slot()
 	pad := 3 + pixel.Or("RarityFrame Padding", o.Padding, 4)

@@ -31,7 +31,7 @@ type EmptyStateOptions struct {
 }
 
 type EmptyStateResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Acted   bool
 }
 

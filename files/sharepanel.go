@@ -28,7 +28,7 @@ type SharePanelOptions struct {
 }
 
 type SharePanelResult struct {
-	Element         *ui.Element
+	Element         ui.Element
 	Copied, Changed bool
 }
 

@@ -12,7 +12,7 @@ type DateRangeOptions struct {
 }
 
 type DateRangeResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

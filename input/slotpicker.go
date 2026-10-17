@@ -14,7 +14,7 @@ type SlotPickerOptions struct {
 }
 
 type SlotPickerResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -33,7 +33,7 @@ func SlotPicker(c *ui.Context, text string, value *int, options []string, o Slot
 	if *value < 0 || *value >= n {
 		panic(fmt.Sprintf("input: SlotPicker value %d outside %d options", *value, n))
 	}
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleSlider).Label(text).Description(options[*value]).Disabled(o.Disabled)
 	})
 	s := ui.Local(base, reelKey{}, func() reel { return reel{} })

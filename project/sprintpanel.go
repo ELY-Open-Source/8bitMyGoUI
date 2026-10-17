@@ -26,7 +26,7 @@ type SprintPanelOptions struct {
 const day = 24 * time.Hour
 
 // SprintPanel shows a sprint's points done and days left.
-func SprintPanel(c *ui.Context, s Sprint, o SprintPanelOptions) *ui.Element {
+func SprintPanel(c *ui.Context, s Sprint, o SprintPanelOptions) ui.Element {
 	k := pixel.K(c)
 	if s.Name == "" || !s.Start.Before(s.End) || s.Total < 1 || s.Done < 0 || s.Done > s.Total {
 		panic(fmt.Sprintf("project: SprintPanel %q from %v to %v, %d of %d", s.Name, s.Start, s.End, s.Done, s.Total))

@@ -27,7 +27,7 @@ type SidebarOptions struct {
 }
 
 type SidebarResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -46,7 +46,7 @@ func Sidebar(c *ui.Context, text string, sections []SidebarSection, selected *in
 			for _, it := range sec.Items {
 				i := n
 				n++
-				shell, _, st := pixel.Shell(c, func() *ui.Element {
+				shell, _, st := pixel.Shell(c, func() ui.Element {
 					return ui.RadioBase(c, &v, i).Label(it.Label).Disabled(o.Disabled)
 				})
 				shell.Size(k.D(w), k.D(pixel.LineHeight+2)).Draw(func(p *ui.Painter, r ui.Rect) {

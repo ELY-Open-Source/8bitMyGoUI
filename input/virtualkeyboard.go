@@ -13,7 +13,7 @@ type VirtualKeyboardOptions struct {
 }
 
 type VirtualKeyboardResult struct {
-	Element            *ui.Element
+	Element            ui.Element
 	Changed, Submitted bool
 }
 

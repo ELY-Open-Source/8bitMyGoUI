@@ -77,7 +77,7 @@ type AxisOptions struct {
 }
 
 // Axis draws ticks and micro labels, for any chart.
-func Axis(c *ui.Context, o AxisOptions) *ui.Element {
+func Axis(c *ui.Context, o AxisOptions) ui.Element {
 	k := pixel.K(c)
 	n := pixel.Or("Axis Length", o.Length, 120)
 	marks := o.Labels

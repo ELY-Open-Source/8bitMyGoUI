@@ -15,7 +15,7 @@ type TooltipOptions struct{}
 const tipWidth = 160
 
 // Tooltip bubbles text after 500 ms, or on keyboard focus.
-func Tooltip(c *ui.Context, text string, o TooltipOptions, trigger func()) *ui.Element {
+func Tooltip(c *ui.Context, text string, o TooltipOptions, trigger func()) ui.Element {
 	k := pixel.K(c)
 	wrap := ui.Box(c)
 	show := hint(c, wrap, 500*time.Millisecond)
@@ -32,12 +32,12 @@ func Tooltip(c *ui.Context, text string, o TooltipOptions, trigger func()) *ui.E
 }
 
 // bubble floats content by b; w keeps it inside.
-func bubble(c *ui.Context, b ui.Rect, content func(), w int) *ui.Element {
+func bubble(c *ui.Context, b ui.Rect, content func(), w int) ui.Element {
 	k := pixel.K(c)
 	ww, wh := c.Size()
 	x := max(0, min(b.X+b.W/2-k.D(8), ww-k.D(w)))
 	at := max(3, int((b.X+b.W/2-x)/k.Dot()))
-	var e *ui.Element
+	var e ui.Element
 	ui.Overlay(c, func() {
 		e = ui.Box(c).Absolute().Left(x).PassThrough()
 		tail := display.Bottom

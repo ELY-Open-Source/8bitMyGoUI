@@ -39,7 +39,7 @@ func amount(name string, n int) string {
 }
 
 // money draws a currency icon and amount, named for readers.
-func money(c *ui.Context, k pixel.Kit, cur Currency, n int, slot pixel.Slot) *ui.Element {
+func money(c *ui.Context, k pixel.Kit, cur Currency, n int, slot pixel.Slot) ui.Element {
 	sp, word := coin(k, cur)
 	s := amount("money", n)
 	return ui.Box(c).Size(k.D(14+pixel.Measure(s)), k.D(pixel.LineHeight)).Role(ui.RoleText).Label(s + " " + word).Draw(func(p *ui.Painter, r ui.Rect) {

@@ -19,7 +19,7 @@ type LoginFormOptions struct {
 }
 
 type LoginFormResult struct {
-	Element   *ui.Element
+	Element   ui.Element
 	Submitted bool
 }
 

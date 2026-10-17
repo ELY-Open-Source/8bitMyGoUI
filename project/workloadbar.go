@@ -26,7 +26,7 @@ type WorkloadBarOptions struct {
 }
 
 // WorkloadBar shows each member's load against capacity.
-func WorkloadBar(c *ui.Context, text string, loads []Load, o WorkloadBarOptions) *ui.Element {
+func WorkloadBar(c *ui.Context, text string, loads []Load, o WorkloadBarOptions) ui.Element {
 	k := pixel.K(c)
 	cp := o.Capacity
 	if cp == 0 {

@@ -13,7 +13,7 @@ type DescriptionListOptions struct {
 }
 
 // DescriptionList sets terms beside their descriptions.
-func DescriptionList(c *ui.Context, pairs [][2]string, o DescriptionListOptions) *ui.Element {
+func DescriptionList(c *ui.Context, pairs [][2]string, o DescriptionListOptions) ui.Element {
 	k := pixel.K(c)
 	tw := pixel.Or("DescriptionList TermWidth", o.TermWidth, 80)
 	return ui.Column(c).FillWidth().Gap(k.D(4)).Children(func() {

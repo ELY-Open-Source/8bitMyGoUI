@@ -3,9 +3,9 @@ package pixel
 import "github.com/egoist/mygo/ui"
 
 // Pad is a focusable grid; it returns the picked cell.
-func Pad(c *ui.Context, text string, cols, n, cw, ch int, cur *int, disabled bool) (shell, base *ui.Element, st State, picked int) {
+func Pad(c *ui.Context, text string, cols, n, cw, ch int, cur *int, disabled bool) (shell, base ui.Element, st State, picked int) {
 	k := K(c)
-	shell, base, st = Shell(c, func() *ui.Element {
+	shell, base, st = Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleGroup).Label(text).Disabled(disabled)
 	})
 	shell.Size(k.D(cols*cw), k.D((n+cols-1)/cols*ch))

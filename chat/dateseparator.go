@@ -16,7 +16,7 @@ type DateSeparatorOptions struct {
 }
 
 // DateSeparator rules a line with TODAY, YESTERDAY or the date.
-func DateSeparator(c *ui.Context, day time.Time, o DateSeparatorOptions) *ui.Element {
+func DateSeparator(c *ui.Context, day time.Time, o DateSeparatorOptions) ui.Element {
 	k := pixel.K(c)
 	now := k.Now()
 	// At midnight today becomes yesterday.

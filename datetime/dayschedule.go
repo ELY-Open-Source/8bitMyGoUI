@@ -19,7 +19,7 @@ type DayScheduleOptions struct {
 const hourH, gutter = pixel.LineHeight + 4, 24
 
 // DaySchedule places events on hour rows by start and length.
-func DaySchedule(c *ui.Context, events []Event, o DayScheduleOptions) *ui.Element {
+func DaySchedule(c *ui.Context, events []Event, o DayScheduleOptions) ui.Element {
 	k := pixel.K(c)
 	from, to := o.From, o.To
 	if from == 0 && to == 0 {

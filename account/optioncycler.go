@@ -15,7 +15,7 @@ type OptionCyclerOptions struct {
 }
 
 type OptionCyclerResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -28,7 +28,7 @@ func OptionCycler(c *ui.Context, text string, options []string, selected *int, o
 		longest = max(longest, pixel.Measure(s))
 	}
 	w := pixel.Or("OptionCycler Width", o.Width, longest)
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleStepper).Label(text).Disabled(o.Disabled)
 	})
 	n, old := len(options), *selected

@@ -20,7 +20,7 @@ func (a *App) boot(c *ui.Context) {
 		shown = 16
 	}
 	start := shown == 16 && (k.Reduce() || step%12 < 8)
-	shell, base, _ := pixel.Shell(c, func() *ui.Element { return ui.ButtonBase(c).Label("Press start") })
+	shell, base, _ := pixel.Shell(c, func() ui.Element { return ui.ButtonBase(c).Label("Press start") })
 	shell.Fill().Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)
 		w := pixel.Measure(logo) * 4
@@ -34,7 +34,7 @@ func (a *App) boot(c *ui.Context) {
 		hint := "Enter · Space · Click     回车 · 空格 · 点击"
 		g.Text((g.W-pixel.Measure(hint))/2, g.H-28, hint, pixel.Faint, 1)
 	})
-	base.AutoFocus()
+	pixel.AutoFocus(c, base)
 	if base.Clicked() || c.Shortcut(0, ui.KeyEnter) || c.Shortcut(0, ui.KeySpace) {
 		slog.Debug("8bit: gallery start")
 		a.started = true

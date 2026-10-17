@@ -13,7 +13,7 @@ type SparklineOptions struct {
 }
 
 // Sparkline is a line one text line high, end marked.
-func Sparkline(c *ui.Context, text string, values []float64, o SparklineOptions) *ui.Element {
+func Sparkline(c *ui.Context, text string, values []float64, o SparklineOptions) ui.Element {
 	k := pixel.K(c)
 	w := pixel.Or("Sparkline Width", o.Width, 48)
 	if len(values) < 2 {

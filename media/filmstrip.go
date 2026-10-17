@@ -12,7 +12,7 @@ type FilmstripOptions struct {
 }
 
 // Filmstrip lays a sprite's frames on film with sprocket holes.
-func Filmstrip(c *ui.Context, text string, sp *pixel.Sprite, o FilmstripOptions) *ui.Element {
+func Filmstrip(c *ui.Context, text string, sp *pixel.Sprite, o FilmstripOptions) ui.Element {
 	k := pixel.K(c)
 	s := scale("Filmstrip", o.Scale, 2)
 	n := sp.Frames()

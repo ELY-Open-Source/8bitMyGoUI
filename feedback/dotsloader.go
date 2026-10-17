@@ -9,7 +9,7 @@ import (
 type DotsLoaderOptions struct{}
 
 // DotsLoader bounces three dots in turn.
-func DotsLoader(c *ui.Context, text string, o DotsLoaderOptions) *ui.Element {
+func DotsLoader(c *ui.Context, text string, o DotsLoaderOptions) ui.Element {
 	k := pixel.K(c)
 	return ui.Box(c).Role(ui.RoleProgress).Label(text).Size(k.D(18), k.D(8)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)

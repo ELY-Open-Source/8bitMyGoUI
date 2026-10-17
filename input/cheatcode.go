@@ -17,7 +17,7 @@ type CheatCodeOptions struct {
 }
 
 type CheatCodeResult struct {
-	Element  *ui.Element
+	Element  ui.Element
 	Unlocked bool
 }
 
@@ -38,7 +38,7 @@ func CheatCode(c *ui.Context, text string, o CheatCodeOptions) CheatCodeResult {
 	if seq == nil {
 		seq = konami
 	}
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleGroup).Label(text).Disabled(o.Disabled)
 	})
 	s := ui.Local(base, cheatKey{}, func() cheat { return cheat{} })

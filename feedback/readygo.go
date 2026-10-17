@@ -15,7 +15,7 @@ type ReadyGoOptions struct {
 }
 
 type ReadyGoResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Done comes once, as GO! shows.
 	Done bool
 }

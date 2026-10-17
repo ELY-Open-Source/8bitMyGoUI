@@ -18,7 +18,7 @@ type StepSequencerOptions struct {
 }
 
 type StepSequencerResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 	// Step is the playhead, 0–15, or -1 when stopped.
 	Step int

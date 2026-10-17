@@ -22,7 +22,7 @@ type Effect struct {
 type StatusEffectsOptions struct{}
 
 // StatusEffects rows effect icons: buffs edged Good, debuffs Bad.
-func StatusEffects(c *ui.Context, text string, effects []Effect, o StatusEffectsOptions) *ui.Element {
+func StatusEffects(c *ui.Context, text string, effects []Effect, o StatusEffectsOptions) ui.Element {
 	k := pixel.K(c)
 	parts := make([]string, len(effects))
 	for i, ef := range effects {

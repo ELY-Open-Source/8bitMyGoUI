@@ -12,7 +12,7 @@ type KeyValueOptions struct {
 }
 
 // KeyValue joins key and value with a dotted leader.
-func KeyValue(c *ui.Context, key, value string, o KeyValueOptions) *ui.Element {
+func KeyValue(c *ui.Context, key, value string, o KeyValueOptions) ui.Element {
 	k := pixel.K(c)
 	kw, vw := pixel.Measure(key), pixel.Measure(value)
 	return ui.Box(c).FillWidth().MinWidth(k.D(kw + vw + 8)).Height(k.D(pixel.LineHeight)).Role(ui.RoleText).Label(key + " " + value).Draw(func(p *ui.Painter, r ui.Rect) {

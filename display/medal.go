@@ -30,7 +30,7 @@ type MedalOptions struct {
 }
 
 // Medal is a ribboned medal showing its rank.
-func Medal(c *ui.Context, r Rank, o MedalOptions) *ui.Element {
+func Medal(c *ui.Context, r Rank, o MedalOptions) ui.Element {
 	if r > Bronze {
 		panic(fmt.Sprintf("display: unknown Rank %d", r))
 	}

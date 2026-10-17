@@ -19,7 +19,7 @@ type MentionInputOptions struct {
 }
 
 type MentionInputResult struct {
-	Element                      *ui.Element
+	Element                      ui.Element
 	Changed, Submitted, Accepted bool
 	// Mentioned is the member just completed, else empty.
 	Mentioned string

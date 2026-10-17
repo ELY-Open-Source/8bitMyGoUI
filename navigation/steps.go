@@ -38,7 +38,7 @@ var waving = pixel.MustSprite(`
 type StepsOptions struct{}
 
 // Steps are flags on a path: done, waving, then locked.
-func Steps(c *ui.Context, labels []string, current int, o StepsOptions) *ui.Element {
+func Steps(c *ui.Context, labels []string, current int, o StepsOptions) ui.Element {
 	k := pixel.K(c)
 	if current < 0 || current >= len(labels) {
 		panic(fmt.Sprintf("navigation: step %d of %d", current, len(labels)))

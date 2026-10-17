@@ -18,7 +18,7 @@ type ToggleGroupOptions struct {
 }
 
 type ToggleGroupResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -34,7 +34,7 @@ func ToggleGroup(c *ui.Context, labels []string, on []bool, o ToggleGroupOptions
 		for i, l := range labels {
 			// The base turns before it learns it is off.
 			v := on[i]
-			shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.ToggleBase(c, &v).Label(l).Disabled(o.Disabled) })
+			shell, base, st := pixel.Shell(c, func() ui.Element { return ui.ToggleBase(c, &v).Label(l).Disabled(o.Disabled) })
 			if i > 0 {
 				shell.Margin(0, 0, 0, k.D(-1))
 			}

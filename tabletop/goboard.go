@@ -23,7 +23,7 @@ type GoBoardOptions struct {
 }
 
 type GoBoardResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Placed is the point played this frame, else -1.
 	Placed int
 }

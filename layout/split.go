@@ -20,7 +20,7 @@ type SplitOptions struct {
 }
 
 type SplitResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -28,7 +28,7 @@ type SplitResult struct {
 func Split(c *ui.Context, size *int, o SplitOptions, first, second func()) SplitResult {
 	k := pixel.K(c)
 	least := pixel.Or("Split Min", o.Min, 24)
-	var e *ui.Element
+	var e ui.Element
 	var total float32
 	back, fwd := ui.KeyLeft, ui.KeyRight
 	if o.Vertical {
@@ -47,7 +47,7 @@ func Split(c *ui.Context, size *int, o SplitOptions, first, second func()) Split
 	start := *size
 	e.AlignItems(ui.Stretch).Children(func() {
 		pane := ui.Box(c).Clip().Children(first)
-		shell, base, st := pixel.Shell(c, func() *ui.Element {
+		shell, base, st := pixel.Shell(c, func() ui.Element {
 			cur := ui.CursorResizeEW
 			if o.Vertical {
 				cur = ui.CursorResizeNS

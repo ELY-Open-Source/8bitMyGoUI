@@ -15,7 +15,7 @@ type HighlightOptions struct {
 }
 
 // Highlight marks each match of query in s, ignoring case.
-func Highlight(c *ui.Context, s, query string, o HighlightOptions) *ui.Element {
+func Highlight(c *ui.Context, s, query string, o HighlightOptions) ui.Element {
 	k := pixel.K(c)
 	mark := slotOr(o.Mark, pixel.Warn)
 	rs := []rune(s)

@@ -24,7 +24,7 @@ type pictureCache struct {
 }
 
 // Picture reduces img to the palette with Bayer dither.
-func Picture(c *ui.Context, img image.Image, o PictureOptions) *ui.Element {
+func Picture(c *ui.Context, img image.Image, o PictureOptions) ui.Element {
 	k := pixel.K(c)
 	b := img.Bounds()
 	w, h := pixel.Or("Picture W", o.W, b.Dx()), pixel.Or("Picture H", o.H, b.Dy())

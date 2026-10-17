@@ -15,7 +15,7 @@ type JoystickOptions struct {
 }
 
 type JoystickResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// X and Y are in −1…1; Y grows downward.
 	X, Y  float64
 	Moved bool
@@ -38,7 +38,7 @@ const (
 // Joystick drags a knob in a ring; arrows nudge it.
 func Joystick(c *ui.Context, text string, o JoystickOptions) JoystickResult {
 	k := pixel.K(c)
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleGroup).Label(text).Disabled(o.Disabled)
 	})
 	s := ui.Local(base, stickKey{}, func() stick { return stick{} })

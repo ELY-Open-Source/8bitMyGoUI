@@ -17,7 +17,7 @@ type InfiniteListOptions struct {
 }
 
 type InfiniteListResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// More asks for rows past the n there are.
 	More bool
 }
@@ -42,7 +42,7 @@ func InfiniteList(c *ui.Context, text string, n int, o InfiniteListOptions, row 
 	if o.Done {
 		rows = n
 	}
-	var e *ui.Element
+	var e ui.Element
 	box.Children(func() {
 		e = ui.List(c, &s.list, rows, pixel.Lazy(c, func(i int) {
 			if i < n {

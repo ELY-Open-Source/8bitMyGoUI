@@ -26,7 +26,7 @@ type VendingMachineOptions struct {
 }
 
 type VendingMachineResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Vended is the slot dropped this frame, else -1.
 	Vended int
 }

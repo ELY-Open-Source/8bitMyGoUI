@@ -39,7 +39,7 @@ func scale(name string, s, def int) int {
 }
 
 // art is a named picture w by h dots.
-func art(c *ui.Context, k pixel.Kit, label string, w, h int) *ui.Element {
+func art(c *ui.Context, k pixel.Kit, label string, w, h int) ui.Element {
 	if label == "" {
 		panic("media: a picture needs a name")
 	}
@@ -75,7 +75,7 @@ type turn struct {
 }
 
 // turned counts steps while playing; stopped, it holds still.
-func turned(c *ui.Context, k pixel.Kit, e *ui.Element, playing bool, fps int) int {
+func turned(c *ui.Context, k pixel.Kit, e ui.Element, playing bool, fps int) int {
 	s := ui.Local(e, turnKey{}, func() turn { return turn{} })
 	on := playing && !k.Reduce()
 	if on {

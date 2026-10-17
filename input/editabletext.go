@@ -17,7 +17,7 @@ type EditableTextOptions struct {
 }
 
 type EditableTextResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -41,7 +41,7 @@ func EditableText(c *ui.Context, text string, value *string, o EditableTextOptio
 	box.Children(func() {
 		if s.on {
 			ed, e := field(c, &s.draft, pixel.EditorOptions{Label: text, Placeholder: o.Placeholder}, w, nil, nil, nil)
-			ed.Input.AutoFocus()
+			pixel.AutoFocus(c, ed.Input)
 			// Keys reach the wrapper; the editor's state gates them.
 			on := !ed.Input.IsDisabled()
 			enter, escape := on && pixel.Shortcut(e, 0, ui.KeyEnter), on && pixel.Shortcut(e, 0, ui.KeyEscape)
@@ -54,7 +54,7 @@ func EditableText(c *ui.Context, text string, value *string, o EditableTextOptio
 			}
 			return
 		}
-		shell, base, st := pixel.Shell(c, func() *ui.Element {
+		shell, base, st := pixel.Shell(c, func() ui.Element {
 			return ui.Box(c).Focusable().Role(ui.RoleButton).Label(text).Description(*value).Disabled(o.Disabled)
 		})
 		if s.refocus {

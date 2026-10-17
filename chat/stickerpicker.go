@@ -14,7 +14,7 @@ type StickerPickerOptions struct {
 }
 
 type StickerPickerResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Picked is the sticker chosen this frame, else empty.
 	Picked string
 }

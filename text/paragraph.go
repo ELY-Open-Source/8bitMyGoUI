@@ -25,7 +25,7 @@ type ParagraphOptions struct {
 }
 
 // Paragraph wraps s at the width it had last frame.
-func Paragraph(c *ui.Context, s string, o ParagraphOptions) *ui.Element {
+func Paragraph(c *ui.Context, s string, o ParagraphOptions) ui.Element {
 	k := pixel.K(c)
 	gap := pixel.Or("Paragraph Gap", o.Gap, 0)
 	if o.Align > Right {

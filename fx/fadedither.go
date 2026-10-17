@@ -12,7 +12,7 @@ type FadeDitherOptions struct {
 }
 
 // FadeDither covers content through Bayer levels, or uncovers it.
-func FadeDither(c *ui.Context, covered bool, o FadeDitherOptions, content func()) *ui.Element {
+func FadeDither(c *ui.Context, covered bool, o FadeDitherOptions, content func()) ui.Element {
 	k := pixel.K(c)
 	s := slotOr(o.Slot, dark(k))
 	e := ui.Column(c)

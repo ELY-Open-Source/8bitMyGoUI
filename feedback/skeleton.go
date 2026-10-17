@@ -16,7 +16,7 @@ type SkeletonOptions struct {
 }
 
 // Skeleton stands in for content; a dithered shine sweeps it.
-func Skeleton(c *ui.Context, o SkeletonOptions) *ui.Element {
+func Skeleton(c *ui.Context, o SkeletonOptions) ui.Element {
 	k := pixel.K(c)
 	n := pixel.Or("Skeleton Lines", o.Lines, 3)
 	w := pixel.Or("Skeleton Width", o.Width, 160)

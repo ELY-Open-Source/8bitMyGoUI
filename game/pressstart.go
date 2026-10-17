@@ -13,7 +13,7 @@ type PressStartOptions struct {
 }
 
 type PressStartResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Pressed bool
 }
 
@@ -21,7 +21,7 @@ type PressStartResult struct {
 func PressStart(c *ui.Context, o PressStartOptions) PressStartResult {
 	k := pixel.K(c)
 	s := k.Msg("press_start")
-	shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.ButtonBase(c).Label(s).Disabled(o.Disabled) })
+	shell, base, st := pixel.Shell(c, func() ui.Element { return ui.ButtonBase(c).Label(s).Disabled(o.Disabled) })
 	res := PressStartResult{Element: shell, Pressed: base.Clicked()}
 	if res.Pressed {
 		slog.Debug("8bit: press start")

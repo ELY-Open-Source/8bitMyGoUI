@@ -23,7 +23,7 @@ type CompassOptions struct {
 }
 
 // Compass is a heading strip with letters and markers.
-func Compass(c *ui.Context, text string, heading float64, marks []Bearing, o CompassOptions) *ui.Element {
+func Compass(c *ui.Context, text string, heading float64, marks []Bearing, o CompassOptions) ui.Element {
 	k := pixel.K(c)
 	for _, v := range append([]float64{heading}, bearings(marks)...) {
 		if math.IsNaN(v) || math.IsInf(v, 0) {

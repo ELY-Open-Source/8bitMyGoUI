@@ -19,7 +19,7 @@ type RunDialogOptions struct {
 }
 
 type RunDialogResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Canceled is CANCEL, the close box or Escape.
 	Changed, Submitted, Canceled bool
 }

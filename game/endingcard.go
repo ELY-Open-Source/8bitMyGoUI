@@ -16,7 +16,7 @@ type EndingCardOptions struct {
 }
 
 // EndingCard dithers THE END in, step by step.
-func EndingCard(c *ui.Context, o EndingCardOptions) *ui.Element {
+func EndingCard(c *ui.Context, o EndingCardOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := pixel.Or("EndingCard Width", o.Width, 200), pixel.Or("EndingCard Height", o.Height, 80)
 	s := k.Msg("the_end")

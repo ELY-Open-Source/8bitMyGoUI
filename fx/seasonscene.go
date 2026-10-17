@@ -15,14 +15,14 @@ type SeasonSceneOptions struct {
 }
 
 // SeasonScene paints a season at an hour, in its palette.
-func SeasonScene(c *ui.Context, season pixel.Season, hour int, o SeasonSceneOptions) *ui.Element {
+func SeasonScene(c *ui.Context, season pixel.Season, hour int, o SeasonSceneOptions) ui.Element {
 	checkHour("SeasonScene", hour)
 	if season > pixel.Winter {
 		panic(fmt.Sprintf("fx: SeasonScene season %d", season))
 	}
 	s := pixel.Current(c)
 	s.Palette = pixel.Find(season, hour < 6 || hour >= 18)
-	var e *ui.Element
+	var e ui.Element
 	pixel.Scope(c, s, func() {
 		k := pixel.K(c)
 		w, h := size("SeasonScene", o.Width, o.Height, 160, 96)

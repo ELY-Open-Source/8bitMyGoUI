@@ -15,7 +15,7 @@ type ATBGaugeOptions struct {
 }
 
 // ATBGauge fills as a turn nears; full, it flashes READY.
-func ATBGauge(c *ui.Context, text string, value float64, o ATBGaugeOptions) *ui.Element {
+func ATBGauge(c *ui.Context, text string, value float64, o ATBGaugeOptions) ui.Element {
 	k := pixel.K(c)
 	if !(value >= 0 && value <= 1) {
 		panic(fmt.Sprintf("game: ATBGauge value %v outside 0–1", value))

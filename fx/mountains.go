@@ -13,7 +13,7 @@ type MountainsOptions struct {
 }
 
 // Mountains scroll three ridges: far ones slow, near ones quick.
-func Mountains(c *ui.Context, o MountainsOptions) *ui.Element {
+func Mountains(c *ui.Context, o MountainsOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := size("Mountains", o.Width, o.Height, 160, 96)
 	return box(c, k, o.Label, w, h).Draw(func(p *ui.Painter, r ui.Rect) {

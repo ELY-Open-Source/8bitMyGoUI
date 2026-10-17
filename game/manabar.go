@@ -14,7 +14,7 @@ type ManaBarOptions struct {
 }
 
 // ManaBar shows mp of full, ticked every few points.
-func ManaBar(c *ui.Context, text string, mp, full int, o ManaBarOptions) *ui.Element {
+func ManaBar(c *ui.Context, text string, mp, full int, o ManaBarOptions) ui.Element {
 	k := pixel.K(c)
 	amount("ManaBar mp", mp, full)
 	w := pixel.Or("ManaBar Width", o.Width, 96)

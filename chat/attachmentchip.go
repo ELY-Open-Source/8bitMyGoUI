@@ -21,7 +21,7 @@ type AttachmentChipOptions struct {
 }
 
 type AttachmentChipResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Removed bool
 }
 

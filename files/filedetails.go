@@ -16,7 +16,7 @@ type FileDetailsOptions struct {
 }
 
 // FileDetails shows a file's icon, name, kind, size and dates.
-func FileDetails(c *ui.Context, f File, o FileDetailsOptions) *ui.Element {
+func FileDetails(c *ui.Context, f File, o FileDetailsOptions) ui.Element {
 	k := pixel.K(c)
 	check("FileDetails", f)
 	return ui.Column(c).Width(k.D(pixel.Or("FileDetails Width", o.Width, 220))).Gap(k.D(6)).Role(ui.RoleGroup).Label(f.Name).Children(func() {

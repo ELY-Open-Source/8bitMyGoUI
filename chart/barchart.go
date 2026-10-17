@@ -17,7 +17,7 @@ type BarChartOptions struct {
 }
 
 // BarChart stands bars on micro-font axes; hover reads a value.
-func BarChart(c *ui.Context, text string, labels []string, values []float64, o BarChartOptions) *ui.Element {
+func BarChart(c *ui.Context, text string, labels []string, values []float64, o BarChartOptions) ui.Element {
 	k := pixel.K(c)
 	if len(labels) != len(values) || len(values) == 0 {
 		panic(fmt.Sprintf("chart: BarChart has %d labels for %d values", len(labels), len(values)))

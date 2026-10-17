@@ -14,7 +14,7 @@ type PlayerSelectOptions struct {
 }
 
 type PlayerSelectResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Chosen is Enter, Space or a click on a row.
 	Changed, Chosen bool
 }

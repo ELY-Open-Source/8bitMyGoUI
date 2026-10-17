@@ -14,7 +14,7 @@ type CheckboxGroupOptions struct {
 }
 
 type CheckboxGroupResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -38,7 +38,7 @@ func CheckboxGroup(c *ui.Context, text string, items []string, checked []bool, o
 	all := count(checked) == len(checked) && len(checked) > 0
 	res := CheckboxGroupResult{}
 	res.Element = ui.Column(c).Gap(k.D(2)).Role(ui.RoleGroup).Children(func() {
-		shell, base, st := pixel.Shell(c, func() *ui.Element {
+		shell, base, st := pixel.Shell(c, func() ui.Element {
 			return ui.CheckboxBase(c, &all).Label(text).Disabled(o.Disabled)
 		})
 		shell.Size(k.D(12+pixel.Measure(text)), k.D(pixel.LineHeight)).Draw(func(p *ui.Painter, r ui.Rect) {

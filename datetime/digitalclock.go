@@ -16,7 +16,7 @@ type DigitalClockOptions struct {
 }
 
 // DigitalClock shows HH:MM:SS in seven segments; colons blink.
-func DigitalClock(c *ui.Context, o DigitalClockOptions) *ui.Element {
+func DigitalClock(c *ui.Context, o DigitalClockOptions) ui.Element {
 	k := pixel.K(c)
 	sc := pixel.Or("DigitalClock Scale", o.Scale, 2)
 	if sc > 4 {

@@ -16,7 +16,7 @@ type NotificationBellOptions struct {
 }
 
 type NotificationBellResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Clicked bool
 }
 
@@ -34,7 +34,7 @@ func NotificationBell(c *ui.Context, text string, n int, o NotificationBellOptio
 	if n < 0 {
 		panic(fmt.Sprintf("chat: NotificationBell count %d", n))
 	}
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.ButtonBase(c).Label(text).Description(fmt.Sprintf(k.Msg("new_count"), n)).Disabled(o.Disabled).FocusRing(false)
 	})
 	s := ui.Local(shell, bellKey{}, func() bellState { return bellState{last: n} })

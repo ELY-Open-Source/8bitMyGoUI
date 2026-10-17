@@ -19,7 +19,7 @@ type DiskDefragOptions struct {
 }
 
 type DiskDefragResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Done is the frame the last block falls in place.
 	Done bool
 }

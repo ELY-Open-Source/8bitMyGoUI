@@ -23,7 +23,7 @@ type EditorOptions struct {
 
 type Edit struct {
 	// Element is laid out; Input takes the focus.
-	Element, Input              *ui.Element
+	Element, Input              ui.Element
 	Changed, Submitted, Focused bool
 	// Line is the caret's line, from 0.
 	Line int
@@ -53,7 +53,7 @@ func Editor(c *ui.Context, value *string, o EditorOptions) Edit {
 	if o.EnterSends && !o.Multiline {
 		panic("pixel: EnterSends needs a multi-line field")
 	}
-	shell, base, _ := Shell(c, func() *ui.Element {
+	shell, base, _ := Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleTextField).Label(o.Label).Disabled(o.Disabled)
 	})
 	s := ui.Local(base, editKey{}, func() editState { return editState{} })
@@ -73,7 +73,7 @@ func Editor(c *ui.Context, value *string, o EditorOptions) Edit {
 		base.Description(*value)
 	}
 	width, check := WrapWidth(c, shell)
-	env := editEnv{multi: o.Multiline, sends: o.EnterSends, maxLen: o.MaxLength, mask: o.Mask, width: width, dot: k.dot, read: c.ReadClipboard, write: func(v string) { s.clip, s.clipped = v, true }}
+	env := editEnv{multi: o.Multiline, sends: o.EnterSends, maxLen: o.MaxLength, mask: o.Mask, width: width, dot: k.dot, read: c.Services().ReadClipboard, write: func(v string) { s.clip, s.clipped = v, true }}
 	shown := s.view(o.Mask, true)
 	caret := s.caret + s.composeCaret
 	lines := editLayout(shown, width, o.Multiline)

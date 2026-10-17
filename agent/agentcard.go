@@ -24,7 +24,7 @@ type AgentCardOptions struct {
 const cardW, cardH = 136, 48
 
 // AgentCard is a party card: class, level, context as HP.
-func AgentCard(c *ui.Context, a Agent, o AgentCardOptions) *ui.Element {
+func AgentCard(c *ui.Context, a Agent, o AgentCardOptions) ui.Element {
 	k := pixel.K(c)
 	if a.Name == "" || a.Class == "" || a.Level < 1 || a.Window < 1 || a.Used < 0 || a.Used > a.Window {
 		panic(fmt.Sprintf("agent: AgentCard %q, %q, LV %d, %d of %d tokens", a.Name, a.Class, a.Level, a.Used, a.Window))

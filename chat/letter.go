@@ -14,7 +14,7 @@ type LetterOptions struct {
 }
 
 // Letter sets a body on parchment with a signature.
-func Letter(c *ui.Context, body string, o LetterOptions) *ui.Element {
+func Letter(c *ui.Context, body string, o LetterOptions) ui.Element {
 	k := pixel.K(c)
 	w := pixel.Or("Letter Width", o.Width, 180)
 	if w < 40 {

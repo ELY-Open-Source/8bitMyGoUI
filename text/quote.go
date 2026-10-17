@@ -18,7 +18,7 @@ type QuoteOptions struct {
 }
 
 // Quote is a block quote with bar, mark and cite.
-func Quote(c *ui.Context, s string, o QuoteOptions) *ui.Element {
+func Quote(c *ui.Context, s string, o QuoteOptions) ui.Element {
 	k := pixel.K(c)
 	return ui.Row(c).Gap(k.D(6)).AlignItems(ui.Stretch).Role(ui.RoleGroup).Children(func() {
 		ui.Box(c).Width(k.D(2)).Draw(func(p *ui.Painter, r ui.Rect) {

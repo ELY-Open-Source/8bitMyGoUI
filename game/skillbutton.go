@@ -16,7 +16,7 @@ type SkillButtonOptions struct {
 }
 
 type SkillButtonResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Clicked is a press while the skill is ready.
 	Clicked bool
 }
@@ -27,7 +27,7 @@ func SkillButton(c *ui.Context, text string, sprite *pixel.Sprite, key string, c
 	if sprite == nil || !(cooldown >= 0 && cooldown <= 1) || !pixel.MicroOK(key) {
 		panic(fmt.Sprintf("game: SkillButton %q needs a sprite, a micro key %q, a cooldown in 0–1 (%v)", text, key, cooldown))
 	}
-	shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.ButtonBase(c).Label(text).Disabled(o.Disabled) })
+	shell, base, st := pixel.Shell(c, func() ui.Element { return ui.ButtonBase(c).Label(text).Disabled(o.Disabled) })
 	res := SkillButtonResult{Element: shell, Clicked: base.Clicked() && cooldown == 0}
 	if res.Clicked {
 		slog.Debug("8bit: skill", "label", text)

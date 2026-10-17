@@ -16,7 +16,7 @@ type ConfettiOptions struct {
 var confettiSlots = []pixel.Slot{pixel.Accent, pixel.Good, pixel.Warn, pixel.Bad, pixel.Info, pixel.Magic}
 
 // Confetti tumbles bits of every color down, turning.
-func Confetti(c *ui.Context, o ConfettiOptions) *ui.Element {
+func Confetti(c *ui.Context, o ConfettiOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := size("Confetti", o.Width, o.Height, 160, 96)
 	return box(c, k, o.Label, w, h).Draw(func(p *ui.Painter, r ui.Rect) {

@@ -16,7 +16,7 @@ type WindowOptions struct {
 }
 
 // Window is a beveled window with an optional title tab.
-func Window(c *ui.Context, o WindowOptions, children func()) *ui.Element {
+func Window(c *ui.Context, o WindowOptions, children func()) ui.Element {
 	k := pixel.K(c)
 	pad := 3 + pixel.Or("Window Padding", o.Padding, 6)
 	top := 0

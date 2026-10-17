@@ -15,7 +15,7 @@ type RainbowTextOptions struct {
 }
 
 // RainbowText gives each character the next slot of a band.
-func RainbowText(c *ui.Context, s string, o RainbowTextOptions) *ui.Element {
+func RainbowText(c *ui.Context, s string, o RainbowTextOptions) ui.Element {
 	k, sc := pixel.K(c), scale(o.Scale)
 	band := o.Band
 	if len(band) == 0 {

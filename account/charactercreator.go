@@ -113,7 +113,7 @@ type CharacterCreatorOptions struct {
 }
 
 type CharacterCreatorResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

@@ -21,7 +21,7 @@ type CandlestickOptions struct {
 }
 
 // Candlestick draws wicks and bodies: up Good, down Bad.
-func Candlestick(c *ui.Context, text string, candles []Candle, o CandlestickOptions) *ui.Element {
+func Candlestick(c *ui.Context, text string, candles []Candle, o CandlestickOptions) ui.Element {
 	k := pixel.K(c)
 	if len(candles) == 0 {
 		panic("chart: Candlestick has no candles")

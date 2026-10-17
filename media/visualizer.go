@@ -16,7 +16,7 @@ type VisualizerOptions struct {
 }
 
 // Visualizer mirrors each level, 0 to 1, about the middle.
-func Visualizer(c *ui.Context, text string, levels []float64, o VisualizerOptions) *ui.Element {
+func Visualizer(c *ui.Context, text string, levels []float64, o VisualizerOptions) ui.Element {
 	k := pixel.K(c)
 	if len(levels) == 0 {
 		panic("media: Visualizer has no levels")

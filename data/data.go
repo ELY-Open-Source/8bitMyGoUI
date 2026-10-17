@@ -28,7 +28,7 @@ var (
 )
 
 // well sinks box and finishes it as st says.
-func well(c *ui.Context, box *ui.Element, st pixel.State) {
+func well(c *ui.Context, box ui.Element, st pixel.State) {
 	k := pixel.K(c)
 	box.Padding(k.D(2)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)

@@ -23,7 +23,7 @@ type DiffScrollOptions struct {
 }
 
 // DiffScroll unrolls a parchment of changed files, lines counted.
-func DiffScroll(c *ui.Context, text string, files []FileDiff, o DiffScrollOptions) *ui.Element {
+func DiffScroll(c *ui.Context, text string, files []FileDiff, o DiffScrollOptions) ui.Element {
 	k := pixel.K(c)
 	if len(files) == 0 {
 		panic("agent: DiffScroll has no files")

@@ -20,7 +20,7 @@ type ApprovalPromptOptions struct {
 }
 
 type ApprovalPromptResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Allowed or Denied is the answer given this frame.
 	Allowed, Denied bool
 }
@@ -81,7 +81,7 @@ func ApprovalPrompt(c *ui.Context, text, command string, o ApprovalPromptOptions
 }
 
 // sprite is a 12-dot icon, unnamed, in ink.
-func sprite(c *ui.Context, k pixel.Kit, sp *pixel.Sprite, ink pixel.Slot) *ui.Element {
+func sprite(c *ui.Context, k pixel.Kit, sp *pixel.Sprite, ink pixel.Slot) ui.Element {
 	return ui.Box(c).Size(k.D(sp.W), k.D(sp.H)).Role(ui.RoleNone).Draw(func(p *ui.Painter, r ui.Rect) {
 		k.Canvas(p, r).Sprite(0, 0, sp, 0, ink, 1)
 	})

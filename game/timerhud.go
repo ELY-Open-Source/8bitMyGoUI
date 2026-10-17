@@ -13,7 +13,7 @@ import (
 type TimerHUDOptions struct{}
 
 // TimerHUD shows TIME in seconds; under 30 it blinks red.
-func TimerHUD(c *ui.Context, left time.Duration, o TimerHUDOptions) *ui.Element {
+func TimerHUD(c *ui.Context, left time.Duration, o TimerHUDOptions) ui.Element {
 	k := pixel.K(c)
 	if left < 0 {
 		panic(fmt.Sprintf("game: TimerHUD %v left", left))

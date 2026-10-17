@@ -17,7 +17,7 @@ type TextOptions struct {
 }
 
 // Text is a pixel-font label that screen readers read.
-func Text(c *ui.Context, s string, o TextOptions) *ui.Element {
+func Text(c *ui.Context, s string, o TextOptions) ui.Element {
 	k := K(c)
 	scale := scaleOr1(o.Scale)
 	e := ui.Box(c).Label(s).Role(ui.RoleText)
@@ -65,7 +65,7 @@ func Wrap(s string, width, maxLines int) []string {
 type wrapKey struct{}
 
 // WrapWidth is e's last painted width; Draw must call check.
-func WrapWidth(c *ui.Context, e *ui.Element) (int, func(r ui.Rect)) {
+func WrapWidth(c *ui.Context, e ui.Element) (int, func(r ui.Rect)) {
 	dot := K(c).dot
 	w := ui.Local(e, wrapKey{}, func() int { return 0 })
 	used := *w
@@ -89,7 +89,7 @@ func scaleOr1(s int) int {
 type State struct{ Hover, Press, Focus, Disabled bool }
 
 // Shell wraps base in an enabled box that paints.
-func Shell(c *ui.Context, base func() *ui.Element) (shell, b *ui.Element, st State) {
+func Shell(c *ui.Context, base func() ui.Element) (shell, b ui.Element, st State) {
 	shell = ui.Box(c)
 	shell.Children(func() { b = base().Fill().FocusRing(false) })
 	own, inert := b.IsDisabled(), current(c).cur.Inert
@@ -103,7 +103,7 @@ func Shell(c *ui.Context, base func() *ui.Element) (shell, b *ui.Element, st Sta
 }
 
 // Shortcut is e's key this frame, while e is enabled.
-func Shortcut(e *ui.Element, mods ui.Modifiers, key ui.Key) bool {
+func Shortcut(e ui.Element, mods ui.Modifiers, key ui.Key) bool {
 	// MyGo still hands keys to a base just turned off.
 	return e.Shortcut(mods, key) && !e.IsDisabled()
 }
@@ -111,10 +111,10 @@ func Shortcut(e *ui.Element, mods ui.Modifiers, key ui.Key) bool {
 type parkKey struct{}
 
 // Park moves focus off e while off, back once on.
-func Park(c *ui.Context, e *ui.Element, off bool) {
+func Park(c *ui.Context, e ui.Element, off bool) {
 	parked := ui.Local(e, parkKey{}, func() bool { return false })
 	spot := c.Root()
-	if h := current(c).harbor; h != nil {
+	if h := current(c).harbor; h.Valid() {
 		spot = h
 	}
 	switch {
@@ -130,8 +130,20 @@ func Park(c *ui.Context, e *ui.Element, off bool) {
 	}
 }
 
+type autoKey struct{}
+
+// AutoFocus focuses e as it appears, after overlays note openers.
+func AutoFocus(c *ui.Context, e ui.Element) {
+	first := false
+	h := ui.Local(e, autoKey{}, func() ui.Handle { first = true; return ui.Handle{} })
+	e.Bind(h)
+	if first {
+		h.Focus(c)
+	}
+}
+
 // Harbor keeps focus in e while controls in fn rest.
-func Harbor(c *ui.Context, e *ui.Element, fn func()) {
+func Harbor(c *ui.Context, e ui.Element, fn func()) {
 	f := current(c)
 	prev := f.harbor
 	f.harbor = e

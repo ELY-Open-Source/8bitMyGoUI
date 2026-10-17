@@ -13,7 +13,7 @@ type CloudsOptions struct {
 }
 
 // Clouds drift by: far ones slowly, near ones faster.
-func Clouds(c *ui.Context, o CloudsOptions) *ui.Element {
+func Clouds(c *ui.Context, o CloudsOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := size("Clouds", o.Width, o.Height, 160, 96)
 	return box(c, k, o.Label, w, h).Draw(func(p *ui.Painter, r ui.Rect) {

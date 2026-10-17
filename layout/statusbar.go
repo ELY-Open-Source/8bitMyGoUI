@@ -9,7 +9,7 @@ import (
 type StatusBarOptions struct{}
 
 // StatusBar shows segments split by sunken dividers; the first grows.
-func StatusBar(c *ui.Context, segments []string, o StatusBarOptions) *ui.Element {
+func StatusBar(c *ui.Context, segments []string, o StatusBarOptions) ui.Element {
 	k := pixel.K(c)
 	return ui.Row(c).FillWidth().Height(k.D(pixel.LineHeight + 3)).AlignItems(ui.Stretch).Role(ui.RoleStatus).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)

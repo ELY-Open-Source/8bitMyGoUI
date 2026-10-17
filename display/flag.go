@@ -14,7 +14,7 @@ type FlagOptions struct {
 }
 
 // Flag waves on its pole, stepped at 6 fps.
-func Flag(c *ui.Context, o FlagOptions) *ui.Element {
+func Flag(c *ui.Context, o FlagOptions) ui.Element {
 	k, sc := pixel.K(c), scale(o.Scale)
 	cloth := slotOr(o.Slot, pixel.Bad)
 	return art(c, k, o.Label, 20*sc, 26*sc, func(g pixel.Canvas) {

@@ -47,11 +47,12 @@ func (k Kit) Now() time.Time    { return k.now }
 func (k Kit) Reduce() bool      { return k.reduce }
 
 type frame struct {
-	cur    Settings
-	at     time.Time
+	cur Settings
+	// pass is the root of the pass Use ran in.
+	pass   ui.Element
 	typing bool
 	// harbor holds the focus of controls turning off.
-	harbor *ui.Element
+	harbor ui.Element
 }
 
 type frameKey struct{}
@@ -63,7 +64,7 @@ func Use(c *ui.Context, s Settings) {
 	if f.cur.Palette != s.Palette {
 		slog.Debug("8bit: palette", "name", s.Palette.Name)
 	}
-	f.cur, f.at, f.typing, f.harbor = s, c.Now(), false, nil
+	f.cur, f.pass, f.typing, f.harbor = s, c.Root(), false, ui.Element{}
 	c.SetTheme(theme(s.Palette))
 }
 
@@ -103,7 +104,7 @@ func frameOf(c *ui.Context) *frame {
 
 func current(c *ui.Context) *frame {
 	f := frameOf(c)
-	if !f.at.Equal(c.Now()) {
+	if f.pass != c.Root() {
 		panic("pixel: Use was not called in this frame")
 	}
 	return f

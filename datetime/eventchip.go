@@ -12,7 +12,7 @@ type EventChipOptions struct {
 }
 
 // EventChip is a small chip with time and title.
-func EventChip(c *ui.Context, e Event, o EventChipOptions) *ui.Element {
+func EventChip(c *ui.Context, e Event, o EventChipOptions) ui.Element {
 	k := pixel.K(c)
 	edge := o.Slot
 	if edge == 0 {

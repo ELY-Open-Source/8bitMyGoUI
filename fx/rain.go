@@ -13,7 +13,7 @@ type RainOptions struct {
 }
 
 // Rain slants streaks down; each splashes as it lands.
-func Rain(c *ui.Context, o RainOptions) *ui.Element {
+func Rain(c *ui.Context, o RainOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := size("Rain", o.Width, o.Height, 160, 96)
 	return box(c, k, o.Label, w, h).Draw(func(p *ui.Painter, r ui.Rect) {

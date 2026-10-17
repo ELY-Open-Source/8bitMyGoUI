@@ -14,7 +14,7 @@ type PageDotsOptions struct {
 }
 
 type PageDotsResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -22,7 +22,7 @@ type PageDotsResult struct {
 func PageDots(c *ui.Context, text string, page *int, total int, o PageDotsOptions) PageDotsResult {
 	k := pixel.K(c)
 	check(*page, total)
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleSlider).Label(text).Description(fmt.Sprintf("%d/%d", *page, total)).Disabled(o.Disabled)
 	})
 	old := *page

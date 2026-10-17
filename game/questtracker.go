@@ -12,7 +12,7 @@ import (
 type QuestTrackerOptions struct{}
 
 // QuestTracker lists a quest's objectives with counts, met ones ticked.
-func QuestTracker(c *ui.Context, q Quest, o QuestTrackerOptions) *ui.Element {
+func QuestTracker(c *ui.Context, q Quest, o QuestTrackerOptions) ui.Element {
 	k := pixel.K(c)
 	q.check()
 	w := icon.Star.W + 2 + pixel.Measure(q.Title)

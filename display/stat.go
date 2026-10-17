@@ -27,7 +27,7 @@ type StatOptions struct {
 }
 
 // Stat is a big value with a label and delta.
-func Stat(c *ui.Context, label, value string, o StatOptions) *ui.Element {
+func Stat(c *ui.Context, label, value string, o StatOptions) ui.Element {
 	k := pixel.K(c)
 	return ui.Column(c).Gap(k.D(1)).Role(ui.RoleGroup).Label(label).Children(func() {
 		pixel.Text(c, label, pixel.TextOptions{Slot: pixel.Faint})

@@ -18,7 +18,7 @@ type CurrencyConvertOptions struct {
 }
 
 type CurrencyConvertResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Converted is the gems bought this frame.
 	Converted int
 }

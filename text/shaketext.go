@@ -13,7 +13,7 @@ type ShakeTextOptions struct {
 }
 
 // ShakeText jitters each character a dot, seeded, at 12 fps.
-func ShakeText(c *ui.Context, s string, o ShakeTextOptions) *ui.Element {
+func ShakeText(c *ui.Context, s string, o ShakeTextOptions) ui.Element {
 	k, sc := pixel.K(c), scale(o.Scale)
 	return block(c, k, s, pixel.Measure(s)*sc+2, pixel.LineHeight*sc+2, func(g pixel.Canvas) {
 		step := g.Step(12)

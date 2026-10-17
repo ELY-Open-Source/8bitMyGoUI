@@ -10,7 +10,7 @@ import (
 )
 
 // box sizes an effect; a label makes it an image.
-func box(c *ui.Context, k pixel.Kit, label string, w, h int) *ui.Element {
+func box(c *ui.Context, k pixel.Kit, label string, w, h int) ui.Element {
 	e := ui.Box(c).Size(k.D(w), k.D(h))
 	if label != "" {
 		return e.Label(label).Role(ui.RoleImage)
@@ -87,7 +87,7 @@ func checkHour(name string, hour int) {
 }
 
 // cover draws over e's content, clipped to e.
-func cover(k pixel.Kit, e *ui.Element, draw func(g pixel.Canvas), content func()) *ui.Element {
+func cover(k pixel.Kit, e ui.Element, draw func(g pixel.Canvas), content func()) ui.Element {
 	return e.DrawOver(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)
 		g.Clip(0, 0, g.W, g.H, func() { draw(g) })

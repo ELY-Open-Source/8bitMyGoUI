@@ -29,7 +29,7 @@ type BubbleOptions struct {
 const tailLen = 5
 
 // Bubble is a speech bubble with a tail around children.
-func Bubble(c *ui.Context, o BubbleOptions, children func()) *ui.Element {
+func Bubble(c *ui.Context, o BubbleOptions, children func()) ui.Element {
 	if o.Tail > Right {
 		panic(fmt.Sprintf("display: unknown Side %d", o.Tail))
 	}

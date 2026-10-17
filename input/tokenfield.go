@@ -19,7 +19,7 @@ type TokenFieldOptions struct {
 }
 
 type TokenFieldResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

@@ -32,7 +32,7 @@ type TitleBarOptions struct {
 }
 
 type TitleBarResult struct {
-	Element  *ui.Element
+	Element  ui.Element
 	Close    bool
 	Minimize bool
 }
@@ -67,7 +67,7 @@ func TitleBar(c *ui.Context, title string, o TitleBarOptions) TitleBarResult {
 
 // windowBox is a framed button showing its glyph on hover.
 func windowBox(c *ui.Context, k pixel.Kit, glyph *pixel.Sprite, name string, disabled bool) bool {
-	shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.ButtonBase(c).Label(name).Disabled(disabled) })
+	shell, base, st := pixel.Shell(c, func() ui.Element { return ui.ButtonBase(c).Label(name).Disabled(disabled) })
 	shell.Size(k.D(11), k.D(11)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)
 		fill := pixel.Face

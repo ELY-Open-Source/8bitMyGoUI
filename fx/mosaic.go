@@ -19,7 +19,7 @@ type MosaicOptions struct {
 var blocks = [...]int{1, 2, 3, 4, 6, 8, 6, 4, 3, 2, 1}
 
 // Mosaic pixelates sp in growing blocks, then sharpens it again.
-func Mosaic(c *ui.Context, sp *pixel.Sprite, o MosaicOptions) *ui.Element {
+func Mosaic(c *ui.Context, sp *pixel.Sprite, o MosaicOptions) ui.Element {
 	k := pixel.K(c)
 	sc := scale("Mosaic", o.Scale, 1)
 	e := box(c, k, o.Label, sp.W*sc, sp.H*sc)

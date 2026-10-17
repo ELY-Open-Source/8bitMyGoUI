@@ -22,7 +22,7 @@ type ShortcutListOptions struct {
 }
 
 // ShortcutList pairs actions with their keycaps.
-func ShortcutList(c *ui.Context, label string, items []Shortcut, o ShortcutListOptions) *ui.Element {
+func ShortcutList(c *ui.Context, label string, items []Shortcut, o ShortcutListOptions) ui.Element {
 	k := pixel.K(c)
 	for _, it := range items {
 		if len(it.Keys) == 0 {

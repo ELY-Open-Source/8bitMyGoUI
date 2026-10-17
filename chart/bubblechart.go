@@ -16,7 +16,7 @@ type BubbleChartOptions struct {
 }
 
 // BubbleChart draws points as discs, area by Size.
-func BubbleChart(c *ui.Context, text string, points []Point, o BubbleChartOptions) *ui.Element {
+func BubbleChart(c *ui.Context, text string, points []Point, o BubbleChartOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := size("BubbleChart", o.Width, o.Height, 160, 80)
 	f := fitPoints(points, w, h, 8)

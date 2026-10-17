@@ -29,7 +29,7 @@ func rule(g pixel.Canvas, x, y, n int, vertical bool, on, off int, s pixel.Slot)
 type dragKey struct{}
 
 // drag is enabled e's pointer travel this frame, in dots.
-func drag(k pixel.Kit, e *ui.Element) (dx, dy int, ok bool) {
+func drag(k pixel.Kit, e ui.Element) (dx, dy int, ok bool) {
 	rest := ui.Local(e, dragKey{}, func() [2]float32 { return [2]float32{} })
 	fx, fy, ok := e.Dragged()
 	if !ok || e.IsDisabled() {

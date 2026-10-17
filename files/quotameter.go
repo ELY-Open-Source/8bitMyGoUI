@@ -33,7 +33,7 @@ var (
 )
 
 // QuotaMeter shows storage used as gems filling up.
-func QuotaMeter(c *ui.Context, text string, used, quota int64, o QuotaMeterOptions) *ui.Element {
+func QuotaMeter(c *ui.Context, text string, used, quota int64, o QuotaMeterOptions) ui.Element {
 	k := pixel.K(c)
 	n := pixel.Or("QuotaMeter Gems", o.Gems, 10)
 	if n > 40 || used < 0 || quota <= 0 {

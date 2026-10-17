@@ -17,7 +17,7 @@ type HeartsOptions struct {
 }
 
 // Hearts shows hp of full hearts, in quarters.
-func Hearts(c *ui.Context, text string, hp, full float64, o HeartsOptions) *ui.Element {
+func Hearts(c *ui.Context, text string, hp, full float64, o HeartsOptions) ui.Element {
 	k := pixel.K(c)
 	if full < 1 || full != math.Trunc(full) || !(hp >= 0 && hp <= full) || hp*4 != math.Trunc(hp*4) {
 		panic(fmt.Sprintf("game: Hearts %v of %v; hearts are whole, health in quarters", hp, full))

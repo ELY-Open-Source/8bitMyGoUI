@@ -14,7 +14,7 @@ type SpeechBubbleOptions struct {
 }
 
 // SpeechBubble shows who said what, when; tail their side.
-func SpeechBubble(c *ui.Context, m Message, o SpeechBubbleOptions) *ui.Element {
+func SpeechBubble(c *ui.Context, m Message, o SpeechBubbleOptions) ui.Element {
 	k := pixel.K(c)
 	w := pixel.Or("SpeechBubble Width", o.Width, 140)
 	// Yours sit right on Accent, written in AccentInk.

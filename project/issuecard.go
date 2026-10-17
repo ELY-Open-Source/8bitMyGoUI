@@ -26,7 +26,7 @@ type IssueCardOptions struct {
 }
 
 type IssueCardResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Clicked bool
 }
 
@@ -51,7 +51,7 @@ func IssueCard(c *ui.Context, is Issue, o IssueCardOptions) IssueCardResult {
 	w := pixel.Or("IssueCard Width", o.Width, 160)
 	lines := pixel.Wrap(is.Title, w-8, 2)
 	// The shell draws the card; the button stays bare.
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.ButtonBase(c).Label(is.ID + " " + is.Title).Disabled(o.Disabled)
 	})
 	base.Description(strings.Join(said, ", "))

@@ -15,7 +15,7 @@ type SeasonWheelOptions struct {
 }
 
 type SeasonWheelResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -32,7 +32,7 @@ func SeasonWheel(c *ui.Context, text string, season *pixel.Season, o SeasonWheel
 		panic(fmt.Sprintf("datetime: unknown Season %d", *season))
 	}
 	old := *season
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleRadioGroup).Label(text).Disabled(o.Disabled)
 	})
 	if pixel.Shortcut(base, 0, ui.KeyRight) || pixel.Shortcut(base, 0, ui.KeyDown) {

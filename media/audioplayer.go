@@ -24,7 +24,7 @@ type AudioPlayerOptions struct {
 }
 
 type AudioPlayerResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Changed is play, seek or volume; others are presses.
 	Changed, Stopped, Previous, Next bool
 }

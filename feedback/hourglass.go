@@ -29,7 +29,7 @@ var glass = []string{
 }
 
 // Hourglass drains in steps, then flips.
-func Hourglass(c *ui.Context, text string, o HourglassOptions) *ui.Element {
+func Hourglass(c *ui.Context, text string, o HourglassOptions) ui.Element {
 	k := pixel.K(c)
 	return ui.Box(c).Role(ui.RoleProgress).Label(text).Size(k.D(14), k.D(14)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)

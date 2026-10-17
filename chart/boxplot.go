@@ -27,7 +27,7 @@ func quartile(sorted []float64, q float64) float64 {
 }
 
 // BoxPlot boxes each group's quartiles; whiskers reach its ends.
-func BoxPlot(c *ui.Context, text string, groups []Series, o BoxPlotOptions) *ui.Element {
+func BoxPlot(c *ui.Context, text string, groups []Series, o BoxPlotOptions) ui.Element {
 	k := pixel.K(c)
 	if len(groups) == 0 {
 		panic("chart: BoxPlot has no groups")

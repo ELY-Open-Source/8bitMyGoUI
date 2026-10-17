@@ -31,7 +31,7 @@ type NotificationsOptions struct {
 
 type NotificationsResult struct {
 	// Element holds the cards on screen.
-	Element *ui.Element
+	Element ui.Element
 	// Dismissed is the card × closed this frame, or nil.
 	Dismissed *Notification
 }

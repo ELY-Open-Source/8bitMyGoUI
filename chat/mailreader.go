@@ -13,7 +13,7 @@ type MailReaderOptions struct {
 }
 
 // MailReader shows a mail's headers, a rule, its body.
-func MailReader(c *ui.Context, m Mail, o MailReaderOptions) *ui.Element {
+func MailReader(c *ui.Context, m Mail, o MailReaderOptions) ui.Element {
 	k := pixel.K(c)
 	w := pixel.Or("MailReader Width", o.Width, 220)
 	return ui.Column(c).Width(k.D(w)).Gap(k.D(4)).Children(func() {

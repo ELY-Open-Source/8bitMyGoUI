@@ -63,7 +63,7 @@ type GemOptions struct {
 }
 
 // Gem is a cut gem by rarity, sparkling in steps.
-func Gem(c *ui.Context, r Rarity, o GemOptions) *ui.Element {
+func Gem(c *ui.Context, r Rarity, o GemOptions) ui.Element {
 	k, sc := pixel.K(c), scale(o.Scale)
 	ink := r.Slot()
 	return art(c, k, r.name(k), (gem.W+3)*sc, (gem.H+2)*sc, func(g pixel.Canvas) {

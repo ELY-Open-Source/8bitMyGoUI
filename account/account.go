@@ -24,14 +24,14 @@ func choice(name string, i *int, n int) {
 func words(k pixel.Kit, key string) []string { return strings.Fields(k.Msg(key)) }
 
 // caption is a line of micro text named for readers.
-func caption(c *ui.Context, k pixel.Kit, s string, slot pixel.Slot) *ui.Element {
+func caption(c *ui.Context, k pixel.Kit, s string, slot pixel.Slot) ui.Element {
 	return ui.Box(c).Size(k.D(pixel.MicroWidth(s)), k.D(5)).Role(ui.RoleText).Label(s).Draw(func(p *ui.Painter, r ui.Rect) {
 		k.Canvas(p, r).Micro(0, 0, s, slot, 1)
 	})
 }
 
 // mark draws s unnamed, beside the control that names it.
-func mark(c *ui.Context, k pixel.Kit, s string, slot pixel.Slot, w int) *ui.Element {
+func mark(c *ui.Context, k pixel.Kit, s string, slot pixel.Slot, w int) ui.Element {
 	return ui.Box(c).Size(k.D(max(w, pixel.Measure(s))), k.D(pixel.LineHeight)).Draw(func(p *ui.Painter, r ui.Rect) {
 		k.Canvas(p, r).Text(0, 0, s, slot, 1)
 	})

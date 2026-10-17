@@ -12,7 +12,7 @@ type DissolveOptions struct {
 }
 
 // Dissolve switches content's dots to a slot in shuffled order.
-func Dissolve(c *ui.Context, covered bool, o DissolveOptions, content func()) *ui.Element {
+func Dissolve(c *ui.Context, covered bool, o DissolveOptions, content func()) ui.Element {
 	k := pixel.K(c)
 	s := slotOr(o.Slot, dark(k))
 	e := ui.Column(c)

@@ -19,7 +19,7 @@ type VideoFrameOptions struct {
 }
 
 type VideoFrameResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Changed is play, pause or a seek.
 	Changed bool
 }

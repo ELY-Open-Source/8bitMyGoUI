@@ -18,7 +18,7 @@ type LoadingTipsOptions struct {
 const tipTurn = 4 * time.Second
 
 // LoadingTips turns tips every 4 s under a progress bar.
-func LoadingTips(c *ui.Context, tips []string, value float64, o LoadingTipsOptions) *ui.Element {
+func LoadingTips(c *ui.Context, tips []string, value float64, o LoadingTipsOptions) ui.Element {
 	k := pixel.K(c)
 	w := pixel.Or("LoadingTips Width", o.Width, 200)
 	if len(tips) == 0 {

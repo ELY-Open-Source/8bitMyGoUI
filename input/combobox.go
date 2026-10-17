@@ -18,7 +18,7 @@ type ComboboxOptions struct {
 }
 
 type ComboboxResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Changed reports a new *value; Chosen, an option taken.
 	Changed, Chosen bool
 }
@@ -80,7 +80,7 @@ func Combobox(c *ui.Context, text string, value *string, options []string, o Com
 		st.open = false
 	}
 	show, held := st.open && len(shown) > 0, false
-	panel := ui.PopoverBase(c, e, &show, func(panel *ui.Element) {
+	panel := ui.PopoverBase(c, e, &show, func(panel ui.Element) {
 		panel.MinWidth(e.Bounds().W)
 		panel.HandleInput(func(ev ui.InputEvent) bool {
 			if ev.Kind != ui.InputScroll {
@@ -105,7 +105,7 @@ func Combobox(c *ui.Context, text string, value *string, options []string, o Com
 		moved := over && [2]float32{px, py} != st.ptr
 		st.ptr = [2]float32{px, py}
 		menu(c, panel, func() {
-			items := make([]*ui.Element, len(shown))
+			items := make([]ui.Element, len(shown))
 			for i := st.top; i < end; i++ {
 				opt := shown[i]
 				items[i] = ui.Row(c).Role(ui.RoleListItem).Label(opt)
@@ -128,10 +128,10 @@ func Combobox(c *ui.Context, text string, value *string, options []string, o Com
 		st.open = false
 	}
 	// Losing focus closes it, unless pressing on the list.
-	if panel != nil && panel.Pressed() {
+	if panel.Valid() && panel.Pressed() {
 		held = true
 	}
-	if panel != nil && st.open && !ed.Focused && !held {
+	if panel.Valid() && st.open && !ed.Focused && !held {
 		st.open = false
 		// This frame built the list: hide it, rebuild without it.
 		panel.Invisible()

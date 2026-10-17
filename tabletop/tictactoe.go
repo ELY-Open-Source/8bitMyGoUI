@@ -13,7 +13,7 @@ type TicTacToeOptions struct {
 }
 
 type TicTacToeResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Played is the cell you took this frame, else -1.
 	Played int
 	// Over is the game ending this frame; Restarted, the CONTINUE.

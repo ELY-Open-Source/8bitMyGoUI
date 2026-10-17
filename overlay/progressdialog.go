@@ -15,7 +15,7 @@ type ProgressDialogOptions struct {
 }
 
 type ProgressDialogResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Canceled is CANCEL, Escape or a click outside.
 	Canceled bool
 }
@@ -25,7 +25,7 @@ func ProgressDialog(c *ui.Context, title string, value float64, open *bool, o Pr
 	k := pixel.K(c)
 	was := *open
 	var res ProgressDialogResult
-	res.Element = ui.DialogBase(c, open, func(back, panel *ui.Element) {
+	res.Element = ui.DialogBase(c, open, func(back, panel ui.Element) {
 		dim(k, back, pixel.Back, 8)
 		panel.Width(k.D(200)).Label(title).Focusable().FocusRing(false).Children(func() {
 			pixel.Harbor(c, panel, func() {

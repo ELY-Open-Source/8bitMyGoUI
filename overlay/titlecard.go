@@ -16,7 +16,7 @@ type TitleCardOptions struct {
 }
 
 // TitleCard dithers in, holds title, dithers out; fills its parent.
-func TitleCard(c *ui.Context, title string, o TitleCardOptions) *ui.Element {
+func TitleCard(c *ui.Context, title string, o TitleCardOptions) ui.Element {
 	k := pixel.K(c)
 	if o.Hold < 0 {
 		panic("overlay: TitleCard Hold is negative")

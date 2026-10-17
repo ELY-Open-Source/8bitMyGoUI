@@ -14,7 +14,7 @@ type PopconfirmOptions struct {
 }
 
 type PopconfirmResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Canceled is NO, Escape or a click outside.
 	Confirmed, Canceled bool
 }

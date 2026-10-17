@@ -15,7 +15,7 @@ type AchievementOptions struct {
 }
 
 // Achievement slides a trophy card in, holds it, then out.
-func Achievement(c *ui.Context, title string, o AchievementOptions) *ui.Element {
+func Achievement(c *ui.Context, title string, o AchievementOptions) ui.Element {
 	k := pixel.K(c)
 	w := pixel.Or("Achievement Width", o.Width, 200)
 	e := ui.Box(c)

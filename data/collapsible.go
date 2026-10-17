@@ -13,7 +13,7 @@ type CollapsibleOptions struct {
 }
 
 type CollapsibleResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -25,7 +25,7 @@ func Collapsible(c *ui.Context, title string, open *bool, o CollapsibleOptions, 
 	col.Children(func() {
 		// The base turns before it learns it is off.
 		v := *open
-		shell, base, st := pixel.Shell(c, func() *ui.Element {
+		shell, base, st := pixel.Shell(c, func() ui.Element {
 			return ui.CollapsibleBase(c, &v).Trigger.Label(title).Disabled(o.Disabled)
 		})
 		if res.Changed = v != *open && !base.IsDisabled(); res.Changed {

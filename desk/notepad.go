@@ -18,7 +18,7 @@ type NotepadOptions struct {
 }
 
 type NotepadResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Saved is FILE, SAVE chosen this frame.
 	Changed, Saved bool
 }

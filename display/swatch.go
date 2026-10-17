@@ -12,7 +12,7 @@ type SwatchOptions struct {
 }
 
 // Swatch shows the active palette's sixteen slots with names.
-func Swatch(c *ui.Context, o SwatchOptions) *ui.Element {
+func Swatch(c *ui.Context, o SwatchOptions) ui.Element {
 	k := pixel.K(c)
 	cols := pixel.Or("Swatch Columns", o.Columns, 4)
 	cell := 14 + pixel.Measure("AccentLit")

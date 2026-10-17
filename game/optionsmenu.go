@@ -39,7 +39,7 @@ type OptionsMenuOptions struct {
 }
 
 type OptionsMenuResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -63,7 +63,7 @@ func OptionsMenu(c *ui.Context, text string, settings []Setting, row *int, o Opt
 			value = max(value, pixel.Measure(ch))
 		}
 	}
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleList).Label(text).Disabled(o.Disabled)
 	})
 	res, was := OptionsMenuResult{Element: shell}, *row

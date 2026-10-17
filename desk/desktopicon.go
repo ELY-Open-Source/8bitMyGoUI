@@ -15,7 +15,7 @@ type DesktopIconOptions struct {
 }
 
 type DesktopIconResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Clicked chooses it; Opened is a double click or Enter.
 	Clicked, Opened bool
 }
@@ -29,7 +29,7 @@ func DesktopIcon(c *ui.Context, label string, icon *pixel.Sprite, o DesktopIconO
 	if label == "" {
 		panic("desk: DesktopIcon has no label")
 	}
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleButton).Label(label).Disabled(o.Disabled)
 	})
 	res := DesktopIconResult{Element: shell}

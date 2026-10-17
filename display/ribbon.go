@@ -14,7 +14,7 @@ type RibbonOptions struct {
 const tail = 12
 
 // Ribbon is a title banner with notched, folded tails.
-func Ribbon(c *ui.Context, title string, o RibbonOptions) *ui.Element {
+func Ribbon(c *ui.Context, title string, o RibbonOptions) ui.Element {
 	k := pixel.K(c)
 	band := slotOr(o.Slot, pixel.Accent)
 	tw := pixel.Measure(title)

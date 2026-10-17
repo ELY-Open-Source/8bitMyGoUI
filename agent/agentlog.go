@@ -41,7 +41,7 @@ type AgentLogOptions struct {
 type agentLogKey struct{}
 
 // AgentLog tells steps as a battle log, the newest typed.
-func AgentLog(c *ui.Context, text, agent string, steps []LogStep, o AgentLogOptions) *ui.Element {
+func AgentLog(c *ui.Context, text, agent string, steps []LogStep, o AgentLogOptions) ui.Element {
 	k := pixel.K(c)
 	if agent == "" {
 		panic("agent: AgentLog has no agent")

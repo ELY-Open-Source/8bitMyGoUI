@@ -18,7 +18,7 @@ type ScrubberOptions struct {
 }
 
 type ScrubberResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

@@ -13,7 +13,7 @@ type ScatterPlotOptions struct {
 }
 
 // ScatterPlot puts each point as a 2×2 square.
-func ScatterPlot(c *ui.Context, text string, points []Point, o ScatterPlotOptions) *ui.Element {
+func ScatterPlot(c *ui.Context, text string, points []Point, o ScatterPlotOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := size("ScatterPlot", o.Width, o.Height, 160, 80)
 	f := fitPoints(points, w, h, 2)

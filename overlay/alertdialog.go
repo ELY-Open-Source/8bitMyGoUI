@@ -24,7 +24,7 @@ type AlertDialogOptions struct {
 }
 
 type AlertDialogResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Pressed is the button pressed this frame, or -1.
 	Pressed int
 	Closed  bool
@@ -46,7 +46,7 @@ func AlertDialog(c *ui.Context, title, message string, open *bool, o AlertDialog
 	was := *open
 	res := AlertDialogResult{Pressed: -1}
 	press := func(i int) { res.Pressed, *open = i, false }
-	res.Element = ui.DialogBase(c, open, func(back, panel *ui.Element) {
+	res.Element = ui.DialogBase(c, open, func(back, panel ui.Element) {
 		dim(k, back, pixel.Back, 8)
 		panel.Width(k.D(220)).Role(ui.RoleAlertDialog).Label(title).Description(message).Focusable().FocusRing(false)
 		if pixel.Shortcut(panel, 0, ui.KeyEnter) && !o.Disabled && !pixel.Current(c).Inert {

@@ -26,7 +26,7 @@ type CheckboxOptions struct {
 }
 
 type CheckboxResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -35,7 +35,7 @@ func Checkbox(c *ui.Context, text string, checked *bool, o CheckboxOptions) Chec
 	k := pixel.K(c)
 	// The base turns before it learns it is off.
 	on := *checked
-	shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.CheckboxBase(c, &on).Label(text).Disabled(o.Disabled) })
+	shell, base, st := pixel.Shell(c, func() ui.Element { return ui.CheckboxBase(c, &on).Label(text).Disabled(o.Disabled) })
 	changed := on != *checked && !base.IsDisabled()
 	if changed {
 		*checked = on

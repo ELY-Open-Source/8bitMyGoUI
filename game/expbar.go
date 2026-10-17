@@ -23,7 +23,7 @@ type rise struct {
 }
 
 // ExpBar shows xp toward next and the level; ups flash.
-func ExpBar(c *ui.Context, text string, level, xp, next int, o ExpBarOptions) *ui.Element {
+func ExpBar(c *ui.Context, text string, level, xp, next int, o ExpBarOptions) ui.Element {
 	k := pixel.K(c)
 	if level < 1 {
 		panic(fmt.Sprintf("game: ExpBar level %d", level))

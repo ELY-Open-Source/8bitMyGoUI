@@ -38,7 +38,7 @@ type KeyBindingsOptions struct {
 }
 
 type KeyBindingsResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -64,7 +64,7 @@ func KeyBindings(c *ui.Context, text string, binds []Binding, o KeyBindingsOptio
 		panic("account: KeyBindings has no bindings")
 	}
 	w, rh := pixel.Or("KeyBindings Width", o.Width, 200), pixel.LineHeight+4
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleList).Label(text).Disabled(o.Disabled)
 	})
 	kb := ui.Local(base, bindKey{}, func() capture { return capture{} })

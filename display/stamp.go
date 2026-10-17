@@ -13,7 +13,7 @@ type StampOptions struct {
 }
 
 // Stamp is a rubber-stamp mark whose border wears unevenly.
-func Stamp(c *ui.Context, s string, o StampOptions) *ui.Element {
+func Stamp(c *ui.Context, s string, o StampOptions) ui.Element {
 	k := pixel.K(c)
 	ink := slotOr(o.Slot, pixel.Bad)
 	w, h := pixel.Measure(s)+12, pixel.LineHeight+8

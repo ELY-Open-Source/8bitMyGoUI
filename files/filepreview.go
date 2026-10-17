@@ -24,7 +24,7 @@ type FilePreviewOptions struct {
 type previewKey struct{}
 
 // FilePreview shows a picture, else text, in a sunken pane.
-func FilePreview(c *ui.Context, name string, pv Preview, o FilePreviewOptions) *ui.Element {
+func FilePreview(c *ui.Context, name string, pv Preview, o FilePreviewOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := pixel.Or("FilePreview W", o.W, 160), pixel.Or("FilePreview H", o.H, 120)
 	return ui.Column(c).Gap(k.D(2)).AlignItems(ui.Start).Role(ui.RoleGroup).Label(name).Children(func() {

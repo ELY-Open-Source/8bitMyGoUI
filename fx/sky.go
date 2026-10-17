@@ -13,7 +13,7 @@ type SkyOptions struct {
 }
 
 // Sky dithers down the palette's sky slots; night shows stars.
-func Sky(c *ui.Context, o SkyOptions) *ui.Element {
+func Sky(c *ui.Context, o SkyOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := size("Sky", o.Width, o.Height, 160, 96)
 	return box(c, k, o.Label, w, h).Draw(func(p *ui.Painter, r ui.Rect) {

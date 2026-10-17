@@ -25,7 +25,7 @@ type ProfilerBarsOptions struct {
 var depths = []pixel.Slot{pixel.Accent, pixel.Info, pixel.Good, pixel.Warn, pixel.Magic}
 
 // ProfilerBars stacks spans under their parents, each bar its time.
-func ProfilerBars(c *ui.Context, text string, root Span, o ProfilerBarsOptions) *ui.Element {
+func ProfilerBars(c *ui.Context, text string, root Span, o ProfilerBarsOptions) ui.Element {
 	k := pixel.K(c)
 	w := pixel.Or("ProfilerBars Width", o.Width, 240)
 	if root.Length <= 0 {

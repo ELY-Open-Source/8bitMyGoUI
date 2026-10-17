@@ -15,7 +15,7 @@ type DeckOptions struct {
 }
 
 type DeckResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Drawn is a card taken this frame.
 	Drawn bool
 }
@@ -28,7 +28,7 @@ func Deck(c *ui.Context, text string, count int, o DeckOptions) DeckResult {
 		panic(fmt.Sprintf("tabletop: Deck of %d", count))
 	}
 	left := fmt.Sprintf(k.Msg("cards_left"), count)
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleButton).Label(text).Description(left).Disabled(o.Disabled || count == 0)
 	})
 	res := DeckResult{Element: shell, Drawn: !base.IsDisabled() && base.Clicked()}

@@ -19,7 +19,7 @@ type MenuBarOptions struct {
 }
 
 type MenuBarResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Menu and Item are this frame's choice, else -1.
 	Menu, Item int
 }
@@ -66,7 +66,7 @@ func MenuBar(c *ui.Context, text string, menus []Menu, o MenuBarOptions) MenuBar
 	px, py, over := row.PointerPosition()
 	moved := over && [2]float32{px, py} != b.ptr
 	b.ptr = [2]float32{px, py}
-	var anchor *ui.Element
+	var anchor ui.Element
 	row.Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)
 		g.Rect(0, 0, g.W, g.H, pixel.Face)
@@ -92,7 +92,7 @@ func MenuBar(c *ui.Context, text string, menus []Menu, o MenuBarOptions) MenuBar
 			}
 		}
 	})
-	if b.open >= 0 && anchor != nil {
+	if b.open >= 0 && anchor.Valid() {
 		items := menus[b.open].Items
 		res.Item = b.m.keys(row.Shortcut, items)
 		if _, clicked := b.m.list(c, anchor, items); clicked >= 0 {

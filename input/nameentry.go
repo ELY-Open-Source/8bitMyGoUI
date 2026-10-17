@@ -14,7 +14,7 @@ type NameEntryOptions struct {
 }
 
 type NameEntryResult struct {
-	Element            *ui.Element
+	Element            ui.Element
 	Changed, Confirmed bool
 }
 

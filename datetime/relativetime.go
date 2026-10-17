@@ -15,7 +15,7 @@ type RelativeTimeOptions struct {
 }
 
 // RelativeTime says how long since or until t, each minute.
-func RelativeTime(c *ui.Context, t time.Time, o RelativeTimeOptions) *ui.Element {
+func RelativeTime(c *ui.Context, t time.Time, o RelativeTimeOptions) ui.Element {
 	k := pixel.K(c)
 	ink := o.Slot
 	if ink == 0 {

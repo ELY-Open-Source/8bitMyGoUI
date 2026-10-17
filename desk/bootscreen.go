@@ -19,7 +19,7 @@ type BootScreenOptions struct {
 }
 
 type BootScreenResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Done is the frame the last line shows.
 	Done bool
 }

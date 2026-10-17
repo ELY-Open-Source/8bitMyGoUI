@@ -262,7 +262,7 @@ func TestLoadingTipsTurnEveryFourSeconds(t *testing.T) {
 func TestInteractPromptBobsOnceASecond(t *testing.T) {
 	wd := &world{clk: newClock()}
 	tt := view(300, 200, wd, func(c *ui.Context) {
-		var target *ui.Element
+		var target ui.Element
 		ui.Column(c).Padding(60).Children(func() { target = ui.Box(c).Size(20, 20) })
 		game.InteractPrompt(c, target, "OPEN", game.InteractPromptOptions{})
 	})

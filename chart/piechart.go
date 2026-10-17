@@ -12,7 +12,7 @@ type PieChartOptions struct {
 }
 
 // PieChart rasterizes one sector per slice, dot by dot.
-func PieChart(c *ui.Context, text string, slices []Slice, o PieChartOptions) *ui.Element {
+func PieChart(c *ui.Context, text string, slices []Slice, o PieChartOptions) ui.Element {
 	k := pixel.K(c)
 	n := pixel.Or("PieChart Size", o.Size, 64)
 	_, cuts := shares(slices)

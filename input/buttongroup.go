@@ -17,7 +17,7 @@ type ButtonGroupOptions struct {
 }
 
 type ButtonGroupResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Clicked is the button clicked this frame, or -1.
 	Clicked int
 }
@@ -29,7 +29,7 @@ func ButtonGroup(c *ui.Context, labels []string, o ButtonGroupOptions) ButtonGro
 	res := ButtonGroupResult{Clicked: -1}
 	res.Element = ui.Row(c).Role(ui.RoleToolbar).Label(o.Label).FocusGroup(ui.Horizontal).Children(func() {
 		for i, l := range labels {
-			shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.ButtonBase(c).Label(l).Disabled(o.Disabled) })
+			shell, base, st := pixel.Shell(c, func() ui.Element { return ui.ButtonBase(c).Label(l).Disabled(o.Disabled) })
 			w := pixel.Measure(l)*sc + 2*pad
 			if i > 0 {
 				shell.Margin(0, 0, 0, k.D(-1))

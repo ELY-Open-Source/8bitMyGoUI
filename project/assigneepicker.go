@@ -16,7 +16,7 @@ type AssigneePickerOptions struct {
 }
 
 type AssigneePickerResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -38,7 +38,7 @@ func AssigneePicker(c *ui.Context, text string, party []string, chosen *int, o A
 			}
 			// The shell draws the seat; the radio stays bare.
 			sel := *chosen
-			shell, base, st := pixel.Shell(c, func() *ui.Element {
+			shell, base, st := pixel.Shell(c, func() ui.Element {
 				return ui.RadioBase(c, &sel, i).Label(name).Disabled(o.Disabled)
 			})
 			// The radio picks before it is told it is off.

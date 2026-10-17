@@ -27,7 +27,7 @@ type PropertyGridOptions struct {
 }
 
 type PropertyGridResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

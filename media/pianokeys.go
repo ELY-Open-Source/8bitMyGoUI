@@ -14,7 +14,7 @@ type PianoKeysOptions struct {
 }
 
 type PianoKeysResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Struck are notes begun this frame, like "C#4".
 	Struck []string
 }
@@ -36,7 +36,7 @@ var (
 // PianoKeys plays C4–C5 by pointer, A–K and WETYU.
 func PianoKeys(c *ui.Context, text string, o PianoKeysOptions) PianoKeysResult {
 	k := pixel.K(c)
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleGroup).Label(text).Disabled(o.Disabled)
 	})
 	hd := ui.Local(base, pianoKey{}, func() hand { return hand{held: -1, typed: -1} })

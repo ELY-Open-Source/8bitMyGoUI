@@ -13,7 +13,7 @@ type OceanOptions struct {
 }
 
 // Ocean rolls wave crests toward you by cycling their slots.
-func Ocean(c *ui.Context, o OceanOptions) *ui.Element {
+func Ocean(c *ui.Context, o OceanOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := size("Ocean", o.Width, o.Height, 160, 64)
 	return box(c, k, o.Label, w, h).Draw(func(p *ui.Painter, r ui.Rect) {

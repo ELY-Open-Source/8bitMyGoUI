@@ -14,7 +14,7 @@ type ShutdownScreenOptions struct {
 }
 
 // ShutdownScreen says it is safe to turn off the computer.
-func ShutdownScreen(c *ui.Context, o ShutdownScreenOptions) *ui.Element {
+func ShutdownScreen(c *ui.Context, o ShutdownScreenOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := pixel.Or("ShutdownScreen Width", o.Width, 320), pixel.Or("ShutdownScreen Height", o.Height, 200)
 	s := k.Msg("safe_to_turn_off")

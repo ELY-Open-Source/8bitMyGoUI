@@ -13,7 +13,7 @@ type AuroraOptions struct {
 }
 
 // Aurora hangs curtains whose slots slide sideways.
-func Aurora(c *ui.Context, o AuroraOptions) *ui.Element {
+func Aurora(c *ui.Context, o AuroraOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := size("Aurora", o.Width, o.Height, 160, 96)
 	return box(c, k, o.Label, w, h).Draw(func(p *ui.Painter, r ui.Rect) {

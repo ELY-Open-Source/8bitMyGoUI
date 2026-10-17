@@ -20,7 +20,7 @@ type DockOptions struct {
 }
 
 type DockResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Launched is the app pressed this frame, else -1.
 	Launched int
 }
@@ -68,7 +68,7 @@ func Dock(c *ui.Context, text string, apps []DockApp, o DockOptions) DockResult 
 			for i, a := range apps {
 				// Keyed by name: apps come and go.
 				ui.Box(c).Key(a.Name).Children(func() {
-					shell, base, st := pixel.Shell(c, func() *ui.Element {
+					shell, base, st := pixel.Shell(c, func() ui.Element {
 						return ui.Box(c).Focusable().Role(ui.RoleButton).Label(a.Name).Disabled(o.Disabled)
 					})
 					up := st.Hover || st.Focus

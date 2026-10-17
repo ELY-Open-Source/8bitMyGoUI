@@ -16,7 +16,7 @@ type HexViewerOptions struct {
 }
 
 type HexViewerResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

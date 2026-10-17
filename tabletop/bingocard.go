@@ -16,7 +16,7 @@ type BingoCardOptions struct {
 }
 
 type BingoCardResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Bingo is the first full line, this frame.
 	Changed, Bingo bool
 }

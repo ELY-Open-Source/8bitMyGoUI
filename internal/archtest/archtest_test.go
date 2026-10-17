@@ -166,6 +166,10 @@ func TestNoBannedCalls(t *testing.T) {
 				if id, ok := sel.X.(*ast.Ident); sel.Sel.Name == "Shortcut" && !pkg && !(ok && id.Name == "c") {
 					t.Errorf("%s: %s.Shortcut skips the enabled check; use pixel.Shortcut", f.path, receiver(sel.X))
 				}
+				// It moves the focus before an overlay notes its opener.
+				if sel.Sel.Name == "AutoFocus" && !pkg {
+					t.Errorf("%s: %s.AutoFocus loses an overlay's opener; use pixel.AutoFocus", f.path, receiver(sel.X))
+				}
 			}
 			return true
 		})

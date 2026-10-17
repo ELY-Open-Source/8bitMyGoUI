@@ -262,7 +262,7 @@ func TestGachaReelRefusesAFaceWithoutSprite(t *testing.T) {
 }
 
 func TestInteractPromptSitsAboveItsTarget(t *testing.T) {
-	var target *ui.Element
+	var target ui.Element
 	pad := 40
 	tt := view(400, 300, &world{clk: newClock(), reduce: true}, func(c *ui.Context) {
 		ui.Column(c).Padding(pixel.K(c).D(pad)).Children(func() {

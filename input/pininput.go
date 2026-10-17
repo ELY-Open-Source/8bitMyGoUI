@@ -15,7 +15,7 @@ type PinInputOptions struct {
 }
 
 type PinInputResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Complete reports the last box filled.
 	Changed, Complete bool
 }
@@ -34,7 +34,7 @@ const pinBox, pinGap = 12, 4
 func PinInput(c *ui.Context, text string, value *string, o PinInputOptions) PinInputResult {
 	k := pixel.K(c)
 	n := pixel.Or("PinInput Length", o.Length, 4)
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleTextField).Label(text).Description(*value).Disabled(o.Disabled)
 	})
 	p := ui.Local(base, pinKey{}, func() pin { return pin{} })
@@ -60,7 +60,7 @@ func PinInput(c *ui.Context, text string, value *string, o PinInputOptions) PinI
 			put(ev.Text)
 		// Browsers paste by command, native hosts by Cmd+V.
 		case ev.Kind == ui.InputCommand && ev.Text == "paste", ev.Kind == ui.InputKeyDown && ev.Key == ui.KeyV && ev.Mods == ui.Cmd:
-			put(c.ReadClipboard())
+			put(c.Services().ReadClipboard())
 		case ev.Kind == ui.InputKeyDown && ev.Key == ui.KeyBackspace && ev.Mods == 0:
 			if len(*value) > 0 {
 				*value, *changed = (*value)[:len(*value)-1], true

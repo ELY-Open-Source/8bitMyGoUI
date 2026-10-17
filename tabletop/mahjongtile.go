@@ -51,7 +51,7 @@ var (
 const tileW, tileH = 26, 34
 
 // MahjongTile is a suit or honor tile, or its back.
-func MahjongTile(c *ui.Context, t Tile, o MahjongTileOptions) *ui.Element {
+func MahjongTile(c *ui.Context, t Tile, o MahjongTileOptions) ui.Element {
 	k := pixel.K(c)
 	if t.Family < Dots || t.Family > Dragons || t.Rank < 1 || t.Rank > families[t.Family].ranks {
 		panic(fmt.Sprintf("tabletop: MahjongTile %+v", t))

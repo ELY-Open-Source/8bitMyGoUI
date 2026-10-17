@@ -23,7 +23,7 @@ type SpriteSheetOptions struct {
 }
 
 type SpriteSheetResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Changed is a frame chosen or play pressed.
 	Changed bool
 }

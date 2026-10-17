@@ -18,7 +18,7 @@ type ProgressOptions struct {
 }
 
 // Progress fills chunk by chunk; below zero a block runs.
-func Progress(c *ui.Context, text string, value float64, o ProgressOptions) *ui.Element {
+func Progress(c *ui.Context, text string, value float64, o ProgressOptions) ui.Element {
 	k := pixel.K(c)
 	if value > 1 || math.IsNaN(value) {
 		panic(fmt.Sprintf("feedback: Progress value %v is past 1", value))

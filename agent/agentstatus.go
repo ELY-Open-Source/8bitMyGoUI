@@ -19,7 +19,7 @@ type AgentStatusOptions struct {
 var halo = ring(17)
 
 // AgentStatus rings a portrait: idle, working, blocked or done.
-func AgentStatus(c *ui.Context, text string, s Status, o AgentStatusOptions) *ui.Element {
+func AgentStatus(c *ui.Context, text string, s Status, o AgentStatusOptions) ui.Element {
 	k := pixel.K(c)
 	face := portrait("AgentStatus", o.Portrait)
 	word, slot := s.look(k)

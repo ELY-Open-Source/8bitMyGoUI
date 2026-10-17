@@ -3,6 +3,7 @@ package gallery
 import (
 	"log/slog"
 	"strings"
+	"time"
 
 	"github.com/egoist/mygo/ui"
 
@@ -22,6 +23,7 @@ type App struct {
 	query   string
 	search  input.TextInputResult
 	logs    map[string][]string
+	now     func() time.Time
 }
 
 // New starts at path; the boot screen shows first.
@@ -43,8 +45,11 @@ func (a *App) Go(path string) {
 	}
 }
 
+// SetClock gives the components a clock other than the frame's.
+func (a *App) SetClock(now func() time.Time) { a.now = now }
+
 func (a *App) View(c *ui.Context) {
-	pixel.Use(c, pixel.Settings{Palette: pixel.Palettes[a.palette], Dot: Dot, Locale: a.locale})
+	pixel.Use(c, pixel.Settings{Palette: pixel.Palettes[a.palette], Dot: Dot, Locale: a.locale, Now: a.now})
 	if !a.started {
 		a.boot(c)
 		return

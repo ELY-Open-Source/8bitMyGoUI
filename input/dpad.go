@@ -27,7 +27,7 @@ type DPadOptions struct {
 }
 
 type DPadResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Pressed is the arm pressed this frame.
 	Pressed Direction
 }
@@ -43,7 +43,7 @@ type flash struct {
 // DPad is a cross pad reporting arrows and pressed arms.
 func DPad(c *ui.Context, text string, o DPadOptions) DPadResult {
 	k := pixel.K(c)
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleGroup).Label(text).Disabled(o.Disabled)
 	})
 	lit := ui.Local(base, dpadKey{}, func() flash { return flash{} })

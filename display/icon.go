@@ -14,7 +14,7 @@ type IconOptions struct {
 }
 
 // Icon draws a sprite at ×1–×4 in an ink slot.
-func Icon(c *ui.Context, sp *pixel.Sprite, o IconOptions) *ui.Element {
+func Icon(c *ui.Context, sp *pixel.Sprite, o IconOptions) ui.Element {
 	k, sc := pixel.K(c), scale(o.Scale)
 	return art(c, k, o.Label, sp.W*sc, sp.H*sc, func(g pixel.Canvas) { g.Sprite(0, 0, sp, 0, o.Slot, sc) })
 }

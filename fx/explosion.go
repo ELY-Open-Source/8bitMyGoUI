@@ -22,7 +22,7 @@ const blastSteps = 8
 var debrisSlots = []pixel.Slot{pixel.Warn, pixel.Bad, pixel.Faint}
 
 // Explosion bursts, breaks into smoke and throws debris.
-func Explosion(c *ui.Context, o ExplosionOptions) *ui.Element {
+func Explosion(c *ui.Context, o ExplosionOptions) ui.Element {
 	k := pixel.K(c)
 	n := pixel.Or("Explosion Size", o.Size, 48)
 	e := box(c, k, o.Label, n, n)

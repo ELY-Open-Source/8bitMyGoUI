@@ -15,7 +15,7 @@ type InteractPromptOptions struct {
 }
 
 // InteractPrompt bobs a Ⓐ TALK bubble above target.
-func InteractPrompt(c *ui.Context, target *ui.Element, action string, o InteractPromptOptions) *ui.Element {
+func InteractPrompt(c *ui.Context, target ui.Element, action string, o InteractPromptOptions) ui.Element {
 	k := pixel.K(c)
 	key := o.Key
 	if key == "" {
@@ -33,7 +33,7 @@ func InteractPrompt(c *ui.Context, target *ui.Element, action string, o Interact
 	if !k.Reduce() {
 		bob = k.Tick(c, 4) / 2 % 2
 	}
-	var e *ui.Element
+	var e ui.Element
 	ui.Overlay(c, func() {
 		e = ui.Box(c).Absolute().Left(x).Bottom(wh - b.Y + k.D(1+bob)).PassThrough().Role(ui.RoleText).Label(key + " " + action)
 		// Bounds lag a layout; if the target moved, build again.

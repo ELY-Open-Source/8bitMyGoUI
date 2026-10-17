@@ -15,7 +15,7 @@ type SwitchOptions struct {
 }
 
 type SwitchResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -24,7 +24,7 @@ func Switch(c *ui.Context, text string, on *bool, o SwitchOptions) SwitchResult 
 	k := pixel.K(c)
 	// The base turns before it learns it is off.
 	v := *on
-	shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.SwitchBase(c, &v).Label(label(o.Label, text)).Disabled(o.Disabled) })
+	shell, base, st := pixel.Shell(c, func() ui.Element { return ui.SwitchBase(c, &v).Label(label(o.Label, text)).Disabled(o.Disabled) })
 	changed := v != *on && !base.IsDisabled()
 	if changed {
 		*on = v

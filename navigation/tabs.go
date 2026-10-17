@@ -14,7 +14,7 @@ type TabsOptions struct {
 }
 
 type TabsResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -52,7 +52,7 @@ func tabs(c *ui.Context, text string, labels []string, selected *int, side bool,
 		}
 		p.List.Label(text).Children(func() {
 			for i, l := range labels {
-				shell, _, st := pixel.Shell(c, func() *ui.Element { return p.Tab(i).Label(l).Disabled(o.Disabled) })
+				shell, _, st := pixel.Shell(c, func() ui.Element { return p.Tab(i).Label(l).Disabled(o.Disabled) })
 				w, h := size(i), th
 				if side {
 					w = tw

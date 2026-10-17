@@ -16,7 +16,7 @@ type HorizontalBarOptions struct {
 }
 
 // HorizontalBar lays labeled bars across, longest to the edge.
-func HorizontalBar(c *ui.Context, text string, labels []string, values []float64, o HorizontalBarOptions) *ui.Element {
+func HorizontalBar(c *ui.Context, text string, labels []string, values []float64, o HorizontalBarOptions) ui.Element {
 	k := pixel.K(c)
 	if len(labels) != len(values) || len(values) == 0 {
 		panic(fmt.Sprintf("chart: HorizontalBar has %d labels for %d values", len(labels), len(values)))

@@ -14,7 +14,7 @@ type GameOverOptions struct {
 }
 
 type GameOverResult struct {
-	Element        *ui.Element
+	Element        ui.Element
 	Continue, Quit bool
 }
 

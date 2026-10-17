@@ -25,7 +25,7 @@ func Knob(c *ui.Context, text string, value *float64, o KnobOptions) KnobResult 
 	k := pixel.K(c)
 	lo, hi := bounds(o.Min, o.Max)
 	r := rail{lo: lo, hi: hi, step: o.Step}
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleSlider).Label(text).Description(fmtValue(*value)).Disabled(o.Disabled)
 	})
 	old, set := *value, r.snap(value)

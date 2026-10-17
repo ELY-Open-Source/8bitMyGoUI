@@ -13,7 +13,7 @@ type WaterfallOptions struct {
 }
 
 // Waterfall pours between cliffs by cycling its water slots.
-func Waterfall(c *ui.Context, o WaterfallOptions) *ui.Element {
+func Waterfall(c *ui.Context, o WaterfallOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := size("Waterfall", o.Width, o.Height, 64, 96)
 	return box(c, k, o.Label, w, h).Draw(func(p *ui.Painter, r ui.Rect) {

@@ -14,7 +14,7 @@ type ScoreBoardOptions struct {
 }
 
 // ScoreBoard shows SCORE and HI-SCORE in big digits.
-func ScoreBoard(c *ui.Context, score, hi int, o ScoreBoardOptions) *ui.Element {
+func ScoreBoard(c *ui.Context, score, hi int, o ScoreBoardOptions) ui.Element {
 	k := pixel.K(c)
 	if score < 0 || hi < 0 {
 		panic(fmt.Sprintf("game: ScoreBoard %d and %d", score, hi))

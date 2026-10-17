@@ -27,7 +27,7 @@ type ArchiveViewerOptions struct {
 }
 
 type ArchiveViewerResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Sorted reports a header click this frame.
 	Changed, Sorted bool
 }

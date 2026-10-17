@@ -16,7 +16,7 @@ type LeavesOptions struct {
 var leafSlots = []pixel.Slot{pixel.Warn, pixel.Bad, pixel.Accent}
 
 // Leaves swing down side to side, turning on their stems.
-func Leaves(c *ui.Context, o LeavesOptions) *ui.Element {
+func Leaves(c *ui.Context, o LeavesOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := size("Leaves", o.Width, o.Height, 160, 96)
 	return box(c, k, o.Label, w, h).Draw(func(p *ui.Painter, r ui.Rect) {

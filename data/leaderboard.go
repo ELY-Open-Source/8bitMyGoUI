@@ -23,7 +23,7 @@ type LeaderboardOptions struct {
 }
 
 // Leaderboard ranks scores; the top three wear medals.
-func Leaderboard(c *ui.Context, scores []Score, o LeaderboardOptions) *ui.Element {
+func Leaderboard(c *ui.Context, scores []Score, o LeaderboardOptions) ui.Element {
 	k := pixel.K(c)
 	if o.Player < -1 || o.Player >= len(scores) {
 		panic(fmt.Sprintf("data: Leaderboard Player %d of %d", o.Player, len(scores)))

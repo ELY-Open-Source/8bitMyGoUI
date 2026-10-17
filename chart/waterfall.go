@@ -14,7 +14,7 @@ type WaterfallOptions struct {
 }
 
 // Waterfall walks a running total: Good up, Bad down.
-func Waterfall(c *ui.Context, text string, labels []string, deltas []float64, o WaterfallOptions) *ui.Element {
+func Waterfall(c *ui.Context, text string, labels []string, deltas []float64, o WaterfallOptions) ui.Element {
 	k := pixel.K(c)
 	if len(labels) != len(deltas) || len(deltas) == 0 {
 		panic(fmt.Sprintf("chart: Waterfall has %d labels for %d steps", len(labels), len(deltas)))

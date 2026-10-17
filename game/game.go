@@ -88,7 +88,7 @@ func nearest(spots []Spot, from, dx, dy int) int {
 }
 
 // arrows moves cur among spots by arrow keys.
-func arrows(base *ui.Element, spots []Spot, cur *int) {
+func arrows(base ui.Element, spots []Spot, cur *int) {
 	for _, m := range []struct {
 		key    ui.Key
 		dx, dy int
@@ -115,7 +115,7 @@ type begun struct {
 }
 
 // start is e's first showing, or its last cue change.
-func start(k pixel.Kit, e *ui.Element, cue int) begun {
+func start(k pixel.Kit, e ui.Element, cue int) begun {
 	s := ui.Local(e, startKey{}, func() begun { return begun{cue: cue, at: k.Now()} })
 	if s.cue != cue {
 		s.cue, s.at, s.run = cue, k.Now(), s.run+1

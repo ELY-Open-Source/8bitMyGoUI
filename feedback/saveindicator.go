@@ -15,7 +15,7 @@ type saveKey struct{}
 var spin = [4]int{12, 8, 2, 8}
 
 // SaveIndicator spins a floppy while saving, then shows SAVED ✓.
-func SaveIndicator(c *ui.Context, saving bool, o SaveIndicatorOptions) *ui.Element {
+func SaveIndicator(c *ui.Context, saving bool, o SaveIndicatorOptions) ui.Element {
 	k := pixel.K(c)
 	e := ui.Row(c).Gap(k.D(4)).AlignItems(ui.Center)
 	ever := ui.Local(e, saveKey{}, func() bool { return false })

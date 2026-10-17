@@ -19,7 +19,7 @@ type ContinuePromptOptions struct {
 }
 
 type ContinuePromptResult struct {
-	Element           *ui.Element
+	Element           ui.Element
 	Yes, No, TimedOut bool
 }
 

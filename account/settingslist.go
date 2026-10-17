@@ -24,7 +24,7 @@ type SettingsListOptions struct {
 }
 
 // SettingsList sets controls beside labels under section titles.
-func SettingsList(c *ui.Context, text string, sections []SettingsSection, o SettingsListOptions) *ui.Element {
+func SettingsList(c *ui.Context, text string, sections []SettingsSection, o SettingsListOptions) ui.Element {
 	k := pixel.K(c)
 	return ui.Column(c).Width(k.D(pixel.Or("SettingsList Width", o.Width, 240))).Gap(k.D(2)).Role(ui.RoleGroup).Label(text).Children(func() {
 		for i, s := range sections {

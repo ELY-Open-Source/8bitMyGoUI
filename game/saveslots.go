@@ -22,7 +22,7 @@ type SaveSlotsOptions struct {
 }
 
 type SaveSlotsResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 	// Chosen is the slot opened this frame, or -1.
 	Chosen int

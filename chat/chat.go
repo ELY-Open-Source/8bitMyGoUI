@@ -20,7 +20,7 @@ type Message struct {
 
 // listed is a chat list's choice; Submitted is Enter.
 type listed struct {
-	Element            *ui.Element
+	Element            ui.Element
 	Changed, Submitted bool
 }
 
@@ -37,7 +37,7 @@ func list(c *ui.Context, k pixel.Kit, text string, n int, selected *int, w, h in
 }
 
 // para wraps s to w dots, hugging its lines.
-func para(c *ui.Context, k pixel.Kit, s string, w, maxLines int, ink pixel.Slot) *ui.Element {
+func para(c *ui.Context, k pixel.Kit, s string, w, maxLines int, ink pixel.Slot) ui.Element {
 	lines := pixel.Wrap(s, w, maxLines)
 	lw := 0
 	for _, l := range lines {
@@ -75,7 +75,7 @@ func tagW(s string) int {
 }
 
 // rule centers label on a line across w dots.
-func rule(c *ui.Context, k pixel.Kit, label string, w int, ink, edge pixel.Slot) *ui.Element {
+func rule(c *ui.Context, k pixel.Kit, label string, w int, ink, edge pixel.Slot) ui.Element {
 	tw := tagW(label)
 	if w < tw+16 {
 		panic(fmt.Sprintf("chat: a %d-dot rule cannot hold %q", w, label))

@@ -14,7 +14,7 @@ type BlinkTextOptions struct {
 }
 
 // BlinkText blinks; under Reduce Motion it stays shown.
-func BlinkText(c *ui.Context, s string, o BlinkTextOptions) *ui.Element {
+func BlinkText(c *ui.Context, s string, o BlinkTextOptions) ui.Element {
 	k, sc := pixel.K(c), scale(o.Scale)
 	fps := pixel.Or("BlinkText FPS", o.FPS, 4)
 	return block(c, k, s, pixel.Measure(s)*sc, pixel.LineHeight*sc, func(g pixel.Canvas) {

@@ -32,7 +32,7 @@ type InlineMessageOptions struct {
 }
 
 // InlineMessage is a small ✓ or ! field note.
-func InlineMessage(c *ui.Context, message string, o InlineMessageOptions) *ui.Element {
+func InlineMessage(c *ui.Context, message string, o InlineMessageOptions) ui.Element {
 	k := pixel.K(c)
 	slot, _ := o.Kind.look()
 	sp := bang

@@ -16,7 +16,7 @@ type MeterOptions struct {
 }
 
 // Meter shows a level in Good, Warn or Bad.
-func Meter(c *ui.Context, text string, value float64, o MeterOptions) *ui.Element {
+func Meter(c *ui.Context, text string, value float64, o MeterOptions) ui.Element {
 	k := pixel.K(c)
 	lo, hi := o.Min, o.Max
 	if lo == 0 && hi == 0 {

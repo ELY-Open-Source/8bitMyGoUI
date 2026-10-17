@@ -17,7 +17,7 @@ type BossBarOptions struct {
 }
 
 // BossBar is a wide bar under the name, phases marked.
-func BossBar(c *ui.Context, name string, hp, full int, o BossBarOptions) *ui.Element {
+func BossBar(c *ui.Context, name string, hp, full int, o BossBarOptions) ui.Element {
 	k := pixel.K(c)
 	amount("BossBar hp", hp, full)
 	for _, f := range o.Phases {

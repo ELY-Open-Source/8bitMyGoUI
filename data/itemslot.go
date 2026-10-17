@@ -26,7 +26,7 @@ type ItemSlotOptions struct {
 }
 
 // ItemSlot shows an item, count, rarity edge and cooldown.
-func ItemSlot(c *ui.Context, it Item, o ItemSlotOptions) *ui.Element {
+func ItemSlot(c *ui.Context, it Item, o ItemSlotOptions) ui.Element {
 	k := pixel.K(c)
 	o.check()
 	return ui.Box(c).Role(ui.RoleImage).Label(it.String()).Size(k.D(SlotSize), k.D(SlotSize)).Draw(func(p *ui.Painter, r ui.Rect) {

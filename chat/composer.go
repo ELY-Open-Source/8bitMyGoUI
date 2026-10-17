@@ -19,7 +19,7 @@ type ComposerOptions struct {
 }
 
 type ComposerResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 	// Sent is the text sent this frame, else empty.
 	Sent string

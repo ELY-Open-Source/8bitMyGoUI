@@ -19,7 +19,7 @@ type CarouselOptions struct {
 }
 
 type CarouselResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

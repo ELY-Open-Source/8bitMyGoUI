@@ -17,7 +17,7 @@ type PathBarOptions struct {
 }
 
 type PathBarResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Clicked is the folder clicked, else -1.
 	Clicked int
 }
@@ -48,7 +48,7 @@ func PathBar(c *ui.Context, text string, parts []string, o PathBarOptions) PathB
 					})
 					break
 				}
-				shell, base, st := pixel.Shell(c, func() *ui.Element {
+				shell, base, st := pixel.Shell(c, func() ui.Element {
 					return ui.ButtonBase(c).Label(part).Disabled(o.Disabled)
 				})
 				if base.Clicked() {

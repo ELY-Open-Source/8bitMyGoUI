@@ -29,7 +29,7 @@ type UploadQueueOptions struct {
 }
 
 type UploadQueueResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Canceled is the upload whose ✕ was pressed, else -1.
 	Canceled int
 }

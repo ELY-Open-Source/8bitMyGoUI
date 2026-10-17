@@ -25,7 +25,7 @@ type BidTickerOptions struct {
 }
 
 // BidTicker lists bids, newest first, crowning the highest.
-func BidTicker(c *ui.Context, text string, bids []Bid, o BidTickerOptions) *ui.Element {
+func BidTicker(c *ui.Context, text string, bids []Bid, o BidTickerOptions) ui.Element {
 	k := pixel.K(c)
 	top := -1
 	for i, b := range bids {

@@ -39,7 +39,7 @@ type ChessboardOptions struct {
 }
 
 type ChessboardResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Moved is this frame's move, From one square To another.
 	Moved    bool
 	From, To int

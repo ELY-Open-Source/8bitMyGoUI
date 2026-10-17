@@ -24,7 +24,7 @@ type counting struct {
 }
 
 // CountUp counts to a new value in eight steps.
-func CountUp(c *ui.Context, value int, o CountUpOptions) *ui.Element {
+func CountUp(c *ui.Context, value int, o CountUpOptions) ui.Element {
 	k := pixel.K(c)
 	sc := pixel.Or("CountUp Scale", o.Scale, 1)
 	e := ui.Box(c).Role(ui.RoleText).Label(strconv.Itoa(value))

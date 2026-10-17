@@ -16,7 +16,7 @@ type LightboxOptions struct {
 }
 
 type LightboxResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Changed turns the picture; Closed is ×, Escape or outside.
 	Changed, Closed bool
 }
@@ -31,7 +31,7 @@ func Lightbox(c *ui.Context, text string, n int, at *int, open *bool, o Lightbox
 	off := o.Disabled || pixel.Current(c).Inert
 	turn := func(d int) { *at = (*at + d + n) % n }
 	var res LightboxResult
-	res.Element = ui.DialogBase(c, open, func(back, panel *ui.Element) {
+	res.Element = ui.DialogBase(c, open, func(back, panel ui.Element) {
 		deep, light := dark(k)
 		dim(k, back, deep, 13)
 		left, right := pixel.Shortcut(panel, 0, ui.KeyLeft), pixel.Shortcut(panel, 0, ui.KeyRight)

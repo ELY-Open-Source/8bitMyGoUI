@@ -24,7 +24,7 @@ type SevenSegmentOptions struct {
 }
 
 // SevenSegment shows digits, minus and colon with ghost segments.
-func SevenSegment(c *ui.Context, s string, o SevenSegmentOptions) *ui.Element {
+func SevenSegment(c *ui.Context, s string, o SevenSegmentOptions) ui.Element {
 	k, sc := pixel.K(c), scale(o.Scale)
 	ink := slotOr(o.Slot, pixel.Bad)
 	w := 0

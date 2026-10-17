@@ -25,7 +25,7 @@ type TimeTrackerOptions struct {
 }
 
 type TimeTrackerResult struct {
-	Element          *ui.Element
+	Element          ui.Element
 	Started, Stopped bool
 }
 

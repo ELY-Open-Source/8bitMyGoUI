@@ -14,7 +14,7 @@ type MicroTextOptions struct {
 }
 
 // MicroText draws s upper-cased in micro font; unknown runes panic.
-func MicroText(c *ui.Context, s string, o MicroTextOptions) *ui.Element {
+func MicroText(c *ui.Context, s string, o MicroTextOptions) ui.Element {
 	k, sc := pixel.K(c), scale(o.Scale)
 	up := strings.ToUpper(s)
 	return block(c, k, s, pixel.MicroWidth(up)*sc, pixel.MicroHeight*sc, func(g pixel.Canvas) {

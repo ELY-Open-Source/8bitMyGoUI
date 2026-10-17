@@ -22,7 +22,7 @@ type CraftingOptions struct {
 }
 
 type CraftingResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 	// Picked is the cell chosen this frame, or -1.
 	Picked  int

@@ -16,7 +16,7 @@ type CrashScreenOptions struct {
 }
 
 type CrashScreenResult struct {
-	Element  *ui.Element
+	Element  ui.Element
 	Continue bool
 }
 

@@ -15,7 +15,7 @@ type CommandMenuOptions struct {
 }
 
 type CommandMenuResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Chosen is the item taken this frame, or -1.
 	Chosen   int
 	Canceled bool
@@ -26,12 +26,12 @@ type cursorKey struct{}
 // CommandMenu is a JRPG command window with a bobbing ▶.
 func CommandMenu(c *ui.Context, text string, items []MenuItem, o CommandMenuOptions) CommandMenuResult {
 	k := pixel.K(c)
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleList).Label(text).Disabled(o.Disabled)
 	})
 	// An off menu never takes the focus.
 	if o.AutoFocus && !base.IsDisabled() {
-		base.AutoFocus()
+		pixel.AutoFocus(c, base)
 	}
 	cur := ui.Local(base, cursorKey{}, func() int { return 0 })
 	res := CommandMenuResult{Element: shell, Chosen: -1}

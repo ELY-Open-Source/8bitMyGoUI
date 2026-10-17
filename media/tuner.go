@@ -15,7 +15,7 @@ type TunerOptions struct {
 }
 
 type TunerResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

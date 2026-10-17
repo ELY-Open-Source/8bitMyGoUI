@@ -27,7 +27,7 @@ type PixelEditorOptions struct {
 }
 
 type PixelEditorResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Changed is the art; Copied is COPY.
 	Changed, Copied bool
 }
@@ -129,7 +129,7 @@ func PixelEditor(c *ui.Context, text string, art *string, o PixelEditorOptions) 
 }
 
 // canvas paints cells, checkers where clear, grid and cursor.
-func canvas(shell *ui.Element, k pixel.Kit, st pixel.State, cells []int, w, z, cur int, grid bool) {
+func canvas(shell ui.Element, k pixel.Kit, st pixel.State, cells []int, w, z, cur int, grid bool) {
 	shell.Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)
 		for i, v := range cells {

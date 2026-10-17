@@ -23,7 +23,7 @@ type MinesweeperOptions struct {
 }
 
 type MinesweeperResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Won or Lost is the game ending this frame.
 	Won, Lost bool
 	// Flagged is a flag set or lifted; Restarted, the face.

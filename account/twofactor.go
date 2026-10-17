@@ -19,7 +19,7 @@ type TwoFactorOptions struct {
 }
 
 type TwoFactorResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Submitted is the sixth box filled.
 	Changed, Submitted bool
 }

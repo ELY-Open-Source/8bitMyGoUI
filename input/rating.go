@@ -19,7 +19,7 @@ type RatingOptions struct {
 }
 
 type RatingResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -41,7 +41,7 @@ func Rating(c *ui.Context, text string, value *int, o RatingOptions) RatingResul
 		for i := 1; i <= n; i++ {
 			was := *value == i
 			on := was
-			shell, base, st := pixel.Shell(c, func() *ui.Element {
+			shell, base, st := pixel.Shell(c, func() ui.Element {
 				return ui.CheckboxBase(c, &on).Role(ui.RoleRadio).Label(fmt.Sprintf("%d/%d", i, n)).Disabled(o.Disabled)
 			})
 			if base.Focused() {

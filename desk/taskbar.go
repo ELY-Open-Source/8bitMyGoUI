@@ -21,7 +21,7 @@ type TaskbarOptions struct {
 }
 
 type TaskbarResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Changed is a window button pressed; Launched a program.
 	Changed  bool
 	Launched string

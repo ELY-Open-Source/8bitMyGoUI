@@ -15,7 +15,7 @@ type CostCoinsOptions struct {
 }
 
 // CostCoins stacks cost as gold dollars, silver dimes, bronze cents.
-func CostCoins(c *ui.Context, text string, cents int, o CostCoinsOptions) *ui.Element {
+func CostCoins(c *ui.Context, text string, cents int, o CostCoinsOptions) ui.Element {
 	k := pixel.K(c)
 	if cents < 0 {
 		panic(fmt.Sprintf("agent: CostCoins of %d cents", cents))

@@ -18,7 +18,7 @@ type PaletteCycleOptions struct {
 }
 
 // PaletteCycle draws sp, rotating band's slots one place a step.
-func PaletteCycle(c *ui.Context, sp *pixel.Sprite, band []pixel.Slot, o PaletteCycleOptions) *ui.Element {
+func PaletteCycle(c *ui.Context, sp *pixel.Sprite, band []pixel.Slot, o PaletteCycleOptions) ui.Element {
 	k := pixel.K(c)
 	fps, sc := pixel.Or("PaletteCycle FPS", o.FPS, 8), scale("PaletteCycle", o.Scale, 1)
 	if len(band) < 2 {

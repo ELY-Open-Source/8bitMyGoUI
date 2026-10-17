@@ -15,7 +15,7 @@ type AnalogClockOptions struct {
 }
 
 // AnalogClock ticks each second; its hands are Bresenham lines.
-func AnalogClock(c *ui.Context, o AnalogClockOptions) *ui.Element {
+func AnalogClock(c *ui.Context, o AnalogClockOptions) ui.Element {
 	k := pixel.K(c)
 	size := pixel.Or("AnalogClock Size", o.Size, 48)
 	// Wake on the next whole second.

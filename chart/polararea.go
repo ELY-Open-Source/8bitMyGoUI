@@ -12,7 +12,7 @@ type PolarAreaOptions struct {
 }
 
 // PolarArea gives slices equal turns, reaching out by value.
-func PolarArea(c *ui.Context, text string, slices []Slice, o PolarAreaOptions) *ui.Element {
+func PolarArea(c *ui.Context, text string, slices []Slice, o PolarAreaOptions) ui.Element {
 	k := pixel.K(c)
 	n := pixel.Or("PolarArea Size", o.Size, 64)
 	shares(slices)

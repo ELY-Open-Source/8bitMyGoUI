@@ -14,7 +14,7 @@ type PlaceholderOptions struct {
 }
 
 // Placeholder is a dithered box with a cross and size.
-func Placeholder(c *ui.Context, o PlaceholderOptions) *ui.Element {
+func Placeholder(c *ui.Context, o PlaceholderOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := pixel.Or("Placeholder W", o.W, 64), pixel.Or("Placeholder H", o.H, 48)
 	size := fmt.Sprintf("%d×%d", w, h)

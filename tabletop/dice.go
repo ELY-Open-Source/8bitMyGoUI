@@ -18,7 +18,7 @@ type DiceOptions struct {
 var hop = [...]int{0, 3, 5, 6, 6, 5, 3, 1}
 
 // Dice is a d6 showing value; new Cues tumble it.
-func Dice(c *ui.Context, text string, value int, o DiceOptions) *ui.Element {
+func Dice(c *ui.Context, text string, value int, o DiceOptions) ui.Element {
 	k := pixel.K(c)
 	if value < 1 || value > 6 {
 		panic(fmt.Sprintf("tabletop: Dice value %d", value))

@@ -13,7 +13,7 @@ type FirefliesOptions struct {
 }
 
 // Fireflies wander and glow: bright, dim, then dark a while.
-func Fireflies(c *ui.Context, o FirefliesOptions) *ui.Element {
+func Fireflies(c *ui.Context, o FirefliesOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := size("Fireflies", o.Width, o.Height, 160, 96)
 	return box(c, k, o.Label, w, h).Draw(func(p *ui.Painter, r ui.Rect) {

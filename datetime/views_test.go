@@ -238,7 +238,7 @@ func TestTodayMarksMoveAtMidnight(t *testing.T) {
 	} {
 		tt := view(600, 400, clk, false, build)
 		pixel.ResetDue()
-		before := time.Now()
+		before := tt.Now()
 		tt.Frame()
 		if due := pixel.Due(); due.IsZero() || due.Sub(before) > 2*time.Second {
 			t.Fatalf("%s: no rebuild asked for midnight, due %v", name, due)
@@ -264,7 +264,7 @@ func TestRelativeTimeRoundsTheFutureUp(t *testing.T) {
 		at := clk.t.Add(tc.ahead)
 		tt := view(300, 60, clk, false, func(c *ui.Context) { datetime.RelativeTime(c, at, datetime.RelativeTimeOptions{}) })
 		pixel.ResetDue()
-		before := time.Now()
+		before := tt.Now()
 		tt.Frame()
 		if wait := pixel.Due().Sub(before); !shows(tt, tc.words) || wait < tc.wait-time.Second || wait > tc.wait+time.Second {
 			t.Fatalf("%v ahead: %q, next repaint in %v", tc.ahead, tt.Texts(), wait)

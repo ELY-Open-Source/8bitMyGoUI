@@ -36,7 +36,7 @@ var capSlots = []pixel.Slot{pixel.Info, pixel.Good, pixel.Warn, pixel.Magic, pix
 const laneH = pixel.LineHeight + 8
 
 // Roadmap lays bars on lanes under months, from from's.
-func Roadmap(c *ui.Context, text string, from time.Time, lanes []Lane, o RoadmapOptions) *ui.Element {
+func Roadmap(c *ui.Context, text string, from time.Time, lanes []Lane, o RoadmapOptions) ui.Element {
 	k := pixel.K(c)
 	months, mw := pixel.Or("Roadmap Months", o.Months, 6), pixel.Or("Roadmap MonthWidth", o.MonthWidth, 44)
 	if len(lanes) == 0 || months > 120 {

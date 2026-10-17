@@ -23,7 +23,7 @@ type scrambleState struct {
 }
 
 // ScrambleText settles from random glyphs to s, left to right.
-func ScrambleText(c *ui.Context, s string, o ScrambleTextOptions) *ui.Element {
+func ScrambleText(c *ui.Context, s string, o ScrambleTextOptions) ui.Element {
 	k, sc := pixel.K(c), scale(o.Scale)
 	fps := pixel.Or("ScrambleText FPS", o.FPS, 15)
 	rs := []rune(s)

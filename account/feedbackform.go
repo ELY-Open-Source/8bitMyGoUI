@@ -17,7 +17,7 @@ type FeedbackFormOptions struct {
 }
 
 type FeedbackFormResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Sent    bool
 }
 

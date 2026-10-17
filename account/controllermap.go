@@ -37,7 +37,7 @@ var pad = []struct {
 type ControllerMapOptions struct{}
 
 // ControllerMap draws a pad; labels say what each button does.
-func ControllerMap(c *ui.Context, text string, labels map[PadButton]string, o ControllerMapOptions) *ui.Element {
+func ControllerMap(c *ui.Context, text string, labels map[PadButton]string, o ControllerMapOptions) ui.Element {
 	k := pixel.K(c)
 	var said []string
 	for b := DPad; b <= Select; b++ {

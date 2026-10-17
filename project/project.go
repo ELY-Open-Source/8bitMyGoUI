@@ -53,7 +53,7 @@ func hms(d time.Duration) string {
 }
 
 // show draws s unnamed, beside an element that names it.
-func show(c *ui.Context, k pixel.Kit, s string, slot pixel.Slot, w int) *ui.Element {
+func show(c *ui.Context, k pixel.Kit, s string, slot pixel.Slot, w int) ui.Element {
 	return ui.Box(c).Size(k.D(w), k.D(pixel.LineHeight)).Draw(func(p *ui.Painter, r ui.Rect) {
 		k.Canvas(p, r).Text(0, 0, pixel.Wrap(s, w, 1)[0], slot, 1)
 	})

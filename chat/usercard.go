@@ -21,7 +21,7 @@ type UserCardOptions struct {
 }
 
 type UserCardResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Clicked is the action clicked this frame, else -1.
 	Clicked int
 }

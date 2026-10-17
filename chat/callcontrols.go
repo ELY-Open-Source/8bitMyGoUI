@@ -14,7 +14,7 @@ type CallControlsOptions struct {
 }
 
 type CallControlsResult struct {
-	Element         *ui.Element
+	Element         ui.Element
 	Changed, HungUp bool
 }
 
@@ -23,8 +23,8 @@ func CallControls(c *ui.Context, text string, muted, camera *bool, o CallControl
 	k := pixel.K(c)
 	var res CallControlsResult
 	// A slash crosses a sprite that is off.
-	button := func(base func() *ui.Element, sp *pixel.Sprite, fill, ink pixel.Slot, off bool) bool {
-		shell, b, st := pixel.Shell(c, func() *ui.Element { return base().Disabled(o.Disabled).FocusRing(false) })
+	button := func(base func() ui.Element, sp *pixel.Sprite, fill, ink pixel.Slot, off bool) bool {
+		shell, b, st := pixel.Shell(c, func() ui.Element { return base().Disabled(o.Disabled).FocusRing(false) })
 		shell.Size(k.D(22), k.D(22)).Draw(func(p *ui.Painter, r ui.Rect) {
 			g := k.Canvas(p, r)
 			g.Frame(0, 0, 22, 22, pixel.Raised, fill)
@@ -39,15 +39,15 @@ func CallControls(c *ui.Context, text string, muted, camera *bool, o CallControl
 	}
 	m, cam := *muted, *camera
 	res.Element = ui.Row(c).Gap(k.D(4)).FocusGroup(ui.Horizontal).Role(ui.RoleToolbar).Label(text).Children(func() {
-		if button(func() *ui.Element { return ui.ToggleBase(c, &m).Label(k.Msg("mute")) }, icon.Mic, pixel.Face, pixel.Ink, *muted) {
+		if button(func() ui.Element { return ui.ToggleBase(c, &m).Label(k.Msg("mute")) }, icon.Mic, pixel.Face, pixel.Ink, *muted) {
 			*muted, res.Changed = m, true
 			slog.Debug("8bit: call mute", "label", text, "muted", *muted)
 		}
-		if button(func() *ui.Element { return ui.ToggleBase(c, &cam).Label(k.Msg("camera")) }, icon.Camera, pixel.Face, pixel.Ink, !*camera) {
+		if button(func() ui.Element { return ui.ToggleBase(c, &cam).Label(k.Msg("camera")) }, icon.Camera, pixel.Face, pixel.Ink, !*camera) {
 			*camera, res.Changed = cam, true
 			slog.Debug("8bit: call camera", "label", text, "on", *camera)
 		}
-		if button(func() *ui.Element { return ui.ButtonBase(c).Label(k.Msg("hang_up")) }, icon.Phone, pixel.Bad, pixel.AccentInk, false) {
+		if button(func() ui.Element { return ui.ButtonBase(c).Label(k.Msg("hang_up")) }, icon.Phone, pixel.Bad, pixel.AccentInk, false) {
 			res.HungUp = true
 			slog.Debug("8bit: call hung up", "label", text)
 		}

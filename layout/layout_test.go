@@ -302,44 +302,48 @@ func TestAppFrameFolds(t *testing.T) {
 }
 
 func TestAspectBoxAndViewport(t *testing.T) {
-	var aspect, screen *ui.Element
+	var aspect, screen ui.Handle
+	var ctx *ui.Context
 	tt := ui.NewTester(func(c *ui.Context) {
+		ctx = c
 		use(c)
 		ui.Column(c).Children(func() {
 			ui.Box(c).Width(300).Children(func() {
-				aspect = layout.AspectBox(c, layout.AspectBoxOptions{W: 16, H: 9}, func() {})
+				layout.AspectBox(c, layout.AspectBoxOptions{W: 16, H: 9}, func() {}).Bind(&aspect)
 			})
 			ui.Box(c).Size(400, 300).Children(func() {
-				layout.Viewport(c, layout.ViewportOptions{W: 64, H: 40}, func() { screen = ui.Box(c).Fill() })
+				layout.Viewport(c, layout.ViewportOptions{W: 64, H: 40}, func() { ui.Box(c).Fill().Bind(&screen) })
 			})
 		})
 	}, 500, 700)
 	tt.Frame()
-	if b := aspect.Bounds(); b.W != 300 || b.H != 2*(150*9/16) {
+	if b := aspect.Bounds(ctx); b.W != 300 || b.H != 2*(150*9/16) {
 		t.Fatalf("aspect box %v", b)
 	}
-	if b := screen.Bounds(); b.X != 72 || b.Y != aspect.Bounds().H+70 || b.W != 256 || b.H != 160 {
+	if b := screen.Bounds(ctx); b.X != 72 || b.Y != aspect.Bounds(ctx).H+70 || b.W != 256 || b.H != 160 {
 		t.Fatalf("viewport screen %v", b)
 	}
 }
 
 func TestLayersSizes(t *testing.T) {
-	var auto, sized, fill *ui.Element
+	var auto, sized, fill ui.Handle
+	var ctx *ui.Context
 	tt := ui.NewTester(func(c *ui.Context) {
+		ctx = c
 		use(c)
 		ui.Column(c).AlignItems(ui.Start).Children(func() {
-			auto = layout.Layers(c, layout.LayersOptions{}, func() { ui.Box(c).Size(50, 30) }, func() { ui.Box(c).Fill() })
-			sized = layout.Layers(c, layout.LayersOptions{}, func() { fill = ui.Box(c).Fill() }).Size(120, 64)
+			layout.Layers(c, layout.LayersOptions{}, func() { ui.Box(c).Size(50, 30) }, func() { ui.Box(c).Fill() }).Bind(&auto)
+			layout.Layers(c, layout.LayersOptions{}, func() { ui.Box(c).Fill().Bind(&fill) }).Size(120, 64).Bind(&sized)
 		})
 	}, 400, 300)
 	tt.Frame()
-	if b := auto.Bounds(); b.W != 50 || b.H != 30 {
+	if b := auto.Bounds(ctx); b.W != 50 || b.H != 30 {
 		t.Fatalf("first layer did not size the box: %v", b)
 	}
-	if b := fill.Bounds(); b.W != 120 || b.H != 64 {
+	if b := fill.Bounds(ctx); b.W != 120 || b.H != 64 {
 		t.Fatalf("first layer did not fill a sized box: %v", b)
 	}
-	if b := sized.Bounds(); b.H != 64 {
+	if b := sized.Bounds(ctx); b.H != 64 {
 		t.Fatalf("sized box %v", b)
 	}
 }

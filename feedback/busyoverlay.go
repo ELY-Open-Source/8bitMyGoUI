@@ -11,7 +11,7 @@ type BusyOverlayOptions struct{}
 type busyKey struct{}
 
 // BusyOverlay veils busy content, whose controls then take no input.
-func BusyOverlay(c *ui.Context, busy bool, o BusyOverlayOptions, content func()) *ui.Element {
+func BusyOverlay(c *ui.Context, busy bool, o BusyOverlayOptions, content func()) ui.Element {
 	k := pixel.K(c)
 	outer := ui.Box(c)
 	// held is whether the veil had the focus last frame.
@@ -29,7 +29,7 @@ func BusyOverlay(c *ui.Context, busy bool, o BusyOverlayOptions, content func())
 		s := pixel.Current(c)
 		s.Inert = s.Inert || busy
 		before := c.Root().Focused()
-		var body *ui.Element
+		var body ui.Element
 		pixel.Scope(c, s, func() { body = ui.Box(c).Children(content) })
 		if !busy {
 			return

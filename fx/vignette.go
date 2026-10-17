@@ -12,7 +12,7 @@ type VignetteOptions struct {
 }
 
 // Vignette dithers a slot inward from edges; corners go solid.
-func Vignette(c *ui.Context, o VignetteOptions, content func()) *ui.Element {
+func Vignette(c *ui.Context, o VignetteOptions, content func()) ui.Element {
 	k := pixel.K(c)
 	s := slotOr(o.Slot, dark(k))
 	return cover(k, ui.Column(c), func(g pixel.Canvas) { vignette(g, s) }, content)

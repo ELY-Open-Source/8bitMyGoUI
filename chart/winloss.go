@@ -11,7 +11,7 @@ import (
 type WinLossOptions struct{}
 
 // WinLoss rows blocks: wins up, losses down, draws dashed.
-func WinLoss(c *ui.Context, text string, results []int, o WinLossOptions) *ui.Element {
+func WinLoss(c *ui.Context, text string, results []int, o WinLossOptions) ui.Element {
 	k := pixel.K(c)
 	return ui.Box(c).Size(k.D(len(results)*5), k.D(pixel.LineHeight)).Role(ui.RoleImage).Label(text).
 		Description(record(results)).Draw(func(p *ui.Painter, r ui.Rect) {

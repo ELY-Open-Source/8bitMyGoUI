@@ -21,7 +21,7 @@ type MemberListOptions struct {
 }
 
 // MemberList groups members online and offline, with status dots.
-func MemberList(c *ui.Context, text string, members []Member, o MemberListOptions) *ui.Element {
+func MemberList(c *ui.Context, text string, members []Member, o MemberListOptions) ui.Element {
 	k := pixel.K(c)
 	w := pixel.Or("MemberList Width", o.Width, 140)
 	var on, off []Member

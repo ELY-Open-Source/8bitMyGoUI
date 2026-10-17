@@ -15,7 +15,7 @@ type LootPopupOptions struct {
 }
 
 type LootPopupResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Closed is OK, Escape or a click outside.
 	Closed bool
 }

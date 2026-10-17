@@ -19,7 +19,7 @@ type ResizableOptions struct {
 }
 
 type ResizableResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -41,7 +41,7 @@ func Resizable(c *ui.Context, w, h *int, o ResizableOptions, children func()) Re
 	e := ui.Box(c).Clip()
 	e.Children(func() {
 		children()
-		shell, base, st := pixel.Shell(c, func() *ui.Element {
+		shell, base, st := pixel.Shell(c, func() ui.Element {
 			return ui.Box(c).Focusable().Role(ui.RoleSplitter).Label(label(k, o.Label, "resize")).Disabled(o.Disabled).Cursor(ui.CursorResizeNWSE)
 		})
 		if dx, dy, ok := drag(k, base); ok {

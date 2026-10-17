@@ -15,7 +15,7 @@ type StaminaBarOptions struct {
 }
 
 // StaminaBar blocks stamina out; the part-full block dithers.
-func StaminaBar(c *ui.Context, text string, value float64, o StaminaBarOptions) *ui.Element {
+func StaminaBar(c *ui.Context, text string, value float64, o StaminaBarOptions) ui.Element {
 	k := pixel.K(c)
 	if !(value >= 0 && value <= 1) {
 		panic(fmt.Sprintf("game: StaminaBar value %v outside 0–1", value))

@@ -16,7 +16,7 @@ type TimerOptions struct {
 }
 
 type TimerResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Done is true in the frame the time runs out.
 	Done bool
 }

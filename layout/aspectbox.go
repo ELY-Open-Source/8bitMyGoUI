@@ -12,7 +12,7 @@ type AspectBoxOptions struct {
 }
 
 // AspectBox fills the width and keeps W:H in whole dots.
-func AspectBox(c *ui.Context, o AspectBoxOptions, children func()) *ui.Element {
+func AspectBox(c *ui.Context, o AspectBoxOptions, children func()) ui.Element {
 	k := pixel.K(c)
 	rw, rh := pixel.Or("AspectBox W", o.W, 1), pixel.Or("AspectBox H", o.H, 1)
 	e := ui.Box(c).FillWidth().Clip()

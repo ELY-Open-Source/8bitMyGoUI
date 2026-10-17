@@ -19,7 +19,7 @@ type PatchNotesOptions struct {
 }
 
 // PatchNotes lists versions, each line tagged ADDED, FIXED or CHANGED.
-func PatchNotes(c *ui.Context, title string, patches []Patch, o PatchNotesOptions) *ui.Element {
+func PatchNotes(c *ui.Context, title string, patches []Patch, o PatchNotesOptions) ui.Element {
 	k := pixel.K(c)
 	w := pixel.Or("PatchNotes Width", o.Width, 240)
 	// Tags draw in the main font, so any locale reads.

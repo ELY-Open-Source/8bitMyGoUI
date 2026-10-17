@@ -23,7 +23,7 @@ type AlarmOptions struct {
 }
 
 type AlarmResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

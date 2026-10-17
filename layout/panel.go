@@ -15,7 +15,7 @@ type PanelOptions struct {
 }
 
 // Panel frames children in a style.
-func Panel(c *ui.Context, o PanelOptions, children func()) *ui.Element {
+func Panel(c *ui.Context, o PanelOptions, children func()) ui.Element {
 	k := pixel.K(c)
 	fill := o.Fill
 	if fill == pixel.Ink {

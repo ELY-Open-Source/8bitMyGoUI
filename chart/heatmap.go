@@ -16,7 +16,7 @@ type HeatmapOptions struct {
 }
 
 // Heatmap shades cells by dither level between two slots.
-func Heatmap(c *ui.Context, text string, rows, cols []string, values [][]float64, o HeatmapOptions) *ui.Element {
+func Heatmap(c *ui.Context, text string, rows, cols []string, values [][]float64, o HeatmapOptions) ui.Element {
 	k := pixel.K(c)
 	if len(values) != len(rows) {
 		panic(fmt.Sprintf("chart: Heatmap has %d rows of values for %d rows", len(values), len(rows)))

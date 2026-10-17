@@ -18,7 +18,7 @@ type BattleLogOptions struct {
 }
 
 // BattleLog keeps the newest lines last; old ones roll off.
-func BattleLog(c *ui.Context, text string, lines []Line, o BattleLogOptions) *ui.Element {
+func BattleLog(c *ui.Context, text string, lines []Line, o BattleLogOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := pixel.Or("BattleLog Width", o.Width, 180), pixel.Or("BattleLog Height", o.Height, 68)
 	n := (h - 4) / pixel.LineHeight

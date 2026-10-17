@@ -14,7 +14,7 @@ type TilesOptions struct {
 }
 
 // Tiles wraps n equal tiles into rows.
-func Tiles(c *ui.Context, n int, o TilesOptions, tile func(i int)) *ui.Element {
+func Tiles(c *ui.Context, n int, o TilesOptions, tile func(i int)) ui.Element {
 	k := pixel.K(c)
 	w := pixel.Or("Tiles W", o.W, 48)
 	h := pixel.Or("Tiles H", o.H, w)

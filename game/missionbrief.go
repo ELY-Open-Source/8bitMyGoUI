@@ -14,7 +14,7 @@ type MissionBriefOptions struct {
 }
 
 type MissionBriefResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Start   bool
 }
 

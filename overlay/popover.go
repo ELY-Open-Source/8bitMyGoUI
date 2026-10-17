@@ -15,11 +15,11 @@ type PopoverOptions struct {
 const notch = 4
 
 // Popover opens a panel below anchor, notched toward it.
-func Popover(c *ui.Context, text string, anchor *ui.Element, open *bool, o PopoverOptions, content func()) *ui.Element {
+func Popover(c *ui.Context, text string, anchor ui.Element, open *bool, o PopoverOptions, content func()) ui.Element {
 	k := pixel.K(c)
 	w := pixel.Or("Popover Width", o.Width, 0)
 	ab := anchor.Bounds()
-	return ui.PopoverBase(c, anchor, open, func(panel *ui.Element) {
+	return ui.PopoverBase(c, anchor, open, func(panel ui.Element) {
 		if w > 0 {
 			panel.Width(k.D(w))
 		}

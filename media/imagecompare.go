@@ -18,7 +18,7 @@ type ImageCompareOptions struct {
 }
 
 type ImageCompareResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

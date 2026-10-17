@@ -13,7 +13,7 @@ type RadioOptions struct {
 }
 
 type RadioResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -22,7 +22,7 @@ func Radio[T comparable](c *ui.Context, text string, value T, selected *T, o Rad
 	k := pixel.K(c)
 	was := *selected == value
 	on := was
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.CheckboxBase(c, &on).Role(ui.RoleRadio).Label(text).Disabled(o.Disabled)
 	})
 	res := RadioResult{Element: shell}

@@ -12,7 +12,7 @@ type ScanlinesOptions struct {
 }
 
 // Scanlines shades every other row of content at half strength.
-func Scanlines(c *ui.Context, o ScanlinesOptions, content func()) *ui.Element {
+func Scanlines(c *ui.Context, o ScanlinesOptions, content func()) ui.Element {
 	k := pixel.K(c)
 	s := slotOr(o.Slot, pixel.Shade)
 	return cover(k, ui.Column(c), func(g pixel.Canvas) {

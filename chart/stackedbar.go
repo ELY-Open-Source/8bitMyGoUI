@@ -14,7 +14,7 @@ type StackedBarOptions struct {
 }
 
 // StackedBar stacks each category's series, one slot per series.
-func StackedBar(c *ui.Context, text string, labels []string, series []Series, o StackedBarOptions) *ui.Element {
+func StackedBar(c *ui.Context, text string, labels []string, series []Series, o StackedBarOptions) ui.Element {
 	k := pixel.K(c)
 	if len(labels) == 0 {
 		panic("chart: StackedBar has no labels")

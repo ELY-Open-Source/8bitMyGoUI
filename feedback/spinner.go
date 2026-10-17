@@ -15,7 +15,7 @@ type SpinnerOptions struct {
 var ring = [8][2]int{{5, 1}, {8, 2}, {9, 5}, {8, 8}, {5, 9}, {2, 8}, {1, 5}, {2, 2}}
 
 // Spinner turns through eight frames, even under Reduce Motion.
-func Spinner(c *ui.Context, text string, o SpinnerOptions) *ui.Element {
+func Spinner(c *ui.Context, text string, o SpinnerOptions) ui.Element {
 	k := pixel.K(c)
 	s := pixel.Or("Spinner Scale", o.Scale, 1)
 	if s > 4 {

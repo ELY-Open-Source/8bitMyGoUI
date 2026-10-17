@@ -15,7 +15,7 @@ type TypingIndicatorOptions struct {
 }
 
 // TypingIndicator bounces three dots in a bubble while name types.
-func TypingIndicator(c *ui.Context, name string, o TypingIndicatorOptions) *ui.Element {
+func TypingIndicator(c *ui.Context, name string, o TypingIndicatorOptions) ui.Element {
 	k := pixel.K(c)
 	ink := o.Slot
 	if ink == pixel.Ink {

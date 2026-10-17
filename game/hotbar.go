@@ -16,7 +16,7 @@ type HotbarOptions struct {
 }
 
 type HotbarResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 	// Used is the slot used this frame, or -1.
 	Used int

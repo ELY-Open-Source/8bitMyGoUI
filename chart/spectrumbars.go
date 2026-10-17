@@ -24,7 +24,7 @@ type peaks struct {
 }
 
 // SpectrumBars lights segmented bars; peak dots fall behind them.
-func SpectrumBars(c *ui.Context, text string, levels []float64, o SpectrumBarsOptions) *ui.Element {
+func SpectrumBars(c *ui.Context, text string, levels []float64, o SpectrumBarsOptions) ui.Element {
 	k := pixel.K(c)
 	n := pixel.Or("SpectrumBars Segments", o.Segments, 10)
 	for _, l := range levels {

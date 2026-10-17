@@ -14,7 +14,7 @@ type BadgeOptions struct {
 }
 
 // Badge shows n, capped at 99+, or text.
-func Badge(c *ui.Context, n int, o BadgeOptions) *ui.Element {
+func Badge(c *ui.Context, n int, o BadgeOptions) ui.Element {
 	k := pixel.K(c)
 	s := o.Text
 	if s == "" {

@@ -14,7 +14,7 @@ type CardOptions struct {
 }
 
 // Card is a raised panel: header strip, body, footer.
-func Card(c *ui.Context, o CardOptions, body func()) *ui.Element {
+func Card(c *ui.Context, o CardOptions, body func()) ui.Element {
 	k := pixel.K(c)
 	e := ui.Column(c).Padding(k.D(2)).Draw(func(p *ui.Painter, r ui.Rect) {
 		box(k.Canvas(p, r), pixel.Raised, pixel.Face)

@@ -18,7 +18,7 @@ type TextInputOptions struct {
 
 type TextInputResult struct {
 	// Element is laid out; Input takes the focus.
-	Element, Input              *ui.Element
+	Element, Input              ui.Element
 	Changed, Submitted, Focused bool
 }
 
@@ -29,7 +29,7 @@ func TextInput(c *ui.Context, label string, value *string, o TextInputOptions) T
 }
 
 // field frames an editor in a well with extras.
-func field(c *ui.Context, value *string, eo pixel.EditorOptions, width int, bad func() bool, icon *pixel.Sprite, after func()) (pixel.Edit, *ui.Element) {
+func field(c *ui.Context, value *string, eo pixel.EditorOptions, width int, bad func() bool, icon *pixel.Sprite, after func()) (pixel.Edit, ui.Element) {
 	k := pixel.K(c)
 	var ed pixel.Edit
 	e := ui.Row(c).Width(k.D(pixel.Or("Width", width, 120))).Height(k.D(pixel.LineHeight+6)).Padding(0, k.D(4)).Gap(k.D(3)).AlignItems(ui.Center)
@@ -69,7 +69,7 @@ func well(g pixel.Canvas, edge pixel.Slot, focus bool) {
 }
 
 // result wraps an editor's events and logs submits.
-func result(e *ui.Element, ed pixel.Edit, label string) TextInputResult {
+func result(e ui.Element, ed pixel.Edit, label string) TextInputResult {
 	if ed.Submitted {
 		slog.Debug("8bit: field submitted", "label", label)
 	}

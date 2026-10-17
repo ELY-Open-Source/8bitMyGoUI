@@ -262,7 +262,7 @@ func TestDateSeparatorNamesTheDay(t *testing.T) {
 	day := wd.clk.t
 	pixel.ResetDue()
 	tt := view(400, 100, wd, func(c *ui.Context) { chat.DateSeparator(c, day, chat.DateSeparatorOptions{}) })
-	if until := time.Until(pixel.Due()); until <= 0 || until > 2*time.Second {
+	if until := pixel.Due().Sub(tt.Now()); until <= 0 || until > 2*time.Second {
 		t.Fatalf("the next build is due in %v, not at midnight", until)
 	}
 	wd.clk.t = wd.clk.t.Add(2 * time.Second)

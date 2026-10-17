@@ -18,7 +18,7 @@ type RecentFilesOptions struct {
 }
 
 type RecentFilesResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Opened is Enter or a double click on a file.
 	Changed, Opened bool
 }

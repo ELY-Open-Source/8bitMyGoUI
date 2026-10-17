@@ -13,7 +13,7 @@ type GradientTextOptions struct {
 }
 
 // GradientText dithers glyph dots from Top down to Bottom.
-func GradientText(c *ui.Context, s string, o GradientTextOptions) *ui.Element {
+func GradientText(c *ui.Context, s string, o GradientTextOptions) ui.Element {
 	k, sc := pixel.K(c), scale(o.Scale)
 	top, bottom := slotOr(o.Top, pixel.AccentLit), slotOr(o.Bottom, pixel.Accent)
 	return block(c, k, s, pixel.Measure(s)*sc, pixel.LineHeight*sc, func(g pixel.Canvas) {

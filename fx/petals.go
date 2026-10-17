@@ -13,7 +13,7 @@ type PetalsOptions struct {
 }
 
 // Petals fall on a breeze, turning as they go.
-func Petals(c *ui.Context, o PetalsOptions) *ui.Element {
+func Petals(c *ui.Context, o PetalsOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := size("Petals", o.Width, o.Height, 160, 96)
 	return box(c, k, o.Label, w, h).Draw(func(p *ui.Painter, r ui.Rect) {

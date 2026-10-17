@@ -25,7 +25,7 @@ func note(semi int) string {
 }
 
 // played are the semitones whose letters e heard this frame.
-func played(e *ui.Element) []int {
+func played(e ui.Element) []int {
 	var out []int
 	for semi, kb := range keyboard {
 		if pixel.Shortcut(e, 0, kb.key) {

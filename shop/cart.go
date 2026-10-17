@@ -28,7 +28,7 @@ type CartOptions struct {
 }
 
 type CartResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 	// Removed is the line whose ✕ was pressed, else -1.
 	Removed int

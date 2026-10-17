@@ -29,7 +29,7 @@ type TrophyOptions struct {
 }
 
 // Trophy is a gold cup over an engraved plaque.
-func Trophy(c *ui.Context, plaque string, o TrophyOptions) *ui.Element {
+func Trophy(c *ui.Context, plaque string, o TrophyOptions) ui.Element {
 	k, sc := pixel.K(c), scale(o.Scale)
 	up := strings.ToUpper(plaque)
 	micro := pixel.MicroOK(up)

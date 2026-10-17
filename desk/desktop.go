@@ -13,7 +13,7 @@ type DesktopOptions struct {
 }
 
 // Desktop lays icons down a dithered wallpaper, column by column.
-func Desktop(c *ui.Context, text string, o DesktopOptions, icons func()) *ui.Element {
+func Desktop(c *ui.Context, text string, o DesktopOptions, icons func()) ui.Element {
 	k := pixel.K(c)
 	o.Wallpaper.name(k)
 	w, h := pixel.Or("Desktop Width", o.Width, 320), pixel.Or("Desktop Height", o.Height, 200)

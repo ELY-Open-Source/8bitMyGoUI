@@ -14,7 +14,7 @@ import (
 type LockScreenOptions struct{}
 
 type LockScreenResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Unlocked is a key or click opening it this frame.
 	Unlocked bool
 }
@@ -40,7 +40,7 @@ func LockScreen(c *ui.Context, text string, open *bool, o LockScreenOptions) Loc
 			g.Text((g.W-pixel.Measure(press))/2, g.H-3*pixel.LineHeight, press, pixel.Accent, 1)
 		}
 	})
-	if panel != nil {
+	if panel.Valid() {
 		panel.Description(clock + ", " + date + ", " + press)
 	}
 	if woke {

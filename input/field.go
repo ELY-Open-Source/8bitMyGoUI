@@ -16,7 +16,7 @@ type FieldOptions struct {
 }
 
 // Field puts a label above a control, notes below.
-func Field(c *ui.Context, label string, o FieldOptions, control func()) *ui.Element {
+func Field(c *ui.Context, label string, o FieldOptions, control func()) ui.Element {
 	k := pixel.K(c)
 	return ui.Column(c).Gap(k.D(2)).Role(ui.RoleGroup).Label(label).Children(func() {
 		pixel.Text(c, label, pixel.TextOptions{})

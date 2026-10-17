@@ -12,7 +12,7 @@ type FigureOptions struct {
 }
 
 // Figure shows content over a centered caption.
-func Figure(c *ui.Context, caption string, o FigureOptions, content func()) *ui.Element {
+func Figure(c *ui.Context, caption string, o FigureOptions, content func()) ui.Element {
 	k := pixel.K(c)
 	return ui.Column(c).Gap(k.D(3)).AlignItems(ui.Center).Role(ui.RoleGroup).Label(caption).Children(func() {
 		content()

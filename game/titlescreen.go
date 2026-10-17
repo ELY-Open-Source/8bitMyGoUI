@@ -16,7 +16,7 @@ type TitleScreenOptions struct {
 }
 
 type TitleScreenResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Chosen is 0 NEW GAME, 1 CONTINUE, 2 OPTIONS.
 	Chosen int
 }
@@ -50,7 +50,7 @@ func TitleScreen(c *ui.Context, title string, started *bool, o TitleScreenOption
 }
 
 // logo writes the title big, gold over red, shadowed.
-func logo(c *ui.Context, title string) *ui.Element {
+func logo(c *ui.Context, title string) ui.Element {
 	k := pixel.K(c)
 	w := 3*pixel.Measure(title) + 2
 	return ui.Box(c).Role(ui.RoleText).Label(title).Size(k.D(w), k.D(3*pixel.LineHeight+2)).Draw(func(p *ui.Painter, r ui.Rect) {

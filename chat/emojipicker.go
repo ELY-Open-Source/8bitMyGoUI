@@ -14,7 +14,7 @@ type EmojiPickerOptions struct {
 }
 
 type EmojiPickerResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Picked is the emoji chosen this frame, else empty.
 	Picked string
 }

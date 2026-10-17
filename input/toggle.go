@@ -17,7 +17,7 @@ type ToggleOptions struct {
 }
 
 type ToggleResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -27,7 +27,7 @@ func Toggle(c *ui.Context, text string, on *bool, o ToggleOptions) ToggleResult 
 	h, pad, top, sc := o.Size.metrics()
 	// The base turns before it learns it is off.
 	v := *on
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.ToggleBase(c, &v).Label(label(o.Label, text)).Disabled(o.Disabled)
 	})
 	changed := v != *on && !base.IsDisabled()

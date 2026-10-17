@@ -20,7 +20,7 @@ type AppWindowOptions struct {
 }
 
 type AppWindowResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Closed is the close box; Moved, a drag or arrow.
 	Closed, Moved bool
 }
@@ -64,7 +64,7 @@ func AppWindow(c *ui.Context, title string, x, y *int, o AppWindowOptions, conte
 		g.Frame(0, 0, g.W, g.H, pixel.Raised, pixel.Face)
 	}).Children(func() {
 		ui.Row(c).FillWidth().Gap(k.D(2)).AlignItems(ui.Center).Children(func() {
-			shell, base, st := pixel.Shell(c, func() *ui.Element {
+			shell, base, st := pixel.Shell(c, func() ui.Element {
 				return ui.Box(c).Focusable().Role(ui.RoleGroup).Label(title).Description(k.Msg("arrows_move")).Disabled(o.Disabled)
 			})
 			if !base.IsDisabled() {

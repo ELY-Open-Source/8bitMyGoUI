@@ -20,7 +20,7 @@ type SparkleOptions struct {
 var glints = [...]int{0, 1, 2, 1, 0, -1, -1, -1}
 
 // Sparkle twinkles four stars around its middle, in turn.
-func Sparkle(c *ui.Context, o SparkleOptions) *ui.Element {
+func Sparkle(c *ui.Context, o SparkleOptions) ui.Element {
 	k := pixel.K(c)
 	n := pixel.Or("Sparkle Size", o.Size, 24)
 	s := slotOr(o.Slot, pixel.Warn)

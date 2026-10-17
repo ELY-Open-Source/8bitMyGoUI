@@ -11,7 +11,7 @@ type CodeOptions struct {
 }
 
 // Code is an inline chip on Well, bordered in Edge.
-func Code(c *ui.Context, s string, o CodeOptions) *ui.Element {
+func Code(c *ui.Context, s string, o CodeOptions) ui.Element {
 	k := pixel.K(c)
 	return block(c, k, s, pixel.Measure(s)+6, pixel.LineHeight+2, func(g pixel.Canvas) {
 		g.Frame(0, 0, g.W, g.H, pixel.Flat, pixel.Well)

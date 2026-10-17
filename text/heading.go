@@ -15,7 +15,7 @@ type HeadingOptions struct {
 }
 
 // Heading is a title with a 1-dot Shade shadow.
-func Heading(c *ui.Context, s string, o HeadingOptions) *ui.Element {
+func Heading(c *ui.Context, s string, o HeadingOptions) ui.Element {
 	level := pixel.Or("Heading Level", o.Level, 1)
 	if level > 3 {
 		panic(fmt.Sprintf("text: Heading Level %d outside 1–3", level))

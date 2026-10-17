@@ -30,7 +30,7 @@ func demoPalettes(c *ui.Context, log func(string)) {
 			s.Palette = pal
 			pixel.Scope(c, s, func() {
 				kp := pixel.K(c)
-				shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.ButtonBase(c).Label(pal.Name) })
+				shell, base, st := pixel.Shell(c, func() ui.Element { return ui.ButtonBase(c).Label(pal.Name) })
 				shell.Height(kp.D(52)).Draw(func(p *ui.Painter, r ui.Rect) {
 					g := kp.Canvas(p, r)
 					g.Frame(0, 0, g.W, g.H, pixel.Window, pixel.Face)
@@ -158,7 +158,7 @@ func demoSprites(c *ui.Context, log func(string)) {
 		sp = slimeLeft
 	}
 	k := pixel.K(c)
-	shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.ButtonBase(c).Label("slime") })
+	shell, base, st := pixel.Shell(c, func() ui.Element { return ui.ButtonBase(c).Label("slime") })
 	shell.Size(k.D(120), k.D(48)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)
 		g.Rect(0, 40, g.W, 8, pixel.Good)

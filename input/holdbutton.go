@@ -19,7 +19,7 @@ type HoldButtonOptions struct {
 }
 
 type HoldButtonResult struct {
-	Element   *ui.Element
+	Element   ui.Element
 	Confirmed bool
 }
 
@@ -44,7 +44,7 @@ func HoldButton(c *ui.Context, text string, o HoldButtonOptions) HoldButtonResul
 	if d == 0 {
 		d = time.Second
 	}
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.ButtonBase(c).Label(text).Description(k.Msg("hold")).Disabled(o.Disabled)
 	})
 	h := ui.Local(base, holdButtonKey{}, func() holding { return holding{} })

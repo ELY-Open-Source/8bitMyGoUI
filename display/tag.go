@@ -25,7 +25,7 @@ type TagOptions struct {
 }
 
 type TagResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Removed bool
 }
 
@@ -61,7 +61,7 @@ func Tag(c *ui.Context, label string, o TagOptions) TagResult {
 
 // removeBox is the × that removes a tag.
 func removeBox(c *ui.Context, k pixel.Kit, name string, disabled bool) bool {
-	shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.ButtonBase(c).Label(name).Disabled(disabled) })
+	shell, base, st := pixel.Shell(c, func() ui.Element { return ui.ButtonBase(c).Label(name).Disabled(disabled) })
 	shell.Size(k.D(9), k.D(9)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)
 		if st.Hover || st.Press {

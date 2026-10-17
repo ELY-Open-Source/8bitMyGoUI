@@ -85,8 +85,8 @@ func TestClock(t *testing.T) {
 	if step != 0 || busy == 0 {
 		t.Fatalf("under Reduce Motion: Step %d (want 0), Busy %d", step, busy)
 	}
-	if due := time.Until(pixel.Due()); due <= 0 || due > 125*time.Millisecond {
-		t.Fatalf("Due in %v, want the 8 fps wait on the real clock", due)
+	if due := pixel.Due().Sub(tt.Now()); due <= 0 || due > 125*time.Millisecond {
+		t.Fatalf("Due in %v, want the 8 fps wait on the frame clock", due)
 	}
 	pixel.ResetDue()
 	if !pixel.Due().IsZero() {
@@ -166,7 +166,7 @@ func shellView(disabled *bool, clicks *int, st *pixel.State) func(c *ui.Context)
 		ui.Box(c).Size(k.D(16), k.D(4))
 		ui.Row(c).Children(func() {
 			ui.Box(c).Size(k.D(16), k.D(8))
-			shell, base, s := pixel.Shell(c, func() *ui.Element {
+			shell, base, s := pixel.Shell(c, func() ui.Element {
 				return ui.ButtonBase(c).Label("go").Disabled(*disabled)
 			})
 			*st = s

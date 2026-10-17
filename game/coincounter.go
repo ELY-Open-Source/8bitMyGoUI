@@ -16,7 +16,7 @@ type CoinCounterOptions struct {
 }
 
 // CoinCounter spins a coin beside a count that ticks up.
-func CoinCounter(c *ui.Context, text string, coins int, o CoinCounterOptions) *ui.Element {
+func CoinCounter(c *ui.Context, text string, coins int, o CoinCounterOptions) ui.Element {
 	k := pixel.K(c)
 	if coins < 0 {
 		panic(fmt.Sprintf("game: CoinCounter %d", coins))

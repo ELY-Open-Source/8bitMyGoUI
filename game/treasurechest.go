@@ -16,7 +16,7 @@ type TreasureChestOptions struct {
 }
 
 type TreasureChestResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Opened is true in the frame a press opens it.
 	Opened bool
 }
@@ -35,7 +35,7 @@ func TreasureChest(c *ui.Context, text string, it data.Item, open *bool, o Treas
 	if it.Sprite == nil {
 		panic(fmt.Sprintf("game: TreasureChest item %q has no sprite", it.Name))
 	}
-	shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.ButtonBase(c).Label(text).Disabled(o.Disabled) })
+	shell, base, st := pixel.Shell(c, func() ui.Element { return ui.ButtonBase(c).Label(text).Disabled(o.Disabled) })
 	res := TreasureChestResult{Element: shell}
 	if base.Clicked() && !*open {
 		*open, res.Opened = true, true

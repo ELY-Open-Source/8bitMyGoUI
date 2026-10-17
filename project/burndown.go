@@ -17,7 +17,7 @@ type BurndownOptions struct {
 }
 
 // Burndown draws the ideal line and the work left.
-func Burndown(c *ui.Context, text string, total float64, days int, left []float64, o BurndownOptions) *ui.Element {
+func Burndown(c *ui.Context, text string, total float64, days int, left []float64, o BurndownOptions) ui.Element {
 	k := pixel.K(c)
 	if !(total > 0) || math.IsInf(total, 0) || days < 1 || len(left) > days+1 {
 		panic(fmt.Sprintf("project: Burndown of %v over %d days, %d points", total, days, len(left)))

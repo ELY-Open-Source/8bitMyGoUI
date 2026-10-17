@@ -19,7 +19,7 @@ type QuestBoardOptions struct {
 }
 
 type QuestBoardResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Moved reports a card that changed column or place.
 	Moved bool
 }
@@ -47,7 +47,7 @@ func QuestBoard(c *ui.Context, text string, cols *[3][]string, o QuestBoardOptio
 		}
 		most = max(most, len(col))
 	}
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleGroup).Label(text).Disabled(o.Disabled)
 	})
 	b := ui.Local(base, boardKey{}, func() board { return board{} })

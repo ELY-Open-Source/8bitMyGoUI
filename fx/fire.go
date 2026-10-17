@@ -59,7 +59,7 @@ s###........###s
 `)
 
 // Fire burns a campfire: flicker frames, heat rising through it.
-func Fire(c *ui.Context, o FireOptions) *ui.Element {
+func Fire(c *ui.Context, o FireOptions) ui.Element {
 	k := pixel.K(c)
 	sc := scale("Fire", o.Scale, 2)
 	return box(c, k, o.Label, 16*sc, 20*sc).Draw(func(p *ui.Painter, r ui.Rect) {

@@ -16,7 +16,7 @@ type SunDialOptions struct {
 }
 
 type SunDialResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -30,7 +30,7 @@ func SunDial(c *ui.Context, text string, hour *int, o SunDialOptions) SunDialRes
 		panic(fmt.Sprintf("datetime: SunDial hour %d outside 0–23", *hour))
 	}
 	old := *hour
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleSlider).Label(text).Disabled(o.Disabled)
 	})
 	if pixel.Shortcut(base, 0, ui.KeyLeft) {

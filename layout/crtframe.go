@@ -15,7 +15,7 @@ type CRTFrameOptions struct {
 const crtSide, crtChin = 10, 16
 
 // CRTFrame shows children on a monitor with scanlines.
-func CRTFrame(c *ui.Context, o CRTFrameOptions, children func()) *ui.Element {
+func CRTFrame(c *ui.Context, o CRTFrameOptions, children func()) ui.Element {
 	k := pixel.K(c)
 	return ui.Column(c).Padding(k.D(crtSide), k.D(crtSide), k.D(crtChin), k.D(crtSide)).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)

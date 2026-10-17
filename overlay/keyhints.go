@@ -15,7 +15,7 @@ type KeyHint struct {
 type KeyHintsOptions struct{}
 
 // KeyHints shows controls, as Ⓐ CONFIRM Ⓑ BACK.
-func KeyHints(c *ui.Context, hints []KeyHint, o KeyHintsOptions) *ui.Element {
+func KeyHints(c *ui.Context, hints []KeyHint, o KeyHintsOptions) ui.Element {
 	k := pixel.K(c)
 	return ui.Row(c).Gap(k.D(10)).Padding(k.D(3), k.D(6)).AlignItems(ui.Center).Role(ui.RoleGroup).Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)

@@ -17,7 +17,7 @@ type EqualizerOptions struct {
 }
 
 type EqualizerResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Band is the band changed this frame, else -1.
 	Band int
 }

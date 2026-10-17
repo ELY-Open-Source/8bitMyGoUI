@@ -15,7 +15,7 @@ type AccountSwitcherOptions struct {
 }
 
 type AccountSwitcherResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -36,7 +36,7 @@ func AccountSwitcher(c *ui.Context, text string, names [4]string, current *int, 
 				label += ", " + k.Msg("in_use")
 			}
 			// The shell draws the card; the base stays bare.
-			shell, base, st := pixel.Shell(c, func() *ui.Element {
+			shell, base, st := pixel.Shell(c, func() ui.Element {
 				return ui.ButtonBase(c).Role(ui.RoleRadio).Label(label).Disabled(o.Disabled)
 			})
 			if base.Clicked() && *current != i {

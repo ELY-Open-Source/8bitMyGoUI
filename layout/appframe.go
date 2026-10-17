@@ -14,7 +14,7 @@ type AppFrameOptions struct {
 }
 
 // AppFrame arranges header, sidebar, main and footer; nil ones vanish.
-func AppFrame(c *ui.Context, o AppFrameOptions, header, sidebar, main, footer func()) *ui.Element {
+func AppFrame(c *ui.Context, o AppFrameOptions, header, sidebar, main, footer func()) ui.Element {
 	k := pixel.K(c)
 	sw := pixel.Or("AppFrame SidebarWidth", o.SidebarWidth, 96)
 	fold := pixel.Or("AppFrame FoldBelow", o.FoldBelow, 320)
@@ -43,7 +43,7 @@ func AppFrame(c *ui.Context, o AppFrameOptions, header, sidebar, main, footer fu
 		if header != nil {
 			strip(header, true)
 		}
-		var body *ui.Element
+		var body ui.Element
 		if folded {
 			body = ui.Column(c)
 		} else {

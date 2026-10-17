@@ -26,7 +26,7 @@ type odoState struct {
 const odoCell = 10
 
 // Odometer rolls its digits toward value, step by step.
-func Odometer(c *ui.Context, value int, o OdometerOptions) *ui.Element {
+func Odometer(c *ui.Context, value int, o OdometerOptions) ui.Element {
 	if value < 0 {
 		panic(fmt.Sprintf("text: Odometer value %d is negative", value))
 	}

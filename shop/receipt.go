@@ -27,7 +27,7 @@ type ReceiptOptions struct {
 }
 
 // Receipt prints lines dot-matrix style, perforated down the sides.
-func Receipt(c *ui.Context, shop string, lines []ReceiptLine, o ReceiptOptions) *ui.Element {
+func Receipt(c *ui.Context, shop string, lines []ReceiptLine, o ReceiptOptions) ui.Element {
 	k := pixel.K(c)
 	if shop == "" {
 		panic("shop: Receipt has no shop name")

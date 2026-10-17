@@ -30,7 +30,7 @@ type ProfileCardOptions struct {
 }
 
 // ProfileCard shows a player: face, name, level, title and stats.
-func ProfileCard(c *ui.Context, p Profile, o ProfileCardOptions) *ui.Element {
+func ProfileCard(c *ui.Context, p Profile, o ProfileCardOptions) ui.Element {
 	k := pixel.K(c)
 	if p.Level < 1 {
 		panic(fmt.Sprintf("account: ProfileCard level %d", p.Level))

@@ -29,7 +29,7 @@ type ShopItemOptions struct {
 }
 
 type ShopItemResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Bought  bool
 }
 

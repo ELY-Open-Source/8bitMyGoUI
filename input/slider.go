@@ -19,7 +19,7 @@ type SliderOptions struct {
 }
 
 type SliderResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -48,7 +48,7 @@ type RailOptions struct {
 }
 
 // SlideBase is an undrawn slider: pointer and keys set *value.
-func SlideBase(c *ui.Context, text string, value *float64, o RailOptions) (shell *ui.Element, st pixel.State, changed bool) {
+func SlideBase(c *ui.Context, text string, value *float64, o RailOptions) (shell ui.Element, st pixel.State, changed bool) {
 	lo, hi := bounds(o.Min, o.Max)
 	return slide(c, value, rail{lo: lo, hi: hi, step: o.Step, vertical: o.Vertical, label: text, disabled: o.Disabled})
 }
@@ -62,8 +62,8 @@ type rail struct {
 }
 
 // slide is a focusable track; pointer and keys set *v.
-func slide(c *ui.Context, v *float64, r rail) (*ui.Element, pixel.State, bool) {
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+func slide(c *ui.Context, v *float64, r rail) (ui.Element, pixel.State, bool) {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleSlider).Label(r.label).Description(fmtValue(*v)).Disabled(r.disabled)
 	})
 	old := *v
@@ -102,7 +102,7 @@ func (r rail) snap(v *float64) func(float64) {
 }
 
 // keys step *v by arrows; Home and End jump.
-func (r rail) keys(base *ui.Element, v *float64, set func(float64)) {
+func (r rail) keys(base ui.Element, v *float64, set func(float64)) {
 	step := r.step
 	if step == 0 {
 		step = (r.hi - r.lo) / 20
@@ -144,7 +144,7 @@ func groove(g pixel.Canvas, x, y int) {
 }
 
 // report logs a change and wraps the result.
-func report(e *ui.Element, changed bool, kind, text string, v float64) SliderResult {
+func report(e ui.Element, changed bool, kind, text string, v float64) SliderResult {
 	if changed {
 		slog.Debug("8bit: "+kind, "label", text, "value", v)
 	}

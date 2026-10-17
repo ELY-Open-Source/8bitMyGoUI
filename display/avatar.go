@@ -90,7 +90,7 @@ type AvatarOptions struct {
 }
 
 // Avatar draws a face seeded by name, or a picture.
-func Avatar(c *ui.Context, name string, o AvatarOptions) *ui.Element {
+func Avatar(c *ui.Context, name string, o AvatarOptions) ui.Element {
 	k, sc := pixel.K(c), scale(o.Scale)
 	if o.Picture != nil {
 		return Picture(c, o.Picture, PictureOptions{W: 16 * sc, H: 16 * sc, Label: name})

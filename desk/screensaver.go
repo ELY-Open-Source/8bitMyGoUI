@@ -13,7 +13,7 @@ import (
 type ScreensaverOptions struct{}
 
 type ScreensaverResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Woke is the input that ended it this frame.
 	Woke bool
 }

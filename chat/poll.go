@@ -23,7 +23,7 @@ type PollOptions struct {
 }
 
 type PollResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Voted is the option voted for this frame, else -1.
 	Voted int
 }
@@ -65,7 +65,7 @@ func Poll(c *ui.Context, question string, opts []PollOption, mine *int, o PollOp
 // bar fills an option's share; ▶ marks your vote.
 func bar(c *ui.Context, k pixel.Kit, op PollOption, total int, mine bool, w int, disabled bool) bool {
 	label := fmt.Sprintf("%s, %d", op.Text, op.Votes)
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.ButtonBase(c).Label(label).Disabled(disabled).FocusRing(false)
 	})
 	n := strconv.Itoa(op.Votes)

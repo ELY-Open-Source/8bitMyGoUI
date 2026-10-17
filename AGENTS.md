@@ -8,13 +8,13 @@ Progress truth: `TASKS.md`. Requirements: `PRD.md` and `docs/prd/components-*.md
 | Item | Value |
 | --- | --- |
 | Go | 1.27.1 |
-| MyGo | `github.com/egoist/mygo v0.2.10`, pinned in go.mod |
+| MyGo | `github.com/egoist/mygo v0.5.5`, pinned in go.mod |
 | Font | Ark Pixel Font 12px proportional zh_Hans v2026.09.25 (OFL-1.1, `pixel/OFL.txt`). Rebuild: `go run ./tools/fontpack -in ark-pixel-12px-proportional-zh_hans.bdf` (BDF sha256 `535f7024…8c86`) |
 | QR | `rsc.io/qr v0.2.0` (BSD-3), encoder behind `display.QRCode` |
-| Web | `cmd/web` built with `GOOS=js GOARCH=wasm`; the browser runs the gallery under `ui.Tester` and blits frames to a canvas |
+| Web | `cmd/web` built with `GOOS=js GOARCH=wasm`; the browser runs the gallery under `ui.Tester`, whose clock the host moves with real time (at most 500 ms a call), and blits frames to a canvas |
 | Hosting | Cloudflare Workers static assets from `web/dist`; code on Gitea `git.zacharyzhang.com` |
 
-Read MyGo source before using an API: `$(go env GOMODCACHE)/github.com/egoist/mygo@v0.2.10` (`ui/*.go`, `docs/ui/*.md`). Never guess.
+Read MyGo source before using an API: `$(go env GOMODCACHE)/github.com/egoist/mygo@v0.5.5` (`ui/*.go`, `docs/ui/*.md`). Never guess.
 
 ## Layout
 
@@ -65,7 +65,7 @@ Imports point down only. Same-tier imports are forbidden. `internal/archtest` en
 - Read pointers and keys only while `base.IsDisabled()` is false, never by the `Disabled` option alone: `pixel.Shell` disables the base under Inert too, and a drag begun before stays pressed. MyGo still hands a key to a base that turned off this frame, so keys go through `pixel.Shortcut` (archtest bans an element's own `Shortcut`); a container that stays enabled, or a wrapper around an editor, also checks its own off state. `pixel.Editor` turns away text typed in a veil's first frame; read an edited value after building its editor, or gate the read. A `HandleInput` handler runs before the build learns the base is off: it records, and the build applies only while the base is enabled.
 - MyGo's value bases (`ToggleBase`, `SwitchBase`, `CheckboxBase`, `RadioBase`, `SegmentedBase`, `TabsBase`, `CollapsibleBase`) turn their value while built, before `Disabled` applies, so a key in a veil's first frame lands. Hand them a copy; keep only turns of an enabled base.
 - MyGo paints a disabled element and all inside it at half opacity, and only a disabled element reads as disabled to assistive technology. Disable only drawless bases, as `pixel.Shell` does. A container with drawn content stays enabled, parks its focus, ignores input and says `DISABLED` in its description.
-- A press focuses the nearest focusable element under it, or nothing, and a focusable element keeps the click: clicks never reach its ancestors. A control that acts on a press is that focusable element. A `DialogBase` moves the focus inside as it opens and keeps Tab there, but only onto something focusable: make its panel focusable, ring off, and build its children in `pixel.Harbor(c, panel, …)` so controls turning off park their focus there and get it back. A closing overlay hands the focus back to its opener. While a press is on, `Hovered` is false for every other element: ask `Pressed`.
+- A press focuses the nearest focusable element under it, or nothing, and a focusable element keeps the click: clicks never reach its ancestors. A control that acts on a press is that focusable element. A `DialogBase` moves the focus inside as it opens and keeps Tab there, but only onto something focusable: make its panel focusable, ring off, and build its children in `pixel.Harbor(c, panel, …)` so controls turning off park their focus there and get it back. A closing overlay hands the focus back to its opener: MyGo notes the opener after building the overlay, so focus an element as it appears with `pixel.AutoFocus`, never `AutoFocus` (archtest bans it). While a press is on, the elements around it stay `Hovered`: ask `Pressed`, and tell a press-given focus by focus arriving under the pointer.
 - Enter and Space click a focused clickable element unless a `Shortcut` takes them. Take them wherever a click reads the pointer's position.
 - Under `pixel.Settings.Inert` (a busy veil) `pixel.Shell` disables every base and gives the focus back after. A popup sits above any veil: a control closes its popup when disabled or inert. If the popup held the focus, focus the opener and `pixel.Park` it in that frame; tell it by `Focused` on the popup's controls, since MyGo links parents only after a frame.
 - Elements are known by their place among siblings. Wrap one whose earlier siblings come and go in `ui.Box(c).Key(k)`, or it loses focus and state. Rows the caller removes are keyed by a name that must be unique: panic on twins.
@@ -77,7 +77,8 @@ Imports point down only. Same-tier imports are forbidden. `internal/archtest` en
 - Item slots look alike everywhere: draw them with `data.DrawSlot` or `data.ItemSlot`.
 - Fail fast: panic on programmer errors such as bad options. Never swallow an error.
 - Composites log state changes: `slog.Debug("8bit: <component> <event>", …)`. Never log secrets, nor anything typed or copied: log counts. The gallery logs which demo spoke, not what it said.
-- No cross-frame `*ui.Element` caching. No goroutines touching elements.
+- A `ui.Element` is a handle that expires before the next build pass: never keep one across passes; bind a `ui.Handle` instead (`Handle.Bounds(c)` works between builds). No goroutines touching elements.
+- `Context` methods answer only during a build: an input handler reads the clipboard through `c.Services()`.
 - Files under 500 lines. Comments: one line, ten words at most, only when needed. No dead code, no versioned APIs.
 
 ## Gallery entry
@@ -87,7 +88,7 @@ Each component adds one `Entry` in `gallery/demos_<category>.go`: ID, Name, Zh, 
 ## Tests
 
 - `go vet ./... && go test ./...` before reporting done.
-- Behavior tests drive `ui.Tester` and assert values. Timed components take `pixel.Settings.Now` from a test clock. `Tester.Focused(label)` is also true when an ancestor holds the focus.
+- Behavior tests drive `ui.Tester` and assert values. Timed components take `pixel.Settings.Now` from a test clock. The Tester clock stands still until `Advance`; measure `pixel.Due()` against `tt.Now()`. `Tester.Focused(label)` is also true when an ancestor holds the focus.
 - `gallery` checks every entry under every palette: only palette colors, whole dots. Demos that call `pixel.Scope`, and the home and entry pages, may show other palettes. `PIXEL_SHOTS=<dir> go test ./gallery -run TestInvariants` writes PNGs for visual review.
 - `gallery` also sweeps all demos: keys, typing, clicks and the wheel as a veil falls log nothing; a clock stepping back crashes nothing and shows no new negative number; every Tab stop has a name; every gallery word has glyphs; the README's counts match the registry.
 - Web: `npm install && npm test` in `web/` builds `web/dist` and runs Playwright on a local server; `BASE_URL=<url> npx playwright test` checks a deployed site. Tests read `window.__8bit` (`ready`, `stats()`, `texts()`, `page()`, `find(label)`, `log`). Every page must end without console or page errors; a test that expects some says so in an annotation. The budget test logs first frame, p50 and p95 (Go's share plus the canvas blit) and the wasm's brotli bytes, and holds them to PRD §6.

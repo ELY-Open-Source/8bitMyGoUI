@@ -20,7 +20,7 @@ type PromptBoxOptions struct {
 }
 
 type PromptBoxResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 	// Cast is the prompt cast this frame, else empty.
 	Cast string

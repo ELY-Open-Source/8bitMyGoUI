@@ -32,7 +32,7 @@ type ScrollAreaOptions struct {
 }
 
 type ScrollAreaResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Changed reports the view moved since the last frame.
 	Changed bool
 }
@@ -66,7 +66,7 @@ func ScrollArea(c *ui.Context, s *ui.ScrollState, o ScrollAreaOptions, children 
 		}
 		st.end = s.MaxY
 	}
-	var v *ui.Element
+	var v ui.Element
 	row.Children(func() {
 		scrollBar(c, k, s, view, o.Disabled || inert, o.Disabled)
 		// A disabled view is a new element; the focus leaves.
@@ -161,7 +161,7 @@ func thumb(h, view, y, maxY, dot float32) (size, at float32) {
 
 // arrow is a scrollbar button; keys scroll the view instead.
 func arrow(c *ui.Context, k pixel.Kit, sp *pixel.Sprite, label string, disabled bool) bool {
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Role(ui.RoleButton).Label(label).Disabled(disabled)
 	})
 	shell.Size(k.D(barW), k.D(barW)).Draw(func(p *ui.Painter, r ui.Rect) {

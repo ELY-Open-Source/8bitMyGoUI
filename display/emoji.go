@@ -71,7 +71,7 @@ type EmojiOptions struct {
 }
 
 // Emoji draws one of sixteen hand-placed faces by name.
-func Emoji(c *ui.Context, name string, o EmojiOptions) *ui.Element {
+func Emoji(c *ui.Context, name string, o EmojiOptions) ui.Element {
 	return Icon(c, EmojiSprite(name), IconOptions{Scale: o.Scale, Label: name})
 }
 

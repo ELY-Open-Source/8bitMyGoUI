@@ -18,7 +18,7 @@ type VolumeOptions struct {
 }
 
 type VolumeResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

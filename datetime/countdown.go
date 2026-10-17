@@ -12,7 +12,7 @@ import (
 type CountdownOptions struct{}
 
 type CountdownResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Done is true in the frame time runs out.
 	Done bool
 }

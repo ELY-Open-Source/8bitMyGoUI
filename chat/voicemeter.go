@@ -15,7 +15,7 @@ type VoiceMeterOptions struct {
 }
 
 // VoiceMeter lights bars for 0–1: green, amber, then red.
-func VoiceMeter(c *ui.Context, text string, level float64, o VoiceMeterOptions) *ui.Element {
+func VoiceMeter(c *ui.Context, text string, level float64, o VoiceMeterOptions) ui.Element {
 	k := pixel.K(c)
 	if math.IsNaN(level) || level < 0 || level > 1 {
 		panic(fmt.Sprintf("chat: VoiceMeter level %v outside 0–1", level))

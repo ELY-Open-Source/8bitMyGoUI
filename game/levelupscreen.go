@@ -26,7 +26,7 @@ type LevelUpScreenOptions struct {
 }
 
 type LevelUpScreenResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 	Done    bool
 }

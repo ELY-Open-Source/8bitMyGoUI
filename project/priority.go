@@ -56,7 +56,7 @@ var bars = [3]*pixel.Sprite{pixel.MustSprite(`
 var levelInks = [...]pixel.Slot{pixel.Good, pixel.Warn, pixel.Bad, pixel.Bad}
 
 // Priority is a level's icon; critical is on fire.
-func Priority(c *ui.Context, l Level, o PriorityOptions) *ui.Element {
+func Priority(c *ui.Context, l Level, o PriorityOptions) ui.Element {
 	k := pixel.K(c)
 	say := l.word(k)
 	s := pixel.Or("Priority Scale", o.Scale, 1)

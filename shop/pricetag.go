@@ -15,7 +15,7 @@ type PriceTagOptions struct {
 }
 
 // PriceTag is a coin and amount; sales strike the old.
-func PriceTag(c *ui.Context, price int, o PriceTagOptions) *ui.Element {
+func PriceTag(c *ui.Context, price int, o PriceTagOptions) ui.Element {
 	k := pixel.K(c)
 	sp, word := coin(k, o.Currency)
 	now, was := amount("PriceTag", price), amount("PriceTag Was", o.Was)

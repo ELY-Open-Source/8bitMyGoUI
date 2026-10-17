@@ -24,7 +24,7 @@ type ShopOptions struct {
 }
 
 type ShopResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Bought and Sold are this frame's trades, or -1.
 	Bought, Sold int
 }

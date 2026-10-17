@@ -13,7 +13,7 @@ type SunMoonOptions struct {
 }
 
 // SunMoon arcs the sun by day, the moon by night.
-func SunMoon(c *ui.Context, hour int, o SunMoonOptions) *ui.Element {
+func SunMoon(c *ui.Context, hour int, o SunMoonOptions) ui.Element {
 	checkHour("SunMoon", hour)
 	k := pixel.K(c)
 	w, h := size("SunMoon", o.Width, o.Height, 160, 96)

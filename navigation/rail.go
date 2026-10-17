@@ -18,7 +18,7 @@ type NavRailOptions struct {
 }
 
 type NavRailResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -30,7 +30,7 @@ func NavRail(c *ui.Context, text string, items []NavItem, selected *int, o NavRa
 	v := *selected
 	res.Element = ui.RadioGroup(c, func() {
 		for i, it := range items {
-			shell, _, st := pixel.Shell(c, func() *ui.Element {
+			shell, _, st := pixel.Shell(c, func() ui.Element {
 				return ui.RadioBase(c, &v, i).Label(it.Label).Disabled(o.Disabled)
 			})
 			shell.Size(k.D(22), k.D(22)).Draw(func(p *ui.Painter, r ui.Rect) {

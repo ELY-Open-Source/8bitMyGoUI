@@ -24,7 +24,7 @@ type TradeWindowOptions struct {
 }
 
 type TradeWindowResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 	// Traded reports both confirms landing this frame.
 	Traded bool

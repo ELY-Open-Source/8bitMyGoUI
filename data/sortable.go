@@ -16,7 +16,7 @@ type SortableOptions struct {
 }
 
 type SortableResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -33,7 +33,7 @@ func Sortable(c *ui.Context, text string, items *[]string, o SortableOptions) So
 	k := pixel.K(c)
 	n := len(*items)
 	off := o.Disabled || pixel.Current(c).Inert
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleList).Label(text).Disabled(o.Disabled)
 	})
 	s := ui.Local(base, sortKey{}, func() sorting { return sorting{} })

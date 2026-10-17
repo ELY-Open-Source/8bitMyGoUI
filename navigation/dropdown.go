@@ -14,7 +14,7 @@ type DropdownMenuOptions struct {
 }
 
 type DropdownMenuResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Chosen is the item taken this frame, or -1.
 	Chosen int
 }

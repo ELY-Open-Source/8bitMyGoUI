@@ -15,7 +15,7 @@ type WeekStripOptions struct {
 }
 
 type WeekStripResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -26,7 +26,7 @@ const dayW, dayH = 22, 2 * pixel.LineHeight
 func WeekStrip(c *ui.Context, text string, date *time.Time, o WeekStripOptions) WeekStripResult {
 	k := pixel.K(c)
 	old := *date
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleGroup).Label(text).Disabled(o.Disabled)
 	})
 	if pixel.Shortcut(base, 0, ui.KeyLeft) {

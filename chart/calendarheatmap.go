@@ -20,7 +20,7 @@ type CalendarHeatmapOptions struct {
 const day = 5
 
 // CalendarHeatmap rates a year's UTC days 0–4, week by week.
-func CalendarHeatmap(c *ui.Context, text string, year int, level func(d time.Time) int, o CalendarHeatmapOptions) *ui.Element {
+func CalendarHeatmap(c *ui.Context, text string, year int, level func(d time.Time) int, o CalendarHeatmapOptions) ui.Element {
 	k := pixel.K(c)
 	ink := o.Slot
 	if ink == 0 {

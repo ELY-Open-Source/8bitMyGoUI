@@ -17,7 +17,7 @@ type AboutOptions struct {
 }
 
 // About shows the title as a logo, version, then credits.
-func About(c *ui.Context, title, version string, o AboutOptions) *ui.Element {
+func About(c *ui.Context, title, version string, o AboutOptions) ui.Element {
 	k := pixel.K(c)
 	if version == "" {
 		panic("account: About needs a version")

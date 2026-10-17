@@ -15,7 +15,7 @@ type DifficultySelectOptions struct {
 }
 
 type DifficultySelectResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

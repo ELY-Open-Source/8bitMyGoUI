@@ -21,7 +21,7 @@ type PasswordGridOptions struct {
 }
 
 type PasswordGridResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Submitted is END on a full password.
 	Changed, Submitted bool
 }

@@ -4,7 +4,7 @@
 
 | Work | Version | License | What it does here |
 | --- | --- | --- | --- |
-| [MyGo](https://github.com/egoist/mygo) | v0.2.10 | MIT | Native UI toolkit the components build on |
+| [MyGo](https://github.com/egoist/mygo) | v0.5.5 | MIT | Native UI toolkit the components build on |
 | [Ark Pixel Font](https://github.com/TakWolf/ark-pixel-font), 12px proportional zh_Hans | 2026.09.25 | SIL OFL 1.1 | The pixel font, packed into `pixel/font12.bin` |
 | [rsc.io/qr](https://pkg.go.dev/rsc.io/qr) | v0.2.0 | BSD-3-Clause | QR encoding for `display.QRCode` |
 | [go-text/typesetting](https://github.com/go-text/typesetting) | v0.3.5 | Unlicense or BSD-3-Clause; used under BSD-3-Clause | Text shaping inside MyGo |

@@ -15,7 +15,7 @@ type RecordButtonOptions struct {
 }
 
 type RecordButtonResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

@@ -14,7 +14,7 @@ type LegendOptions struct {
 }
 
 type LegendResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
@@ -29,7 +29,7 @@ func Legend(c *ui.Context, text string, series []Series, hidden []bool, o Legend
 	row.Children(func() {
 		for i, s := range series {
 			shown := !hidden[i]
-			shell, base, st := pixel.Shell(c, func() *ui.Element { return ui.ToggleBase(c, &shown).Label(s.Name).Disabled(o.Disabled) })
+			shell, base, st := pixel.Shell(c, func() ui.Element { return ui.ToggleBase(c, &shown).Label(s.Name).Disabled(o.Disabled) })
 			// The base turns before it learns it is off.
 			if base.Changed() && !base.IsDisabled() {
 				hidden[i], res.Changed = !shown, true

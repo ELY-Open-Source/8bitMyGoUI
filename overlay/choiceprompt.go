@@ -15,7 +15,7 @@ type ChoicePromptOptions struct {
 }
 
 type ChoicePromptResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Chosen is the choice taken this frame, or -1.
 	Chosen int
 	// Canceled is Escape or a click outside.
@@ -34,7 +34,7 @@ func ChoicePrompt(c *ui.Context, question string, choices []string, open *bool, 
 	cur := ui.Local(home, choiceKey{}, func() int { return 0 })
 	was := *open
 	res := ChoicePromptResult{Chosen: -1}
-	res.Element = ui.DialogBase(c, open, func(back, panel *ui.Element) {
+	res.Element = ui.DialogBase(c, open, func(back, panel ui.Element) {
 		dim(k, back, pixel.Back, 4)
 		panel.Width(k.D(180)).Label(question).Focusable().FocusRing(false).Children(func() {
 			pixel.Harbor(c, panel, func() {

@@ -18,14 +18,14 @@ type RadioGroupOptions struct {
 type radioKey struct{}
 
 type RadioGroupResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
 // RadioGroup chooses *selected; one Tab stop, arrows choose.
 func RadioGroup(c *ui.Context, labels []string, selected *int, o RadioGroupOptions) RadioGroupResult {
 	k := pixel.K(c)
-	var e *ui.Element
+	var e ui.Element
 	if o.Row {
 		e = ui.Row(c).Gap(k.D(10)).FocusGroup(ui.Horizontal)
 	} else {
@@ -38,7 +38,7 @@ func RadioGroup(c *ui.Context, labels []string, selected *int, o RadioGroupOptio
 		for i, l := range labels {
 			was := *selected == i
 			on := was
-			shell, base, st := pixel.Shell(c, func() *ui.Element {
+			shell, base, st := pixel.Shell(c, func() ui.Element {
 				return ui.CheckboxBase(c, &on).Role(ui.RoleRadio).Label(l).Disabled(o.Disabled)
 			})
 			if base.Focused() {

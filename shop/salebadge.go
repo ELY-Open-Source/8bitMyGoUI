@@ -114,7 +114,7 @@ var (
 )
 
 // SaleBadge is a SALE -n% starburst whose rim flashes.
-func SaleBadge(c *ui.Context, percent int, o SaleBadgeOptions) *ui.Element {
+func SaleBadge(c *ui.Context, percent int, o SaleBadgeOptions) ui.Element {
 	k := pixel.K(c)
 	if percent < 1 || percent > 99 {
 		panic(fmt.Sprintf("shop: SaleBadge of %d%%", percent))

@@ -25,7 +25,7 @@ type SkillTreeOptions struct {
 }
 
 type SkillTreeResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 	// Learned is the skill learned this frame, or -1.
 	Learned int
@@ -69,7 +69,7 @@ func SkillTree(c *ui.Context, text string, skills []Skill, cursor, points *int, 
 		return !skills[i].Learned
 	}
 	old := *cursor
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleGroup).Label(text).Disabled(o.Disabled)
 	})
 	arrows(base, spots, cursor)

@@ -21,7 +21,7 @@ type TrayIconsOptions struct {
 }
 
 type TrayIconsResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Clicked is the icon pressed this frame, else -1.
 	Clicked int
 }
@@ -43,7 +43,7 @@ func TrayIcons(c *ui.Context, text string, icons []TrayIcon, o TrayIconsOptions)
 			// Keyed by tip: icons come and go.
 			ui.Box(c).Key(t.Tip).Children(func() {
 				overlay.Tooltip(c, t.Tip, overlay.TooltipOptions{}, func() {
-					shell, base, st := pixel.Shell(c, func() *ui.Element {
+					shell, base, st := pixel.Shell(c, func() ui.Element {
 						return ui.Box(c).Focusable().Role(ui.RoleButton).Label(t.Tip).Disabled(o.Disabled)
 					})
 					if !base.IsDisabled() && base.Clicked() {

@@ -169,7 +169,7 @@ func TestRelativeTimeAsksForTheNextMinute(t *testing.T) {
 	at := clk.t.Add(-90 * time.Second)
 	tt := view(300, 60, clk, false, func(c *ui.Context) { datetime.RelativeTime(c, at, datetime.RelativeTimeOptions{}) })
 	pixel.ResetDue()
-	before := time.Now()
+	before := tt.Now()
 	tt.Frame()
 	// The words change at two minutes: thirty seconds on.
 	if wait := pixel.Due().Sub(before); wait < 29*time.Second || wait > 31*time.Second {

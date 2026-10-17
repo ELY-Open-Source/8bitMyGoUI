@@ -115,9 +115,9 @@ func TestCrashScreenStepsAtFourFPS(t *testing.T) {
 	tt := view(600, 300, wd, func(c *ui.Context) {
 		code.CrashScreen(c, "panic: oops", nil, code.CrashScreenOptions{})
 	})
-	// Paint asks for the next step on the real clock.
+	// Paint asks for the next step on the frame clock.
 	pixel.ResetDue()
-	before := time.Now()
+	before := tt.Now()
 	tt.Frame()
 	if d := pixel.Due().Sub(before); d < time.Second/4 || d >= time.Second/2 {
 		t.Fatalf("the next blink step is %v away, want a quarter second", d)

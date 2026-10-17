@@ -15,7 +15,7 @@ type wake struct {
 }
 
 // cover fills the window; keys, clicks, long moves end it.
-func cover(c *ui.Context, k pixel.Kit, text string, open *bool, moves bool, draw func(g pixel.Canvas)) (anchor, panel *ui.Element, woke bool) {
+func cover(c *ui.Context, k pixel.Kit, text string, open *bool, moves bool, draw func(g pixel.Canvas)) (anchor, panel ui.Element, woke bool) {
 	anchor = ui.Box(c).Role(ui.RoleNone)
 	st := ui.Local(anchor, wakeKey{}, func() wake { return wake{} })
 	was := *open
@@ -25,7 +25,7 @@ func cover(c *ui.Context, k pixel.Kit, text string, open *bool, moves bool, draw
 	if !*open {
 		*st = wake{}
 	}
-	panel = ui.DialogBase(c, open, func(back, panel *ui.Element) {
+	panel = ui.DialogBase(c, open, func(back, panel ui.Element) {
 		back.Draw(func(p *ui.Painter, r ui.Rect) { draw(k.Canvas(p, r)) })
 		back.HandleInput(func(ev ui.InputEvent) bool {
 			// Any button and the wheel end it, as keys do.

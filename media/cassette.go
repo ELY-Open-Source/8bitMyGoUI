@@ -19,7 +19,7 @@ type CassetteOptions struct {
 }
 
 // Cassette turns its reels while playing; tape winds right.
-func Cassette(c *ui.Context, text string, o CassetteOptions) *ui.Element {
+func Cassette(c *ui.Context, text string, o CassetteOptions) ui.Element {
 	k := pixel.K(c)
 	if !(o.Progress >= 0 && o.Progress <= 1) {
 		panic(fmt.Sprintf("media: Cassette Progress %v outside 0–1", o.Progress))

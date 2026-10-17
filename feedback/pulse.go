@@ -12,7 +12,7 @@ type PulseOptions struct {
 }
 
 // Pulse rings its child with a ring growing in steps.
-func Pulse(c *ui.Context, o PulseOptions, content func()) *ui.Element {
+func Pulse(c *ui.Context, o PulseOptions, content func()) ui.Element {
 	k := pixel.K(c)
 	slot := o.Slot
 	if slot == 0 {

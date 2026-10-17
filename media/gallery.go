@@ -16,7 +16,7 @@ type GalleryOptions struct {
 }
 
 type GalleryResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

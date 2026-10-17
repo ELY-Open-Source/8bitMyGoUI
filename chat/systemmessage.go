@@ -19,7 +19,7 @@ var diamond = pixel.MustSprite(`
 `)
 
 // SystemMessage centers a notice, such as PLAYER 2 HAS JOINED.
-func SystemMessage(c *ui.Context, text string, o SystemMessageOptions) *ui.Element {
+func SystemMessage(c *ui.Context, text string, o SystemMessageOptions) ui.Element {
 	k := pixel.K(c)
 	ink := o.Slot
 	if ink == pixel.Ink {

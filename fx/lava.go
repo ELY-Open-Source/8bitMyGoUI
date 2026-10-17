@@ -13,7 +13,7 @@ type LavaOptions struct {
 }
 
 // Lava flows in cycling veins while bubbles swell and pop.
-func Lava(c *ui.Context, o LavaOptions) *ui.Element {
+func Lava(c *ui.Context, o LavaOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := size("Lava", o.Width, o.Height, 160, 48)
 	return box(c, k, o.Label, w, h).Draw(func(p *ui.Painter, r ui.Rect) {

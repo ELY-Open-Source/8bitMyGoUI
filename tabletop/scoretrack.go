@@ -19,7 +19,7 @@ type ScoreTrackOptions struct {
 const space = 20
 
 // ScoreTrack winds a path; player meeples mark their scores.
-func ScoreTrack(c *ui.Context, text string, scores []int, o ScoreTrackOptions) *ui.Element {
+func ScoreTrack(c *ui.Context, text string, scores []int, o ScoreTrackOptions) ui.Element {
 	k := pixel.K(c)
 	n := pixel.Or("ScoreTrack Spaces", o.Spaces, 30)
 	// A space prints three digits at most.

@@ -18,7 +18,7 @@ type RouletteOptions struct {
 const wheel = 28
 
 // Roulette spins its wheel, on a new Cue, to result.
-func Roulette(c *ui.Context, text string, segments []string, result int, o RouletteOptions) *ui.Element {
+func Roulette(c *ui.Context, text string, segments []string, result int, o RouletteOptions) ui.Element {
 	k := pixel.K(c)
 	n := len(segments)
 	if n < 2 || n > 64 || result < 0 || result >= n || slices.Contains(segments, "") {

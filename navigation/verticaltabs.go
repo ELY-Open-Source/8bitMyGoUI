@@ -9,7 +9,7 @@ type VerticalTabsOptions struct {
 }
 
 type VerticalTabsResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

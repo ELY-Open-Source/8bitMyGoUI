@@ -13,7 +13,7 @@ type PalettePickerOptions struct {
 }
 
 type PalettePickerResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

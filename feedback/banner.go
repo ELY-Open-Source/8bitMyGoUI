@@ -22,7 +22,7 @@ type BannerOptions struct {
 }
 
 type BannerResult struct {
-	Element   *ui.Element
+	Element   ui.Element
 	Action    string
 	Dismissed bool
 }

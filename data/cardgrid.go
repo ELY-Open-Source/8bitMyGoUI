@@ -13,7 +13,7 @@ type CardGridOptions struct {
 }
 
 // CardGrid fits as many card columns as width allows.
-func CardGrid(c *ui.Context, n int, o CardGridOptions, card func(i int)) *ui.Element {
+func CardGrid(c *ui.Context, n int, o CardGridOptions, card func(i int)) ui.Element {
 	mw := pixel.Or("CardGrid MinWidth", o.MinWidth, 96)
 	box := ui.Box(c).FillWidth()
 	w, check := pixel.WrapWidth(c, box)

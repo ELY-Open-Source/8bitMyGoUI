@@ -19,7 +19,7 @@ type TerminalOptions struct {
 }
 
 type TerminalResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Ran is the command Enter sent, else "".
 	Ran     string
 	Changed bool

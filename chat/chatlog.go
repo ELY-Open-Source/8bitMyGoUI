@@ -15,7 +15,7 @@ type ChatLogOptions struct {
 type logKey struct{}
 
 // ChatLog scrolls messages and follows the end while there.
-func ChatLog(c *ui.Context, text string, o ChatLogOptions, content func()) *ui.Element {
+func ChatLog(c *ui.Context, text string, o ChatLogOptions, content func()) ui.Element {
 	k := pixel.K(c)
 	w, h := pixel.Or("ChatLog Width", o.Width, 220), pixel.Or("ChatLog Height", o.Height, 140)
 	box := ui.Box(c).Size(k.D(w), k.D(h))

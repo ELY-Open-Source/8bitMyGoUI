@@ -18,7 +18,7 @@ type GlitchOptions struct {
 const glitchSteps = 6
 
 // Glitch shifts row bands and swaps two slots, briefly.
-func Glitch(c *ui.Context, sp *pixel.Sprite, o GlitchOptions) *ui.Element {
+func Glitch(c *ui.Context, sp *pixel.Sprite, o GlitchOptions) ui.Element {
 	k := pixel.K(c)
 	sc := scale("Glitch", o.Scale, 1)
 	// Three dots either side hold the rows shifted out.

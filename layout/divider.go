@@ -34,7 +34,7 @@ var diamond = pixel.MustSprite(`
 `)
 
 // Divider is a rule across its parent.
-func Divider(c *ui.Context, o DividerOptions) *ui.Element {
+func Divider(c *ui.Context, o DividerOptions) ui.Element {
 	k := pixel.K(c)
 	ink := o.Slot
 	if ink == pixel.Ink {

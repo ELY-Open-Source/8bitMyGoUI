@@ -15,7 +15,7 @@ type ConfirmDialogOptions struct {
 }
 
 type ConfirmDialogResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Canceled is NO, Escape or a click outside.
 	Confirmed, Canceled bool
 }
@@ -29,7 +29,7 @@ func ConfirmDialog(c *ui.Context, message string, open *bool, o ConfirmDialogOpt
 	cur := ui.Local(home, confirmKey{}, func() int { return 1 })
 	was := *open
 	var res ConfirmDialogResult
-	res.Element = ui.DialogBase(c, open, func(back, panel *ui.Element) {
+	res.Element = ui.DialogBase(c, open, func(back, panel ui.Element) {
 		dim(k, back, pixel.Back, 8)
 		panel.Width(k.D(180)).Label(k.Msg("sure")).Description(message).Focusable().FocusRing(false).Children(func() {
 			pixel.Harbor(c, panel, func() {

@@ -13,7 +13,7 @@ type PauseMenuOptions struct {
 }
 
 type PauseMenuResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Chosen is RESUME 0, OPTIONS 1, QUIT 2, or -1.
 	Chosen int
 }
@@ -28,7 +28,7 @@ func PauseMenu(c *ui.Context, paused *bool, o PauseMenuOptions) PauseMenuResult 
 	was := *paused
 	res := PauseMenuResult{Chosen: -1}
 	items := []string{k.Msg("resume"), k.Msg("options"), k.Msg("quit")}
-	res.Element = ui.DialogBase(c, paused, func(back, panel *ui.Element) {
+	res.Element = ui.DialogBase(c, paused, func(back, panel ui.Element) {
 		deep, light := dark(k)
 		dim(k, back, deep, 10)
 		title := k.Msg("paused")

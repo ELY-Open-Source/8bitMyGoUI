@@ -15,7 +15,7 @@ type CommandPaletteOptions struct {
 }
 
 type CommandPaletteResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Ran is the command run this frame, or -1.
 	Ran int
 }
@@ -54,7 +54,7 @@ func CommandPalette(c *ui.Context, text string, commands []MenuItem, open *bool,
 			res.Ran, *open = i, false
 		}
 	}
-	res.Element = ui.DialogBase(c, open, func(back, panel *ui.Element) {
+	res.Element = ui.DialogBase(c, open, func(back, panel ui.Element) {
 		back.Draw(func(p *ui.Painter, r ui.Rect) {
 			g := k.Canvas(p, r)
 			g.Checker(0, 0, g.W, g.H, pixel.Back)
@@ -64,7 +64,7 @@ func CommandPalette(c *ui.Context, text string, commands []MenuItem, open *bool,
 			g.Frame(0, 0, g.W, g.H, pixel.Window, pixel.Face)
 		}).Children(func() {
 			f := input.TextInput(c, text, &st.query, input.TextInputOptions{Placeholder: "> …", Width: 228})
-			f.Input.AutoFocus()
+			pixel.AutoFocus(c, f.Input)
 			if f.Changed {
 				st.lit = 0
 			}

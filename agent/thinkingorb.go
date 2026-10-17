@@ -24,7 +24,7 @@ var (
 )
 
 // ThinkingOrb is a crystal ball that swirls while thinking.
-func ThinkingOrb(c *ui.Context, text string, thinking bool, o ThinkingOrbOptions) *ui.Element {
+func ThinkingOrb(c *ui.Context, text string, thinking bool, o ThinkingOrbOptions) ui.Element {
 	k := pixel.K(c)
 	word := k.Msg("idle")
 	if thinking {

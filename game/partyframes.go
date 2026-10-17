@@ -18,7 +18,7 @@ type Member struct {
 type PartyFramesOptions struct{}
 
 // PartyFrames stacks member cards; a fallen member greys out.
-func PartyFrames(c *ui.Context, text string, members []Member, o PartyFramesOptions) *ui.Element {
+func PartyFrames(c *ui.Context, text string, members []Member, o PartyFramesOptions) ui.Element {
 	k := pixel.K(c)
 	return ui.Column(c).Gap(k.D(3)).AlignItems(ui.Start).Role(ui.RoleGroup).Label(text).Children(func() {
 		for _, m := range members {

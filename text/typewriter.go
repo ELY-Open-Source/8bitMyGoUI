@@ -23,7 +23,7 @@ type TypewriterOptions struct {
 }
 
 type TypewriterResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Done is true in the frame the whole text shows.
 	Done bool
 }
@@ -45,7 +45,7 @@ func Typewriter(c *ui.Context, s string, o TypewriterOptions) TypewriterResult {
 	}
 	// S5 steps at 4–15 fps; fast typing shows more.
 	fps := max(4, min(cps, 15))
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		e := ui.Box(c).Role(ui.RoleText).Label(s).Disabled(o.Disabled)
 		if !o.Disabled {
 			e.Focusable()

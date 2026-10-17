@@ -14,7 +14,7 @@ type SectionOptions struct {
 }
 
 // Section titles a group inside a dotted rule.
-func Section(c *ui.Context, title string, o SectionOptions, children func()) *ui.Element {
+func Section(c *ui.Context, title string, o SectionOptions, children func()) ui.Element {
 	k := pixel.K(c)
 	up := strings.ToUpper(title)
 	return ui.Column(c).Gap(k.D(pixel.Or("Section Gap", o.Gap, 4))).Role(ui.RoleGroup).Label(title).Children(func() {

@@ -13,7 +13,7 @@ type OutlineTextOptions struct {
 }
 
 // OutlineText rings every glyph dot of s with Edge.
-func OutlineText(c *ui.Context, s string, o OutlineTextOptions) *ui.Element {
+func OutlineText(c *ui.Context, s string, o OutlineTextOptions) ui.Element {
 	k, sc := pixel.K(c), scale(o.Scale)
 	fill := slotOr(o.Slot, pixel.Lit)
 	return block(c, k, s, pixel.Measure(s)*sc+2, pixel.LineHeight*sc+2, func(g pixel.Canvas) {

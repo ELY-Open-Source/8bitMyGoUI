@@ -13,7 +13,7 @@ type WalletOptions struct {
 }
 
 // Wallet shows gold and gem balances that roll on change.
-func Wallet(c *ui.Context, gold, gems int, o WalletOptions) *ui.Element {
+func Wallet(c *ui.Context, gold, gems int, o WalletOptions) ui.Element {
 	k := pixel.K(c)
 	g, m := amount("Wallet gold", gold), amount("Wallet gems", gems)
 	_, gw := coin(k, Gold)

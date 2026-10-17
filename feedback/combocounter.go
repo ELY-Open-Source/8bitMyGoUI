@@ -13,7 +13,7 @@ type ComboCounterOptions struct{}
 type comboKey struct{}
 
 // ComboCounter shows ×n COMBO!, popping bigger as n rises.
-func ComboCounter(c *ui.Context, count int, o ComboCounterOptions) *ui.Element {
+func ComboCounter(c *ui.Context, count int, o ComboCounterOptions) ui.Element {
 	k := pixel.K(c)
 	e := ui.Box(c)
 	s := ui.Local(e, comboKey{}, func() rise { return rise{level: count} })

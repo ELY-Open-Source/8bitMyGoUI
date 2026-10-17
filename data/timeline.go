@@ -15,7 +15,7 @@ type Event struct {
 type TimelineOptions struct{}
 
 // Timeline strings dated events down a line of markers.
-func Timeline(c *ui.Context, events []Event, o TimelineOptions) *ui.Element {
+func Timeline(c *ui.Context, events []Event, o TimelineOptions) ui.Element {
 	k := pixel.K(c)
 	return ui.Column(c).FillWidth().Children(func() {
 		for i, ev := range events {

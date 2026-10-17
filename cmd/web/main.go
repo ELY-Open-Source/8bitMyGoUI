@@ -20,6 +20,9 @@ import (
 // dot is DIPs per dot; each dot is one pixel.
 const dot = gallery.Dot
 
+// catchUp caps the replay after a hidden tab.
+const catchUp = 500 * time.Millisecond
+
 type host struct {
 	app    *gallery.App
 	tt     *ui.Tester
@@ -29,10 +32,14 @@ type host struct {
 	over   bool
 	dead   bool
 	began  time.Time
+	// wall is when the Tester clock last caught up.
+	wall time.Time
 }
 
 func main() {
 	h := &host{app: gallery.New("/")}
+	// Components keep real time while the Tester clock lags.
+	h.app.SetClock(time.Now)
 	api := js.Global().Get("Object").New()
 	export := func(name string, fn func(args []js.Value) any) {
 		api.Set(name, js.FuncOf(func(_ js.Value, args []js.Value) any { return h.guard(name, args, fn) }))
@@ -84,6 +91,7 @@ func (h *host) guard(name string, args []js.Value, fn func([]js.Value) any) (res
 	// An empty clipboard after a call means nothing was copied.
 	if h.tt != nil {
 		h.tt.SetClipboard("")
+		h.sync()
 	}
 	pixel.ResetDue()
 	h.began = time.Now()
@@ -104,7 +112,7 @@ func (h *host) crash(why string) (res any) {
 		}
 	}()
 	h.tt = ui.NewTester(func(c *ui.Context) {
-		pixel.Use(c, pixel.Settings{Palette: pixel.WinterNight, Dot: dot})
+		pixel.Use(c, pixel.Settings{Palette: pixel.WinterNight, Dot: dot, Now: time.Now})
 		ui.Column(c).Fill().Center().Children(func() {
 			if feedback.ErrorState(c, why, feedback.ErrorStateOptions{}).Continue {
 				js.Global().Get("location").Call("reload")
@@ -112,6 +120,7 @@ func (h *host) crash(why string) (res any) {
 		})
 	}, h.w*dot, h.h*dot)
 	h.tt.SetScale(1.0 / dot)
+	h.wall = time.Now()
 	return h.out()
 }
 
@@ -123,8 +132,16 @@ func (h *host) start(a []js.Value) any {
 	}
 	h.tt = ui.NewTester(h.app.View, h.w*dot, h.h*dot)
 	h.tt.SetScale(1.0 / dot)
+	h.wall = time.Now()
 	slog.Info("8bit: start", "dots", fmt.Sprintf("%dx%d", h.w, h.h), "path", h.app.Path())
 	return h.out()
+}
+
+// sync moves the Tester clock on with the real one.
+func (h *host) sync() {
+	now := time.Now()
+	h.tt.Advance(min(now.Sub(h.wall), catchUp))
+	h.wall = now
 }
 
 func (h *host) size(w, ht int) {
@@ -169,7 +186,8 @@ func (h *host) out() any {
 	took := float64(time.Since(h.began).Microseconds()) / 1000
 	res := map[string]any{"w": img.Rect.Dx(), "h": img.Rect.Dy(), "pix": pix, "path": h.app.Path(), "cursor": int(h.tt.Cursor()), "took": took}
 	if due := pixel.Due(); !due.IsZero() {
-		res["due"] = float64(time.Until(due).Milliseconds())
+		// Asked on the Tester clock, which may lag.
+		res["due"] = float64(due.Sub(h.tt.Now()).Milliseconds())
 	}
 	if r, ok := h.tt.TextCaret(); ok {
 		res["caret"] = []any{float64(r.X / dot), float64(r.Y / dot), float64(r.H / dot)}

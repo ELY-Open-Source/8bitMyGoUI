@@ -10,7 +10,7 @@ import (
 )
 
 // dim checkers the backdrop of a dialog.
-func dim(k pixel.Kit, back *ui.Element, s pixel.Slot, level int) {
+func dim(k pixel.Kit, back ui.Element, s pixel.Slot, level int) {
 	back.Draw(func(p *ui.Painter, r ui.Rect) {
 		g := k.Canvas(p, r)
 		g.Veil(0, 0, g.W, g.H, s, level)
@@ -33,7 +33,7 @@ func choose(c *ui.Context, text string, items []string, cur *int, digits, off bo
 	off = off || pixel.Current(c).Inert
 	box := ui.Column(c).FocusRing(false).Role(ui.RoleList).Label(text)
 	if !off {
-		box.Focusable().AutoFocus()
+		pixel.AutoFocus(c, box.Focusable())
 	}
 	pixel.Park(c, box, off)
 	picked := -1
@@ -92,23 +92,24 @@ type hintKey struct{}
 
 // hinting is when hover began, and a press-given focus.
 type hinting struct {
-	since   time.Time
-	pressed bool
+	since          time.Time
+	focus, pressed bool
 }
 
 // hint holds after resting wait, or on keyboard focus.
-func hint(c *ui.Context, e *ui.Element, wait time.Duration) bool {
+func hint(c *ui.Context, e ui.Element, wait time.Duration) bool {
 	k := pixel.K(c)
 	s := ui.Local(e, hintKey{}, func() hinting { return hinting{} })
 	_, _, over := e.PointerPosition()
 	hovered, focus := e.Hovered(), e.FocusWithin()
 	switch {
-	case over && !hovered:
-		// A press inside: its focus is not the keyboard's.
+	case focus && !s.focus && over:
+		// Focus arriving under the pointer came from a press.
 		s.pressed = true
 	case !focus:
 		s.pressed = false
 	}
+	s.focus = focus
 	rested := false
 	if hovered {
 		if s.since.IsZero() {
@@ -123,7 +124,7 @@ func hint(c *ui.Context, e *ui.Element, wait time.Duration) bool {
 }
 
 // arriving counts the steps, of four, a panel still slides.
-func arriving(c *ui.Context, home *ui.Element, open bool) int {
+func arriving(c *ui.Context, home ui.Element, open bool) int {
 	k := pixel.K(c)
 	on := 0
 	if open {

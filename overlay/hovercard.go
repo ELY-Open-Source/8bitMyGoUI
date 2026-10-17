@@ -14,7 +14,7 @@ type HoverCardOptions struct {
 type hoverKey struct{}
 
 // HoverCard shows card below trigger while either is hovered.
-func HoverCard(c *ui.Context, text string, o HoverCardOptions, trigger func(), card func()) *ui.Element {
+func HoverCard(c *ui.Context, text string, o HoverCardOptions, trigger func(), card func()) ui.Element {
 	k := pixel.K(c)
 	w := pixel.Or("HoverCard Width", o.Width, 160)
 	wrap := ui.Box(c)

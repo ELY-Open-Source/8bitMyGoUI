@@ -28,7 +28,7 @@ type Character struct {
 type CharacterSheetOptions struct{}
 
 // CharacterSheet shows a portrait, name, class, level and stats.
-func CharacterSheet(c *ui.Context, h Character, o CharacterSheetOptions) *ui.Element {
+func CharacterSheet(c *ui.Context, h Character, o CharacterSheetOptions) ui.Element {
 	k := pixel.K(c)
 	if h.Portrait == nil || h.Level < 1 {
 		panic(fmt.Sprintf("game: character %q needs a portrait and a level (%d)", h.Name, h.Level))

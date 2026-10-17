@@ -13,7 +13,7 @@ type ColorSlotOptions struct {
 }
 
 type ColorSlotResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

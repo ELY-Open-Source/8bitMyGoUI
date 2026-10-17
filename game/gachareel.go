@@ -14,7 +14,7 @@ import (
 type GachaReelOptions struct{}
 
 type GachaReelResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Done is true in the frame the last reel stops.
 	Done bool
 }

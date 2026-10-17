@@ -13,7 +13,7 @@ type ContextMenuOptions struct {
 }
 
 type ContextMenuResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Chosen is the item taken this frame, or -1.
 	Chosen int
 }
@@ -70,7 +70,7 @@ func ContextMenu(c *ui.Context, text string, items []MenuItem, o ContextMenuOpti
 	if clicked >= 0 {
 		res.Chosen = clicked
 	}
-	if panel != nil {
+	if panel.Valid() {
 		b := area.Bounds()
 		panel.Left(b.X + s.x).Top(b.Y + s.y)
 	}

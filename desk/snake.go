@@ -20,7 +20,7 @@ type SnakeOptions struct {
 }
 
 type SnakeResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Score is food eaten; Started and Over are this frame's.
 	Score         int
 	Started, Over bool
@@ -47,7 +47,7 @@ func Snake(c *ui.Context, text string, o SnakeOptions) SnakeResult {
 	if cols < 6 || rows < 4 {
 		panic(fmt.Sprintf("desk: Snake %d×%d is too small", cols, rows))
 	}
-	shell, base, st := pixel.Shell(c, func() *ui.Element {
+	shell, base, st := pixel.Shell(c, func() ui.Element {
 		return ui.Box(c).Focusable().Role(ui.RoleGroup).Label(text).Disabled(o.Disabled)
 	})
 	s := ui.Local(shell, snakeKey{}, func() pit { return pit{} })

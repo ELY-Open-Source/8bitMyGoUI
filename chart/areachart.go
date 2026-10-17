@@ -15,7 +15,7 @@ type AreaChartOptions struct {
 }
 
 // AreaChart draws a line with the area below it dithered.
-func AreaChart(c *ui.Context, text string, labels []string, values []float64, o AreaChartOptions) *ui.Element {
+func AreaChart(c *ui.Context, text string, labels []string, values []float64, o AreaChartOptions) ui.Element {
 	k := pixel.K(c)
 	w, h := size("AreaChart", o.Width, o.Height, 160, 80)
 	if len(values) != len(labels) || len(values) < 2 {

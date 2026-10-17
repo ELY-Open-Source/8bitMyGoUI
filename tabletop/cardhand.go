@@ -15,7 +15,7 @@ type CardHandOptions struct {
 }
 
 type CardHandResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Played is the card played this frame, else -1.
 	Played int
 }
@@ -49,7 +49,7 @@ func CardHand(c *ui.Context, text string, cards []Card, o CardHandOptions) CardH
 	n := len(cards)
 	w := max(cardW, fan*(n-1)+cardW)
 	res.Element = col.Children(func() {
-		shell, base, st := pixel.Shell(c, func() *ui.Element {
+		shell, base, st := pixel.Shell(c, func() ui.Element {
 			return ui.Box(c).Focusable().Role(ui.RoleGroup).Label(text).Disabled(o.Disabled)
 		})
 		*cur = max(0, min(*cur, n-1))

@@ -15,7 +15,7 @@ type ShakeOptions struct {
 var shakes = [...]int{2, -2, 2, -2, 1, -1, 0}
 
 // Shake jolts its child side to side briefly.
-func Shake(c *ui.Context, o ShakeOptions, content func()) *ui.Element {
+func Shake(c *ui.Context, o ShakeOptions, content func()) ui.Element {
 	k := pixel.K(c)
 	e := ui.Box(c)
 	dx := shakes[k.Shot(c, e, o.Cue, 15, len(shakes)-1)]

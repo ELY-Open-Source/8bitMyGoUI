@@ -28,7 +28,7 @@ type TableOptions struct {
 }
 
 type TableResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Sorted reports a header click; sort the rows by *sort.
 	Changed, Submitted, Sorted bool
 }
@@ -51,11 +51,11 @@ func Table(c *ui.Context, text string, cols []Column, rows int, sort *Sort, sele
 		st.Selected = nil
 	}
 	res := TableResult{Element: box}
-	var list *ui.Element
+	var list ui.Element
 	box.Children(func() {
 		ui.Row(c).FocusGroup(ui.Horizontal).Role(ui.RoleRow).Children(func() {
 			for i, col := range cols {
-				shell, base, hs := pixel.Shell(c, func() *ui.Element {
+				shell, base, hs := pixel.Shell(c, func() ui.Element {
 					return ui.ButtonBase(c).Role(ui.RoleColumnHeader).Label(col.Title).Disabled(o.Disabled)
 				})
 				if base.Clicked() {

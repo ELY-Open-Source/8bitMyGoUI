@@ -16,7 +16,7 @@ type FilterBarOptions struct {
 }
 
 type FilterBarResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 

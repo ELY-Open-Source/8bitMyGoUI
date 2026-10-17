@@ -19,7 +19,7 @@ type DrawerOptions struct {
 }
 
 type DrawerResult struct {
-	Element *ui.Element
+	Element ui.Element
 	// Closed is Escape or a click outside.
 	Closed bool
 }
@@ -35,7 +35,7 @@ func Drawer(c *ui.Context, text string, open *bool, o DrawerOptions, content fun
 	off := k.D(arriving(c, home, *open) * size / 4)
 	was := *open
 	var res DrawerResult
-	res.Element = ui.DialogBase(c, open, func(back, panel *ui.Element) {
+	res.Element = ui.DialogBase(c, open, func(back, panel ui.Element) {
 		dim(k, back, pixel.Back, 8)
 		panel.Absolute().Label(text).Padding(k.D(8)).Focusable().FocusRing(false)
 		switch o.Side {

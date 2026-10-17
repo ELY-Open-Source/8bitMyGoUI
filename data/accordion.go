@@ -16,7 +16,7 @@ type AccordionOptions struct {
 }
 
 type AccordionResult struct {
-	Element *ui.Element
+	Element ui.Element
 	Changed bool
 }
 
