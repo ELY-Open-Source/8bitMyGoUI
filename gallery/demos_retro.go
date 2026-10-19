@@ -142,7 +142,7 @@ func demoWallpaperPicker(c *ui.Context, log func(string)) {
 }
 
 func demoClipboardPanel(c *ui.Context, log func(string)) {
-	clips := []string{"git push gitea main", "IT'S NOW SAFE TO TURN OFF", "UP UP DOWN DOWN LEFT RIGHT", "8bitmygoui.workers.dev"}
+	clips := []string{"git push origin main", "IT'S NOW SAFE TO TURN OFF", "UP UP DOWN DOWN LEFT RIGHT", "8bitmygoui.workers.dev"}
 	if i := desk.ClipboardPanel(c, "Clipboard", clips, desk.ClipboardPanelOptions{Width: 240}).Copied; i >= 0 {
 		log(fmt.Sprintf("copied clip %d", i+1))
 	}

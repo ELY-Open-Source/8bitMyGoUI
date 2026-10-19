@@ -11,7 +11,7 @@ Pixel-art components in the manner of 16-bit consoles, for [MyGo](https://github
 ## Install
 
 ```sh
-go get git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI@latest
+go get github.com/ELY-Open-Source/8bitMyGoUI@latest
 ```
 
 It needs Go 1.27.1 or later and builds on MyGo v0.5.5. MyGo's native UI needs nothing else; on Linux it runs on GTK 3.
@@ -28,9 +28,9 @@ import (
 	"github.com/egoist/mygo"
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/input"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/text"
+	"github.com/ELY-Open-Source/8bitMyGoUI/input"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/text"
 )
 
 // arcade is the app's state.

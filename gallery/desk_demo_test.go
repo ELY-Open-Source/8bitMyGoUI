@@ -21,7 +21,7 @@ func TestDeskDemosLogTheirActions(t *testing.T) {
 		{"/c/477-bootscreen", []string{"REBOOT"}}, {"/c/478-screensaver", []string{"START SAVER", "key:A"}},
 		{"/c/480-dock", []string{"MAIL"}}, {"/c/481-rundialog", []string{"OK", "CANCEL"}},
 		{"/c/482-diskdefrag", []string{"START", "NEW DISK"}}, {"/c/483-wallpaperpicker", []string{"Wallpaper"}},
-		{"/c/484-clipboardpanel", []string{"git push gitea main"}}, {"/c/485-lockscreen", []string{"LOCK", "key:A"}},
+		{"/c/484-clipboardpanel", []string{"git push origin main"}}, {"/c/485-lockscreen", []string{"LOCK", "key:A"}},
 	} {
 		a, tt := open(tc.path)
 		slug := tc.path[3:]

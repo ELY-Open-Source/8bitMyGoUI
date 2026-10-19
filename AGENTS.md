@@ -1,6 +1,6 @@
 # AGENTS.md
 
-8bitMyGoUI: pixel-art components in the manner of 16-bit consoles, for MyGo native UI. Go module `git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI`.
+8bitMyGoUI: pixel-art components in the manner of 16-bit consoles, for MyGo native UI. Go module `github.com/ELY-Open-Source/8bitMyGoUI`.
 Progress truth: `TASKS.md`. Requirements: `PRD.md` and `docs/prd/components-*.md`.
 
 ## Stack
@@ -12,7 +12,7 @@ Progress truth: `TASKS.md`. Requirements: `PRD.md` and `docs/prd/components-*.md
 | Font | Ark Pixel Font 12px proportional zh_Hans v2026.09.25 (OFL-1.1, `pixel/OFL.txt`). Rebuild: `go run ./tools/fontpack -in ark-pixel-12px-proportional-zh_hans.bdf` (BDF sha256 `535f7024…8c86`) |
 | QR | `rsc.io/qr v0.2.0` (BSD-3), encoder behind `display.QRCode` |
 | Web | `cmd/web` built with `GOOS=js GOARCH=wasm`; the browser runs the gallery under `ui.Tester`, whose clock the host moves with real time (at most 500 ms a call), and blits frames to a canvas |
-| Hosting | Cloudflare Workers static assets from `web/dist`; code on Gitea `git.zacharyzhang.com` |
+| Hosting | Cloudflare Workers static assets from `web/dist`; code on GitHub `github.com/ELY-Open-Source/8bitMyGoUI` |
 
 Read MyGo source before using an API: `$(go env GOMODCACHE)/github.com/egoist/mygo@v0.5.5` (`ui/*.go`, `docs/ui/*.md`). Never guess.
 
@@ -105,4 +105,4 @@ Each TASKS.md item is reviewed in a Herdr pane split to the right, by `codex --y
 
 ## Secrets
 
-The Gitea token lives only in the environment (`GITEA_TOKEN`). Never write it to a file, a commit or a log.
+Tokens (GitHub, Cloudflare) live only in the environment. Never write one to a file, a commit or a log.
