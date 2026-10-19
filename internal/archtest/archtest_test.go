@@ -15,7 +15,7 @@ import (
 	"testing"
 )
 
-const module = "git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/"
+const module = "github.com/ELY-Open-Source/8bitMyGoUI/"
 
 var tiers = map[string]int{
 	"pixel": 0, "icon": 1,

@@ -4,7 +4,7 @@ import (
 	"math"
 	"testing"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 func TestTokensPrintShort(t *testing.T) {

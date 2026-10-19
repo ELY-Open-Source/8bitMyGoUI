@@ -8,7 +8,7 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/input"
+	"github.com/ELY-Open-Source/8bitMyGoUI/input"
 )
 
 func TestLogsCountWhatWasTyped(t *testing.T) {

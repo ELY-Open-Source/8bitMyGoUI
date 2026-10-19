@@ -7,8 +7,8 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/icon"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/navigation"
+	"github.com/ELY-Open-Source/8bitMyGoUI/icon"
+	"github.com/ELY-Open-Source/8bitMyGoUI/navigation"
 )
 
 func TestKeysInAVeilsFirstFrameTurnNothing(t *testing.T) {

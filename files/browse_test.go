@@ -6,8 +6,8 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/files"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/files"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 var drive = files.Dir{Name: "C:", Files: []files.File{{Name: "BOOT.INI", Kind: files.Text, Size: 10}}, Dirs: []files.Dir{

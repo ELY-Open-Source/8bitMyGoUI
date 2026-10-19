@@ -7,12 +7,12 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/data"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/display"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/game"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/icon"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/input"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/data"
+	"github.com/ELY-Open-Source/8bitMyGoUI/display"
+	"github.com/ELY-Open-Source/8bitMyGoUI/game"
+	"github.com/ELY-Open-Source/8bitMyGoUI/icon"
+	"github.com/ELY-Open-Source/8bitMyGoUI/input"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 var gameEntries = []Entry{

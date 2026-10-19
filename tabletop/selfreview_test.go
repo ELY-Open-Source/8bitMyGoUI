@@ -7,7 +7,7 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/tabletop"
+	"github.com/ELY-Open-Source/8bitMyGoUI/tabletop"
 )
 
 func TestTossesTakeAClockStepBack(t *testing.T) {

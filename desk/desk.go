@@ -4,7 +4,7 @@ package desk
 import (
 	"fmt"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 // Wallpaper is a dithered desktop pattern.

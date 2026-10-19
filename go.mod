@@ -1,4 +1,4 @@
-module git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI
+module github.com/ELY-Open-Source/8bitMyGoUI
 
 go 1.27.1
 

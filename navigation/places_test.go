@@ -7,9 +7,9 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/icon"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/navigation"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/icon"
+	"github.com/ELY-Open-Source/8bitMyGoUI/navigation"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 var navItems = []navigation.NavItem{{Icon: icon.Home, Label: "Home"}, {Icon: icon.Map, Label: "Map"}, {Icon: icon.Settings, Label: "Options"}}

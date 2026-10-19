@@ -6,8 +6,8 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/files"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/icon"
+	"github.com/ELY-Open-Source/8bitMyGoUI/files"
+	"github.com/ELY-Open-Source/8bitMyGoUI/icon"
 )
 
 // offPalette counts dots no palette color matches.

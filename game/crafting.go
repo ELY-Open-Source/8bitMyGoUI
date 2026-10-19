@@ -6,9 +6,9 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/data"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/input"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/data"
+	"github.com/ELY-Open-Source/8bitMyGoUI/input"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 // Recipe makes Result from item names in a 3×3 grid.

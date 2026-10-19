@@ -4,7 +4,7 @@ package feedback
 import (
 	"strconv"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 // pingpong runs n back and forth over 0…span.

@@ -8,9 +8,9 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/icon"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/input"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/icon"
+	"github.com/ELY-Open-Source/8bitMyGoUI/input"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 // Program is a START entry; with Programs, a submenu.

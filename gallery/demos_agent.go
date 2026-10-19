@@ -7,9 +7,9 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/agent"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/input"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/agent"
+	"github.com/ELY-Open-Source/8bitMyGoUI/input"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 var agentEntries = []Entry{

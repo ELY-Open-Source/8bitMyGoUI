@@ -7,8 +7,8 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/chart"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/chart"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 var hp = []chart.Series{{Name: "HP", Values: []float64{10, 30, 20, 40}, Slot: pixel.Good}, {Name: "MP", Values: []float64{5, 5, 15, 10}, Slot: pixel.Info}}

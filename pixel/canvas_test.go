@@ -3,7 +3,7 @@ package pixel_test
 import (
 	"testing"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 func TestRectAndLines(t *testing.T) {

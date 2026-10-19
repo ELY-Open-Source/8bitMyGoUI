@@ -3,7 +3,7 @@ package files
 import (
 	"fmt"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 // Kind is what a file holds; it picks the icon.

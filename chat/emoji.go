@@ -3,9 +3,9 @@ package chat
 import (
 	"fmt"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/display"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/icon"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/display"
+	"github.com/ELY-Open-Source/8bitMyGoUI/icon"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 // glyph is a 12×12 emoji and its # dots' slot.

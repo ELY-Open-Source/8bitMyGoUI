@@ -8,7 +8,7 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/text"
+	"github.com/ELY-Open-Source/8bitMyGoUI/text"
 )
 
 func TestOdometerHoldsMaxIntAndRollsWithinS5(t *testing.T) {

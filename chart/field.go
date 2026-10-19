@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 // Point sits on two value axes; Size sizes bubbles.

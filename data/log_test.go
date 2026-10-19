@@ -8,8 +8,8 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/data"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/icon"
+	"github.com/ELY-Open-Source/8bitMyGoUI/data"
+	"github.com/ELY-Open-Source/8bitMyGoUI/icon"
 )
 
 // logs captures debug logs while fn runs.

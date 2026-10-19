@@ -5,7 +5,7 @@ import (
 	"image/color"
 	"testing"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 func fill(w, h int, c color.Color) *image.RGBA {

@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 func panics(t *testing.T, name string, fn func()) {

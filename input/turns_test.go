@@ -6,7 +6,7 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/input"
+	"github.com/ELY-Open-Source/8bitMyGoUI/input"
 )
 
 // turnCase builds a control on fresh state, and reads it.

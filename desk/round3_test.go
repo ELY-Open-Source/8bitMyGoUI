@@ -7,7 +7,7 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/desk"
+	"github.com/ELY-Open-Source/8bitMyGoUI/desk"
 )
 
 func TestNarrowSizesStayInsideOrPanic(t *testing.T) {

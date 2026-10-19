@@ -8,7 +8,7 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/media"
+	"github.com/ELY-Open-Source/8bitMyGoUI/media"
 )
 
 func TestMediaClocksHoldWhenTheClockStepsBack(t *testing.T) {

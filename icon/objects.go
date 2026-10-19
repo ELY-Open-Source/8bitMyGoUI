@@ -1,6 +1,6 @@
 package icon
 
-import "git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+import "github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 
 var (
 	Home = pixel.MustSprite(`

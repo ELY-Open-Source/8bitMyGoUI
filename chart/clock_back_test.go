@@ -7,7 +7,7 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/chart"
+	"github.com/ELY-Open-Source/8bitMyGoUI/chart"
 )
 
 func TestSpectrumPeaksStayWhenTheClockStepsBack(t *testing.T) {

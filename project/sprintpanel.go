@@ -6,9 +6,9 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/feedback"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/layout"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/feedback"
+	"github.com/ELY-Open-Source/8bitMyGoUI/layout"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 // Sprint is a stretch of work, counted in points.

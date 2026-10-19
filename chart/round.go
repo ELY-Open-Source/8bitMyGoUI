@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 // turn is a dot's angle, 0–1 clockwise from twelve.

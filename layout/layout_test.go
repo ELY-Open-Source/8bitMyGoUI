@@ -8,8 +8,8 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/layout"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/layout"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 func use(c *ui.Context) { pixel.Use(c, pixel.Settings{Palette: pixel.SpringDay}) }

@@ -1,7 +1,7 @@
 // Package icon holds hand-placed 12×12 sprites.
 package icon
 
-import "git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+import "github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 
 var (
 	Check = pixel.MustSprite(`

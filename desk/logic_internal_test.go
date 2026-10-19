@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 func TestCalcPrintsAndPresses(t *testing.T) {

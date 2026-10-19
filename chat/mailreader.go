@@ -3,8 +3,8 @@ package chat
 import (
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/data"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/data"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 type MailReaderOptions struct {

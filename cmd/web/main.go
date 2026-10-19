@@ -12,9 +12,9 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/feedback"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/gallery"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/feedback"
+	"github.com/ELY-Open-Source/8bitMyGoUI/gallery"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 // dot is DIPs per dot; each dot is one pixel.

@@ -6,8 +6,8 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/code"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/code"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 func TestBreakpointsToggleByClickAndEnter(t *testing.T) {

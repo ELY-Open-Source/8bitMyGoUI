@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 type Variant uint8

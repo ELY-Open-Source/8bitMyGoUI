@@ -8,8 +8,8 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/text"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/text"
 )
 
 type clock struct{ t time.Time }

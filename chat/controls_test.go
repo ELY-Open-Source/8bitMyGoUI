@@ -7,8 +7,8 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/chat"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/chat"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 func TestReactionsToggleYours(t *testing.T) {

@@ -5,8 +5,8 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/chart"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/chart"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 var days = []string{"MON", "TUE", "WED", "THU"}

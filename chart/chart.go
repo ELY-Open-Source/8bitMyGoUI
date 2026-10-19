@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 // Series is a named row of values.

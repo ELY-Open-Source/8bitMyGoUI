@@ -6,7 +6,7 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/chat"
+	"github.com/ELY-Open-Source/8bitMyGoUI/chat"
 )
 
 func TestKeysInAVeilsFirstFrameTurnNothing(t *testing.T) {

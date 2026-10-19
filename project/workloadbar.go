@@ -7,9 +7,9 @@ import (
 
 	"github.com/egoist/mygo/ui"
 
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/display"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/feedback"
-	"git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+	"github.com/ELY-Open-Source/8bitMyGoUI/display"
+	"github.com/ELY-Open-Source/8bitMyGoUI/feedback"
+	"github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 )
 
 // Load is a member's hours of work.

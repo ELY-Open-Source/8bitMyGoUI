@@ -1,6 +1,6 @@
 package game
 
-import "git.zacharyzhang.com/ZacharyZhang-NY/8bitMyGoUI/pixel"
+import "github.com/ELY-Open-Source/8bitMyGoUI/pixel"
 
 // coin spins: face, turning, edge on, turning back.
 var coin = pixel.MustSprite(`
