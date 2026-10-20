@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Showcase
+    url: https://8bitmygoui.zhangyanghaha0407.workers.dev
+    about: "Every component runs in the browser; try it before you file."
