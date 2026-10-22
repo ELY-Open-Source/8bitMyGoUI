@@ -3,7 +3,7 @@ module github.com/ELY-Open-Source/8bitMyGoUI
 go 1.27.1
 
 require (
-	github.com/egoist/mygo v0.5.5
+	github.com/egoist/mygo v0.6.2
 	rsc.io/qr v0.2.0
 )
 

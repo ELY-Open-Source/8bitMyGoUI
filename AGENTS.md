@@ -8,13 +8,13 @@ Progress truth: `TASKS.md`. Requirements: `PRD.md` and `docs/prd/components-*.md
 | Item | Value |
 | --- | --- |
 | Go | 1.27.1 |
-| MyGo | `github.com/egoist/mygo v0.5.5`, pinned in go.mod |
+| MyGo | `github.com/egoist/mygo v0.6.2`, pinned in go.mod |
 | Font | Ark Pixel Font 12px proportional zh_Hans v2026.09.25 (OFL-1.1, `pixel/OFL.txt`). Rebuild: `go run ./tools/fontpack -in ark-pixel-12px-proportional-zh_hans.bdf` (BDF sha256 `535f7024…8c86`) |
 | QR | `rsc.io/qr v0.2.0` (BSD-3), encoder behind `display.QRCode` |
 | Web | `cmd/web` built with `GOOS=js GOARCH=wasm`; the browser runs the gallery under `ui.Tester`, whose clock the host moves with real time (at most 500 ms a call), and blits frames to a canvas |
 | Hosting | Cloudflare Workers static assets from `web/dist`; code on GitHub `github.com/ELY-Open-Source/8bitMyGoUI` |
 
-Read MyGo source before using an API: `$(go env GOMODCACHE)/github.com/egoist/mygo@v0.5.5` (`ui/*.go`, `docs/ui/*.md`). Never guess.
+Read MyGo source before using an API: `$(go env GOMODCACHE)/github.com/egoist/mygo@v0.6.2` (`ui/*.go`, `docs/ui/*.md`). Never guess.
 
 ## Layout
 

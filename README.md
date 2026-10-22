@@ -14,7 +14,7 @@ Pixel-art components in the manner of 16-bit consoles, for [MyGo](https://github
 go get github.com/ELY-Open-Source/8bitMyGoUI@latest
 ```
 
-It needs Go 1.27.1 or later and builds on MyGo v0.5.5. MyGo's native UI needs nothing else; on Linux it runs on GTK 3.
+It needs Go 1.27.1 or later and builds on MyGo v0.6.2. MyGo's native UI needs nothing else; on Linux it runs on GTK 3.
 
 ## A first window
 
