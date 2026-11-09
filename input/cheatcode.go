@@ -48,7 +48,7 @@ func CheatCode(c *ui.Context, text string, o CheatCodeOptions) CheatCodeResult {
 	}
 	// Keys come in order here, however fast they are typed.
 	base.HandleInput(func(ev ui.InputEvent) bool {
-		if ev.Kind != ui.InputKeyDown || ev.Mods != 0 {
+		if ev.Kind != ui.InputKeyDown || ev.Mods != 0 || ev.Key == ui.KeyUnknown {
 			return false
 		}
 		s.won, s.trail = false, append(s.trail, ev.Key)

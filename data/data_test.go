@@ -108,7 +108,8 @@ func TestListOffTakesNoChoice(t *testing.T) {
 		tt := view(400, 300, newClock(), inert, func(c *ui.Context) {
 			party(c, &sel, data.ListOptions{Disabled: !inert}, &changes, &sent)
 		})
-		click(t, tt, "Dax")
+		r := find(t, tt, "Dax") // the off list's cover takes it
+		tt.ClickAt(r.X+r.W/2, r.Y+r.H/2)
 		tt.Key(0, ui.KeyDown)
 		if sel != 1 || changes != 0 {
 			t.Fatalf("inert %v: sel %d after a click and Down", inert, sel)

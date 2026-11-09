@@ -15,8 +15,8 @@ func TestFilesDemosLogTheirActions(t *testing.T) {
 		{"/c/406-fileexplorer", []string{"FOLDERS", "key:Up"}}, {"/c/407-filegrid", []string{"SAVE1.SAV", "key:Right", "key:Enter"}},
 		{"/c/409-pathbar", []string{"GAMES", "BACK DOWN"}}, {"/c/410-memorycard", []string{"DELETE HERO QUEST"}},
 		{"/c/412-uploadqueue", []string{"CANCEL BOSS.PNG"}}, {"/c/413-trash", []string{"EMPTY", "THROW AWAY"}},
-		{"/c/414-recentfiles", []string{"Recent", "key:Down", "key:Enter"}}, {"/c/415-filepreview", []string{"SUNSET.PNG"}},
-		{"/c/416-archiveviewer", []string{"LOOT.ZIP", "key:Down", "SIZE"}}, {"/c/418-sharepanel", []string{"COPY", "EDIT"}},
+		{"/c/414-recentfiles", []string{"at:Recent", "key:Down", "key:Enter"}}, {"/c/415-filepreview", []string{"SUNSET.PNG"}},
+		{"/c/416-archiveviewer", []string{"at:LOOT.ZIP", "key:Down", "SIZE"}}, {"/c/418-sharepanel", []string{"COPY", "EDIT"}},
 	} {
 		a, tt := open(tc.path)
 		slug := tc.path[3:]
@@ -24,6 +24,9 @@ func TestFilesDemosLogTheirActions(t *testing.T) {
 			before := len(a.logs[slug])
 			if k, ok := strings.CutPrefix(step, "key:"); ok {
 				tt.Key(0, letters[k])
+			} else if l, ok := strings.CutPrefix(step, "at:"); ok {
+				r, _ := tt.Find(l) // a row takes the press
+				tt.ClickAt(r.X+r.W/2, r.Y+r.H/2)
 			} else {
 				click(t, tt, step)
 			}

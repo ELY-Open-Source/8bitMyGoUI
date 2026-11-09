@@ -133,7 +133,8 @@ func TestCheckoutStepsStartFresh(t *testing.T) {
 			})
 		})
 	})
-	click(t, tt, "List")
+	r := find(t, tt, "List") // a row takes it
+	tt.ClickAt(r.X+r.W/2, r.Y+r.H/2)
 	tt.Key(0, ui.KeyEnd)
 	click(t, tt, "NEXT ▶")
 	// The new step's list starts at its top.

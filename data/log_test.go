@@ -39,7 +39,8 @@ func TestStateChangesAreLogged(t *testing.T) {
 		r := find(t, tt, "Bag")
 		tt.ClickAt(r.X+4, r.Y+4)
 		tt.Key(0, ui.KeyRight)
-		click(t, tt, "/")
+		f := find(t, tt, "/") // its row takes the press
+		tt.ClickAt(f.X+f.W/2, f.Y+f.H/2)
 		tt.Key(0, ui.KeyRight)
 	})
 	for _, want := range []string{"8bit: table chose", "8bit: inventory chose", "8bit: outline toggled"} {

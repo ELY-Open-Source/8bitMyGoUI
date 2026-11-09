@@ -48,7 +48,7 @@ func cover(c *ui.Context, k pixel.Kit, text string, open *bool, moves bool, draw
 		panel.Focusable().FocusRing(false).Label(text).HandleInput(func(ev ui.InputEvent) bool {
 			if ev.Kind == ui.InputKeyDown {
 				st.woke = true
-				return true
+				return ev.Key != ui.KeyUnknown // Alt stays the menu bar's
 			}
 			return false
 		})

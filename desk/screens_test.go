@@ -50,7 +50,7 @@ func TestBootScreenCountsThenPrints(t *testing.T) {
 }
 
 func TestScreensaverWakesOnAnyInput(t *testing.T) {
-	for _, wake := range []string{"key", "click", "move"} {
+	for _, wake := range []string{"key", "alt", "click", "move"} {
 		wd := newWorld()
 		on, woke := false, 0
 		tt := view(600, 400, wd, func(c *ui.Context) {
@@ -72,6 +72,9 @@ func TestScreensaverWakesOnAnyInput(t *testing.T) {
 		switch wake {
 		case "key":
 			tt.Key(0, ui.KeyA)
+		case "alt":
+			tt.CodeDown(ui.Alt, ui.CodeAltLeft)
+			tt.CodeUp(0, ui.CodeAltLeft)
 		case "click":
 			tt.ClickAt(10, 10)
 		case "move":

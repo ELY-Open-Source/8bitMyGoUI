@@ -4,13 +4,14 @@
 
 | Work | Version | License | What it does here |
 | --- | --- | --- | --- |
-| [MyGo](https://github.com/egoist/mygo) | v0.6.2 | MIT | Native UI toolkit the components build on |
+| [MyGo](https://github.com/egoist/mygo) | v0.8.3 | MIT | Native UI toolkit the components build on |
 | [Ark Pixel Font](https://github.com/TakWolf/ark-pixel-font), 12px proportional zh_Hans | 2026.09.25 | SIL OFL 1.1 | The pixel font, packed into `pixel/font12.bin` |
 | [rsc.io/qr](https://pkg.go.dev/rsc.io/qr) | v0.2.0 | BSD-3-Clause | QR encoding for `display.QRCode` |
 | [go-text/typesetting](https://github.com/go-text/typesetting) | v0.3.5 | Unlicense or BSD-3-Clause; used under BSD-3-Clause | Text shaping inside MyGo |
 | [golang.org/x/image](https://pkg.go.dev/golang.org/x/image) | v0.46.0 | BSD-3-Clause | Image support inside MyGo |
+| [golang.org/x/text](https://pkg.go.dev/golang.org/x/text) | v0.43.0 | BSD-3-Clause | Text support inside MyGo |
 | [purego](https://github.com/ebitengine/purego) | v0.11.1 | Apache-2.0 | System calls without cgo inside MyGo, native builds only |
-| Go standard library and `wasm_exec.js` | Go 1.27.1 | BSD-3-Clause | The runtime, and the showcase's WebAssembly loader |
+| Go standard library and `wasm_exec.js` | Go 1.27.3 | BSD-3-Clause | The runtime, and the showcase's WebAssembly loader |
 
 ## MyGo: MIT License
 
@@ -38,7 +39,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## Go, golang.org/x/image: BSD-3-Clause
+## Go, golang.org/x/image, golang.org/x/text: BSD-3-Clause
 
 ```text
 Copyright 2009 The Go Authors.

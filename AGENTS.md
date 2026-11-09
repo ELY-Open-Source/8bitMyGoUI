@@ -7,14 +7,14 @@ Progress truth: `TASKS.md`. Requirements: `PRD.md` and `docs/prd/components-*.md
 
 | Item | Value |
 | --- | --- |
-| Go | 1.27.1 |
-| MyGo | `github.com/egoist/mygo v0.6.2`, pinned in go.mod |
+| Go | 1.27.3 (MyGo's minimum) |
+| MyGo | `github.com/egoist/mygo v0.8.3`, pinned in go.mod |
 | Font | Ark Pixel Font 12px proportional zh_Hans v2026.09.25 (OFL-1.1, `pixel/OFL.txt`). Rebuild: `go run ./tools/fontpack -in ark-pixel-12px-proportional-zh_hans.bdf` (BDF sha256 `535f7024…8c86`) |
 | QR | `rsc.io/qr v0.2.0` (BSD-3), encoder behind `display.QRCode` |
 | Web | `cmd/web` built with `GOOS=js GOARCH=wasm`; the browser runs the gallery under `ui.Tester`, whose clock the host moves with real time (at most 500 ms a call), and blits frames to a canvas |
 | Hosting | Cloudflare Workers static assets from `web/dist`; code on GitHub `github.com/ELY-Open-Source/8bitMyGoUI` |
 
-Read MyGo source before using an API: `$(go env GOMODCACHE)/github.com/egoist/mygo@v0.6.2` (`ui/*.go`, `docs/ui/*.md`). Never guess.
+Read MyGo source before using an API: `$(go env GOMODCACHE)/github.com/egoist/mygo@v0.8.3` (`ui/*.go`, `docs/ui/*.md`). Never guess.
 
 ## Layout
 
@@ -66,6 +66,7 @@ Imports point down only. Same-tier imports are forbidden. `internal/archtest` en
 - MyGo's value bases (`ToggleBase`, `SwitchBase`, `CheckboxBase`, `RadioBase`, `SegmentedBase`, `TabsBase`, `CollapsibleBase`) turn their value while built, before `Disabled` applies, so a key in a veil's first frame lands. Hand them a copy; keep only turns of an enabled base.
 - MyGo paints a disabled element and all inside it at half opacity, and only a disabled element reads as disabled to assistive technology. Disable only drawless bases, as `pixel.Shell` does. A container with drawn content stays enabled, parks its focus, ignores input and says `DISABLED` in its description.
 - A press focuses the nearest focusable element under it, or nothing, and a focusable element keeps the click: clicks never reach its ancestors. A control that acts on a press is that focusable element. A `DialogBase` moves the focus inside as it opens and keeps Tab there, but only onto something focusable: make its panel focusable, ring off, and build its children in `pixel.Harbor(c, panel, …)` so controls turning off park their focus there and get it back. A closing overlay hands the focus back to its opener: MyGo notes the opener after building the overlay, so focus an element as it appears with `pixel.AutoFocus`, never `AutoFocus` (archtest bans it). While a press is on, the elements around it stay `Hovered`: ask `Pressed`, and tell a press-given focus by focus arriving under the pointer.
+- Lone modifiers and Caps Lock reach `HandleInput` as `ui.KeyUnknown`: a handler that reacts to any key skips them or returns false, so Alt stays the menu bar's.
 - Enter and Space click a focused clickable element unless a `Shortcut` takes them. Take them wherever a click reads the pointer's position.
 - Under `pixel.Settings.Inert` (a busy veil) `pixel.Shell` disables every base and gives the focus back after. A popup sits above any veil: a control closes its popup when disabled or inert. If the popup held the focus, focus the opener and `pixel.Park` it in that frame; tell it by `Focused` on the popup's controls, since MyGo links parents only after a frame.
 - Elements are known by their place among siblings. Wrap one whose earlier siblings come and go in `ui.Box(c).Key(k)`, or it loses focus and state. Rows the caller removes are keyed by a name that must be unique: panic on twins.
@@ -88,6 +89,7 @@ Each component adds one `Entry` in `gallery/demos_<category>.go`: ID, Name, Zh, 
 ## Tests
 
 - `go vet ./... && go test ./...` before reporting done.
+- `tt.Click(label)` refuses a label whose center reaches another control, as a veil over it or a list row inside a labeled list: click those by position with `find` and `tt.ClickAt`.
 - Behavior tests drive `ui.Tester` and assert values. Timed components take `pixel.Settings.Now` from a test clock. The Tester clock stands still until `Advance`; measure `pixel.Due()` against `tt.Now()`. `Tester.Focused(label)` is also true when an ancestor holds the focus.
 - `gallery` checks every entry under every palette: only palette colors, whole dots. Demos that call `pixel.Scope`, and the home and entry pages, may show other palettes. `PIXEL_SHOTS=<dir> go test ./gallery -run TestInvariants` writes PNGs for visual review.
 - `gallery` also sweeps all demos: keys, typing, clicks and the wheel as a veil falls log nothing; a clock stepping back crashes nothing and shows no new negative number; every Tab stop has a name; every gallery word has glyphs; the README's counts match the registry.

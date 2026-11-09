@@ -198,8 +198,10 @@ func TestBusyOverlayBlocksInputAndGivesFocusBack(t *testing.T) {
 		t.Fatal("Tab did not pass over the busy content")
 	}
 	// Presses land on the veil, which keeps the focus.
-	click(t, tt, "SAVE")
-	click(t, tt, "raw")
+	r := find(t, tt, "SAVE") // the veil takes it
+	tt.ClickAt(r.X+r.W/2, r.Y+r.H/2)
+	r = find(t, tt, "raw")
+	tt.ClickAt(r.X+r.W/2, r.Y+r.H/2)
 	if clicks != 1 || own() {
 		t.Fatalf("busy content took input: %d clicks, focus %v", clicks, own())
 	}

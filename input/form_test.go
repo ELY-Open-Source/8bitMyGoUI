@@ -148,6 +148,23 @@ func TestCheatCodeUnlocks(t *testing.T) {
 	}
 }
 
+func TestCheatCodeIgnoresKeysWithoutAName(t *testing.T) {
+	unlocked := 0
+	tt := view(400, 200, nil, func(c *ui.Context) {
+		if input.CheatCode(c, "Cheat", input.CheatCodeOptions{Sequence: []ui.Key{ui.KeyA, ui.KeyB}}).Unlocked {
+			unlocked++
+		}
+	})
+	click(t, tt, "Cheat")
+	tt.Key(0, ui.KeyA)
+	tt.CodeDown(0, ui.CodeCapsLock)
+	tt.CodeUp(0, ui.CodeCapsLock)
+	tt.Key(0, ui.KeyB)
+	if unlocked != 1 {
+		t.Fatal("Caps Lock broke A, B")
+	}
+}
+
 func TestCheatCodeBreaksOnOtherKeys(t *testing.T) {
 	unlocked := 0
 	tt := view(400, 200, nil, func(c *ui.Context) {
