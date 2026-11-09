@@ -1,5 +1,7 @@
 # 8bitMyGoUI
 
+[![Listed on Awesome MyGo](https://awesomemygo.dev/badge.svg)](https://awesomemygo.dev/ui)
+
 ![The gallery home in the Winter Night palette](docs/showcase.png)
 
 Pixel-art components in the manner of 16-bit consoles, for [MyGo](https://github.com/egoist/mygo) native UI. There are 500 of them in 22 categories, from a button to a chessboard. Every dot sits on the grid, every color comes from a sixteen-slot palette, and nothing is anti-aliased. Errors read GAME OVER and offer CONTINUE.
