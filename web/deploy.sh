@@ -44,8 +44,14 @@ for f in $(sed -n 's#.*src="\(a/[^"]*\)".*#\1#p' "$stage/index.html"); do
   curl -fs "$site/$f" -o "dist/$f"
 done
 old=$(sed -n 's#.*src="\(a/main\.[0-9a-f]*\.js\)".*#\1#p' "$stage/index.html")
-wasm=$(sed -n "s#.*fetch('\\(a/app\\.[0-9a-f]*\\.wasm\\)').*#\\1#p" "dist/$old")
-curl -fs --max-time 300 "$site/$wasm" -o "dist/$wasm"
+wasm=$(grep -o 'a/app\.[0-9a-f]*\.wasm' "dist/$old" | sort -u)
+if [ -z "$wasm" ]; then
+  echo "deploy: the live main script names no wasm" >&2
+  exit 1
+fi
+for f in $wasm; do
+  curl -fs --max-time 300 "$site/$f" -o "dist/$f"
+done
 cp -R dist/a dist/_headers "$stage/"
 # Step one: the live page beside the new files.
 upload "$stage" "$rev files"

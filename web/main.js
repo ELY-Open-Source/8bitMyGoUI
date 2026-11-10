@@ -194,26 +194,29 @@ window.addEventListener('resize', () => {
   }, 50)
 })
 
-// load streams the wasm, filling the bar as bytes arrive.
+// load streams the wasm's parts and fills the bar.
 async function load () {
-  const res = await fetch('__WASM__')
-  if (!res.ok) throw new Error(`${res.url}: HTTP ${res.status}`)
   const total = Number('__SIZE__')
-  const reader = res.body.getReader()
-  const parts = []
+  const chunks = []
   let got = 0
-  for (;;) {
-    const { done, value } = await reader.read()
-    if (done) break
-    parts.push(value)
-    got += value.length
-    const lit = Math.min(blocks.length, Math.floor(got / total * blocks.length))
-    blocks.forEach((b, i) => b.classList.toggle('on', i < lit))
-    document.getElementById('loading').setAttribute('aria-valuenow', lit)
+  for (const url of __PARTS__) {
+    const res = await fetch(url)
+    if (!res.ok) throw new Error(`${res.url}: HTTP ${res.status}`)
+    const reader = res.body.getReader()
+    for (;;) {
+      const { done, value } = await reader.read()
+      if (done) break
+      chunks.push(value)
+      got += value.length
+      const lit = Math.min(blocks.length, Math.floor(got / total * blocks.length))
+      blocks.forEach((b, i) => b.classList.toggle('on', i < lit))
+      document.getElementById('loading').setAttribute('aria-valuenow', lit)
+    }
   }
+  if (got !== total) throw new Error(`wasm: got ${got} bytes, want ${total}`)
   const bytes = new Uint8Array(got)
   let off = 0
-  for (const p of parts) {
+  for (const p of chunks) {
     bytes.set(p, off)
     off += p.length
   }

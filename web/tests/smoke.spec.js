@@ -265,8 +265,11 @@ test('resizing while wasm loads is safe', async ({ page }) => {
 test('scripts and wasm have content-addressed, immutable URLs', async ({ page, request }) => {
   await open(page, '#/')
   const urls = await page.evaluate(() => performance.getEntriesByType('resource').map(r => r.name).filter(u => u.includes('/a/')))
-  expect(urls.map(u => new URL(u).pathname).sort()).toEqual([
-    expect.stringMatching(/^\/a\/app\.[0-9a-f]{12}\.wasm$/),
+  const paths = urls.map(u => new URL(u).pathname).sort()
+  // The wasm comes in one part or more, sorted first.
+  const wasm = paths.filter(p => /^\/a\/app\.[0-9a-f]{12}\.wasm$/.test(p))
+  expect(wasm.length).toBeGreaterThan(0)
+  expect(paths.slice(wasm.length)).toEqual([
     expect.stringMatching(/^\/a\/main\.[0-9a-f]{12}\.js$/),
     expect.stringMatching(/^\/a\/wasm_exec\.[0-9a-f]{12}\.js$/)
   ])
@@ -305,12 +308,15 @@ test('the budget: first frame, p95 frame, wasm with brotli', async ({ page, requ
   // Stars rush at 12 fps; sixty frames fill the window.
   await page.waitForFunction(() => window.__8bit.stats().frames >= 60)
   const s = await page.evaluate(() => window.__8bit.stats())
-  const [wasm] = await page.evaluate(() => performance.getEntriesByType('resource')
+  const parts = await page.evaluate(() => performance.getEntriesByType('resource')
     .filter(e => e.name.endsWith('.wasm')).map(e => ({ url: e.name, sent: e.encodedBodySize, size: e.decodedBodySize })))
-  let br = wasm.sent
-  if (br >= wasm.size) {
+  expect(parts.length).toBeGreaterThan(0)
+  // Workers refuse a file over 25 MiB.
+  for (const p of parts) expect(p.size).toBeLessThanOrEqual(25 * 1024 * 1024)
+  let br = parts.reduce((n, p) => n + p.sent, 0)
+  if (br >= parts.reduce((n, p) => n + p.size, 0)) {
     // Served plain: compress as Cloudflare's brotli does.
-    const body = await (await request.get(wasm.url)).body()
+    const body = Buffer.concat(await Promise.all(parts.map(async p => (await request.get(p.url)).body())))
     br = brotliCompressSync(body, { params: { [constants.BROTLI_PARAM_QUALITY]: 4 } }).length
   }
   console.log(`budget: first frame ${s.first.toFixed(0)} ms, p50 ${s.p50.toFixed(1)} ms, p95 ${s.p95.toFixed(1)} ms, wasm ${(br / 1e6).toFixed(2)} MB brotli`)

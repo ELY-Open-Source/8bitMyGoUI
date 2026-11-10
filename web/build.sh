@@ -15,10 +15,16 @@ name() {
   mv "$d/$2" "$d/$to"
   echo "$to"
 }
-wasm=$(name app app.wasm wasm)
-sed -i.bak "s#__WASM__#$wasm#g" $d/main.js && rm $d/main.js.bak
+# Workers refuse files over 25 MiB: ship parts.
+split -b 20971520 $d/app.wasm $d/part.
+rm $d/app.wasm
+parts=
+for p in $d/part.*; do
+  parts="$parts${parts:+,}\"$(name app "${p#$d/}" wasm)\""
+done
+sed -i.bak "s#__PARTS__#[$parts]#g" $d/main.js && rm $d/main.js.bak
 exec=$(name wasm_exec wasm_exec.js js)
 main=$(name main main.js js)
 sed "s#__EXEC__#$exec#g; s#__MAIN__#$main#g" web/index.html > $d/index.html
 cp web/_headers $d/
-echo "web/dist built: $main $wasm ($size bytes)"
+echo "web/dist built: $main [$parts] ($size bytes)"
