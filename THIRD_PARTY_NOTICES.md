@@ -7,6 +7,8 @@
 | [MyGo](https://github.com/egoist/mygo) | v0.8.3 | MIT | Native UI toolkit the components build on |
 | [Ark Pixel Font](https://github.com/TakWolf/ark-pixel-font), 12px proportional zh_Hans | 2026.09.25 | SIL OFL 1.1 | The pixel font, packed into `pixel/font12.bin` |
 | [rsc.io/qr](https://pkg.go.dev/rsc.io/qr) | v0.2.0 | BSD-3-Clause | QR encoding for `display.QRCode` |
+| [pele-go](https://github.com/Broderick-Westrope/pele-go) | v0.2.0 | MIT | Mermaid source to SVG for `diagram`: a Go port of [Pele](https://github.com/obsidianmd/pele) 1.10.0 |
+| Mermaid documentation examples, as [Pele](https://github.com/obsidianmd/pele) 1.13.0 collects them in `tests/corpus` | 1.13.0 | MIT | Test data in `diagram/testdata/corpus.json`; in no program |
 | [go-text/typesetting](https://github.com/go-text/typesetting) | v0.3.5 | Unlicense or BSD-3-Clause; used under BSD-3-Clause | Text shaping inside MyGo |
 | [golang.org/x/image](https://pkg.go.dev/golang.org/x/image) | v0.46.0 | BSD-3-Clause | Image support inside MyGo |
 | [golang.org/x/text](https://pkg.go.dev/golang.org/x/text) | v0.43.0 | BSD-3-Clause | Text support inside MyGo |
@@ -19,6 +21,62 @@
 MIT License
 
 Copyright (c) 2026 MyGo contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+## pele-go: MIT License
+
+```text
+MIT License
+
+Copyright (c) 2026 Brodie Westrope (pele-go, the Go port)
+Copyright (c) 2026 kepano (Pele, the upstream project this is ported from)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+## Mermaid documentation examples: MIT License
+
+Sources: https://github.com/mermaid-js/mermaid, https://github.com/obsidianmd/pele
+
+```text
+The MIT License (MIT)
+
+Copyright (c) 2014 - 2022 Knut Sveidqvist
+Copyright (c) 2026 kepano
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

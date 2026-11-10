@@ -199,3 +199,19 @@ func wide(r rune) bool {
 	return unicode.In(r, unicode.Han, unicode.Hiragana, unicode.Katakana, unicode.Hangul) ||
 		r >= 0x3000 && r <= 0x303F || r >= 0xFF00 && r <= 0xFFEF
 }
+
+// Dots plots s's lit dots; y counts from the baseline.
+func Dots(s string, plot func(x, y int)) {
+	x := 0
+	for _, r := range s {
+		g := glyphOf(r)
+		for row := range g.h {
+			for col := range g.w {
+				if g.on(col, row) {
+					plot(x+g.x+col, row-g.y-g.h)
+				}
+			}
+		}
+		x += g.adv
+	}
+}

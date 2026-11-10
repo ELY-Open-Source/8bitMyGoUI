@@ -11,6 +11,7 @@ Progress truth: `TASKS.md`. Requirements: `PRD.md` and `docs/prd/components-*.md
 | MyGo | `github.com/egoist/mygo v0.8.3`, pinned in go.mod |
 | Font | Ark Pixel Font 12px proportional zh_Hans v2026.09.25 (OFL-1.1, `pixel/OFL.txt`). Rebuild: `go run ./tools/fontpack -in ark-pixel-12px-proportional-zh_hans.bdf` (BDF sha256 `535f7024…8c86`) |
 | QR | `rsc.io/qr v0.2.0` (BSD-3), encoder behind `display.QRCode` |
+| Diagrams | `github.com/Broderick-Westrope/pele-go v0.2.0` (MIT), pinned: Pele 1.10.0 in Go, Mermaid source to SVG, 33 types; only `diagram` imports it |
 | Web | `cmd/web` built with `GOOS=js GOARCH=wasm`; the browser runs the gallery under `ui.Tester`, whose clock the host moves with real time (at most 500 ms a call), and blits frames to a canvas |
 | Hosting | Cloudflare Workers static assets from `web/dist`; code on GitHub `github.com/ELY-Open-Source/8bitMyGoUI` |
 
@@ -35,7 +36,7 @@ internal/archtest/ import and API rules
 
 Imports point down only. Same-tier imports are forbidden. `internal/archtest` enforces it.
 
-0 pixel · 1 icon · 2 layout, text, display · 3 input · 4 feedback · 5 navigation, data, overlay, datetime, chart, fx · 6 game, chat, media, code, account, files, project, shop, agent, desk, tabletop · 7 gallery · 8 cmd
+0 pixel · 1 icon · 2 layout, text, display · 3 input · 4 feedback · 5 navigation, data, overlay, datetime, chart, fx, diagram · 6 game, chat, media, code, account, files, project, shop, agent, desk, tabletop · 7 gallery · 8 cmd
 
 ## Style rules
 
@@ -80,6 +81,9 @@ Imports point down only. Same-tier imports are forbidden. `internal/archtest` en
 - Composites log state changes: `slog.Debug("8bit: <component> <event>", …)`. Never log secrets, nor anything typed or copied: log counts. The gallery logs which demo spoke, not what it said.
 - A `ui.Element` is a handle that expires before the next build pass: never keep one across passes; bind a `ui.Handle` instead (`Handle.Bounds(c)` works between builds). No goroutines touching elements.
 - `Context` methods answer only during a build: an input handler reads the clipboard through `c.Services()`.
+- `diagram` walks pele-go's SVG once (`parse`) onto a plate of dots, a palette slot each: Pele measures text with `pixel.Measure` at the font's 12 px, so one unit of its layout is one dot. Paths flatten to polylines (`flatten`); fills take the dots whose centers the outline winds around, strokes walk whole dots with a square brush that inks its leading edges inside the plate, and the plate leaves as rectangles (`cells`). No style's length may cost more work than the plate holds: a length is held to two plates' sides (`dots`). An element, attribute, transform or Pele token (`--_*`, `--pele-*`) the walker does not know is an error, never a guess, fallback or not: add it when pele-go moves. `testdata/corpus.json` holds Mermaid's documentation examples for all 33 types.
+- What the dot grid makes of a diagram: a color takes the nearest palette slot; opacity is a Bayer dither level; the pixel font has one face, so font weight, style and family are read and dropped, and a font size picks a whole scale of 1–4; text under a quarter turn turns with its dots, under any other turn it stays level at its anchor; outlined text rings its dots.
+- A diagram's own `style` values read as CSS within this subset: colors as hex, names, `rgb()`, `hsl()` in degrees, `color-mix(in srgb)` and `var()`; opacity as a number or a percentage; lengths in px, pt, pc, in, cm, mm, q, em and rem; font-size keywords and percentages. A style beats an attribute, a later declaration an earlier one, em reads the element's final font size. A value outside the subset drops as CSS drops an invalid one and leaves the earlier value.
 - Files under 500 lines. Comments: one line, ten words at most, only when needed. No dead code, no versioned APIs.
 
 ## Gallery entry

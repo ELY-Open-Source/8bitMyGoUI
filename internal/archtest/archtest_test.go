@@ -21,7 +21,7 @@ var tiers = map[string]int{
 	"pixel": 0, "icon": 1,
 	"layout": 2, "text": 2, "display": 2,
 	"input": 3, "feedback": 4,
-	"navigation": 5, "data": 5, "overlay": 5, "datetime": 5, "chart": 5, "fx": 5,
+	"navigation": 5, "data": 5, "overlay": 5, "datetime": 5, "chart": 5, "fx": 5, "diagram": 5,
 	"game": 6, "chat": 6, "media": 6, "code": 6, "account": 6, "files": 6,
 	"project": 6, "shop": 6, "agent": 6, "desk": 6, "tabletop": 6,
 	"gallery": 7, "cmd/gallery": 8, "cmd/web": 8,

@@ -218,3 +218,35 @@ func TestMicroFont(t *testing.T) {
 	}()
 	MicroWidth("@")
 }
+
+func TestDotsLieWhereTextDrawsThem(t *testing.T) {
+	var got, want [][2]int
+	Dots("Ag", func(x, y int) { got = append(got, [2]int{x, y}) })
+	x := 0
+	for _, r := range "Ag" {
+		g := glyphOf(r)
+		for row := range g.h {
+			for col := range g.w {
+				if g.on(col, row) {
+					want = append(want, [2]int{x + g.x + col, g.top() + row - font12.ascent})
+				}
+			}
+		}
+		x += g.adv
+	}
+	if len(got) < 20 || !slices.Equal(got, want) {
+		t.Fatalf("Dots = %v, want Text's dots from the baseline: %v", got, want)
+	}
+	below := 0
+	for _, d := range got {
+		if d[0] < 0 || d[0] >= Measure("Ag") || d[0] < glyphOf('A').adv && d[1] >= 0 {
+			t.Fatalf("dot %v leaves the line, or A dips under the baseline", d)
+		}
+		if d[1] >= 0 {
+			below++
+		}
+	}
+	if below == 0 {
+		t.Error("g has no dot under the baseline")
+	}
+}
