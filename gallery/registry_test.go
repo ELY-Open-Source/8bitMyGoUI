@@ -23,7 +23,7 @@ func TestRegistry(t *testing.T) {
 		if !known[e.Category] {
 			t.Fatalf("%s: unknown category %q", e.Name, e.Category)
 		}
-		if (e.ID == 0) != (e.Category == "foundations") || e.ID < 0 || e.ID > 500 {
+		if (e.ID == 0) != (e.Category == "foundations") || e.ID < 0 || e.ID > 501 {
 			t.Fatalf("%s: id %d in %s", e.Name, e.ID, e.Category)
 		}
 		if slugs[e.Slug()] || e.ID > 0 && ids[e.ID] {

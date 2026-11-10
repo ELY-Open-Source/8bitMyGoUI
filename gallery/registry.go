@@ -17,7 +17,7 @@ import (
 
 // Entry is one page: a component or an engine foundation.
 type Entry struct {
-	// ID is 1–500 for components, 0 for foundations.
+	// ID is 1–501 for components, 0 for foundations.
 	ID       int
 	Name, Zh string
 	Category string
@@ -42,6 +42,7 @@ var Categories = []Category{
 	{"overlay", "Overlay", "浮层", icon.Copy},
 	{"datetime", "Date & Time", "日期时间", icon.Calendar},
 	{"chart", "Chart", "图表", icon.Sort},
+	{"diagram", "Diagram", "图解", icon.Link},
 	{"game", "Game", "游戏", icon.Gamepad},
 	{"fx", "Effects", "特效", icon.Sparkle},
 	{"chat", "Chat", "聊天", icon.Chat},
@@ -56,7 +57,7 @@ var Categories = []Category{
 	{"tabletop", "Tabletop", "桌游", icon.Crown},
 }
 
-var entries = slices.Concat(foundationEntries, layoutEntries, textEntries, displayEntries, inputEntries, controlEntries, feedbackEntries, navigationEntries, dataEntries, recordEntries, overlayEntries, popupEntries, datetimeEntries, timeEntries, chartEntries, plotEntries, gameEntries, rpgEntries, screenEntries, lootEntries, fxEntries, screenFxEntries, chatEntries, mailEntries, mediaEntries, studioEntries, codeEntries, debugEntries, accountEntries, playerEntries, filesEntries, storageEntries, projectEntries, teamEntries, shopEntries, marketEntries, agentEntries, guildEntries, deskEntries, retroEntries, tabletopEntries, parlorEntries)
+var entries = slices.Concat(foundationEntries, layoutEntries, textEntries, displayEntries, inputEntries, controlEntries, feedbackEntries, navigationEntries, dataEntries, recordEntries, overlayEntries, popupEntries, datetimeEntries, timeEntries, chartEntries, plotEntries, gameEntries, rpgEntries, screenEntries, lootEntries, fxEntries, screenFxEntries, chatEntries, mailEntries, mediaEntries, studioEntries, codeEntries, debugEntries, accountEntries, playerEntries, filesEntries, storageEntries, projectEntries, teamEntries, shopEntries, marketEntries, agentEntries, guildEntries, deskEntries, retroEntries, tabletopEntries, parlorEntries, diagramEntries)
 
 func Entries() []Entry { return entries }
 

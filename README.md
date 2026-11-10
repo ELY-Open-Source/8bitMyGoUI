@@ -4,9 +4,9 @@
 
 ![The gallery home in the Winter Night palette](docs/showcase.png)
 
-Pixel-art components in the manner of 16-bit consoles, for [MyGo](https://github.com/egoist/mygo) native UI. There are 500 of them in 22 categories, from a button to a chessboard. Every dot sits on the grid, every color comes from a sixteen-slot palette, and nothing is anti-aliased. Errors read GAME OVER and offer CONTINUE.
+Pixel-art components in the manner of 16-bit consoles, for [MyGo](https://github.com/egoist/mygo) native UI. There are 501 of them in 23 categories, from a button to a chessboard. Every dot sits on the grid, every color comes from a sixteen-slot palette, and nothing is anti-aliased. Errors read GAME OVER and offer CONTINUE.
 
-16 位游戏机风格的像素组件库，基于 MyGo 原生 UI：22 个分类，500 个组件。每个点落在点阵上，颜色只来自 16 格调色板，没有抗锯齿。换一套调色板，同一画面就有昼夜四季。
+16 位游戏机风格的像素组件库，基于 MyGo 原生 UI：23 个分类，501 个组件。每个点落在点阵上，颜色只来自 16 格调色板，没有抗锯齿。换一套调色板，同一画面就有昼夜四季。
 
 **Showcase:** <https://8bitmygoui.zhangyanghaha0407.workers.dev>. It is the same Go gallery, compiled to WebAssembly and drawn dot by dot in the browser.
 
@@ -84,6 +84,18 @@ A dot is the grid's unit. `Settings.Dot` sets device-independent pixels per dot,
 
 `Settings.Locale` picks the built-in copy, `pixel.En` or `pixel.Zh`. Motion steps at 4–15 frames a second. Under Reduce Motion, from the system or `Settings.Reduce`, decoration stands still or jumps to its end; loaders and countdowns keep time.
 
+## Mermaid
+
+`diagram.Mermaid` draws Mermaid source on the dot grid: flowcharts, sequence diagrams, pies and 30 more types. Colors take the nearest palette slot, text is the pixel font, and one unit of the layout is one dot. A box too narrow shrinks the picture by a whole factor; text stops reading there, so give a diagram its width. A source with an error shows the engine's message with its line and column.
+
+```go
+diagram.Mermaid(c, "flowchart TD\n  Inn[Rest at the inn] --> Boss([Fight the boss])", diagram.MermaidOptions{})
+```
+
+The engine is [pele-go](https://github.com/Broderick-Westrope/pele-go), a Go port of [Pele](https://github.com/obsidianmd/pele) (MIT). Only programs that import `diagram` link it. Links, remote images and math are not drawn.
+
+`diagram.Mermaid` 把 Mermaid 源码画在点阵上，共 33 种图。颜色取最近的调色板格，文字用像素字体。容器过窄时按整数倍缩小，文字不再可读。
+
 ## Gallery
 
 ```sh
@@ -112,6 +124,7 @@ In the gallery, `/` searches by English name, Chinese name or number, `P` change
 | Overlay | 浮层 | 20 |
 | Date & Time | 日期时间 | 20 |
 | Chart | 图表 | 30 |
+| Diagram | 图解 | 1 |
 | Game | 游戏 | 45 |
 | Effects | 特效 | 30 |
 | Chat | 聊天 | 25 |
@@ -124,7 +137,7 @@ In the gallery, `/` searches by English name, Chinese name or number, `P` change
 | Agent | 智能体 | 15 |
 | Desk | 桌面 | 20 |
 | Tabletop | 桌游 | 15 |
-| **All** | **全部** | **500** |
+| **All** | **全部** | **501** |
 
 Eight foundation pages show the engine: palettes, canvas, dither, the pixel font, icons, sprites, the editor and focus.
 
