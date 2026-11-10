@@ -198,3 +198,18 @@ func (p *plate) cells() []cell {
 	}
 	return out
 }
+
+// shrink keeps each n by n block's top-ranked dot.
+func (p *plate) shrink(n int, rank *[pixel.Slots + 1]int) *plate {
+	out := &plate{w: (p.w + n - 1) / n, h: (p.h + n - 1) / n}
+	out.dots = make([]uint8, out.w*out.h)
+	for y := range p.h {
+		for x := range p.w {
+			d, at := p.dots[y*p.w+x], y/n*out.w+x/n
+			if rank[d] > rank[out.dots[at]] {
+				out.dots[at] = d
+			}
+		}
+	}
+	return out
+}
